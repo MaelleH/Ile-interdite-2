@@ -1,3 +1,6 @@
+package ile.interdite;
+
+
 import Vue.VueAventurier;
 import Model.CarteInondation;
 import Model.Grille;
@@ -6,7 +9,7 @@ import Model.Tuile;
 import Model.CarteTrésor;
 import java.util.*;
 
-public class Controleur {
+public class Controleur implements Observateur {
 
 	Collection<CarteTrésor> piocheCarteTrésor;
 	private Grille grille;
@@ -39,7 +42,7 @@ public class Controleur {
 	 */
 	public boolean deplacementPossible(Aventurier aventurier, Tuile tuile) {
 		// TODO - implement Controleur.deplacementPossible
-		
+		return true;
 	}
 
 	/**
@@ -100,4 +103,18 @@ public class Controleur {
 		throw new UnsupportedOperationException();
 	}
 
+        
+        public void traiterMessage(Message m) {
+            //A Faire 
+            if(m.getBtnCliquéTxt().equals("Aller")){
+                System.out.println("Déplacement! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
+            }else if (m.getBtnCliquéTxt().equals("Assecher")){
+                System.out.println("Assècher!");
+            }else if (m.getBtnCliquéTxt().equals("AutreAction")){
+                System.out.println("Autre Action!");
+            }else if (m.getBtnCliquéTxt().equals("Terminer Tour")){
+                System.out.println("Fin du Tour!");
+            }
+            
+        }
 }
