@@ -34,7 +34,7 @@ public class Controleur {
 	 */
 	public boolean deplacementPossible(Aventurier aventurier, Tuile tuile) {
 		// TODO - implement Controleur.deplacementPossible
-		throw new UnsupportedOperationException();
+		
 	}
 
 	/**
