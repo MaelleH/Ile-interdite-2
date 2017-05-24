@@ -1,0 +1,15 @@
+package Model.Aventuriers;
+
+public class Messager extends Aventurier {
+
+	/**
+	 * 
+	 * @param aven1
+	 * @param aven2
+	 */
+	public void donnerCarte(Aventurier aven1, Aventurier aven2) {
+		// TODO - implement Messager.donnerCarte
+		throw new UnsupportedOperationException();
+	}
+
+}
