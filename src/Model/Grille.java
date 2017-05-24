@@ -1,3 +1,4 @@
+import Model.Coordonnees;
 import java.util.*;
 
 public class Grille {

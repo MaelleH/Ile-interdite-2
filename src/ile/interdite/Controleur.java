@@ -1,6 +1,7 @@
 package ile.interdite;
 
 
+import Model.Coordonnees;
 import Vue.VueAventurier;
 import Model.CarteInondation;
 import Model.Grille;
@@ -22,17 +23,13 @@ public class Controleur implements Observateur {
 
 	/**
 	 * 
-	 * @param aventurier
-	 * @param tuile
+	 * @param a
+         * @param c
+
 	 */
-	public void deplacement(Aventurier a, Tuile t) {
+	public HashMap deplacement(Aventurier a, Coordonnees c) {
 		// TODO - implement Controleur.deplacement
-		Tuile p = new Tuile();
-                p = a.getPosition();
-                for(Tuile i : grille.getHSTuile()){
-                    if(i.getNumT())
-                return true;  
-                }
+              throw new UnsupportedOperationException();  
 	}
 
 	/**
