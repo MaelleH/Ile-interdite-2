@@ -37,19 +37,20 @@ public class Controleur implements Observateur {
 	 * @param aventurier
 	 * @param tuile
 	 */
-	public HashMap deplacementPossible(Aventurier aventurier) {
+	public HashMap deplacementPossible(Aventurier a) {
 		// TODO - implement Controleur.deplacementPossible
                                 
-                HashMap<Coordonnees,Tuile> listeE;   
-		Tuile p = new Tuile();
-                p = aventurier.getPosition();
+                HashMap<Coordonnees,Tuile> listeE = new HashMap<>();   
+		Coordonnees p;
+                p = a.getPosition();
                 
-                for(g.getHSTuile().entrySet()){
-                    if(deplacementPossible(Coordonnees o,Coordonnees n,grille)){
-                        
+                for(Map.Entry i: grille.getHSTuile().entrySet()){
+                    if(a.deplacementPossible(p, (Coordonnees) i.getKey(),grille)){
+                        listeE.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                    }        
                 }
 
-		return true;
+		return listeE;
 	}
 
 	/**
