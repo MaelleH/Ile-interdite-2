@@ -1,25 +1,22 @@
-package Model;
-
-import Model.Aventuriers.Aventurier;
 import java.util.*;
 
 public class Grille {
 
-	private Collection<Tuile> tuiles;
+        private HashMap<Coordonnees,Tuile> HSTuile;
 
-	/**
-	 * 
-	 * @param aventurier
-	 * @param tuile
-	 */
-	public void assécher(Aventurier aventurier, Tuile tuile) {
-		// TODO - implement Grille.assécher
-		throw new UnsupportedOperationException();
-	}
+    /**
+     * @return the HSTuile
+     */
+    public HashMap<Coordonnees,Tuile> getHSTuile() {
+        return HSTuile;
+    }
 
-	public void innonder() {
-		// TODO - implement Grille.innonder
-		throw new UnsupportedOperationException();
-	}
+    /**
+     * @param HSTuile the HSTuile to set
+     */
+    public void setHSTuile(HashMap<Coordonnees,Tuile> HSTuile) {
+        this.HSTuile = HSTuile;
+    }
+
 
 }
