@@ -22,9 +22,14 @@ public class Controleur {
 	 * @param aventurier
 	 * @param tuile
 	 */
-	public void deplacement(Aventurier aventurier, Tuile tuile) {
+	public void deplacement(Aventurier a, Tuile t) {
 		// TODO - implement Controleur.deplacement
-		throw new UnsupportedOperationException();
+		Tuile p = new Tuile();
+                p = a.getPosition();
+                for(Tuile i : grille.getHSTuile()){
+                    if(i.getNumT())
+                return true;  
+                }
 	}
 
 	/**
