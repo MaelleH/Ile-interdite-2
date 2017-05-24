@@ -16,6 +16,11 @@ import javax.swing.SwingConstants;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.border.MatteBorder;
 import Util.Utils.Pion;
+import ile.interdite.Controleur;
+import ile.interdite.Message;
+import ile.interdite.Observateur;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
  
 public class VueAventurier  {
@@ -31,8 +36,12 @@ public class VueAventurier  {
     private final JButton btnTerminerTour;
     private final JTextField position;
     
-    public VueAventurier (String nomJoueur, String nomAventurier, Color couleur){
+    private Observateur controleur;
+    
+    public VueAventurier (String nomJoueur, String nomAventurier, Color couleur, Observateur obs){
 
+        this.controleur=obs;
+        
         this.window = new JFrame();
         window.setSize(350, 200);
 
@@ -71,7 +80,7 @@ public class VueAventurier  {
         mainPanel.add(this.panelBoutons, BorderLayout.SOUTH);
 
         this.btnAller = new JButton("Aller") ;
-        this.btnAssecher = new JButton( "Assecher");
+        this.btnAssecher = new JButton("Assecher");
         this.btnAutreAction = new JButton("AutreAction") ;
         this.btnTerminerTour = new JButton("Terminer Tour") ;
         
@@ -82,6 +91,39 @@ public class VueAventurier  {
 
         this.window.setVisible(true);
         mainPanel.repaint();
+        
+        btnAller.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            controleur.traiterMessage(new Message(btnAller.getText(),position.getText()));
+                                        }
+                                    }
+        );
+        
+        btnAssecher.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            controleur.traiterMessage(new Message(btnAssecher.getText(),position.getText()));
+                                        }
+                                    }
+        );
+        
+        btnAutreAction.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            controleur.traiterMessage(new Message(btnAutreAction.getText(),position.getText()));
+                                        }
+                                    }
+        );
+        
+        btnTerminerTour.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                            controleur.traiterMessage(new Message(btnTerminerTour.getText(),position.getText()));
+                                        }
+                                    }
+        );
+        
     }  
 
      public JButton getBtnAutreAction() {
@@ -108,7 +150,8 @@ public class VueAventurier  {
     
      public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VueAventurier vueAventurier = new VueAventurier ("Manon", "Explorateur",Pion.ROUGE.getCouleur() );
+        Controleur controleur = new Controleur();
+        VueAventurier vueAventurier = new VueAventurier ("Manon", "Explorateur",Pion.ROUGE.getCouleur(),controleur);
     }
 }
 
