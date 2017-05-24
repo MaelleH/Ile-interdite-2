@@ -37,8 +37,18 @@ public class Controleur implements Observateur {
 	 * @param aventurier
 	 * @param tuile
 	 */
-	public boolean deplacementPossible(Aventurier aventurier, Tuile tuile) {
+	public HashMap deplacementPossible(Aventurier aventurier) {
 		// TODO - implement Controleur.deplacementPossible
+                                
+                HashMap<Coordonnees,Tuile> listeE;   
+		Tuile p = new Tuile();
+                p = aventurier.getPosition();
+                
+                for(g.getHSTuile().entrySet()){
+                    if(deplacementPossible(Coordonnees o,Coordonnees n,grille)){
+                        
+                }
+
 		return true;
 	}
 

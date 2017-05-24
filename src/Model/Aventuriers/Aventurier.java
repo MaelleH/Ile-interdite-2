@@ -12,26 +12,12 @@ public class Aventurier {
 	private Collection<CarteTrésor> mainCarteTrésor;
 	private int actionsRestantes;
 	private int ACTIONS_MAX = 3;
-	private Tuile position;
+	private Coordonnees position;
 
-	public Tuile getPosition() {
+	public Coordonnees getPosition() {
 		return this.position;
 	}
 
-	public HashMap caseEnvisagable(Coordonnees c,Grille g) {
-		// TODO - implement Aventurier.caseEnvisagable
-                
-                HashMap<Coordonnees,Tuile> listeE;   
-		Tuile p = new Tuile();
-                p = this.getPosition();
-                
-                for(g.getHSTuile().entrySet()){
-                    if(deplacementPossible()){
-                        
-                }
-
-	}
-        }
         public boolean deplacementPossible(Coordonnees o,Coordonnees n,Grille g) {
 		// TODO - implement Controleur.deplacementPossible
                 int xo,yo,xn,yn;
