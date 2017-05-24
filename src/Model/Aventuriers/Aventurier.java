@@ -1,6 +1,11 @@
+package Model.Aventuriers;
+
 import Model.CarteTrésor;
 import Model.Coordonnees;
+import Model.Grille;
+import Model.Tuile;
 import java.util.*;
+import java.util.HashMap;
 
 public class Aventurier {
 
@@ -15,12 +20,16 @@ public class Aventurier {
 
 	public HashMap caseEnvisagable(Coordonnees c,Grille g) {
 		// TODO - implement Aventurier.caseEnvisagable
+                
+                HashMap<Coordonnees,Tuile> listeE;   
 		Tuile p = new Tuile();
                 p = this.getPosition();
-                for(Coordonnees i : g.getHSTuile()){
+                
+                for(g.getHSTuile().entrySet()){
                     if(deplacementPossible()){
-                      return true;   
+                        
                 }
+
 	}
         }
         public boolean deplacementPossible(Coordonnees o,Coordonnees n,Grille g) {
@@ -34,7 +43,7 @@ public class Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
-                    if(g.get(n).getEtat()!=2){
+                    if(g.getHSTuile().get(n).getEtat()!=2){
                         bool=true;
                     }     
                 }
