@@ -34,4 +34,30 @@ public class Explorateur extends Aventurier {
 
 		
 	}    
+        
+        @Override
+        public boolean assechementPossible(Coordonnees o,Coordonnees n,Grille g) {
+		// TODO - implement Controleur.deplacementPossible
+                int xo,yo,xn,yn;
+                boolean bool=false;
+                
+                xo=Integer.parseInt(o.getX());
+                xn=Integer.parseInt(n.getX());
+                yo=Integer.parseInt(o.getY());
+                yn=Integer.parseInt(n.getY());
+                
+                if(((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))){
+                    if(g.getHSTuile().get(n).getEtat()!=2){
+                        bool=true;
+                    }     
+                }
+                else if (super.assechementPossible(o, n, g)){
+                    bool = true;
+                }
+                return bool;
+
+		
+	}    
+                
+        
 }

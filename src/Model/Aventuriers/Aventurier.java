@@ -37,5 +37,26 @@ public class Aventurier {
 
 		
 	}
-
+	/**
+	 * 
+	 * @param aventurier
+	 * @param tuile
+	 */
+	public boolean assechementPossible(Coordonnees o,Coordonnees n,Grille g) {
+		// TODO - implement Controleur.assèchementPossible
+		int xo,yo,xn,yn;
+                boolean bool=false;
+                
+                xo=Integer.parseInt(o.getX());
+                xn=Integer.parseInt(n.getX());
+                yo=Integer.parseInt(o.getY());
+                yn=Integer.parseInt(n.getY());
+                
+                if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
+                    if(g.getHSTuile().get(n).getEtat()==1){
+                        bool=true;
+                    }     
+                }
+                return bool;
+	}
 }

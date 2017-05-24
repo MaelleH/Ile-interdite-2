@@ -37,42 +37,52 @@ public class Controleur implements Observateur {
 	 * @param aventurier
 	 * @param tuile
 	 */
-	public HashMap deplacementPossible(Aventurier a) {
+	public HashMap deplacementPossibleListe(Aventurier a) {
 		// TODO - implement Controleur.deplacementPossible
                                 
-                HashMap<Coordonnees,Tuile> listeE = new HashMap<>();   
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
 		Coordonnees p;
                 p = a.getPosition();
                 
                 for(Map.Entry i: grille.getHSTuile().entrySet()){
                     if(a.deplacementPossible(p, (Coordonnees) i.getKey(),grille)){
-                        listeE.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
                     }        
                 }
 
-		return listeE;
+		return listeD;
+                
 	}
+
+
 
 	/**
 	 * 
-	 * @param aventurier
-	 * @param tuile
+	 * @param a
+	 * @param t
 	 */
-	public boolean assèchementPossible(Aventurier aventurier, Tuile tuile) {
-		// TODO - implement Controleur.assèchementPossible
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param aventurier
-	 * @param tuile
-	 */
-	public void assécher(Aventurier aventurier, Tuile tuile) {
+	public HashMap assechementPossibleListe(Aventurier a, Coordonnees c) {
 		// TODO - implement Controleur.assécher
-		throw new UnsupportedOperationException();
-	}
+		HashMap<Coordonnees,Tuile> listeA = new HashMap<>();   
+		Coordonnees p;
+                p = a.getPosition();
+                
+                for(Map.Entry i: grille.getHSTuile().entrySet()){
+                    if(a.assechementPossible(p, (Coordonnees) i.getKey(),grille)){
+                        listeA.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                    }        
+                }
+                return listeA;
 
+
+	}
+        
+        public HashMap assecher(Aventurier a) {
+		// TODO - implement Controleur.assécher             
+                if()
+
+
+	}
 	/**
 	 * 
 	 * @param aven1
