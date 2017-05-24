@@ -1,12 +1,8 @@
-package Model;
+
+import Model.NomTuile;
 
 public class Tuile {
 
-	private NomTuile nomT;
-	/**
-	 * Formé avec le num colonne +ligne ( exemple 11 ou 15)
-	 */
-	private String numT;
 	/**
 	 * 0 = Sec
 	 * 1 = Innondé
@@ -14,14 +10,7 @@ public class Tuile {
 	 */
 	private int etat = 0;
 	private String tresor;
-
-	public String getNumT() {
-		return this.numT;
-	}
-
-	public void setNumT(String numT) {
-		this.numT = numT;
-	}
+	private NomTuile nomT;
 
 	public int getEtat() {
 		return this.etat;
@@ -29,6 +18,10 @@ public class Tuile {
 
 	public void setEtat(int etat) {
 		this.etat = etat;
+	}
+
+	public NomTuile getNomT() {
+		return this.nomT;
 	}
 
 }
