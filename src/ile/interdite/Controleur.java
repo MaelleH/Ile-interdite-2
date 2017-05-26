@@ -54,14 +54,7 @@ public class Controleur implements Observateur {
                 
 	}
 
-
-
-	/**
-	 * 
-	 * @param a
-	 * @param t
-	 */
-	public HashMap assechementPossibleListe(Aventurier a, Coordonnees c) {
+	public HashMap assechementPossibleListe(Aventurier a) {
 		// TODO - implement Controleur.assécher
 		HashMap<Coordonnees,Tuile> listeA = new HashMap<>();   
 		Coordonnees p;
@@ -79,9 +72,7 @@ public class Controleur implements Observateur {
         
         public HashMap assecher(Aventurier a) {
 		// TODO - implement Controleur.assécher             
-                if()
-
-
+                throw new UnsupportedOperationException();
 	}
 	/**
 	 * 
