@@ -27,9 +27,9 @@ public class Controleur implements Observateur {
          * @param c
 
 	 */
-	public HashMap deplacement(Aventurier a, Coordonnees c) {
+	public void deplacement(Aventurier a, Coordonnees c) {
 		// TODO - implement Controleur.deplacement
-              throw new UnsupportedOperationException();  
+                
 	}
 
 	/**
@@ -105,14 +105,30 @@ public class Controleur implements Observateur {
 
 	/**
 	 * 
-	 * @param aventurier
+	 * @param a
+     * @return 
 	 */
-	public void priseTresorPossible(Aventurier aventurier) {
+	public boolean priseTresorPossible(Aventurier a) {
 		// TODO - implement Controleur.priseTresorPossible
-		throw new UnsupportedOperationException();
+                String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                int stop=0;
+                
+                if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
+                    
+                    for(CarteTrésor i :a.getMainCarteTrésor()){
+                        if(!(i.getNomCT()).equals(tresor)){
+                          stop = stop +1;  
+                        }
+                    }
+                    if(stop<1){
+                        return true;
+                    }
+                }
+                return false;                
 	}
 
         
+        @Override
         public void traiterMessage(Message m) {
             //A Faire 
             if(m.getBtnCliquéTxt().equals("Aller")){
