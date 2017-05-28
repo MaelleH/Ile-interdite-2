@@ -70,7 +70,7 @@ public class Controleur implements Observateur {
 
 	}
         
-        public HashMap assecher(Aventurier a) {
+        public void assecher(Aventurier a, Coordonnees c) {
 		// TODO - implement Controleur.assécher             
                 throw new UnsupportedOperationException();
 	}
