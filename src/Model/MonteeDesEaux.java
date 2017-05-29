@@ -7,7 +7,7 @@ public class MonteeDesEaux extends CarteTrésor {
 	 */
 	public void moveMarqueur() {
 		// TODO - implement MonteeDesEaux.moveMarqueur
-		throw new UnsupportedOperationException();
+		
 	}
 
 }

@@ -27,9 +27,9 @@ public class Controleur implements Observateur {
          * @param c
 
 	 */
-	public HashMap deplacement(Aventurier a, Coordonnees c) {
+	public void deplacement(Aventurier a, Coordonnees c) {
 		// TODO - implement Controleur.deplacement
-              throw new UnsupportedOperationException();  
+                
 	}
 
 	/**
@@ -70,7 +70,7 @@ public class Controleur implements Observateur {
 
 	}
         
-        public HashMap assecher(Aventurier a) {
+        public void assecher(Aventurier a, Coordonnees c) {
 		// TODO - implement Controleur.assécher             
                 throw new UnsupportedOperationException();
 	}
@@ -91,28 +91,54 @@ public class Controleur implements Observateur {
 	 */
 	public boolean donnationPossible(Aventurier aven1, Aventurier aven2) {
 		// TODO - implement Controleur.donnationPossible
-		throw new UnsupportedOperationException();
+		return aven1.getPosition() == aven2.getPosition();
+                
 	}
 
 	/**
 	 * 
-	 * @param aventurier
+	 * @param a
 	 */
-	public void prendreTresor(Aventurier aventurier) {
+	public void prendreTresor(Aventurier a) {
 		// TODO - implement Controleur.prendreTresor
-		throw new UnsupportedOperationException();
+                
+		if(priseTresorPossible(a)){
+                    String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                    a.getMainCarteTrésor().remove(tresor);
+//PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
+ 
+                }
 	}
 
 	/**
 	 * 
-	 * @param aventurier
+	 * @param a
+     * @return 
 	 */
-	public void priseTresorPossible(Aventurier aventurier) {
+	public boolean priseTresorPossible(Aventurier a) {
 		// TODO - implement Controleur.priseTresorPossible
-		throw new UnsupportedOperationException();
+                String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                int stop=0;
+                
+                if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
+                    
+                    for(CarteTrésor i :a.getMainCarteTrésor()){
+                        if(!(i.getNomCT()).equals(tresor)){
+                          stop = stop +1;  
+                        }
+                    }
+                    if(stop<1){
+                        return true;
+                    }
+                }
+                return false;                
 	}
-
+	public boolean doitDefausser(Aventurier a) {
+		// TODO - implement Controleur.priseTresorPossible
+                return (a.getMainCarteTrésor().size()>5);
+        }
         
+        @Override
         public void traiterMessage(Message m) {
             //A Faire 
             if(m.getBtnCliquéTxt().equals("Aller")){
@@ -121,6 +147,7 @@ public class Controleur implements Observateur {
                 System.out.println("Assècher! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
             }else if (m.getBtnCliquéTxt().equals("AutreAction")){
                 System.out.println("Autre Action! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
+                
             }else if (m.getBtnCliquéTxt().equals("Terminer Tour")){
                 System.out.println("Fin du Tour! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
             }
