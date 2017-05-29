@@ -28,7 +28,7 @@ public class Controleur implements Observateur {
 
 	 */
 	public void deplacement(Aventurier a, Coordonnees c) {
-		// TODO - implement Controleur.deplacement
+		a.setPosition(c);
                 
 	}
 
@@ -73,6 +73,7 @@ public class Controleur implements Observateur {
         public void assecher(Aventurier a, Coordonnees c) {
 		// TODO - implement Controleur.assécher             
                 throw new UnsupportedOperationException();
+                
 	}
 	/**
 	 * 
@@ -141,15 +142,23 @@ public class Controleur implements Observateur {
         @Override
         public void traiterMessage(Message m) {
             //A Faire 
+            String x,y;
+            x=m.getChampSaisieTxt().charAt(0)+"";
+            y=m.getChampSaisieTxt().charAt(1)+"";
+            
+            Coordonnees c = new Coordonnees(x,y);
+            Joueur j = 
+            
             if(m.getBtnCliquéTxt().equals("Aller")){
-                System.out.println("Déplacement! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
+                System.out.println("Déplacement! (" + x +","+ y +")");
+                deplacement(m.getJoueur(), c);
             }else if (m.getBtnCliquéTxt().equals("Assecher")){
-                System.out.println("Assècher! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
+                System.out.println("Assècher! (" + x +","+ y +")");
             }else if (m.getBtnCliquéTxt().equals("AutreAction")){
-                System.out.println("Autre Action! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
+                System.out.println("Autre Action! (" + x +","+ y +")");
                 
             }else if (m.getBtnCliquéTxt().equals("Terminer Tour")){
-                System.out.println("Fin du Tour! (" + m.getChampSaisieTxt().charAt(0)+","+m.getChampSaisieTxt().charAt(1)+")");
+                System.out.println("Fin du Tour! (" + x +","+ y +")");
             }
             
         }

@@ -12,6 +12,7 @@ package ile.interdite;
 public class Message {
     private String btnCliquéTxt;
     private String champSaisieTxt;
+    private String joueur;
 
     public Message(String btnCliquéTxt,String champSaisieTxt) {
         this.btnCliquéTxt = btnCliquéTxt;
@@ -32,5 +33,19 @@ public class Message {
 
     public void setChampSaisieTxt(String champSaisieTxt) {
         this.champSaisieTxt = champSaisieTxt;
+    }
+
+    /**
+     * @return the joueur
+     */
+    public String getJoueur() {
+        return joueur;
+    }
+
+    /**
+     * @param joueur the joueur to set
+     */
+    public void setJoueur(String joueur) {
+        this.joueur = joueur;
     }
 }
