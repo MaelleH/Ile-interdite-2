@@ -174,4 +174,10 @@ public class Controleur implements Observateur {
             }
             
         }
+        public void creationAventurier(int nbjoueur){
+            for (i=0 ; i<nbjoueur;i++){
+                
+            }
+        }
+                
 }
