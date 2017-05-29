@@ -1,3 +1,5 @@
+package Model;
+
 
 import Model.Coordonnees;
 import Model.NomTuile;
