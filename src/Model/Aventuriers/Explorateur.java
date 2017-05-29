@@ -10,8 +10,19 @@ import Model.Coordonnees;
 import Model.Grille;
 
 public class Explorateur extends Aventurier {
+
+    public Explorateur(String explorateur) {
+        super.setNom(explorateur);
+    }
     
-        @Override
+    /**
+     *
+     * @param o
+     * @param n
+     * @param g
+     * @return
+     */
+    @Override
         public boolean deplacementPossible(Coordonnees o,Coordonnees n,Grille g) {
 		// TODO - implement Controleur.deplacementPossible
                 int xo,yo,xn,yn;

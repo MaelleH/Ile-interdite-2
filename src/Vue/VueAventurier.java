@@ -95,7 +95,7 @@ public class VueAventurier  {
         btnAller.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnAller.getText(),position.getText()));
+                                            controleur.traiterMessage(new Message(btnAller.getText(),position.getText(),nomAventurier));
                                         }
                                     }
         );
@@ -103,7 +103,7 @@ public class VueAventurier  {
         btnAssecher.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnAssecher.getText(),position.getText()));
+                                            controleur.traiterMessage(new Message(btnAssecher.getText(),position.getText(),nomAventurier));
                                         }
                                     }
         );
@@ -111,7 +111,7 @@ public class VueAventurier  {
         btnAutreAction.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnAutreAction.getText(),position.getText()));
+                                            controleur.traiterMessage(new Message(btnAutreAction.getText(),position.getText(),nomAventurier));
                                         }
                                     }
         );
@@ -119,7 +119,7 @@ public class VueAventurier  {
         btnTerminerTour.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnTerminerTour.getText(),position.getText()));
+                                            controleur.traiterMessage(new Message(btnTerminerTour.getText(),position.getText(),nomAventurier));
                                         }
                                     }
         );

@@ -5,6 +5,8 @@
  */
 package ile.interdite;
 
+import Model.Aventuriers.Aventurier;
+
 /**
  *
  * @author ferreijo
@@ -14,9 +16,10 @@ public class Message {
     private String champSaisieTxt;
     private String joueur;
 
-    public Message(String btnCliquéTxt,String champSaisieTxt) {
+    public Message(String btnCliquéTxt,String champSaisieTxt,String joueur) {
         this.btnCliquéTxt = btnCliquéTxt;
         this.champSaisieTxt = champSaisieTxt;
+        this.joueur =joueur;
     }   
 
     public String getBtnCliquéTxt() {

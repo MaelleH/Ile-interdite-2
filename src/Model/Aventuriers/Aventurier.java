@@ -13,15 +13,17 @@ public class Aventurier {
 	private int actionsRestantes;
 	private int ACTIONS_MAX = 3;
 	private Coordonnees position;
-
-        
+       
     public Aventurier(){
         
     }
     public Aventurier(String nom) {
         this.nom = nom;
     }
-
+    public Aventurier(String nom, Coordonnees position) {
+        this.nom = nom;
+        this.position=position;
+    }
         
 
         

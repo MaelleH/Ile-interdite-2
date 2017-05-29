@@ -6,6 +6,7 @@ import Vue.VueAventurier;
 import Model.CarteInondation;
 import Model.Grille;
 import Model.Aventuriers.Aventurier;
+import Model.Aventuriers.Explorateur;
 import Model.Tuile;
 import Model.CarteTrésor;
 import java.util.*;
@@ -20,6 +21,7 @@ public class Controleur implements Observateur {
 	private Collection<CarteInondation> piocheCarteInondation;
 	private Collection<CarteInondation> défausseCarteInondation;
 	private Collection<CarteInondation> défausseCarteCoulées;
+        private Explorateur a = new Explorateur("Explorateur");
 
 	/**
 	 * 
@@ -28,8 +30,13 @@ public class Controleur implements Observateur {
 
 	 */
 	public void deplacement(Aventurier a, Coordonnees c) {
+            if(a.getActionsRestantes()>0){
 		a.setPosition(c);
-                
+                a.setActionsRestantes(a.getActionsRestantes()-1);
+            }
+            else{
+                System.out.println("Plus d'actions....");
+            }
 	}
 
 	/**
@@ -147,18 +154,23 @@ public class Controleur implements Observateur {
             y=m.getChampSaisieTxt().charAt(1)+"";
             
             Coordonnees c = new Coordonnees(x,y);
-            Joueur j = 
             
-            if(m.getBtnCliquéTxt().equals("Aller")){
-                System.out.println("Déplacement! (" + x +","+ y +")");
-                deplacement(m.getJoueur(), c);
-            }else if (m.getBtnCliquéTxt().equals("Assecher")){
-                System.out.println("Assècher! (" + x +","+ y +")");
-            }else if (m.getBtnCliquéTxt().equals("AutreAction")){
-                System.out.println("Autre Action! (" + x +","+ y +")");
-                
-            }else if (m.getBtnCliquéTxt().equals("Terminer Tour")){
-                System.out.println("Fin du Tour! (" + x +","+ y +")");
+            switch (m.getBtnCliquéTxt()) {
+                case "Aller":
+                    System.out.println("Déplacement! (" + x +","+ y +")");
+                    deplacement(a, c);
+                    break;
+                case "Assecher":
+                    System.out.println("Assècher! (" + x +","+ y +")");
+                    break;
+                case "AutreAction":
+                    System.out.println("Autre Action! (" + x +","+ y +")");
+                    break;
+                case "Terminer Tour":
+                    System.out.println("Fin du Tour! (" + x +","+ y +")");
+                    break;
+                default:
+                    break;
             }
             
         }
