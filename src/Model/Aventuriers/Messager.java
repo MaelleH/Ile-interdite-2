@@ -9,7 +9,7 @@ public class Messager extends Aventurier {
 	 */
 	public void donnerCarte(Aventurier aven1, Aventurier aven2) {
 		// TODO - implement Messager.donnerCarte
-		throw new UnsupportedOperationException();
+		
 	}
 
 }

@@ -1,5 +1,3 @@
-package Model;
-
 
 import Model.NomTuile;
 
@@ -13,7 +11,16 @@ public class Tuile {
 	private int etat = 0;
 	private String tresor;
 	private NomTuile nomT;
-
+        
+        public Tuile (NomTuile nom,String tresor){
+            this.nomT=nom;
+            this.tresor=tresor;
+        }
+        public Tuile (NomTuile nom){
+            this.nomT=nom;
+        }
+        
+        
 	public int getEtat() {
 		return this.etat;
 	}
