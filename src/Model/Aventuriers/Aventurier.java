@@ -4,6 +4,8 @@ import Model.CarteTrésor;
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
+import static Util.Utils.EtatTuile.ASSECHEE;
+import static Util.Utils.EtatTuile.INONDEE;
 import java.util.*;
 import java.util.HashMap;
 
@@ -43,7 +45,7 @@ public class Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
-                    if(g.getHSTuile().get(n).getEtat()!=2){
+                    if(g.getHSTuile().get(n).getEtat()!=ASSECHEE){
                         bool=true;
                     }     
                 }
@@ -68,7 +70,7 @@ public class Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
-                    if(g.getHSTuile().get(n).getEtat()==1){
+                    if(g.getHSTuile().get(n).getEtat()==INONDEE){
                         bool=true;
                     }     
                 }
