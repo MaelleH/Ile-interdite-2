@@ -1,5 +1,7 @@
 package Model;
 
+import Util.Utils;
+
 
 public class Tuile {
 
@@ -8,7 +10,7 @@ public class Tuile {
 	 * 1 = Innonde
 	 * 2 = Dead
 	 */
-	private int etat = 0;
+	private Utils.EtatTuile etat = Utils.EtatTuile.ASSECHEE;
 	private String tresor;
 	private NomTuile nomT;
         
@@ -21,11 +23,11 @@ public class Tuile {
         }
         
         
-	public int getEtat() {
+	public Utils.EtatTuile getEtat() {
 		return this.etat;
 	}
 
-	public void setEtat(int etat) {
+	public void setEtat(Utils.EtatTuile etat) {
 		this.etat = etat;
 	}
 
