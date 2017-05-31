@@ -1,8 +1,13 @@
 package Model.Aventuriers;
 
 public class Ingenieur extends Aventurier {
-        @Override
-        public String getNom() {
+    public Ingenieur(String ing) {
+        super.setNom(ing);
+    }
+    
+    @Override
+    public String getNom() {
             return "Ingenieur";
-        }
+    }
+    
 }

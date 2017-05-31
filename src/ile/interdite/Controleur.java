@@ -7,6 +7,11 @@ import Model.CarteInondation;
 import Model.Grille;
 import Model.Aventuriers.Aventurier;
 import Model.Aventuriers.Explorateur;
+import Model.Aventuriers.Ingenieur;
+import Model.Aventuriers.Messager;
+import Model.Aventuriers.Navigateur;
+import Model.Aventuriers.Pilote;
+import Model.Aventuriers.Plongeur;
 import Model.Tuile;
 import Model.CarteTrésor;
 import java.util.*;
@@ -16,12 +21,18 @@ public class Controleur implements Observateur {
 	Collection<CarteTrésor> piocheCarteTrésor;
 	private Grille grille;
 	private Collection<Aventurier> joueurs;
-	private VueAventurier vueAventurier;
+        private ArrayList<Aventurier> aventuriers;
+        private VueAventurier vueAventurier;
 	private Collection<CarteTrésor> defausseCarteTrésor;
 	private Collection<CarteInondation> piocheCarteInondation;
 	private Collection<CarteInondation> défausseCarteInondation;
 	private Collection<CarteInondation> défausseCarteCoulées;
-        private Explorateur a = new Explorateur("Explorateur");
+        private final Explorateur explo = new Explorateur("Explorateur");
+        private final Ingenieur inge = new Ingenieur("Ingenieur");
+        private final Messager mess = new Messager("Messager");
+        private final Navigateur navig = new Navigateur("Navigateur");
+        private final Pilote pilot = new Pilote("Pilote");
+        private final Plongeur plong = new Plongeur("Plongeur");
 
 	/**
 	 * 
@@ -158,7 +169,7 @@ public class Controleur implements Observateur {
             switch (m.getBtnCliquéTxt()) {
                 case "Aller":
                     System.out.println("Déplacement! (" + x +","+ y +")");
-                    deplacement(a, c);
+                    deplacement(explo, c);
                     break;
                 case "Assecher":
                     System.out.println("Assècher! (" + x +","+ y +")");
@@ -174,4 +185,19 @@ public class Controleur implements Observateur {
             }
             
         }
+        public void creationAventurier(int nbjoueur){
+            
+            aventuriers.add(explo);
+            aventuriers.add(inge);
+            aventuriers.add(mess);
+            aventuriers.add(navig);
+            aventuriers.add(pilot);
+            aventuriers.add(plong);
+            Collections.shuffle((List<?>) aventuriers);
+            for (int i=0 ; i<nbjoueur; i++){
+                joueurs.add(aventuriers.get(i));
+                //* Ecrire pour chaque joueur son rôle en utilisant joueur i : get(i).getNom();
+            }
+        }
+                
 }

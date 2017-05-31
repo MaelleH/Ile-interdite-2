@@ -5,5 +5,7 @@ public class Navigateur extends Aventurier {
         public String getNom() {
             return "Navigateur";
         }
-    
+    public Navigateur(String navig) {
+        super.setNom(navig);
+    }
 }
