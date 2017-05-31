@@ -8,6 +8,8 @@ package Model.Aventuriers;
 
 import Model.Coordonnees;
 import Model.Grille;
+import static Util.Utils.EtatTuile.ASSECHEE;
+import static Util.Utils.EtatTuile.INONDEE;
 
 public class Explorateur extends Aventurier {
 
@@ -34,7 +36,7 @@ public class Explorateur extends Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))){
-                    if(g.getHSTuile().get(n).getEtat()!=2){
+                    if(g.getHSTuile().get(n).getEtat()!=ASSECHEE){
                         bool=true;
                     }     
                 }
@@ -58,7 +60,7 @@ public class Explorateur extends Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))){
-                    if(g.getHSTuile().get(n).getEtat()!=2){
+                    if(g.getHSTuile().get(n).getEtat()!=INONDEE){
                         bool=true;
                     }     
                 }

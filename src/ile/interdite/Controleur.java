@@ -1,3 +1,4 @@
+
 package ile.interdite;
 
 
@@ -14,6 +15,7 @@ import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
 import Model.Tuile;
 import Model.CarteTrésor;
+import static Util.Utils.EtatTuile.ASSECHEE;
 import java.util.*;
 
 public class Controleur implements Observateur {
@@ -89,9 +91,23 @@ public class Controleur implements Observateur {
 	}
         
         public void assecher(Aventurier a, Coordonnees c) {
-		// TODO - implement Controleur.assécher             
-                throw new UnsupportedOperationException();
-                
+		// TODO - implement Controleur.assécher  
+            if(a.assechementPossible((a.getPosition()), c, grille)){
+                if(a.getActionsRestantes()>0){
+                    for(Map.Entry i: grille.getHSTuile().entrySet()){
+                        if((Coordonnees) i.getKey()==c){
+                            ((Tuile)i.getValue()).setEtat(ASSECHEE);
+                        }        
+                    }
+                    a.setActionsRestantes(a.getActionsRestantes()-1);
+                }
+                else{
+                    System.out.println("Plus d'actions....");
+                } 
+            }  
+            else{
+                System.out.println("Assechement non possible ici!");
+            }
 	}
 	/**
 	 * 
@@ -100,7 +116,7 @@ public class Controleur implements Observateur {
 	 */
 	public void donnerCarte(Aventurier aven1, Aventurier aven2) {
 		// TODO - implement Controleur.donnerCarte
-		throw new UnsupportedOperationException();
+		
 	}
 
 	/**
