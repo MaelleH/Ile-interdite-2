@@ -6,6 +6,11 @@ import java.util.Map;
 
 public class Plongeur extends Aventurier {
 
+    
+        @Override
+        public String getNom() {
+            return "Plongeur";
+        }
 	/**
 	 * @param g
 	 * @param o
@@ -31,28 +36,25 @@ public class Plongeur extends Aventurier {
                         if(deplacementPossible((Coordonnees)i.getKey(), n, g)){
                              if(deplacementPossible((Coordonnees)i.getKey(), o, g)){
                                  bool=true;
-                                 
-                             }
+                        }
                         else{
                           for(Map.Entry j: g.getHSTuile().entrySet()){
                             if(deplacementPossible(((Coordonnees)j.getKey()),((Coordonnees)i.getKey()) , g)){
                                 if(deplacementPossible((Coordonnees)j.getKey(), o, g)){
                                     bool=true;
-                                 
-                            }       
+                                }       
+                            }
+                          }
                         }
-                         }
-                    }
                     
+                            }
+                    }
+        
+        
+
+
                 }
-                
-                
-	}
-        
-        
-
-
-        }return bool;
+            return bool;
         }
         public Plongeur(String plong) {
         super.setNom(plong);

@@ -5,6 +5,9 @@ public class Ingenieur extends Aventurier {
         super.setNom(ing);
     }
     
-    
+    @Override
+    public String getNom() {
+            return "Ingenieur";
+    }
     
 }

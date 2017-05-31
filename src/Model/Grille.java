@@ -1,8 +1,5 @@
 package Model;
 
-
-import Model.Coordonnees;
-import Model.NomTuile;
 import java.util.*;
 
 public class Grille {
@@ -50,6 +47,7 @@ public class Grille {
     Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr");
     
         
+    tuiles.add(tuilpdc);
     tuiles.add(tuilepda);
     tuiles.add(tuilepdb);
     tuiles.add(tuilecdo);
