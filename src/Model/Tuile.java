@@ -10,7 +10,7 @@ public class Tuile {
 	 * 1 = Innonde
 	 * 2 = Dead
 	 */
-	private Utils.EtatTuile etat = Utils.EtatTuile.ASSECHEE;
+	private Utils.EtatTuile etat = Utils.EtatTuile.INONDEE;
 	private String tresor;
 	private NomTuile nomT;
         
