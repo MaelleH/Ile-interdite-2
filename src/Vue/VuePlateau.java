@@ -25,7 +25,7 @@ public class VuePlateau {
 
     public VuePlateau() {
         this.window = new JFrame();
-        window.setSize(600, 600);
+        window.setSize(606, 600);
         this.window.setVisible(true);
         
         window.setTitle("Vue de l'île");
@@ -37,7 +37,7 @@ public class VuePlateau {
         
         for(int i = 1; i<=6;i++){
             for(int j = 1; j<=6;j++){
-                uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"calice");
+                uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre");
                 addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                 this.mainPanel.add(uneCase);
             }
