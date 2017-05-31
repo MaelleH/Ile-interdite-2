@@ -46,6 +46,7 @@ public class Controleur implements Observateur {
             if(a.getActionsRestantes()>0){
 		a.setPosition(c);
                 a.setActionsRestantes(a.getActionsRestantes()-1);
+                System.out.println(a.getPosition().getX()+a.getPosition().getY());
             }
             else{
                 System.out.println("Plus d'actions....");
@@ -91,7 +92,8 @@ public class Controleur implements Observateur {
 	}
         
         public void assecher(Aventurier a, Coordonnees c) {
-		// TODO - implement Controleur.assécher  
+		// TODO - implement Controleur.assécher
+            Scanner sc=new Scanner(System.in);
             if(a.assechementPossible((a.getPosition()), c, grille)){
                 if(a.getActionsRestantes()>0){
                     for(Map.Entry i: grille.getHSTuile().entrySet()){
@@ -107,6 +109,26 @@ public class Controleur implements Observateur {
             }  
             else{
                 System.out.println("Assechement non possible ici!");
+            }
+            
+            if(a.getNom().equals("Navigateur")){
+                System.out.println("Voulez vous assécher une deuxième case? oui/non");
+                if(sc.nextLine()=="oui"){
+                    System.out.println("Entrer les nouvelles coordonnées");
+                    if(a.assechementPossible((a.getPosition()), c, grille)){
+                        for(Map.Entry i: grille.getHSTuile().entrySet()){
+                            if((Coordonnees) i.getKey()==c){
+                                ((Tuile)i.getValue()).setEtat(ASSECHEE);
+                            }        
+                        }
+                        a.setActionsRestantes(a.getActionsRestantes()-1);
+                    }  
+                else{
+                    System.out.println("Assechement non possible ici!");
+                }
+                }
+                
+            
             }
 	}
 	/**
@@ -182,14 +204,17 @@ public class Controleur implements Observateur {
             
             Coordonnees c = new Coordonnees(x,y);
             
+            
+            
+            
             switch (m.getBtnCliquéTxt()) {
                 case ALLER:
                     System.out.println("Déplacement! (" + x +","+ y +")");
-                    //deplacement(explo, c);
+                    deplacement(inge, c);
                     break;
                 case ASSECHER:
                     System.out.println("Assècher! (" + x +","+ y +")");
-                    //assecher(inge, c);
+                    assecher(inge, c);
                     break;
                 case AUTREACTION:
                     System.out.println("Autre Action! (" + x +","+ y +")");
