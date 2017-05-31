@@ -32,7 +32,7 @@ public class PanelCase extends JPanel{
     private JLabel labelEtatCase;
     private JPanel panelEtatCase;
     private JPanel panelTresor;
-    private JPanel panelJoueurs;
+    private PanelJoueurs panelJoueurs;
     private JPanel panelBas;
 
     public PanelCase() {
@@ -67,62 +67,57 @@ public class PanelCase extends JPanel{
         
         panelEtatCase.add(labelEtatCase);
         this.add(panelEtatCase);
-        
-        
-        
-        
-        
+                
         //Affichage Trésor+Joueurs
         panelBas = new JPanel();
         panelBas.setLayout(new GridLayout(1,2));
         
         panelTresor = new JPanel();
-        panelJoueurs = new JPanel();
+        panelJoueurs = new PanelJoueurs();
         panelBas.add(panelTresor);
         panelBas.add(panelJoueurs);
         this.add(panelBas);
-        /*
-        switch (tresor){
-            case "cristal" : this.affichageTresor.setBackground(Color.red);
-            case "calice" : this.affichageTresor.setBackground(Color.magenta);
-            case "zéphyr" : this.affichageTresor.setBackground(Color.yellow);
-            case "pierre" : this.affichageTresor.setBackground(Color.CYAN);
-        }
-        this.etatCase.setLocation(0,60);
-        this.etatCase.setSize(40,40);
-        */
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        //Affichage du Nom de la Case
-        labelNomCase.setText(nomCase);
+        if(typeCase == "ile"){
+            
         
-        //Affichage de l'état de la case
-        if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
-            labelEtatCase.setText(etatCase.toString());
-            panelNomCase.setBackground(new Color(140,77,0));
-            panelEtatCase.setBackground(new Color(140,77,0));
-            panelJoueurs.setBackground(new Color(140,77,0));
-        }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
-            labelEtatCase.setText(etatCase.toString());
-            panelNomCase.setBackground(Color.blue);
-            panelEtatCase.setBackground(Color.blue);
-        }else if(etatCase.toString().equals(EtatTuile.COULEE.toString())){
-            labelEtatCase.setText(etatCase.toString());
-            panelNomCase.setBackground(new Color(0, 0, 139));
-            panelEtatCase.setBackground(new Color(0, 0, 139));
-        }
-        
-        //Affichage du trésor présent sur la Case
-        if(tresor.equals("cristal")){
-            panelTresor.setBackground(new Color(255,81,21));
-        }else if(tresor.equals("calice")){
-            panelTresor.setBackground(new Color(60,130,140));
-        }else if(tresor.equals("zéphyr")){
-            panelTresor.setBackground(new Color(215,169,77));
-        }else if(tresor.equals("pierre")){
-            panelTresor.setBackground(new Color(89,79,108));
+            //Affichage du Nom de la Case
+            labelNomCase.setText(nomCase);
+
+            //Affichage de l'état de la case
+            if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
+                labelEtatCase.setText(etatCase.toString());
+                panelNomCase.setBackground(new Color(140,77,0));
+                panelEtatCase.setBackground(new Color(140,77,0));
+                panelJoueurs.setBackground(new Color(140,77,0));
+            }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
+                labelEtatCase.setText(etatCase.toString());
+                panelNomCase.setBackground(Color.blue);
+                panelEtatCase.setBackground(Color.blue);
+                panelJoueurs.setBackground(Color.blue);
+            }else if(etatCase.toString().equals(EtatTuile.COULEE.toString())){
+                labelEtatCase.setText(etatCase.toString());
+                panelNomCase.setBackground(new Color(0, 0, 139));
+                panelEtatCase.setBackground(new Color(0, 0, 139));
+                panelJoueurs.setBackground(new Color(0, 0, 139));
+            }
+
+            //Affichage du trésor présent sur la Case
+            if(tresor.equals("cristal")){
+                panelTresor.setBackground(new Color(255,81,21));
+            }else if(tresor.equals("calice")){
+                panelTresor.setBackground(new Color(60,130,140));
+            }else if(tresor.equals("zéphyr")){
+                panelTresor.setBackground(new Color(215,169,77));
+            }else if(tresor.equals("pierre")){
+                panelTresor.setBackground(new Color(89,79,108));
+            }
+            
+            //Affichage des joueurs
+            panelJoueurs.afficherDisques(g);
         }
     }
     
