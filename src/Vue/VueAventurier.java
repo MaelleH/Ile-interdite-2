@@ -19,8 +19,14 @@ import Util.Utils.Pion;
 import ile.interdite.Controleur;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
+import static ile.interdite.TypeMessage.ALLER;
+import static ile.interdite.TypeMessage.ASSECHER;
+import static ile.interdite.TypeMessage.AUTREACTION;
+import static ile.interdite.TypeMessage.TERMINERTOUR;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
  
 public class VueAventurier  {
@@ -92,18 +98,34 @@ public class VueAventurier  {
         this.window.setVisible(true);
         mainPanel.repaint();
         
-        btnAller.addActionListener(new ActionListener() {
-                                        @Override
-                                        public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnAller.getText(),position.getText(),nomAventurier));
-                                        }
-                                    }
-        );
+        btnAller.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                controleur.traiterMessage(new Message(ALLER,position.getText(),nomAventurier));
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        
         
         btnAssecher.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnAssecher.getText(),position.getText(),nomAventurier));
+                                           controleur.traiterMessage(new Message(ASSECHER,position.getText(),nomAventurier)); 
                                         }
                                     }
         );
@@ -111,7 +133,7 @@ public class VueAventurier  {
         btnAutreAction.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnAutreAction.getText(),position.getText(),nomAventurier));
+                                            controleur.traiterMessage(new Message(AUTREACTION,position.getText(),nomAventurier));
                                         }
                                     }
         );
@@ -119,7 +141,7 @@ public class VueAventurier  {
         btnTerminerTour.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(btnTerminerTour.getText(),position.getText(),nomAventurier));
+                                            controleur.traiterMessage(new Message(TERMINERTOUR,position.getText(),nomAventurier));
                                         }
                                     }
         );

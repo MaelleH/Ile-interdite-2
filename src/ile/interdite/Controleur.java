@@ -183,17 +183,18 @@ public class Controleur implements Observateur {
             Coordonnees c = new Coordonnees(x,y);
             
             switch (m.getBtnCliquéTxt()) {
-                case "Aller":
+                case ALLER:
                     System.out.println("Déplacement! (" + x +","+ y +")");
-                    deplacement(explo, c);
+                    //deplacement(explo, c);
                     break;
-                case "Assecher":
+                case ASSECHER:
                     System.out.println("Assècher! (" + x +","+ y +")");
+                    //assecher(inge, c);
                     break;
-                case "AutreAction":
+                case AUTREACTION:
                     System.out.println("Autre Action! (" + x +","+ y +")");
                     break;
-                case "Terminer Tour":
+                case TERMINERTOUR:
                     System.out.println("Fin du Tour! (" + x +","+ y +")");
                     break;
                 default:
