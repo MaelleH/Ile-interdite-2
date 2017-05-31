@@ -194,9 +194,9 @@ public class Controleur implements Observateur {
             aventuriers.add(pilot);
             aventuriers.add(plong);
             Collections.shuffle((List<?>) aventuriers);
-            for (int i=0 ; i<nbjoueur;i++){
+            for (int i=0 ; i<nbjoueur; i++){
                 joueurs.add(aventuriers.get(i));
-                //* Ecrire pour chaque joueur son rôle en utilisant get(i).getNom();
+                //* Ecrire pour chaque joueur son rôle en utilisant joueur i : get(i).getNom();
             }
         }
                 
