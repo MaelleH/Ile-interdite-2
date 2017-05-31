@@ -6,6 +6,8 @@
 package Vue;
 
 
+import Util.Utils;
+import Util.Utils.EtatTuile;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import javax.swing.JFrame;
@@ -23,20 +25,21 @@ public class VuePlateau {
 
     public VuePlateau() {
         this.window = new JFrame();
-        window.setSize(600, 600);
+        window.setSize(606, 600);
         this.window.setVisible(true);
         
         window.setTitle("Vue de l'île");
         mainPanel = new JPanel(new GridLayout(6,6));
+        window.add(mainPanel);
         
         PanelCase uneCase;
         this.window.add(mainPanel);
         
         for(int i = 1; i<=6;i++){
             for(int j = 1; j<=6;j++){
-                uneCase = new PanelCase();
+                uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre");
                 addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
-                this.window.add(uneCase);
+                this.mainPanel.add(uneCase);
             }
         }
         this.window.setVisible(true);

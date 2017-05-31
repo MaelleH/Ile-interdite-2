@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -31,6 +32,8 @@ public class PanelCase extends JPanel{
     private JLabel labelEtatCase;
     private JPanel panelEtatCase;
     private JPanel panelTresor;
+    private JPanel panelJoueurs;
+    private JPanel panelBas;
 
     public PanelCase() {
         typeCase = "vide";
@@ -46,6 +49,8 @@ public class PanelCase extends JPanel{
         
         //Parametrage du PanelCase
         setLayout(new GridLayout(3,1));
+        setBorder(BorderFactory.createLineBorder(Color.black));
+        
         
         //Affichage du Nom de la Case
         panelNomCase = new JPanel();
@@ -54,6 +59,8 @@ public class PanelCase extends JPanel{
         panelNomCase.add(labelNomCase);
         this.add(panelNomCase);
         
+        panelNomCase.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
+
         //Affichage de l'état de la case
         panelEtatCase = new JPanel();
         labelEtatCase = new JLabel(etatCase.toString(),SwingConstants.CENTER);
@@ -63,9 +70,17 @@ public class PanelCase extends JPanel{
         
         
         
-        //Affichage du trésor présent sur la Case
-        this.panelTresor = new JPanel();
-        this.add(panelTresor);
+        
+        
+        //Affichage Trésor+Joueurs
+        panelBas = new JPanel();
+        panelBas.setLayout(new GridLayout(1,2));
+        
+        panelTresor = new JPanel();
+        panelJoueurs = new JPanel();
+        panelBas.add(panelTresor);
+        panelBas.add(panelJoueurs);
+        this.add(panelBas);
         /*
         switch (tresor){
             case "cristal" : this.affichageTresor.setBackground(Color.red);
@@ -86,8 +101,9 @@ public class PanelCase extends JPanel{
         //Affichage de l'état de la case
         if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
             labelEtatCase.setText(etatCase.toString());
-            panelNomCase.setBackground(Color.gray);
-            panelEtatCase.setBackground(Color.gray);
+            panelNomCase.setBackground(new Color(140,77,0));
+            panelEtatCase.setBackground(new Color(140,77,0));
+            panelJoueurs.setBackground(new Color(140,77,0));
         }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
             labelEtatCase.setText(etatCase.toString());
             panelNomCase.setBackground(Color.blue);
@@ -100,13 +116,13 @@ public class PanelCase extends JPanel{
         
         //Affichage du trésor présent sur la Case
         if(tresor.equals("cristal")){
-            
+            panelTresor.setBackground(new Color(255,81,21));
         }else if(tresor.equals("calice")){
-            
+            panelTresor.setBackground(new Color(60,130,140));
         }else if(tresor.equals("zéphyr")){
-            
+            panelTresor.setBackground(new Color(215,169,77));
         }else if(tresor.equals("pierre")){
-            
+            panelTresor.setBackground(new Color(89,79,108));
         }
     }
     
