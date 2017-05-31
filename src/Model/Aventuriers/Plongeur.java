@@ -54,6 +54,9 @@ public class Plongeur extends Aventurier {
 
         }return bool;
         }
+        public Plongeur(String plong) {
+        super.setNom(plong);
+    }
         
         
 }

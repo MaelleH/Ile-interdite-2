@@ -11,5 +11,8 @@ public class Messager extends Aventurier {
 		// TODO - implement Messager.donnerCarte
 		return true;
 	}
+        public Messager(String mess) {
+        super.setNom(mess);
+    }
 
 }
