@@ -27,7 +27,7 @@ public class VuePlateau {
         this.window.setVisible(true);
         
         window.setTitle("Vue de l'île");
-        mainPanel = new JPanel(new GridLayout());
+        mainPanel = new JPanel(new GridLayout(6,6));
         
         PanelCase uneCase;
         this.window.add(mainPanel);

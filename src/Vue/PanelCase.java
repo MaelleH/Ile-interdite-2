@@ -8,6 +8,9 @@ package Vue;
 import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -17,35 +20,53 @@ import javax.swing.SwingConstants;
  * @author ferreijo
  */
 public class PanelCase extends JPanel{
-    private JLabel nomCase;
-    private JLabel etatCase;
-    private JPanel affichageTresor;
+    private String typeCase;
+    
+    private String nomCase;
+    private EtatTuile etatCase;
+    private String tresor;
+    
+    private JLabel labelNomCase;
+    private JPanel panelNomCase;
+    private JLabel labelEtatCase;
+    private JPanel panelEtatCase;
+    private JPanel panelTresor;
 
     public PanelCase() {
+        typeCase = "vide";
         this.setBackground(Color.black);
     }
     
-    
-    
     public PanelCase(String nomCase,EtatTuile etatCase,String tresor) {
-        this.setSize(100,100);
+        typeCase = "ile";
+        
+        setNomCase(nomCase);
+        setEtatCase(etatCase);
+        setTresor(tresor);
+        
+        //Parametrage du PanelCase
+        setLayout(new GridLayout(3,1));
         
         //Affichage du Nom de la Case
-        this.nomCase = new JLabel(nomCase,SwingConstants.CENTER);
-        this.nomCase.setLocation(0,0);
-        this.nomCase.setSize(100,20);
-
-        //Affichage de l'état de la Case
-        switch (etatCase){
-            case ASSECHEE : this.etatCase = new JLabel("Sêche",SwingConstants.CENTER);this.setBackground(Color.gray);
-            case INONDEE : this.etatCase = new JLabel("Inondée",SwingConstants.CENTER);this.setBackground(Color.blue);
-            case COULEE : this.etatCase = new JLabel("Coulée",SwingConstants.CENTER);this.setBackground(new Color(0, 0, 139));
-        }
-        this.etatCase.setLocation(20,20);
-        this.etatCase.setSize(60,20);
-
+        panelNomCase = new JPanel();
+        labelNomCase = new JLabel(nomCase,SwingConstants.CENTER);
+        
+        panelNomCase.add(labelNomCase);
+        this.add(panelNomCase);
+        
+        //Affichage de l'état de la case
+        panelEtatCase = new JPanel();
+        labelEtatCase = new JLabel(etatCase.toString(),SwingConstants.CENTER);
+        
+        panelEtatCase.add(labelEtatCase);
+        this.add(panelEtatCase);
+        
+        
+        
         //Affichage du trésor présent sur la Case
-        this.affichageTresor = new JPanel();
+        this.panelTresor = new JPanel();
+        this.add(panelTresor);
+        /*
         switch (tresor){
             case "cristal" : this.affichageTresor.setBackground(Color.red);
             case "calice" : this.affichageTresor.setBackground(Color.magenta);
@@ -54,30 +75,76 @@ public class PanelCase extends JPanel{
         }
         this.etatCase.setLocation(0,60);
         this.etatCase.setSize(40,40);
+        */
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        //Affichage du Nom de la Case
+        labelNomCase.setText(nomCase);
+        
+        //Affichage de l'état de la case
+        if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
+            labelEtatCase.setText(etatCase.toString());
+            panelNomCase.setBackground(Color.gray);
+            panelEtatCase.setBackground(Color.gray);
+        }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
+            labelEtatCase.setText(etatCase.toString());
+            panelNomCase.setBackground(Color.blue);
+            panelEtatCase.setBackground(Color.blue);
+        }else if(etatCase.toString().equals(EtatTuile.COULEE.toString())){
+            labelEtatCase.setText(etatCase.toString());
+            panelNomCase.setBackground(new Color(0, 0, 139));
+            panelEtatCase.setBackground(new Color(0, 0, 139));
+        }
+        
+        //Affichage du trésor présent sur la Case
+        if(tresor.equals("cristal")){
+            
+        }else if(tresor.equals("calice")){
+            
+        }else if(tresor.equals("zéphyr")){
+            
+        }else if(tresor.equals("pierre")){
+            
+        }
     }
     
+    
+    
     public void updateCase(String nomCase,EtatTuile etatCase,String tresor){
-        if (nomCase != null){
-            //MAJ de l'Affichage du Nom de la Case
-            this.nomCase.setText(nomCase);
-
-            //MAJ de l'Affichage de l'état de la Case
-            switch (etatCase){
-                case ASSECHEE : this.etatCase.setText("Sêche");this.setBackground(Color.gray);
-                case INONDEE : this.etatCase.setText("Inondée");this.setBackground(Color.blue);
-                case COULEE : this.etatCase.setText("Coulée");this.setBackground(new Color(0, 0, 139));
-            }
-          
-
-            //MAJ de l'Affichage du trésor présent sur la Case
-            switch (tresor){
-                case "cristal" : this.affichageTresor.setBackground(Color.red);
-                case "calice" : this.affichageTresor.setBackground(Color.magenta);
-                case "zéphyr" : this.affichageTresor.setBackground(Color.yellow);
-                case "pierre" : this.affichageTresor.setBackground(Color.CYAN);
-            }
-           
+        if (typeCase == "ile"){
+            setNomCase(nomCase);
+            setEtatCase(etatCase);
+            setTresor(tresor);
+            this.repaint();
         }
+    }
+
+    
+    /* Getters/Setters */
+    public String getNomCase() {
+        return nomCase;
+    }
+
+    public EtatTuile getEtatCase() {
+        return etatCase;
+    }
+
+    public String getTresor() {
+        return tresor;
+    }
+
+    public void setNomCase(String nomCase) {
+        this.nomCase = nomCase;
+    }
+
+    public void setEtatCase(EtatTuile etatCase) {
+        this.etatCase = etatCase;
+    }
+
+    public void setTresor(String tresor) {
+        this.tresor = tresor;
     }
     
     
