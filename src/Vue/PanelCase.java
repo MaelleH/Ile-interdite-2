@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -31,6 +32,8 @@ public class PanelCase extends JPanel{
     private JLabel labelEtatCase;
     private JPanel panelEtatCase;
     private JPanel panelTresor;
+    private JPanel panelJoueurs;
+    private JPanel panelBas;
 
     public PanelCase() {
         typeCase = "vide";
@@ -46,6 +49,8 @@ public class PanelCase extends JPanel{
         
         //Parametrage du PanelCase
         setLayout(new GridLayout(3,1));
+        setBorder(BorderFactory.createLineBorder(Color.black));
+        
         
         //Affichage du Nom de la Case
         panelNomCase = new JPanel();
@@ -63,9 +68,17 @@ public class PanelCase extends JPanel{
         
         
         
-        //Affichage du trésor présent sur la Case
-        this.panelTresor = new JPanel();
-        this.add(panelTresor);
+        
+        
+        //Affichage Trésor+Joueurs
+        panelBas = new JPanel();
+        panelBas.setLayout(new GridLayout(1,2));
+        
+        panelTresor = new JPanel();
+        panelJoueurs = new JPanel();
+        panelBas.add(panelTresor);
+        panelBas.add(panelJoueurs);
+        this.add(panelBas);
         /*
         switch (tresor){
             case "cristal" : this.affichageTresor.setBackground(Color.red);
@@ -100,13 +113,13 @@ public class PanelCase extends JPanel{
         
         //Affichage du trésor présent sur la Case
         if(tresor.equals("cristal")){
-            
+            panelTresor.setBackground(Color.red);
         }else if(tresor.equals("calice")){
-            
+            panelTresor.setBackground(Color.magenta);
         }else if(tresor.equals("zéphyr")){
-            
+            panelTresor.setBackground(Color.yellow);
         }else if(tresor.equals("pierre")){
-            
+            panelTresor.setBackground(Color.CYAN);
         }
     }
     
