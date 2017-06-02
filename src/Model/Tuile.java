@@ -5,21 +5,18 @@ import Util.Utils;
 
 public class Tuile {
 
-	/**
-	 * 0 = Sec
-	 * 1 = Innonde
-	 * 2 = Dead
-	 */
-	private Utils.EtatTuile etat = Utils.EtatTuile.INONDEE;
+	private Utils.EtatTuile etat;
 	private String tresor;
 	private NomTuile nomT;
         
-        public Tuile (NomTuile nom,String tresor){
+        public Tuile (NomTuile nom,String tresor, Utils.EtatTuile etat){
             this.nomT=nom;
             this.tresor=tresor;
+            this.etat=etat;
         }
-        public Tuile (NomTuile nom){
+        public Tuile (NomTuile nom, Utils.EtatTuile etat){
             this.nomT=nom;
+            this.etat=etat;
         }
         
         

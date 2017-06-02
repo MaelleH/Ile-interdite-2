@@ -15,7 +15,7 @@ public class Aventurier {
 	private Collection<CarteTrésor> mainCarteTrésor;
 	private int actionsRestantes;
 	private int ACTIONS_MAX = 3;
-	private Coordonnees position= new Coordonnees("0","0");
+	private Coordonnees position= new Coordonnees("3","3");
        
     public Aventurier(){
         this.actionsRestantes=ACTIONS_MAX;
@@ -48,9 +48,12 @@ public class Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
-                    if(g.getHSTuile().get(n).getEtat()!=COULEE){
-                        bool=true;
-                    }     
+                    //if(g.getHSTuile().get(n)!= null){
+                       if(g.getHSTuile().get(n).getEtat()!=COULEE){
+                            bool=true;
+                        } 
+                    //}
+                             
                 }
                 return bool;
                 
