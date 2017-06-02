@@ -82,27 +82,25 @@ public class PanelCase extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         if(typeCase == "ile"){
-            
-        
             //Affichage du Nom de la Case
             labelNomCase.setText(nomCase);
 
             //Affichage de l'état de la case
             if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(new Color(140,77,0));
-                panelEtatCase.setBackground(new Color(140,77,0));
-                panelJoueurs.setBackground(new Color(140,77,0));
+                panelNomCase.setBackground(new Color(180,50,50));
+                panelEtatCase.setBackground(new Color(180,50,50));
+                panelJoueurs.setBackground(new Color(180,50,50));
             }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(Color.blue);
-                panelEtatCase.setBackground(Color.blue);
-                panelJoueurs.setBackground(Color.blue);
+                panelNomCase.setBackground(new Color(0, 100, 250));
+                panelEtatCase.setBackground(new Color(0, 100, 250));
+                panelJoueurs.setBackground(new Color(0, 100, 250));
             }else if(etatCase.toString().equals(EtatTuile.COULEE.toString())){
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(new Color(0, 0, 139));
-                panelEtatCase.setBackground(new Color(0, 0, 139));
-                panelJoueurs.setBackground(new Color(0, 0, 139));
+                panelNomCase.setBackground(new Color(0, 0, 50));
+                panelEtatCase.setBackground(new Color(0, 0, 50));
+                panelJoueurs.setBackground(new Color(0, 0, 50));
             }
 
             //Affichage du trésor présent sur la Case
@@ -114,6 +112,8 @@ public class PanelCase extends JPanel{
                 panelTresor.setBackground(new Color(215,169,77));
             }else if(tresor.equals("pierre")){
                 panelTresor.setBackground(new Color(89,79,108));
+            }else{
+                panelTresor.setBackground(panelEtatCase.getBackground());
             }
             
             //Affichage des joueurs
