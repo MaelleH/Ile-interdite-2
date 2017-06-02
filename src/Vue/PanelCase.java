@@ -117,7 +117,7 @@ public class PanelCase extends JPanel{
             }
             
             //Affichage des joueurs
-            panelJoueurs.afficherDisques(g);
+            panelJoueurs.afficherJoueurs();
         }
     }
     
