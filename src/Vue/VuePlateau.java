@@ -9,6 +9,7 @@ package Vue;
 import Model.Coordonnees;
 import Util.Utils;
 import Util.Utils.EtatTuile;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ public class VuePlateau {
         window.add(mainPanel);
         initPlateau();
         
+      
         
         
         this.window.setVisible(true);
@@ -57,6 +59,12 @@ public class VuePlateau {
         }
     }
     
+    
+    
+    public void updateCase(String coord,String nomCase,EtatTuile etatCase,String tresor){
+        listeCases.get(coord).updateCase(nomCase, etatCase, tresor);
+    }
+    
     public void addListeCases(String key,PanelCase uneCase){
         this.listeCases.put(key, uneCase);
     }
@@ -64,5 +72,6 @@ public class VuePlateau {
     public static void main(String [] args) {
         // Instanciation de la fenêtre 
         VuePlateau oui = new VuePlateau();
+        oui.updateCase("24", "Je suis à jour!", EtatTuile.COULEE, "autre");
     }
 }
