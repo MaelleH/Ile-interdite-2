@@ -15,7 +15,11 @@ import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
 import Model.Tuile;
 import Model.CarteTrésor;
+import Util.Utils;
+import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
+import Util.Utils.Pion;
+import Vue.VuePlateau;
 import java.util.*;
 
 public class Controleur implements Observateur {
@@ -241,5 +245,32 @@ public class Controleur implements Observateur {
                 //* Ecrire pour chaque joueur son rôle en utilisant joueur i : get(i).getNom();
             }
         }
-                
+              
+    public void updateVuePlateau(){
+        for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
+            if(e.getValue() == null){
+                String coord = e.getKey().getX() + e.getKey().getY();
+                String nomCase = e.getValue().getNomT().toString();
+                EtatTuile etatTuile = e.getValue().getEtat();
+                String tresor = e.getValue().getTresor();
+                ArrayList<Pion> pionAAfficher = new ArrayList<Pion>();
+                for(Aventurier a : aventuriers){
+                    if(a.getPosition().equals(e.getKey())){
+                        
+                    }
+                }
+            }
+        }
+    }
+        
+    public static void main(String [] args) {
+        // Instanciation de la fenêtre 
+        Controleur controleur = new Controleur();
+        
+        VueAventurier vueAventurier = new VueAventurier ("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur(),controleur);
+        
+        ArrayList<Utils.Pion> pionAAfficher =  new ArrayList<>();
+        VuePlateau oui = new VuePlateau(pionAAfficher);
+        
+    }
 }

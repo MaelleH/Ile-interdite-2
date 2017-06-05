@@ -70,20 +70,5 @@ public class VuePlateau {
         this.listeCases.put(key, uneCase);
     }
     
-    public static void main(String [] args) {
-        // Instanciation de la fenêtre 
-        
-        
-        ArrayList<Utils.Pion> pionAAfficher =  new ArrayList<>();
-        pionAAfficher.add(Utils.Pion.VERT);
-        pionAAfficher.add(Utils.Pion.BLEU);
-        pionAAfficher.add(Utils.Pion.ROUGE);
-        
-        VuePlateau oui = new VuePlateau(pionAAfficher);
-        
-        ArrayList<Utils.Pion> pionAAfficher2 =  new ArrayList<>();
-        pionAAfficher2.add(Utils.Pion.VERT);
-        
-        oui.updateCase("24", "Je suis à jour!", EtatTuile.COULEE, "autre",pionAAfficher2);
-    }
+    
 }

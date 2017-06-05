@@ -1,6 +1,6 @@
 package Model;
 
-public class Coordonnees {
+public class Coordonnees implements Comparable<Coordonnees>{
 	private String x;
 	private String y;
 
@@ -36,7 +36,28 @@ public class Coordonnees {
     public void setY(String y) {
         this.y = y;
     }
-        
+
+    @Override
+    public int compareTo(Coordonnees o) {
+        if(this.getX().compareTo(o.getX())<0){
+            return -1;
+        }else if(this.getX().compareTo(o.getX())==0){
+            if (this.getY().compareTo(o.getY())<0) {
+               return -1; 
+            }else if(this.getY().compareTo(o.getY())==0){
+                return 0;
+            }else{
+                return 1;
+            }
+        }else{
+            return 1;
+        }
         
 
+    }
+        
+        
+    
+    
+    
 }

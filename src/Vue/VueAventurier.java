@@ -170,11 +170,7 @@ public class VueAventurier  {
  
 
     
-     public static void main(String [] args) {
-        // Instanciation de la fenêtre 
-        Controleur controleur = new Controleur();
-        VueAventurier vueAventurier = new VueAventurier ("Manon", "Explorateur",Pion.ROUGE.getCouleur(),controleur);
-    }
+     
 }
 
  
