@@ -11,6 +11,7 @@ import Util.Utils;
 import Util.Utils.EtatTuile;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,14 +26,14 @@ public class VuePlateau {
     
     private HashMap<String,PanelCase> listeCases = new HashMap<>();
 
-    public VuePlateau() {
+    public VuePlateau(ArrayList<Utils.Pion> pionAAfficher) {
         this.window = new JFrame();
         window.setSize(606, 600);
         
         window.setTitle("Vue de l'île");
         mainPanel = new JPanel(new GridLayout(6,6));
         window.add(mainPanel);
-        initPlateau();
+        initPlateau(pionAAfficher);
         
       
         
@@ -40,7 +41,7 @@ public class VuePlateau {
         this.window.setVisible(true);
     }
     
-    public void initPlateau(){
+    public void initPlateau(ArrayList<Utils.Pion> pionAAfficher){
         PanelCase uneCase;
         this.window.add(mainPanel);
         
@@ -51,7 +52,7 @@ public class VuePlateau {
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     this.mainPanel.add(uneCase);
                 }else{
-                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre");
+                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre",pionAAfficher);
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     this.mainPanel.add(uneCase);
                 }
@@ -61,8 +62,8 @@ public class VuePlateau {
     
     
     
-    public void updateCase(String coord,String nomCase,EtatTuile etatCase,String tresor){
-        listeCases.get(coord).updateCase(nomCase, etatCase, tresor);
+    public void updateCase(String coord,String nomCase,EtatTuile etatCase,String tresor,ArrayList<Utils.Pion> pionAAfficher){
+        listeCases.get(coord).updateCase(nomCase, etatCase, tresor,pionAAfficher);
     }
     
     public void addListeCases(String key,PanelCase uneCase){
@@ -71,7 +72,18 @@ public class VuePlateau {
     
     public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        VuePlateau oui = new VuePlateau();
-        oui.updateCase("24", "Je suis à jour!", EtatTuile.COULEE, "autre");
+        
+        
+        ArrayList<Utils.Pion> pionAAfficher =  new ArrayList<>();
+        pionAAfficher.add(Utils.Pion.VERT);
+        pionAAfficher.add(Utils.Pion.BLEU);
+        pionAAfficher.add(Utils.Pion.ROUGE);
+        
+        VuePlateau oui = new VuePlateau(pionAAfficher);
+        
+        ArrayList<Utils.Pion> pionAAfficher2 =  new ArrayList<>();
+        pionAAfficher2.add(Utils.Pion.VERT);
+        
+        oui.updateCase("24", "Je suis à jour!", EtatTuile.COULEE, "autre",pionAAfficher2);
     }
 }

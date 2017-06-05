@@ -5,12 +5,14 @@
  */
 package Vue;
 
+import Util.Utils;
 import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,14 +36,18 @@ public class PanelCase extends JPanel{
     private JPanel panelTresor;
     private PanelJoueurs panelJoueurs;
     private JPanel panelBas;
+    
+    ArrayList<Utils.Pion> pionAAfficher;
 
     public PanelCase() {
         typeCase = "vide";
         this.setBackground(Color.black);
     }
     
-    public PanelCase(String nomCase,EtatTuile etatCase,String tresor) {
+    public PanelCase(String nomCase,EtatTuile etatCase,String tresor,ArrayList<Utils.Pion> pionAAfficher) {
         typeCase = "ile";
+        
+        this.pionAAfficher = pionAAfficher;
         
         setNomCase(nomCase);
         setEtatCase(etatCase);
@@ -117,17 +123,18 @@ public class PanelCase extends JPanel{
             }
             
             //Affichage des joueurs
-            panelJoueurs.afficherJoueurs();
+            panelJoueurs.afficherJoueurs(pionAAfficher);
         }
     }
     
     
     
-    public void updateCase(String nomCase,EtatTuile etatCase,String tresor){
+    public void updateCase(String nomCase,EtatTuile etatCase,String tresor,ArrayList<Utils.Pion> pionAAfficher){
         if (typeCase == "ile"){
             setNomCase(nomCase);
             setEtatCase(etatCase);
             setTresor(tresor);
+            this.pionAAfficher = pionAAfficher;
             this.repaint();
         }
     }

@@ -5,11 +5,13 @@
  */
 package Vue;
 
+import Util.Utils.Pion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,15 +25,22 @@ public class PanelJoueurs extends JPanel{
     private JPanel panelHD;
     private JPanel panelBG;
     private JPanel panelBD;
+    
+    private ArrayList<JPanel> panels;
 
     public PanelJoueurs() { 
         this.setLayout(new GridLayout(5,5));
         
+        panels = new ArrayList<>();
       
         panelHG = new JPanel();
+        panels.add(panelHG);
         panelHD = new JPanel();
+        panels.add(panelHD);
         panelBG = new JPanel();
+        panels.add(panelBG);
         panelBD = new JPanel();
+        panels.add(panelBD);
         
         for(int i = 0;i<5;i++){
             add(new JLabel(""));
@@ -57,11 +66,16 @@ public class PanelJoueurs extends JPanel{
         
     }
 
-    protected void afficherJoueurs() {
-        panelHG.setBackground(Color.black);
-        panelHD.setBackground(Color.black);
-        panelBG.setBackground(Color.black);
-        panelBD.setBackground(Color.black);
+    protected void afficherJoueurs(ArrayList<Pion> pionAAfficher) {
+        int i = 0;
+        for(Pion p : pionAAfficher){
+            panels.get(i).setBackground(p.getCouleur());
+            i++;
+        }
+        while (i<4) {            
+            panels.get(i).setBackground(null);
+            i++;
+        }
     }
 
     
