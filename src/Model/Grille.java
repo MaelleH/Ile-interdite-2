@@ -112,12 +112,22 @@ public class Grille {
     
     public Coordonnees getCoordTuile(String nomTuile){
         for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
-            if(e.getValue().getNomT().toString().equals(nomTuile)){
+            if(e.getValue()!=null && e.getValue().getNomT().toString().equals(nomTuile)){
                 return e.getKey();
             }
         }
         return null;
     }
+    
+    public Tuile getTuile(String nomTuile){
+        for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
+            if(e.getValue()!=null && e.getValue().getNomT().toString().equals(nomTuile)){
+                return e.getValue();
+            }
+        }
+        return null;
+    }
+    
     
        
 
@@ -132,12 +142,21 @@ public class Grille {
                     HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
                 }
                 else{
-
                     HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
                     n=n+1;
                 }
             }
-        } 
+        }
+        
+        getTuile("Le Lagon Perdu").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Observatoire").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Le Jardin des Murmures").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("La Caverne du Brasier").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("La Porte de Bronze").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Le Marais Brumeux").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Le Rocher Fantome").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Le Temple de La Lune").setEtat(Utils.EtatTuile.COULEE);
     }
     
 }
