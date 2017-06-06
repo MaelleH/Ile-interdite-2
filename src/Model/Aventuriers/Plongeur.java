@@ -5,7 +5,9 @@ import Model.Grille;
 import java.util.Map;
 
 public class Plongeur extends Aventurier {
-
+        public Plongeur(Coordonnees position) {
+            super(position);
+        }
     
         @Override
         public String getNom() {
@@ -56,8 +58,7 @@ public class Plongeur extends Aventurier {
                 }
             return bool;
         }
-        public Plongeur() {
-    }
+        
         
         
 }

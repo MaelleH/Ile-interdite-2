@@ -1,7 +1,10 @@
 package Model.Aventuriers;
 
+import Model.Coordonnees;
+
 public class Messager extends Aventurier {
-    public Messager() {
+    public Messager(Coordonnees position) {
+        super(position);
     }
         
     @Override

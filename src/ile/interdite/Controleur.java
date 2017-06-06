@@ -26,7 +26,6 @@ public class Controleur implements Observateur {
 
 	Collection<CarteTrésor> piocheCarteTrésor;
 	private Grille grille;
-	private Collection<Aventurier> joueurs;
         private ArrayList<Aventurier> aventuriers;
         private VueAventurier vueAventurier;
         private VuePlateau vuePlateau;
@@ -34,23 +33,24 @@ public class Controleur implements Observateur {
 	private Collection<CarteInondation> piocheCarteInondation;
 	private Collection<CarteInondation> défausseCarteInondation;
 	private Collection<CarteInondation> défausseCarteCoulées;
-        private final Explorateur explo;
-        private final Ingenieur inge = new Ingenieur();
-        private final Messager mess = new Messager();
-        private final Navigateur navig = new Navigateur();
-        private final Pilote pilot = new Pilote();
-        private final Plongeur plong = new Plongeur();
 
         public Controleur() {
-            grille = new Grille();
-            
-            aventuriers = new ArrayList<>();
-            explo = new Explorateur(new Coordonnees("3", "3"));
-            aventuriers.add(explo);
-            
             vueAventurier = new VueAventurier ("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur(),this);
             ArrayList<Utils.Pion> pionAAfficher =  new ArrayList<>();
             vuePlateau = new VuePlateau(pionAAfficher);
+        }
+        
+        public void initPartie(){
+            //Créer les Aventuriers
+            creationAventurier(2);
+            
+            //Creér les vues de Aventuriers
+            
+            
+            
+            //Créer la grille et mettre à jour la vuePlateau
+            grille = new Grille();
+            updateVuePlateau();
         }
         
         
@@ -229,11 +229,11 @@ public class Controleur implements Observateur {
             switch (m.getBtnCliquéTxt()) {
                 case ALLER:
                     System.out.println("Déplacement! (" + x +","+ y +")");
-                    deplacement(inge, c);
+                    //deplacement(joueu, c);
                     break;
                 case ASSECHER:
                     System.out.println("Assècher! (" + x +","+ y +")");
-                    assecher(inge, c);
+                    //assecher(inge, c);
                     break;
                 case AUTREACTION:
                     System.out.println("Autre Action! (" + x +","+ y +")");
@@ -246,20 +246,32 @@ public class Controleur implements Observateur {
             }
             
         }
-        public void creationAventurier(int nbjoueur){
-            
-            aventuriers.add(explo);
-            aventuriers.add(inge);
-            aventuriers.add(mess);
-            aventuriers.add(navig);
-            aventuriers.add(pilot);
-            aventuriers.add(plong);
-            Collections.shuffle((List<?>) aventuriers);
-            for (int i=0 ; i<nbjoueur; i++){
-                joueurs.add(aventuriers.get(i));
-                //* Ecrire pour chaque joueur son rôle en utilisant joueur i : get(i).getNom();
-            }
+    public void creationAventurier(int nbjoueur){
+        aventuriers = new ArrayList<>();
+
+        Explorateur explo = new Explorateur(grille.getCoordTuile("La Porte de Bronze"));
+        Ingenieur inge = new Ingenieur(grille.getCoordTuile("La Porte de Cuivre"));
+        Messager mess = new Messager(grille.getCoordTuile("La Porte d’Argent"));
+        Navigateur navig = new Navigateur(grille.getCoordTuile("La Porte d'Or"));
+        Pilote pilot = new Pilote(grille.getCoordTuile("Heliport"));
+        Plongeur plong= new Plongeur(grille.getCoordTuile("La Porte de Fer"));
+        
+        aventuriers.add(explo);
+        aventuriers.add(inge);
+        aventuriers.add(mess);
+        aventuriers.add(navig);
+        aventuriers.add(pilot);
+        aventuriers.add(plong);
+        Collections.shuffle((List<?>) aventuriers);
+        
+        ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
+        for (int i=0 ; i<nbjoueur; i++){
+            aventuriersTemp.add(aventuriers.get(i));
+            //* Ecrire pour chaque joueur son rôle en utilisant joueur i : get(i).getNom();
         }
+        
+        aventuriers = aventuriersTemp;
+    }
               
     public void updateVuePlateau(){
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
@@ -271,10 +283,8 @@ public class Controleur implements Observateur {
                 
                 ArrayList<Pion> pionAAfficher = new ArrayList<Pion>();
                 for(Aventurier a : aventuriers){
-                    System.out.println(a.getPosition().equals(e.getKey()));
                     if(a.getPosition().equals(e.getKey())){
                         pionAAfficher.add(getPionAventurier(a));
-                        System.out.println("oui"+getPionAventurier(a).toString());
                     }
                 }
                 
@@ -285,8 +295,8 @@ public class Controleur implements Observateur {
 
     public Pion getPionAventurier(Aventurier a){
         switch(a.getNom()){
-            case "Explorateur" : return Pion.VERT;
-            case "Ingenieur" : return Pion.ROUGE;
+            case "Explorateur" : return Pion.ROUGE;
+            case "Ingenieur" : return Pion.VERT;
             case "Messager" : return Pion.ORANGE;
             case "Navigateur" : return Pion.JAUNE;
             case "Pilote" : return Pion.BLEU;

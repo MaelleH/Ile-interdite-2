@@ -28,6 +28,7 @@ public class VuePlateau {
 
     public VuePlateau(ArrayList<Utils.Pion> pionAAfficher) {
         this.window = new JFrame();
+        window.setLocation(350, 0);
         window.setSize(606, 600);
         
         window.setTitle("Vue de l'île");

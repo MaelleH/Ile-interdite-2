@@ -90,11 +90,10 @@ public class Grille {
 
         for (int i=1;i<=6;i++){
             for (int o=1;o<=6;o++){
-                 int max =tuiles.size();
+                int max =tuiles.size();
 
                 if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
                     HSTuile.put((new Coordonnees(Integer.toString(i),Integer.toString(o))), null);
-
                 }
                 else{
                     int rand = (int) (Math.random()*max);
@@ -106,25 +105,31 @@ public class Grille {
         }      
     }
     
+    public Coordonnees getCoordTuile(String nomTuile){
+        for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
+            if(e.getValue().getNomT().toString().equals(nomTuile)){
+                return e.getKey();
+            }
+        }
+        return null;
+    }
+    
     
     public void creerGrilleProf(){
         creertuiles();
         int n=0;
         for (int i=1;i<=6;i++){
             for (int o=1;o<=6;o++){
-             int max =tuiles.size();
-            
-            if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
-                HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
+                if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
+                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
+                }
+                else{
+
+                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
+                    n=n+1;
+                }
             }
-            else{
-                
-                HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
-                n=n+1;
-            }
-                
-        }
-    } 
-            }
+        } 
+    }
     
 }

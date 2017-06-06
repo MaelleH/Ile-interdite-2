@@ -1,7 +1,10 @@
 package Model.Aventuriers;
 
+import Model.Coordonnees;
+
 public class Ingenieur extends Aventurier {
-    public Ingenieur() {
+    public Ingenieur(Coordonnees position) {
+        super(position);
     }
     
     @Override
