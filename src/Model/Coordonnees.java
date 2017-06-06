@@ -67,7 +67,13 @@ public class Coordonnees{
 
     
     public boolean equals(Coordonnees o) {
-        return (this.getX().equals(o.getX()) && this.getY().equals(o.getY())); //To change body of generated methods, choose Tools | Templates.
+        int xt = Integer.parseInt(this.getX());
+        int yt = Integer.parseInt(this.getY());
+        
+        int xo = Integer.parseInt(o.getX());
+        int yo = Integer.parseInt(o.getY());
+        
+        return (xt==xo) && (yt==yo); //To change body of generated methods, choose Tools | Templates.
     }
         
         

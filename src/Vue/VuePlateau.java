@@ -10,7 +10,10 @@ import Model.Coordonnees;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFrame;
@@ -36,22 +39,29 @@ public class VuePlateau {
         window.add(mainPanel);
         initPlateau();
         
+        
         this.window.setVisible(true);
+        
     }
     
     public void initPlateau(){
         PanelCase uneCase;
         this.window.add(mainPanel);
         
+       
+        
+        
         for(int i = 1; i<=6;i++){
             for(int j = 1; j<=6;j++){
                 if ((i==1 && (j<3||j>4)) || (i==2 && (j==1||j==6)) || (i==5 && (j==1||j==6))  || (i==6 && (j<3||j>4))){
                     uneCase = new PanelCase();
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
+                    
                     this.mainPanel.add(uneCase);
                 }else{
                     uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre");
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
+                    
                     this.mainPanel.add(uneCase);
                 }
             }

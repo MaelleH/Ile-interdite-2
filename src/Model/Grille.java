@@ -128,6 +128,15 @@ public class Grille {
         return null;
     }
     
+    public Tuile getTuile(Coordonnees coord){
+        for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
+            if(e.getValue()!=null && e.getKey().equals(coord)){
+                return e.getValue();
+            }
+        }
+        return null;
+    }
+    
     
        
 

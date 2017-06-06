@@ -35,19 +35,15 @@ public class Controleur implements Observateur {
 	private Collection<CarteInondation> défausseCarteCoulées;
 
         public Controleur() {
-            
-            
-            
             initPartie();
-            
-            
         }
         
         public void initPartie(){
             grille = new Grille();
-            vuePlateau = new VuePlateau();
+            
             //Créer les Aventuriers
             creationAventurier(4);
+            vuePlateau = new VuePlateau();
             
             //Creér les vues de Aventuriers
             int i = 1;
@@ -163,8 +159,7 @@ public class Controleur implements Observateur {
                 default:
                     break;
             }
-            //updateVuePlateau();
-            
+            updateVuePlateau();
         }
     public Aventurier getAv(String nom){
         for(Aventurier i : aventuriers){
@@ -204,6 +199,7 @@ public class Controleur implements Observateur {
     }
               
     public void updateVuePlateau(){
+        
         ArrayList<Pion> pionAAfficher;
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
             pionAAfficher = new ArrayList<Pion>();
@@ -240,7 +236,7 @@ public class Controleur implements Observateur {
         // Instanciation de la fenêtre 
         Controleur controleur = new Controleur();
         
-       controleur.updateVuePlateau();
+        
         
         
         
