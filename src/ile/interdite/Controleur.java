@@ -137,7 +137,7 @@ public class Controleur implements Observateur {
             switch (m.getBtnCliquéTxt()) {
                 case ALLER:
                     System.out.println("Déplacement! (" + x +","+ y +")");
-                    //deplacement(joueu, c);
+                    joueur.deplacement(c);
                     break;
                 case ASSECHER:
                     System.out.println("Assècher! (" + x +","+ y +")");
