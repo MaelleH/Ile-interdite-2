@@ -36,9 +36,6 @@ public class VuePlateau {
         window.add(mainPanel);
         initPlateau(pionAAfficher);
         
-      
-        
-        
         this.window.setVisible(true);
     }
     
