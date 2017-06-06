@@ -193,15 +193,16 @@ public class Controleur implements Observateur {
     }
               
     public void updateVuePlateau(){
-        ArrayList<Pion> pionAAfficher;
+        ArrayList<Pion> pionAAfficher = new ArrayList<Pion>();
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
-            pionAAfficher = new ArrayList<Pion>();
+            
             if(e.getValue() != null){
                 String coord = e.getKey().getX() + e.getKey().getY();
                 String nomCase = e.getValue().getNomT().toString();
                 EtatTuile etatTuile = e.getValue().getEtat();
                 String tresor = e.getValue().getTresor();
                 
+                pionAAfficher.clear();
                 for(Aventurier a : aventuriers){
                     if(a.getPosition().equals(e.getKey())){
                         pionAAfficher.add(getPionAventurier(a));

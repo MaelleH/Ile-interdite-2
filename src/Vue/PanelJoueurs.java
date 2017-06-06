@@ -64,15 +64,15 @@ public class PanelJoueurs extends JPanel{
     }
 
     public void afficherJoueurs(ArrayList<Pion> pionAAfficher) {
-        int i = 0;
+        int oui = 0;
         
         for(Pion p : pionAAfficher){
-            panels.get(i).setBackground(p.getCouleur());
-            i++;
+            panels.get(oui).setBackground(p.getCouleur());
+            oui++;
         }
-        while (i<4) {            
-            panels.get(i).setBackground(null);
-            i++;
+        while (oui<4) {            
+            panels.get(oui).setBackground(null);
+            oui++;
         }
     }
     
