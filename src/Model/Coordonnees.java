@@ -1,6 +1,6 @@
 package Model;
 
-public class Coordonnees {
+public class Coordonnees{
 	private String x;
 	private String y;
 
@@ -36,7 +36,16 @@ public class Coordonnees {
     public void setY(String y) {
         this.y = y;
     }
-        
-        
 
+    
+
+    
+    public boolean equals(Coordonnees o) {
+        return (this.getX().equals(o.getX()) && this.getY().equals(o.getY())); //To change body of generated methods, choose Tools | Templates.
+    }
+        
+        
+    
+    
+    
 }

@@ -13,9 +13,16 @@ import static Util.Utils.EtatTuile.INONDEE;
 
 public class Explorateur extends Aventurier {
 
-    public Explorateur(String explorateur) {
-        super.setNom(explorateur);
+    public Explorateur(Coordonnees position) {
+        super(position);
     }
+
+    @Override
+    public String getNom() {
+        return "Explorateur"; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
     /**
      *

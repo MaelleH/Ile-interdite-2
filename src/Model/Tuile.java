@@ -17,6 +17,8 @@ public class Tuile {
         public Tuile (NomTuile nom, Utils.EtatTuile etat){
             this.nomT=nom;
             this.etat=etat;
+
+            this.tresor="vide";
         }
         
         

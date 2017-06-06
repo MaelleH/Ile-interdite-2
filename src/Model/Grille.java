@@ -10,12 +10,15 @@ public class Grille {
 
     public Grille() {
         HSTuile = new HashMap<>();
+
         creerGrille();
                 
     }
+
+        
+        
         
     
-        
     /**
      * @return the HSTuile
      */
@@ -30,6 +33,7 @@ public class Grille {
         this.HSTuile = HSTuile;
     }
     public void creertuiles(){
+
     Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes,Utils.EtatTuile.ASSECHEE);
     Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze,Utils.EtatTuile.ASSECHEE);
     Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal",Utils.EtatTuile.ASSECHEE);
@@ -54,9 +58,8 @@ public class Grille {
     Tuile tuilevc = new Tuile(NomTuile.LeValduCrepuscule,Utils.EtatTuile.ASSECHEE);
     Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet,Utils.EtatTuile.ASSECHEE);
     Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr",Utils.EtatTuile.ASSECHEE);
-    
         
-    tuiles.add(tuilpdc);
+    
     tuiles.add(tuilepda);
     tuiles.add(tuilepdb);
     tuiles.add(tuilecdo);
@@ -66,6 +69,8 @@ public class Grille {
     tuiles.add(tuilepdc);
     tuiles.add(tuilepa);
     tuiles.add(tuilecdi);
+    tuiles.add(tuileh);
+    tuiles.add(tuilpdc);
     tuiles.add(tuilejh);
     tuiles.add(tuilefp);
     tuiles.add(tuilelp);
@@ -79,8 +84,7 @@ public class Grille {
     tuiles.add(tuilevc);
     tuiles.add(tuiletg);
     tuiles.add(tuilejm);
-    tuiles.add(tuileh);
-    tuiles.add(tuilepdc);
+    
     }
     
     
@@ -137,6 +141,7 @@ public class Grille {
     
     public void creerGrilleProf(){
         creertuiles();
+        int n=0;
         for (int i=1;i<=6;i++){
             for (int o=1;o<=6;o++){
              int max =tuiles.size();
@@ -145,7 +150,7 @@ public class Grille {
                 HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
             }
             else{
-                int n=1;
+                
                 HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
                 n=n+1;
             }

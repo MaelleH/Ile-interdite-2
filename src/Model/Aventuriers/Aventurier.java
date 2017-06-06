@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.HashMap;
 
 public class Aventurier {
-        private String nom;
 	private Collection<CarteTrésor> mainCarteTrésor;
 	private int actionsRestantes;
 	private int ACTIONS_MAX = 3;
@@ -20,12 +19,7 @@ public class Aventurier {
     public Aventurier(){
         this.actionsRestantes=ACTIONS_MAX;
     }
-    public Aventurier(String nom) {
-        this.nom = nom;
-        this.actionsRestantes=ACTIONS_MAX;
-    }
-    public Aventurier(String nom, Coordonnees position) {
-        this.nom = nom;
+    public Aventurier(Coordonnees position) {
         this.position=position;
         this.actionsRestantes=ACTIONS_MAX;
     }
@@ -87,15 +81,9 @@ public class Aventurier {
      * @return the nom
      */
     public String getNom() {
-        return nom;
+        return "Aventurier";
     }
 
-    /**
-     * @param nom the nom to set
-     */
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     /**
      * @return the mainCarteTrésor

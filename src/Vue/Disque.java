@@ -28,7 +28,7 @@ public class Disque {
         g.fillOval(centreX - rayon, centreY - rayon, 2 * rayon, 2 * rayon);
     }
     
-    public void setcolor(Color color){
+    public void setCouleur(Color color){
         this.couleur = color;
     }
 }

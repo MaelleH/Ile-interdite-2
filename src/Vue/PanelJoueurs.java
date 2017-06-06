@@ -5,11 +5,14 @@
  */
 package Vue;
 
+import Util.Utils.Pion;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -18,53 +21,65 @@ import javax.swing.JPanel;
  */
 public class PanelJoueurs extends JPanel{
     
-    private Disque disqueHG;
-    private Disque disqueHD;
-    private Disque disqueBG;
-    private Disque disqueBD;
+    private JPanel panelHG;
+    private JPanel panelHD;
+    private JPanel panelBG;
+    private JPanel panelBD;
+    
+    private ArrayList<JPanel> panels;
 
-    public PanelJoueurs() {
-        int centreDisqueX;
-        int centreDisqueY;
-        int rayon;
-                
-        this.setBackground(Color.YELLOW);
+    public PanelJoueurs() { 
+        this.setLayout(new GridLayout(5,5));
         
-        centreDisqueX =  (int)   (this.getSize().getWidth()/4);
-        centreDisqueY = (int)  (this.getSize().getHeight()/4);
-        rayon = (int) (Math.min(this.getSize().getWidth()/2,this.getSize().getHeight()/2)*0.9);
-
-                
-        disqueHG = new Disque(centreDisqueX, centreDisqueY, rayon, Color.black);
-        for(int i = 0; i<=1;i++){
-            for(int j = 0; j<=1;j++){
-                centreDisqueX =  (int) (((j*2)+1)*  (this.getSize().getWidth()/4));
-                centreDisqueY = (int) (((i*2)+1)*  (this.getSize().getHeight()/4));
-                rayon = (int) (Double.min(this.getSize().getWidth(),this.getSize().getHeight())*0.45);
-                
-                if(i==0 && j==0){
-                    disqueHG = new Disque(centreDisqueX, centreDisqueY, rayon, Color.black);
-                }else if(i==1 && j==0){
-                    disqueHD = new Disque(centreDisqueX, centreDisqueY, rayon, Color.black);
-                }else if(i==0 && j==1){
-                    disqueBG = new Disque(centreDisqueX, centreDisqueY, rayon, Color.black);
-                }else if(i==1 && j==1){
-                    disqueBD = new Disque(centreDisqueX, centreDisqueY, rayon, Color.black);
-                }
-            }
+        panels = new ArrayList<>();
+      
+        panelHG = new JPanel();
+        panels.add(panelHG);
+        panelHD = new JPanel();
+        panels.add(panelHD);
+        panelBG = new JPanel();
+        panels.add(panelBG);
+        panelBD = new JPanel();
+        panels.add(panelBD);
+        
+        for(int i = 0;i<5;i++){
+            add(new JLabel(""));
+        }
+        add(new JLabel(""));
+        add(panelHG);
+        add(new JLabel(""));
+        add(panelHD);
+        add(new JLabel(""));
+        for(int i = 0;i<5;i++){
+            add(new JLabel(""));
+        }
+        add(new JLabel(""));
+        add(panelBG);
+        add(new JLabel(""));
+        add(panelBD);
+        add(new JLabel(""));
+        for(int i = 0;i<5;i++){
+            add(new JLabel(""));
         }
         
+        
+        
+    }
+
+    protected void afficherJoueurs(ArrayList<Pion> pionAAfficher) {
+        int i = 0;
+        for(Pion p : pionAAfficher){
+            panels.get(i).setBackground(p.getCouleur());
+            i++;
+        }
+        while (i<4) {            
+            panels.get(i).setBackground(null);
+            i++;
+        }
     }
 
     
-    public void afficherDisques(Graphics g) {
-        System.out.println("oui");
-        disqueHG.draw(g);
-        disqueHD.draw(g);
-        disqueBG.draw(g);
-        disqueBD.draw(g);
-        
-    }
+    
     
     
     
