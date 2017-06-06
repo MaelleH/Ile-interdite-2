@@ -57,25 +57,27 @@ public class Explorateur extends Aventurier {
       
         
         @Override
-        public boolean assechementPossible(Coordonnees o,Coordonnees n,Grille g) {
+        public HashMap assechementPossibleListe(Grille g) {
 		// TODO - implement Controleur.deplacementPossible
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
                 int xo,yo,xn,yn;
-                boolean bool=false;
                 
-                xo=Integer.parseInt(o.getX());
-                xn=Integer.parseInt(n.getX());
-                yo=Integer.parseInt(o.getY());
-                yn=Integer.parseInt(n.getY());
+                xo=Integer.parseInt(getPosition().getX());
+                yo=Integer.parseInt(getPosition().getY());
                 
-                if(((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))){
-                    if(g.getHSTuile().get(n).getEtat()!=INONDEE){
-                        bool=true;
-                    }     
+                
+                for(Map.Entry i: g.getHSTuile().entrySet()){
+                    xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
+                    yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
+
+                    if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&(((Tuile)i.getValue()).getEtat()==INONDEE)){
+                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                        System.out.println(Integer.toString(xn)+Integer.toString(yn));
+                        System.out.println(((Tuile)i.getValue()).getNomT());    
+                    }        
                 }
-                else if (super.assechementPossible(o, n, g)){
-                    bool = true;
-                }
-                return bool;
+
+		return listeD;
 
 		
 	}    

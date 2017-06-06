@@ -163,6 +163,7 @@ public class Controleur implements Observateur {
                 default:
                     break;
             }
+            //updateVuePlateau();
             
         }
     public Aventurier getAv(String nom){

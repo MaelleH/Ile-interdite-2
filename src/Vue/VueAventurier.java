@@ -102,6 +102,7 @@ public class VueAventurier  {
             @Override
             public void mouseClicked(MouseEvent e) {
                 controleur.traiterMessage(new Message(ALLER,position.getText(),nomAventurier));
+                
             }
 
             @Override
