@@ -10,6 +10,7 @@ import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -57,14 +58,15 @@ public class PanelCase extends JPanel{
         
         //Parametrage du PanelCase
         setLayout(new GridLayout(3,1));
-        setBorder(BorderFactory.createLineBorder(Color.black));
+        setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         
         
         //Affichage du Nom de la Case
         panelNomCase = new JPanel();
         panelNomCase.setLayout(new BorderLayout());
         labelNomCase = new JLabel(nomCase,SwingConstants.CENTER);
-        
+        labelNomCase.setFont(new Font(labelNomCase.getFont().getFontName(),labelNomCase.getFont().getStyle(),(int) (labelNomCase.getFont().getSize()*0.8)));
+      
         panelNomCase.add(labelNomCase,BorderLayout.CENTER);
         this.add(panelNomCase);
         
@@ -97,19 +99,22 @@ public class PanelCase extends JPanel{
             //Affichage de l'état de la case
             if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(new Color(180,50,50));
-                panelEtatCase.setBackground(new Color(180,50,50));
-                panelJoueurs.setBackground(new Color(180,50,50));
+                panelNomCase.setBackground(new Color(150,20,20));
+                panelEtatCase.setBackground(new Color(150,20,20));
+                panelBas.setBackground(new Color(150,20,20));
+                panelJoueurs.setBackground(new Color(150,20,20));
             }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
                 labelEtatCase.setText(etatCase.toString());
                 panelNomCase.setBackground(new Color(0, 100, 250));
                 panelEtatCase.setBackground(new Color(0, 100, 250));
+                panelBas.setBackground(new Color(0, 100, 250));
                 panelJoueurs.setBackground(new Color(0, 100, 250));
             }else if(etatCase.toString().equals(EtatTuile.COULEE.toString())){
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(new Color(0, 0, 50));
-                panelEtatCase.setBackground(new Color(0, 0, 50));
-                panelJoueurs.setBackground(new Color(0, 0, 50));
+                panelNomCase.setBackground(new Color(10, 10, 200));
+                panelEtatCase.setBackground(new Color(10, 10, 200));
+                panelBas.setBackground(new Color(10, 10, 200));
+                panelJoueurs.setBackground(new Color(10, 10, 200));
             }
 
             //Affichage du trésor présent sur la Case

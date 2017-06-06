@@ -31,6 +31,7 @@ public class PanelJoueurs extends JPanel{
     public PanelJoueurs() { 
         this.setLayout(new GridLayout(5,5));
         
+        
         panels = new ArrayList<>();
       
         panelHG = new JPanel();
