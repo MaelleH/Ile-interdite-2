@@ -18,7 +18,7 @@ public class Plongeur extends Aventurier {
 	 * @param o
          * @param n
      * @return 
-	 */
+	 
         @Override
         public boolean deplacementPossible(Coordonnees o,Coordonnees n,Grille g) {
 		// TODO - implement Controleur.deplacementPossible
@@ -57,7 +57,7 @@ public class Plongeur extends Aventurier {
 
                 }
             return bool;
-        }
+        }*/
         
         
         

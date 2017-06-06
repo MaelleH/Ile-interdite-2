@@ -13,6 +13,7 @@ public class Tuile {
             this.nomT=nom;
             this.tresor=tresor;
             this.etat=Utils.EtatTuile.ASSECHEE;
+
         }
         
         public Tuile (NomTuile nom){

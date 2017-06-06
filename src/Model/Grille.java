@@ -30,7 +30,6 @@ public class Grille {
         this.HSTuile = HSTuile;
     }
     public void creertuiles(){
-
         Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes);
         Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze);
         Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal");
@@ -56,33 +55,30 @@ public class Grille {
         Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet);
         Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr");
     
-
-        
-    
-    tuiles.add(tuilepda);
-    tuiles.add(tuilepdb);
-    tuiles.add(tuilecdo);
-    tuiles.add(tuilepdf);
-    tuiles.add(tuilepdo);
-    tuiles.add(tuilefdo);
-    tuiles.add(tuilepdc);
-    tuiles.add(tuilepa);
-    tuiles.add(tuilecdi);
-    tuiles.add(tuileh);
-    tuiles.add(tuilpdc);
-    tuiles.add(tuilejh);
-    tuiles.add(tuilefp);
-    tuiles.add(tuilelp);
-    tuiles.add(tuilemb);
-    tuiles.add(tuileo);
-    tuiles.add(tuilerf);
-    tuiles.add(tuilecb);
-    tuiles.add(tuilets);
-    tuiles.add(tuiletl);
-    tuiles.add(tuilepm);
-    tuiles.add(tuilevc);
-    tuiles.add(tuiletg);
-    tuiles.add(tuilejm);
+        tuiles.add(tuilepda);
+        tuiles.add(tuilepdb);
+        tuiles.add(tuilecdo);
+        tuiles.add(tuilepdf);
+        tuiles.add(tuilepdo);
+        tuiles.add(tuilefdo);
+        tuiles.add(tuilepdc);
+        tuiles.add(tuilepa);
+        tuiles.add(tuilecdi);
+        tuiles.add(tuileh);
+        tuiles.add(tuilpdc);
+        tuiles.add(tuilejh);
+        tuiles.add(tuilefp);
+        tuiles.add(tuilelp);
+        tuiles.add(tuilemb);
+        tuiles.add(tuileo);
+        tuiles.add(tuilerf);
+        tuiles.add(tuilecb);
+        tuiles.add(tuilets);
+        tuiles.add(tuiletl);
+        tuiles.add(tuilepm);
+        tuiles.add(tuilevc);
+        tuiles.add(tuiletg);
+        tuiles.add(tuilejm);
     
     }
     
@@ -111,30 +107,7 @@ public class Grille {
         }      
     }
     
-    public HashMap creerGrille2(){
-        creertuiles();
-        HashMap<Coordonnees,Tuile> HSTuil= new HashMap<>();
-
-        for (int i=1;i<=6;i++){
-            for (int o=1;o<=6;o++){
-                 int max =tuiles.size();
-
-                if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
-                    HSTuile.put((new Coordonnees(Integer.toString(i),Integer.toString(o))), null);
-                    HSTuil.put((new Coordonnees(Integer.toString(i),Integer.toString(o))),null);
-
-                }
-                else{
-                    int rand = (int) (Math.random()*max);
-                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), (tuiles.get(rand)));
-                    System.out.println(Integer.toString(i)+Integer.toString(o)+tuiles.get(rand).getNomT());
-                    tuiles.remove(rand);
-                }
-
-            }
-        }      
-        return this.HSTuile;
-    }    
+     
 
     
     public Coordonnees getCoordTuile(String nomTuile){
@@ -145,6 +118,9 @@ public class Grille {
         }
         return null;
     }
+    
+       
+
     
     
     public void creerGrilleProf(){
