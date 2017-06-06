@@ -25,8 +25,6 @@ public class Aventurier {
     }
         
 
-        
-
 	public Coordonnees getPosition() {
 		return this.position;
 	}
@@ -42,12 +40,12 @@ public class Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
-
-                    //if(g.getHSTuile().get(n)!= null){
+                    
+                    if(g.getHSTuile().get(n)!= null){
                        //if(g.getHSTuile().get(n).getEtat()!=COULEE){
-                            //bool=true;
+                            bool=true;
                         //} 
-                    //}
+                    }
 
                              
                 }
@@ -65,6 +63,7 @@ public class Aventurier {
 
 	 */
 	public void deplacement(Coordonnees c,Grille grille ) {
+            System.out.println(grille.getHSTuile().size());
             System.out.println(grille.getHSTuile().get(c));
             if(this.getActionsRestantes()>0&&deplacementPossible(c,grille)){
 		setPosition(c);
