@@ -26,20 +26,20 @@ public class VuePlateau {
     
     private HashMap<String,PanelCase> listeCases = new HashMap<>();
 
-    public VuePlateau(ArrayList<Utils.Pion> pionAAfficher) {
+    public VuePlateau() {
         this.window = new JFrame();
         window.setLocation(350, 0);
-        window.setSize(606, 600);
+        window.setSize(900, 900);
         
         window.setTitle("Vue de l'île");
         mainPanel = new JPanel(new GridLayout(6,6));
         window.add(mainPanel);
-        initPlateau(pionAAfficher);
+        initPlateau();
         
         this.window.setVisible(true);
     }
     
-    public void initPlateau(ArrayList<Utils.Pion> pionAAfficher){
+    public void initPlateau(){
         PanelCase uneCase;
         this.window.add(mainPanel);
         
@@ -50,7 +50,7 @@ public class VuePlateau {
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     this.mainPanel.add(uneCase);
                 }else{
-                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre",pionAAfficher);
+                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre");
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     this.mainPanel.add(uneCase);
                 }

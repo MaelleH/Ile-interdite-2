@@ -61,13 +61,11 @@ public class PanelJoueurs extends JPanel{
         for(int i = 0;i<5;i++){
             add(new JLabel(""));
         }
-        
-        
-        
     }
 
-    protected void afficherJoueurs(ArrayList<Pion> pionAAfficher) {
+    public void afficherJoueurs(ArrayList<Pion> pionAAfficher) {
         int i = 0;
+        
         for(Pion p : pionAAfficher){
             panels.get(i).setBackground(p.getCouleur());
             i++;
@@ -77,6 +75,7 @@ public class PanelJoueurs extends JPanel{
             i++;
         }
     }
+    
 
     
     

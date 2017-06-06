@@ -35,22 +35,33 @@ public class Controleur implements Observateur {
 	private Collection<CarteInondation> défausseCarteCoulées;
 
         public Controleur() {
-            vueAventurier = new VueAventurier ("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur(),this);
-            ArrayList<Pion> pionAAfficher =  new ArrayList<>();
-            vuePlateau = new VuePlateau(pionAAfficher);
+            
+            
+            
+            initPartie();
+            
+            
         }
         
         public void initPartie(){
+            grille = new Grille();
+            vuePlateau = new VuePlateau();
             //Créer les Aventuriers
-            creationAventurier(2);
+            creationAventurier(4);
             
             //Creér les vues de Aventuriers
+            int i = 1;
+            for(Aventurier a : aventuriers){
+                vueAventurier = new VueAventurier ("Joueur "+i,a.getNom(),getPionAventurier(a).getCouleur(),this);
+                i++;
+            }
             
             
             
             //Créer la grille et mettre à jour la vuePlateau
-            grille = new Grille();
             updateVuePlateau();
+            
+            
         }
         
         
@@ -160,7 +171,7 @@ public class Controleur implements Observateur {
         Explorateur explo = new Explorateur(grille.getCoordTuile("La Porte de Bronze"));
         Ingenieur inge = new Ingenieur(grille.getCoordTuile("La Porte de Cuivre"));
         Messager mess = new Messager(grille.getCoordTuile("La Porte d’Argent"));
-        Navigateur navig = new Navigateur(grille.getCoordTuile("La Porte d'Or"));
+        Navigateur navig = new Navigateur(grille.getCoordTuile("La Porte d’Or"));
         Pilote pilot = new Pilote(grille.getCoordTuile("Heliport"));
         Plongeur plong= new Plongeur(grille.getCoordTuile("La Porte de Fer"));
         
@@ -182,14 +193,15 @@ public class Controleur implements Observateur {
     }
               
     public void updateVuePlateau(){
+        ArrayList<Pion> pionAAfficher;
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
+            pionAAfficher = new ArrayList<Pion>();
             if(e.getValue() != null){
                 String coord = e.getKey().getX() + e.getKey().getY();
                 String nomCase = e.getValue().getNomT().toString();
                 EtatTuile etatTuile = e.getValue().getEtat();
                 String tresor = e.getValue().getTresor();
                 
-                ArrayList<Pion> pionAAfficher = new ArrayList<Pion>();
                 for(Aventurier a : aventuriers){
                     if(a.getPosition().equals(e.getKey())){
                         pionAAfficher.add(getPionAventurier(a));

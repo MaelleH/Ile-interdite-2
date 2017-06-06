@@ -8,6 +8,7 @@ package Vue;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
@@ -37,17 +38,15 @@ public class PanelCase extends JPanel{
     private PanelJoueurs panelJoueurs;
     private JPanel panelBas;
     
-    ArrayList<Utils.Pion> pionAAfficher;
+    ArrayList<Utils.Pion> pionAAfficher = new ArrayList<>();
 
     public PanelCase() {
         typeCase = "vide";
         this.setBackground(Color.black);
     }
     
-    public PanelCase(String nomCase,EtatTuile etatCase,String tresor,ArrayList<Utils.Pion> pionAAfficher) {
+    public PanelCase(String nomCase,EtatTuile etatCase,String tresor) {
         typeCase = "ile";
-        
-        this.pionAAfficher = pionAAfficher;
         
         setNomCase(nomCase);
         setEtatCase(etatCase);
@@ -60,9 +59,10 @@ public class PanelCase extends JPanel{
         
         //Affichage du Nom de la Case
         panelNomCase = new JPanel();
+        panelNomCase.setLayout(new BorderLayout());
         labelNomCase = new JLabel(nomCase,SwingConstants.CENTER);
         
-        panelNomCase.add(labelNomCase);
+        panelNomCase.add(labelNomCase,BorderLayout.CENTER);
         this.add(panelNomCase);
         
         panelNomCase.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.black));
@@ -121,7 +121,6 @@ public class PanelCase extends JPanel{
             }else{
                 panelTresor.setBackground(panelEtatCase.getBackground());
             }
-            
             //Affichage des joueurs
             panelJoueurs.afficherJoueurs(pionAAfficher);
         }
