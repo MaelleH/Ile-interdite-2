@@ -36,7 +36,7 @@ public class Controleur implements Observateur {
 
         public Controleur() {
             vueAventurier = new VueAventurier ("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur(),this);
-            ArrayList<Utils.Pion> pionAAfficher =  new ArrayList<>();
+            ArrayList<Pion> pionAAfficher =  new ArrayList<>();
             vuePlateau = new VuePlateau(pionAAfficher);
         }
         
