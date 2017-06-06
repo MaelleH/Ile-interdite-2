@@ -16,7 +16,6 @@ public class Grille {
         
         
     
-    
     /**
      * @return the HSTuile
      */
