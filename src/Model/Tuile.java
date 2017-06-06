@@ -9,16 +9,16 @@ public class Tuile {
 	private String tresor;
 	private NomTuile nomT;
         
-        public Tuile (NomTuile nom,String tresor, Utils.EtatTuile etat){
+        public Tuile (NomTuile nom,String tresor){
             this.nomT=nom;
             this.tresor=tresor;
-            this.etat=etat;
-        }
-        public Tuile (NomTuile nom, Utils.EtatTuile etat){
-            this.nomT=nom;
-            this.etat=etat;
+            this.etat=Utils.EtatTuile.ASSECHEE;
 
+        }
+        public Tuile (NomTuile nom){
+            this.nomT=nom;
             this.tresor="vide";
+            this.etat=Utils.EtatTuile.ASSECHEE;
         }
         
         

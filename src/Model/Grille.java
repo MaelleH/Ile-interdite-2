@@ -10,14 +10,12 @@ public class Grille {
 
     public Grille() {
         HSTuile = new HashMap<>();
-
-        creerGrille();
-                
+        creerGrilleProf();
     }
-
         
         
         
+    
     
     /**
      * @return the HSTuile
@@ -34,30 +32,32 @@ public class Grille {
     }
     public void creertuiles(){
 
-    Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal",Utils.EtatTuile.ASSECHEE);
-    Tuile tuilepdf = new Tuile(NomTuile.LaPortedeFer,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilepdo = new Tuile(NomTuile.LaPortedOr,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilefdo = new Tuile(NomTuile.LesFalaisesdelOubli,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilepdc = new Tuile(NomTuile.LePalaisdeCorail,"calice",Utils.EtatTuile.ASSECHEE);
-    Tuile tuilepa = new Tuile(NomTuile.LaPortedArgent,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilecdi = new Tuile(NomTuile.LesDunesdelIllusion,Utils.EtatTuile.ASSECHEE);
-    Tuile tuileh = new Tuile(NomTuile.Heliport,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilpdc = new Tuile(NomTuile.LaPortedeCuivre,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilejh = new Tuile(NomTuile.LeJardindesHurlements,"zéphyr",Utils.EtatTuile.ASSECHEE);
-    Tuile tuilefp = new Tuile(NomTuile.LaForetPourpre,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilelp = new Tuile(NomTuile.LeLagonPerdu,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilemb = new Tuile(NomTuile.LeMaraisBrumeux,Utils.EtatTuile.ASSECHEE);
-    Tuile tuileo = new Tuile(NomTuile.Observatoire,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilerf = new Tuile(NomTuile.LeRocherFantome,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilecb = new Tuile(NomTuile.LaCaverneduBrasier,"cristal",Utils.EtatTuile.ASSECHEE);
-    Tuile tuilets = new Tuile(NomTuile.LeTempleduSoleil,"pierre",Utils.EtatTuile.ASSECHEE);
-    Tuile tuiletl = new Tuile(NomTuile.LeTempledeLaLune,"pierre",Utils.EtatTuile.ASSECHEE);
-    Tuile tuilepm = new Tuile(NomTuile.LePalaisdesMarees,"calice",Utils.EtatTuile.ASSECHEE);
-    Tuile tuilevc = new Tuile(NomTuile.LeValduCrepuscule,Utils.EtatTuile.ASSECHEE);
-    Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet,Utils.EtatTuile.ASSECHEE);
-    Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr",Utils.EtatTuile.ASSECHEE);
+        Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes);
+        Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze);
+        Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal");
+        Tuile tuilepdf = new Tuile(NomTuile.LaPortedeFer);
+        Tuile tuilepdo = new Tuile(NomTuile.LaPortedOr);
+        Tuile tuilefdo = new Tuile(NomTuile.LesFalaisesdelOubli);
+        Tuile tuilepdc = new Tuile(NomTuile.LePalaisdeCorail,"calice");
+        Tuile tuilepa = new Tuile(NomTuile.LaPortedArgent);
+        Tuile tuilecdi = new Tuile(NomTuile.LesDunesdelIllusion);
+        Tuile tuileh = new Tuile(NomTuile.Heliport);
+        Tuile tuilpdc = new Tuile(NomTuile.LaPortedeCuivre);
+        Tuile tuilejh = new Tuile(NomTuile.LeJardindesHurlements,"zéphyr");
+        Tuile tuilefp = new Tuile(NomTuile.LaForetPourpre);
+        Tuile tuilelp = new Tuile(NomTuile.LeLagonPerdu);
+        Tuile tuilemb = new Tuile(NomTuile.LeMaraisBrumeux);
+        Tuile tuileo = new Tuile(NomTuile.Observatoire);
+        Tuile tuilerf = new Tuile(NomTuile.LeRocherFantome);
+        Tuile tuilecb = new Tuile(NomTuile.LaCaverneduBrasier,"cristal");
+        Tuile tuilets = new Tuile(NomTuile.LeTempleduSoleil,"pierre");
+        Tuile tuiletl = new Tuile(NomTuile.LeTempledeLaLune,"pierre");
+        Tuile tuilepm = new Tuile(NomTuile.LePalaisdesMarees,"calice");
+        Tuile tuilevc = new Tuile(NomTuile.LeValduCrepuscule);
+        Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet);
+        Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr");
+    
+
         
     
     tuiles.add(tuilepda);
