@@ -29,31 +29,6 @@ public class Aventurier {
 		return this.position;
 	}
 
-        public boolean deplacementPossible(Coordonnees n,Grille g) {
-		// TODO - implement Controleur.deplacementPossible
-                int xo,yo,xn,yn;
-                boolean bool=false;
-                
-                xo=Integer.parseInt(getPosition().getX());
-                xn=Integer.parseInt(n.getX());
-                yo=Integer.parseInt(getPosition().getY());
-                yn=Integer.parseInt(n.getY());
-                
-                if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
-                    
-                    if(g.getHSTuile().get(n)!= null){
-                       //if(g.getHSTuile().get(n).getEtat()!=COULEE){
-                            bool=true;
-                        //} 
-                    }
-
-                             
-                }
-                return bool;
-                
-
-		
-	}
                 
 	/**
 	 * 
@@ -63,12 +38,13 @@ public class Aventurier {
 
 	 */
 	public void deplacement(Coordonnees c,Grille grille ) {
-            System.out.println(grille.getHSTuile().size());
-            System.out.println(grille.getHSTuile().get(c));
-            if(this.getActionsRestantes()>0&&deplacementPossible(c,grille)){
+
+            System.out.println("Position    aventurier" +getPosition().getX()+getPosition().getY());
+            if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){
 		setPosition(c);
                 setActionsRestantes(getActionsRestantes()-1);
                 System.out.println(getPosition().getX()+getPosition().getY());
+                
             }
             else if(this.getActionsRestantes()<0){
                 System.out.println("Plus d'actions....");
@@ -88,13 +64,19 @@ public class Aventurier {
 		// TODO - implement Controleur.deplacementPossible
                                 
                 HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
-		Coordonnees p;
-                p = getPosition();
+                int xo,yo,xn,yn;
+                
+                xo=Integer.parseInt(getPosition().getX());
+                yo=Integer.parseInt(getPosition().getY());
                 
                 for(Map.Entry i: grille.getHSTuile().entrySet()){
-                    if(deplacementPossible((Coordonnees) i.getKey(),grille)){
+                    xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
+                    yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
+
+                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&(((Tuile)i.getValue()).getEtat()!=COULEE)){
                         listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
-                        
+                        System.out.println(Integer.toString(xn)+Integer.toString(yn));
+                        System.out.println(((Tuile)i.getValue()).getNomT());    
                     }        
                 }
 

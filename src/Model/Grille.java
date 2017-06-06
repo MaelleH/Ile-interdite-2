@@ -143,6 +143,9 @@ public class Grille {
                 }
                 else{
                     HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
+                    System.out.println(tuiles.get(n).getNomT());
+                    System.out.println(Integer.toString(i)+Integer.toString(o));
+                    
                     n=n+1;
                 }
             }
@@ -157,6 +160,8 @@ public class Grille {
         getTuile("Le Rocher Fantome").setEtat(Utils.EtatTuile.COULEE);
         getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);
         getTuile("Le Temple de La Lune").setEtat(Utils.EtatTuile.COULEE);
+        
+        
     }
     
 }

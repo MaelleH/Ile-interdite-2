@@ -137,8 +137,8 @@ public class Controleur implements Observateur {
         public void traiterMessage(Message m) {
             //A Faire 
             String x,y;
-            x=m.getChampSaisieTxt().charAt(0)+"";
-            y=m.getChampSaisieTxt().charAt(1)+"";
+            x=Character.toString(m.getChampSaisieTxt().charAt(0));
+            y=Character.toString(m.getChampSaisieTxt().charAt(1));
             
             Coordonnees c = new Coordonnees(x,y);
             

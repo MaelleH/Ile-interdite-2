@@ -16,6 +16,10 @@ public class Tuile {
 
         }
         
+        public int hashMap(){
+          return nomT.hashCode();
+        }
+        
         public Tuile (NomTuile nom){
             this.nomT=nom;
             this.tresor="vide";
