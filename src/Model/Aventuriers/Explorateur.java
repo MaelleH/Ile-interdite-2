@@ -43,7 +43,7 @@ public class Explorateur extends Aventurier {
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))){
-                    if(g.getHSTuile().get(n).getEtat()!=ASSECHEE){
+                    if(g.getTuile(n).getEtat()!=ASSECHEE){
                         bool=true;
                     }     
                 }

@@ -41,7 +41,7 @@ public class Aventurier {
                 
                 if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
                     
-                    if(g.getHSTuile().get(n)!= null){
+                    if(g.getTuile(n)!= null){
                        //if(g.getHSTuile().get(n).getEtat()!=COULEE){
                             bool=true;
                         //} 
@@ -63,8 +63,6 @@ public class Aventurier {
 
 	 */
 	public void deplacement(Coordonnees c,Grille grille ) {
-            System.out.println(grille.getHSTuile().size());
-            System.out.println(grille.getTuile(c).getNomT().toString());
             if(this.getActionsRestantes()>0&&deplacementPossible(c,grille)){
 		setPosition(c);
                 setActionsRestantes(getActionsRestantes()-1);
