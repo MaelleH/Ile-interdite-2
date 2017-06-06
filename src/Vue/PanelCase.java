@@ -38,15 +38,18 @@ public class PanelCase extends JPanel{
     private PanelJoueurs panelJoueurs;
     private JPanel panelBas;
     
-    ArrayList<Utils.Pion> pionAAfficher = new ArrayList<>();
+    ArrayList<Utils.Pion> pionAAfficher;
 
     public PanelCase() {
         typeCase = "vide";
+        pionAAfficher = new ArrayList<>();
         this.setBackground(Color.black);
     }
     
     public PanelCase(String nomCase,EtatTuile etatCase,String tresor) {
         typeCase = "ile";
+        
+        pionAAfficher = new ArrayList<>();
         
         setNomCase(nomCase);
         setEtatCase(etatCase);
