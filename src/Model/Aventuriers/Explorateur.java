@@ -31,15 +31,15 @@ public class Explorateur extends Aventurier {
      * @param g
      * @return
      */
-    @Override
-        public boolean deplacementPossible(Coordonnees o,Coordonnees n,Grille g) {
+
+        public boolean deplacementPossible(Coordonnees n,Grille g) {
 		// TODO - implement Controleur.deplacementPossible
                 int xo,yo,xn,yn;
                 boolean bool=false;
                 
-                xo=Integer.parseInt(o.getX());
+                xo=Integer.parseInt(getPosition().getX());
                 xn=Integer.parseInt(n.getX());
-                yo=Integer.parseInt(o.getY());
+                yo=Integer.parseInt(getPosition().getY());
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))){
@@ -47,7 +47,7 @@ public class Explorateur extends Aventurier {
                         bool=true;
                     }     
                 }
-                else if (super.deplacementPossible(o, n, g)){
+                else if (super.deplacementPossible(n, g)){
                     bool = true;
                 }
                 return bool;

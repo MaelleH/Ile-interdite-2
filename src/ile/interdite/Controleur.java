@@ -54,106 +54,10 @@ public class Controleur implements Observateur {
         }
         
         
-        
-	/**
-	 * 
-	 * @param a
-         * @param c
-
-	 */
-	public void deplacement(Aventurier a, Coordonnees c) {
-
-            if(a.getActionsRestantes()>0&&a.deplacementPossible(a.getPosition(),c,grille)){
-		a.setPosition(c);
-                a.setActionsRestantes(a.getActionsRestantes()-1);
-                System.out.println(a.getPosition().getX()+a.getPosition().getY());
-            }
-            else if(a.getActionsRestantes()<0){
-                System.out.println("Plus d'actions....");
-            }
-            else{
-                System.out.println("Déplacement impossible!");
-            }
-	}
-
-	/**
-	 * 
-	 * @param aventurier
-	 * @param tuile
-	 */
-	public HashMap deplacementPossibleListe(Aventurier a) {
-		// TODO - implement Controleur.deplacementPossible
-                                
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
-		Coordonnees p;
-                p = a.getPosition();
-                
-                for(Map.Entry i: grille.getHSTuile().entrySet()){
-                    if(a.deplacementPossible(p, (Coordonnees) i.getKey(),grille)){
-                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
-                    }        
-                }
-
-		return listeD;
-                
-	}
-
-	public HashMap assechementPossibleListe(Aventurier a) {
-		// TODO - implement Controleur.assécher
-		HashMap<Coordonnees,Tuile> listeA = new HashMap<>();   
-		Coordonnees p;
-                p = a.getPosition();
-                
-                for(Map.Entry i: grille.getHSTuile().entrySet()){
-                    if(a.assechementPossible(p, (Coordonnees) i.getKey(),grille)){
-                        listeA.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
-                    }        
-                }
-                return listeA;
 
 
-	}
-        
-        public void assecher(Aventurier a, Coordonnees c) {
-		// TODO - implement Controleur.assécher
-            Scanner sc=new Scanner(System.in);
-            if(a.assechementPossible((a.getPosition()), c, grille)){
-                if(a.getActionsRestantes()>0){
-                    for(Map.Entry i: grille.getHSTuile().entrySet()){
-                        if((Coordonnees) i.getKey()==c){
-                            ((Tuile)i.getValue()).setEtat(ASSECHEE);
-                        }        
-                    }
-                    a.setActionsRestantes(a.getActionsRestantes()-1);
-                }
-                else{
-                    System.out.println("Plus d'actions....");
-                } 
-            }  
-            else{
-                System.out.println("Assechement non possible ici!");
-            }
-            
-            if(a.getNom().equals("Navigateur")){
-                System.out.println("Voulez vous assécher une deuxième case? oui/non");
-                if(sc.nextLine()=="oui"){
-                    System.out.println("Entrer les nouvelles coordonnées");
-                    if(a.assechementPossible((a.getPosition()), c, grille)){
-                        for(Map.Entry i: grille.getHSTuile().entrySet()){
-                            if((Coordonnees) i.getKey()==c){
-                                ((Tuile)i.getValue()).setEtat(ASSECHEE);
-                            }        
-                        }
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
-                    }  
-                else{
-                    System.out.println("Assechement non possible ici!");
-                }
-                }
-                
-            
-            }
-	}
+	
+
 	/**
 	 * 
 	 * @param aven1
@@ -233,11 +137,11 @@ public class Controleur implements Observateur {
             switch (m.getBtnCliquéTxt()) {
                 case ALLER:
                     System.out.println("Déplacement! (" + x +","+ y +")");
-                    deplacement(inge, c);
+                    inge.deplacement(c, grille);
                     break;
                 case ASSECHER:
                     System.out.println("Assècher! (" + x +","+ y +")");
-                    assecher(inge, c);
+                    inge.assecher(c, grille);
                     break;
                 case AUTREACTION:
                     System.out.println("Autre Action! (" + x +","+ y +")");

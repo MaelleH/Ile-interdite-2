@@ -31,22 +31,23 @@ public class Aventurier {
 		return this.position;
 	}
 
-        public boolean deplacementPossible(Coordonnees o,Coordonnees n,Grille g) {
+        public boolean deplacementPossible(Coordonnees n,Grille g) {
 		// TODO - implement Controleur.deplacementPossible
                 int xo,yo,xn,yn;
                 boolean bool=false;
                 
-                xo=Integer.parseInt(o.getX());
+                xo=Integer.parseInt(getPosition().getX());
                 xn=Integer.parseInt(n.getX());
-                yo=Integer.parseInt(o.getY());
+                yo=Integer.parseInt(getPosition().getY());
                 yn=Integer.parseInt(n.getY());
                 
                 if(((xo==xn)&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))){
-                    //if(g.getHSTuile().get(n)!= null){
-                       if(g.getHSTuile().get(n).getEtat()!=COULEE){
-                            bool=true;
-                        } 
-                    //}
+                    if(g.getHSTuile().get(n)!= null){
+                       bool=true;/*
+                        if(g.getHSTuile().get(n).getEtat()!=COULEE){
+                            
+                        } */
+                    }
                              
                 }
                 return bool;
@@ -54,10 +55,60 @@ public class Aventurier {
 
 		
 	}
+                
 	/**
 	 * 
+	 * @param a
+     * @param grille
+         * @param c
+
+	 */
+	public void deplacement(Coordonnees c,Grille grille ) {
+            System.out.println(grille.getHSTuile().get(c));
+            if(this.getActionsRestantes()>0&&deplacementPossible(c,grille)){
+		setPosition(c);
+                setActionsRestantes(getActionsRestantes()-1);
+                System.out.println(getPosition().getX()+getPosition().getY());
+            }
+            else if(this.getActionsRestantes()<0){
+                System.out.println("Plus d'actions....");
+            }
+            else{
+                System.out.println("Déplacement impossible!");
+            }
+	}
+        
+        
+        /**
+	 * 
+     * @param grille
+     * @return 
+	 */
+	public HashMap deplacementPossibleListe(Grille grille) {
+		// TODO - implement Controleur.deplacementPossible
+                                
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+		Coordonnees p;
+                p = getPosition();
+                
+                for(Map.Entry i: grille.getHSTuile().entrySet()){
+                    if(deplacementPossible((Coordonnees) i.getKey(),grille)){
+                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                        
+                    }        
+                }
+
+		return listeD;
+                
+	}
+
+	/**
+	 * 
+     * @param o
+     * @param n
 	 * @param aventurier
-	 * @param tuile
+     * @param g
+     * @return 
 	 */
 	public boolean assechementPossible(Coordonnees o,Coordonnees n,Grille g) {
 		// TODO - implement Controleur.assèchementPossible
@@ -75,6 +126,63 @@ public class Aventurier {
                     }     
                 }
                 return bool;
+	}
+        
+        public HashMap assechementPossibleListe(Grille grille) {
+		// TODO - implement Controleur.assécher
+		HashMap<Coordonnees,Tuile> listeA = new HashMap<>();   
+		Coordonnees p;
+                p = getPosition();
+                
+                for(Map.Entry i: grille.getHSTuile().entrySet()){
+                    if(assechementPossible(p, (Coordonnees) i.getKey(),grille)){
+                        listeA.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                    }        
+                }
+                return listeA;
+
+
+	}
+        
+        public void assecher(Coordonnees c,Grille grille) {
+		// TODO - implement Controleur.assécher
+            Scanner sc=new Scanner(System.in);
+            if(assechementPossible((getPosition()), c, grille)){
+                if(getActionsRestantes()>0){
+                    for(Map.Entry i: grille.getHSTuile().entrySet()){
+                        if((Coordonnees) i.getKey()==c){
+                            ((Tuile)i.getValue()).setEtat(ASSECHEE);
+                        }        
+                    }
+                    setActionsRestantes(getActionsRestantes()-1);
+                }
+                else{
+                    System.out.println("Plus d'actions....");
+                } 
+            }  
+            else{
+                System.out.println("Assechement non possible ici!");
+            }
+            
+            if(getNom().equals("Navigateur")){
+                System.out.println("Voulez vous assécher une deuxième case? oui/non");
+                if(sc.nextLine()=="oui"){
+                    System.out.println("Entrer les nouvelles coordonnées");
+                    if(assechementPossible((getPosition()), c, grille)){
+                        for(Map.Entry i: grille.getHSTuile().entrySet()){
+                            if((Coordonnees) i.getKey()==c){
+                                ((Tuile)i.getValue()).setEtat(ASSECHEE);
+                            }        
+                        }
+                        setActionsRestantes(getActionsRestantes()-1);
+                    }  
+                else{
+                    System.out.println("Assechement non possible ici!");
+                }
+                }
+                
+            
+            }
 	}
 
     /**
