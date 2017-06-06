@@ -9,7 +9,7 @@ public class Messager extends Aventurier {
         
     @Override
     public String getNom() {
-        return "Explorateur"; //To change body of generated methods, choose Tools | Templates.
+        return "Messager"; //To change body of generated methods, choose Tools | Templates.
     }
     
     /**
