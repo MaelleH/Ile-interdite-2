@@ -137,7 +137,7 @@ public class Controleur implements Observateur {
             switch (m.getBtnCliquéTxt()) {
                 case ALLER:
                     System.out.println("Déplacement! (" + x +","+ y +")");
-                    joueur.deplacement(c);
+                    getAv(m.getJoueur()).deplacement(c,grille);
                     break;
                 case ASSECHER:
                     System.out.println("Assècher! (" + x +","+ y +")");
@@ -154,6 +154,16 @@ public class Controleur implements Observateur {
             }
             
         }
+    public Aventurier getAv(String nom){
+        for(Aventurier i : aventuriers){
+            if(i.getNom().equals(nom)){
+                return i;
+            }
+            
+        }
+        return null;
+    }    
+    
     public void creationAventurier(int nbjoueur){
         aventuriers = new ArrayList<>();
 

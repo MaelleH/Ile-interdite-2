@@ -25,8 +25,6 @@ public class Aventurier {
     }
         
 
-        
-
 	public Coordonnees getPosition() {
 		return this.position;
 	}
