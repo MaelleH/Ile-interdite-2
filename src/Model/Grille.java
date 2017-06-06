@@ -1,5 +1,6 @@
 package Model;
 
+import Util.Utils;
 import java.util.*;
 
 public class Grille {
@@ -29,6 +30,7 @@ public class Grille {
         this.HSTuile = HSTuile;
     }
     public void creertuiles(){
+
         Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes);
         Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze);
         Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal");
@@ -54,6 +56,7 @@ public class Grille {
         Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet);
         Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr");
     
+
         
     
     tuiles.add(tuilepda);
@@ -94,16 +97,45 @@ public class Grille {
 
                 if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
                     HSTuile.put((new Coordonnees(Integer.toString(i),Integer.toString(o))), null);
+                    
+
                 }
                 else{
                     int rand = (int) (Math.random()*max);
                     HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), (tuiles.get(rand)));
+                    System.out.println(Integer.toString(i)+Integer.toString(o)+tuiles.get(rand).getNomT());
                     tuiles.remove(rand);
                 }
 
             }
         }      
     }
+    
+    public HashMap creerGrille2(){
+        creertuiles();
+        HashMap<Coordonnees,Tuile> HSTuil= new HashMap<>();
+
+        for (int i=1;i<=6;i++){
+            for (int o=1;o<=6;o++){
+                 int max =tuiles.size();
+
+                if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
+                    HSTuile.put((new Coordonnees(Integer.toString(i),Integer.toString(o))), null);
+                    HSTuil.put((new Coordonnees(Integer.toString(i),Integer.toString(o))),null);
+
+                }
+                else{
+                    int rand = (int) (Math.random()*max);
+                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), (tuiles.get(rand)));
+                    System.out.println(Integer.toString(i)+Integer.toString(o)+tuiles.get(rand).getNomT());
+                    tuiles.remove(rand);
+                }
+
+            }
+        }      
+        return this.HSTuile;
+    }    
+
     
     public Coordonnees getCoordTuile(String nomTuile){
         for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {

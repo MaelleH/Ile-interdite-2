@@ -5,7 +5,6 @@ import Util.Utils;
 
 public class Tuile {
 
-	
 	private Utils.EtatTuile etat;
 	private String tresor;
 	private NomTuile nomT;
@@ -13,12 +12,13 @@ public class Tuile {
         public Tuile (NomTuile nom,String tresor){
             this.nomT=nom;
             this.tresor=tresor;
-            etat = Utils.EtatTuile.ASSECHEE;
+            this.etat=Utils.EtatTuile.ASSECHEE;
         }
+        
         public Tuile (NomTuile nom){
             this.nomT=nom;
             this.tresor="vide";
-            etat = Utils.EtatTuile.ASSECHEE;
+            this.etat=Utils.EtatTuile.ASSECHEE;
         }
         
         

@@ -62,13 +62,17 @@ public class Controleur implements Observateur {
 
 	 */
 	public void deplacement(Aventurier a, Coordonnees c) {
-            if(a.getActionsRestantes()>0){
+
+            if(a.getActionsRestantes()>0&&a.deplacementPossible(a.getPosition(),c,grille)){
 		a.setPosition(c);
                 a.setActionsRestantes(a.getActionsRestantes()-1);
                 System.out.println(a.getPosition().getX()+a.getPosition().getY());
             }
-            else{
+            else if(a.getActionsRestantes()<0){
                 System.out.println("Plus d'actions....");
+            }
+            else{
+                System.out.println("Déplacement impossible!");
             }
 	}
 
