@@ -6,7 +6,15 @@ public class Grille {
 
         private HashMap<Coordonnees,Tuile> HSTuile;
         private ArrayList<Tuile> tuiles = new ArrayList<>();
+
+    public Grille() {
+        HSTuile = new HashMap<>();
+        creerGrilleProf();
+    }
         
+        
+        
+    
     /**
      * @return the HSTuile
      */
@@ -22,32 +30,32 @@ public class Grille {
     }
     public void creertuiles(){
         Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes);
-    Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze);
-    Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal");
-    Tuile tuilepdf = new Tuile(NomTuile.LaPortedeFer);
-    Tuile tuilepdo = new Tuile(NomTuile.LaPortedOr);
-    Tuile tuilefdo = new Tuile(NomTuile.LesFalaisesdelOubli);
-    Tuile tuilepdc = new Tuile(NomTuile.LePalaisdeCorail,"calice");
-    Tuile tuilepa = new Tuile(NomTuile.LaPortedArgent);
-    Tuile tuilecdi = new Tuile(NomTuile.LesDunesdelIllusion);
-    Tuile tuileh = new Tuile(NomTuile.Heliport);
-    Tuile tuilpdc = new Tuile(NomTuile.LaPortedeCuivre);
-    Tuile tuilejh = new Tuile(NomTuile.LeJardindesHurlements,"zéphyr");
-    Tuile tuilefp = new Tuile(NomTuile.LaForetPourpre);
-    Tuile tuilelp = new Tuile(NomTuile.LeLagonPerdu);
-    Tuile tuilemb = new Tuile(NomTuile.LeMaraisBrumeux);
-    Tuile tuileo = new Tuile(NomTuile.Observatoire);
-    Tuile tuilerf = new Tuile(NomTuile.LeRocherFantome);
-    Tuile tuilecb = new Tuile(NomTuile.LaCaverneduBrasier,"cristal");
-    Tuile tuilets = new Tuile(NomTuile.LeTempleduSoleil,"pierre");
-    Tuile tuiletl = new Tuile(NomTuile.LeTempledeLaLune,"pierre");
-    Tuile tuilepm = new Tuile(NomTuile.LePalaisdesMarees,"calice");
-    Tuile tuilevc = new Tuile(NomTuile.LeValduCrepuscule);
-    Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet);
-    Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr");
+        Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze);
+        Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal");
+        Tuile tuilepdf = new Tuile(NomTuile.LaPortedeFer);
+        Tuile tuilepdo = new Tuile(NomTuile.LaPortedOr);
+        Tuile tuilefdo = new Tuile(NomTuile.LesFalaisesdelOubli);
+        Tuile tuilepdc = new Tuile(NomTuile.LePalaisdeCorail,"calice");
+        Tuile tuilepa = new Tuile(NomTuile.LaPortedArgent);
+        Tuile tuilecdi = new Tuile(NomTuile.LesDunesdelIllusion);
+        Tuile tuileh = new Tuile(NomTuile.Heliport);
+        Tuile tuilpdc = new Tuile(NomTuile.LaPortedeCuivre);
+        Tuile tuilejh = new Tuile(NomTuile.LeJardindesHurlements,"zéphyr");
+        Tuile tuilefp = new Tuile(NomTuile.LaForetPourpre);
+        Tuile tuilelp = new Tuile(NomTuile.LeLagonPerdu);
+        Tuile tuilemb = new Tuile(NomTuile.LeMaraisBrumeux);
+        Tuile tuileo = new Tuile(NomTuile.Observatoire);
+        Tuile tuilerf = new Tuile(NomTuile.LeRocherFantome);
+        Tuile tuilecb = new Tuile(NomTuile.LaCaverneduBrasier,"cristal");
+        Tuile tuilets = new Tuile(NomTuile.LeTempleduSoleil,"pierre");
+        Tuile tuiletl = new Tuile(NomTuile.LeTempledeLaLune,"pierre");
+        Tuile tuilepm = new Tuile(NomTuile.LePalaisdesMarees,"calice");
+        Tuile tuilevc = new Tuile(NomTuile.LeValduCrepuscule);
+        Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet);
+        Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr");
     
         
-    tuiles.add(tuilpdc);
+    
     tuiles.add(tuilepda);
     tuiles.add(tuilepdb);
     tuiles.add(tuilecdo);
@@ -57,6 +65,8 @@ public class Grille {
     tuiles.add(tuilepdc);
     tuiles.add(tuilepa);
     tuiles.add(tuilecdi);
+    tuiles.add(tuileh);
+    tuiles.add(tuilpdc);
     tuiles.add(tuilejh);
     tuiles.add(tuilefp);
     tuiles.add(tuilelp);
@@ -70,8 +80,7 @@ public class Grille {
     tuiles.add(tuilevc);
     tuiles.add(tuiletg);
     tuiles.add(tuilejm);
-    tuiles.add(tuileh);
-    tuiles.add(tuilepdc);
+    
     }
     
     
@@ -100,6 +109,7 @@ public class Grille {
     
     public void creerGrilleProf(){
         creertuiles();
+        int n=0;
         for (int i=1;i<=6;i++){
             for (int o=1;o<=6;o++){
              int max =tuiles.size();
@@ -108,7 +118,7 @@ public class Grille {
                 HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
             }
             else{
-                int n=1;
+                
                 HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
                 n=n+1;
             }

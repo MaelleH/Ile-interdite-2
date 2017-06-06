@@ -20,6 +20,7 @@ public class Tuile {
         }
         public Tuile (NomTuile nom){
             this.nomT=nom;
+            this.tresor="vide";
         }
         
         

@@ -29,17 +29,32 @@ public class Controleur implements Observateur {
 	private Collection<Aventurier> joueurs;
         private ArrayList<Aventurier> aventuriers;
         private VueAventurier vueAventurier;
+        private VuePlateau vuePlateau;
 	private Collection<CarteTrésor> defausseCarteTrésor;
 	private Collection<CarteInondation> piocheCarteInondation;
 	private Collection<CarteInondation> défausseCarteInondation;
 	private Collection<CarteInondation> défausseCarteCoulées;
-        private final Explorateur explo = new Explorateur("Explorateur");
-        private final Ingenieur inge = new Ingenieur("Ingenieur");
-        private final Messager mess = new Messager("Messager");
-        private final Navigateur navig = new Navigateur("Navigateur");
-        private final Pilote pilot = new Pilote("Pilote");
-        private final Plongeur plong = new Plongeur("Plongeur");
+        private final Explorateur explo;
+        private final Ingenieur inge = new Ingenieur();
+        private final Messager mess = new Messager();
+        private final Navigateur navig = new Navigateur();
+        private final Pilote pilot = new Pilote();
+        private final Plongeur plong = new Plongeur();
 
+        public Controleur() {
+            grille = new Grille();
+            
+            aventuriers = new ArrayList<>();
+            explo = new Explorateur(new Coordonnees("3", "3"));
+            aventuriers.add(explo);
+            
+            vueAventurier = new VueAventurier ("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur(),this);
+            ArrayList<Utils.Pion> pionAAfficher =  new ArrayList<>();
+            vuePlateau = new VuePlateau(pionAAfficher);
+        }
+        
+        
+        
 	/**
 	 * 
 	 * @param a
@@ -248,18 +263,35 @@ public class Controleur implements Observateur {
               
     public void updateVuePlateau(){
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
-            if(e.getValue() == null){
+            if(e.getValue() != null){
                 String coord = e.getKey().getX() + e.getKey().getY();
                 String nomCase = e.getValue().getNomT().toString();
                 EtatTuile etatTuile = e.getValue().getEtat();
                 String tresor = e.getValue().getTresor();
+                
                 ArrayList<Pion> pionAAfficher = new ArrayList<Pion>();
                 for(Aventurier a : aventuriers){
+                    System.out.println(a.getPosition().equals(e.getKey()));
                     if(a.getPosition().equals(e.getKey())){
-                        
+                        pionAAfficher.add(getPionAventurier(a));
+                        System.out.println("oui"+getPionAventurier(a).toString());
                     }
                 }
+                
+                vuePlateau.updateCase(coord, nomCase, etatTuile, tresor, pionAAfficher);
             }
+        }
+    }
+
+    public Pion getPionAventurier(Aventurier a){
+        switch(a.getNom()){
+            case "Explorateur" : return Pion.VERT;
+            case "Ingenieur" : return Pion.ROUGE;
+            case "Messager" : return Pion.ORANGE;
+            case "Navigateur" : return Pion.JAUNE;
+            case "Pilote" : return Pion.BLEU;
+            case "Plongeur" : return Pion.VIOLET;
+            default: return null;
         }
     }
         
@@ -267,10 +299,9 @@ public class Controleur implements Observateur {
         // Instanciation de la fenêtre 
         Controleur controleur = new Controleur();
         
-        VueAventurier vueAventurier = new VueAventurier ("Manon", "Explorateur",Utils.Pion.ROUGE.getCouleur(),controleur);
+       controleur.updateVuePlateau();
         
-        ArrayList<Utils.Pion> pionAAfficher =  new ArrayList<>();
-        VuePlateau oui = new VuePlateau(pionAAfficher);
+        
         
     }
 }

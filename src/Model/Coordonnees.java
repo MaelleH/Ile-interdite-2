@@ -1,6 +1,6 @@
 package Model;
 
-public class Coordonnees implements Comparable<Coordonnees>{
+public class Coordonnees{
 	private String x;
 	private String y;
 
@@ -37,23 +37,11 @@ public class Coordonnees implements Comparable<Coordonnees>{
         this.y = y;
     }
 
-    @Override
-    public int compareTo(Coordonnees o) {
-        if(this.getX().compareTo(o.getX())<0){
-            return -1;
-        }else if(this.getX().compareTo(o.getX())==0){
-            if (this.getY().compareTo(o.getY())<0) {
-               return -1; 
-            }else if(this.getY().compareTo(o.getY())==0){
-                return 0;
-            }else{
-                return 1;
-            }
-        }else{
-            return 1;
-        }
-        
+    
 
+    
+    public boolean equals(Coordonnees o) {
+        return (this.getX().equals(o.getX()) && this.getY().equals(o.getY())); //To change body of generated methods, choose Tools | Templates.
     }
         
         
