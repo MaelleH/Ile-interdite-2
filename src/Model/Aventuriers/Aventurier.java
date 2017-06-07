@@ -5,9 +5,6 @@ import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
 import Util.Utils;
-import static Util.Utils.EtatTuile.ASSECHEE;
-import static Util.Utils.EtatTuile.COULEE;
-import static Util.Utils.EtatTuile.INONDEE;
 import static Util.Utils.afficherInformation;
 import java.util.*;
 import java.util.HashMap;
@@ -74,15 +71,18 @@ public class Aventurier {
                 yo=Integer.parseInt(getPosition().getY());
                 
                 for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
-                    xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
-                    yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
+                    if(i.getValue()!=null){
+                        xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
+                        yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
 
                     
-                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
-                        listeD.put((Coordonnees) i.getKey(), i.getValue());
-                        System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                        System.out.println(((Tuile)i.getValue()).getNomT());    
-                    }        
+                        if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
+                            listeD.put((Coordonnees) i.getKey(), i.getValue());
+                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
+                            System.out.println(((Tuile)i.getValue()).getNomT());    
+                        }    
+                    }
+                        
                 }
 
 		return listeD;
@@ -91,21 +91,23 @@ public class Aventurier {
 
         public HashMap assechementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.assécher
-		 HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+		HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
                 int xo,yo,xn,yn;
                 
                 xo=Integer.parseInt(getPosition().getX());
                 yo=Integer.parseInt(getPosition().getY());
                 
                 for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
-                    xn=Integer.parseInt((String)(i.getKey()).getX());
-                    yn=Integer.parseInt((String)(i.getKey()).getY());
+                    if(i.getValue()!=null){
+                        xn=Integer.parseInt((String)(i.getKey()).getX());
+                        yn=Integer.parseInt((String)(i.getKey()).getY());
 
-                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
-                        listeD.put( i.getKey(), i.getValue());
-                        System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                        System.out.println((i.getValue()).getNomT());    
-                    }        
+                        if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
+                            listeD.put( i.getKey(), i.getValue());
+                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
+                            System.out.println((i.getValue()).getNomT());    
+                        }     
+                    }
                 }
 
 		return listeD;
@@ -115,7 +117,6 @@ public class Aventurier {
         
         public void assecher(Coordonnees c,Grille grille) {
 		// TODO - implement Controleur.assécher
-            Scanner sc=new Scanner(System.in);
             if(assechementPossibleListe(grille).containsKey(c)){
                 if(getActionsRestantes()>0){
                     grille.getTuile(c).assechement();

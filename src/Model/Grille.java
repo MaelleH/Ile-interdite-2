@@ -161,6 +161,7 @@ public class Grille {
         getTuile("Le Jardin des Murmures").setEtat(Utils.EtatTuile.INONDEE);
         getTuile("La Caverne du Brasier").setEtat(Utils.EtatTuile.INONDEE);
         getTuile("La Porte de Bronze").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Le Jardin des Hurlements").setEtat(Utils.EtatTuile.INONDEE);
         getTuile("Le Marais Brumeux").setEtat(Utils.EtatTuile.COULEE);
         getTuile("Le Rocher Fantome").setEtat(Utils.EtatTuile.COULEE);
         getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);

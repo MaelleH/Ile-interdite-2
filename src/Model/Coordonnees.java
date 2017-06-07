@@ -10,7 +10,7 @@ public class Coordonnees{
         this.x = x;
         this.y = y;
     }
-        @Override
+    @Override
     public int hashCode(){
         return (x+y).hashCode();
     }

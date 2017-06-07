@@ -156,69 +156,67 @@ public class Controleur implements Observateur {
                 return (a.getMainCarteTrésor().size()>5);
         }
         
-        @Override
-        public void traiterMessage(Message m) {
-            //A Faire 
-            String x,y;
-            
-            
+    @Override
+    public void traiterMessage(Message m) {
+        //A Faire 
+        String x,y;
 
 
-                switch (m.getBtnCliquéTxt()) {
-                    case ALLER:
-                        if(m.getChampSaisieTxt().length() != 2){
-                            Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
-                        }else{
-                
-            
-                            x=Character.toString(m.getChampSaisieTxt().charAt(0));
-                            y=Character.toString(m.getChampSaisieTxt().charAt(1));
 
-                            Coordonnees c = new Coordonnees(x,y);
-                            System.out.println("Déplacement! (" + x +","+ y +")");
-                            getAventurier(m.getJoueur()).deplacement(c,grille);
 
-                        }
-                        
-                        break;
-                    case ASSECHER:
-                        if(m.getChampSaisieTxt().length() != 2){
-                            Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
-                        }else{
-                
-            
-                            x=Character.toString(m.getChampSaisieTxt().charAt(0));
-                            y=Character.toString(m.getChampSaisieTxt().charAt(1));
+            switch (m.getBtnCliquéTxt()) {
+                case ALLER:
+                    if(m.getChampSaisieTxt().length() != 2){
+                        Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
+                    }else{
 
-                            Coordonnees c = new Coordonnees(x,y);
-                            
-                            System.out.println("Assècher! (" + x +","+ y +")");
-                            getAventurier(m.getJoueur()).assecher(c,grille);
 
-                        }
-                        
-                        break;
-                    case AUTREACTION:
-                        System.out.println("Autre Action!");
-                        break;
-                    case TERMINERTOUR:
-                        System.out.println("Fin du Tour!");
-                        finTour();
-                        lancerTour();
-                        break;
-                    default:
-                        break;
-                }
-                updateVuePlateau();
-            
-            
-        }
+                        x=Character.toString(m.getChampSaisieTxt().charAt(0));
+                        y=Character.toString(m.getChampSaisieTxt().charAt(1));
+
+                        Coordonnees c = new Coordonnees(x,y);
+                        System.out.println("Déplacement! (" + x +","+ y +")");
+                        getAventurier(m.getJoueur()).deplacement(c,grille);
+
+                    }
+
+                    break;
+                case ASSECHER:
+                    if(m.getChampSaisieTxt().length() != 2){
+                        Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
+                    }else{
+
+
+                        x=Character.toString(m.getChampSaisieTxt().charAt(0));
+                        y=Character.toString(m.getChampSaisieTxt().charAt(1));
+
+                        Coordonnees c = new Coordonnees(x,y);
+
+                        System.out.println("Assècher! (" + x +","+ y +")");
+                        getAventurier(m.getJoueur()).assecher(c,grille);
+
+                    }
+
+                    break;
+                case AUTREACTION:
+                    System.out.println("Autre Action!");
+                    break;
+                case TERMINERTOUR:
+                    System.out.println("Fin du Tour!");
+                    finTour();
+                    lancerTour();
+                    break;
+                default:
+                    break;
+            }
+            updateVuePlateau();
+    }
+        
     public Aventurier getAventurier(String nom){
         for(Aventurier i : aventuriers){
             if(i.getNom().equals(nom)){
                 return i;
             }
-            
         }
         return null;
     }    
