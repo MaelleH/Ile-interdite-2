@@ -35,7 +35,7 @@ public class Explorateur extends Aventurier {
     public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
                                 
-                /*HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
                 int xo,yo,xn,yn;
                 
                 xo=Integer.parseInt(getPosition().getX());
@@ -45,34 +45,12 @@ public class Explorateur extends Aventurier {
                 for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
                     xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
                     yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
-
-                    if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((! i.getValue().getEtat().equals(Utils.EtatTuile.COULEE)))){
-                        listeD.put((Coordonnees) i.getKey(), i.getValue());
-                        System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                        System.out.println(((Tuile)i.getValue()).getNomT());    
-                    }        
-                }
-
-		return listeD;*/
-                
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
-                int xo,yo,xn,yn;
-                
-                xo=Integer.parseInt(getPosition().getX());
-                yo=Integer.parseInt(getPosition().getY());
-                
-                for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
                     if(i.getValue()!=null){
-                        xn=Integer.parseInt((String)(i.getKey()).getX());
-                        yn=Integer.parseInt((String)(i.getKey()).getY());
-
-
-
-                        if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! i.getValue().getEtat().equals(EtatTuile.COULEE)))){
+                        if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((! i.getValue().getEtat().equals(Utils.EtatTuile.COULEE)))){
                             listeD.put((Coordonnees) i.getKey(), i.getValue());
                             System.out.println(Integer.toString(xn)+Integer.toString(yn));
                             System.out.println(((Tuile)i.getValue()).getNomT());    
-                        } 
+                        }  
                     }
                 }
 

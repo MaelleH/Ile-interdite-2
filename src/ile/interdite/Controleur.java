@@ -74,6 +74,7 @@ public class Controleur implements Observateur {
         public void finTour(){
             getVueAventurier(aventuriers.get(0)).setVisible(false);
             aventuriers.get(0).resetActionsRestantes();
+            aventuriers.get(0).resetAutreA();
             setJoueurSuivant();
         }
 
@@ -199,7 +200,26 @@ public class Controleur implements Observateur {
 
                     break;
                 case AUTREACTION:
-                    System.out.println("Autre Action!");
+                    if(!getAventurier(m.getJoueur()).isAutreA()){
+                        if(m.getChampSaisieTxt().length() != 2){
+                            Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
+                        }else{
+                         x=Character.toString(m.getChampSaisieTxt().charAt(0));
+                         y=Character.toString(m.getChampSaisieTxt().charAt(1));
+
+                         Coordonnees c = new Coordonnees(x,y);
+
+                         System.out.println("Autre Action!");
+
+                         getAventurier(m.getJoueur()).autreAction(c,grille);
+                         getAventurier(m.getJoueur()).setAutreA(true);
+                        } 
+                    }
+                    else{
+                        Utils.afficherInformation("Super Action déja utilisée!");
+                    }
+                    
+                    
                     break;
                 case TERMINERTOUR:
                     System.out.println("Fin du Tour!");
