@@ -9,6 +9,8 @@ package Model.Aventuriers;
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
+import Util.Utils;
+import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import static Util.Utils.EtatTuile.COULEE;
 import static Util.Utils.EtatTuile.INONDEE;
@@ -33,19 +35,40 @@ public class Explorateur extends Aventurier {
     public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
                                 
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                /*HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
                 int xo,yo,xn,yn;
                 
                 xo=Integer.parseInt(getPosition().getX());
                 yo=Integer.parseInt(getPosition().getY());
                 
                 
-                for(Map.Entry i: grille.getHSTuile().entrySet()){
+                for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
                     xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
                     yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
 
-                    if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&(((Tuile)i.getValue()).getEtat()!=COULEE)){
-                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                    if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((! i.getValue().getEtat().equals(Utils.EtatTuile.COULEE)))){
+                        listeD.put((Coordonnees) i.getKey(), i.getValue());
+                        System.out.println(Integer.toString(xn)+Integer.toString(yn));
+                        System.out.println(((Tuile)i.getValue()).getNomT());    
+                    }        
+                }
+
+		return listeD;*/
+                
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                int xo,yo,xn,yn;
+                
+                xo=Integer.parseInt(getPosition().getX());
+                yo=Integer.parseInt(getPosition().getY());
+                
+                for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
+                    xn=Integer.parseInt((String)(i.getKey()).getX());
+                    yn=Integer.parseInt((String)(i.getKey()).getY());
+
+                    
+                    
+                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! i.getValue().getEtat().equals(EtatTuile.COULEE)))){
+                        listeD.put((Coordonnees) i.getKey(), i.getValue());
                         System.out.println(Integer.toString(xn)+Integer.toString(yn));
                         System.out.println(((Tuile)i.getValue()).getNomT());    
                     }        
@@ -57,23 +80,43 @@ public class Explorateur extends Aventurier {
       
         
         @Override
-        public HashMap assechementPossibleListe(Grille g) {
+        public HashMap assechementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                /*HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
                 int xo,yo,xn,yn;
                 
                 xo=Integer.parseInt(getPosition().getX());
                 yo=Integer.parseInt(getPosition().getY());
                 
                 
-                for(Map.Entry i: g.getHSTuile().entrySet()){
+                for(Map.Entry<Coordonnees,Tuile> i: g.getHSTuile().entrySet()){
                     xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
                     yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
 
-                    if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&(((Tuile)i.getValue()).getEtat()==INONDEE)){
-                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                    if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((i.getValue().getEtat().equals(Utils.EtatTuile.COULEE)))){
+                        listeD.put( i.getKey(), i.getValue());
                         System.out.println(Integer.toString(xn)+Integer.toString(yn));
                         System.out.println(((Tuile)i.getValue()).getNomT());    
+                    }        
+                }
+
+		return listeD;*/
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                int xo,yo,xn,yn;
+                
+                xo=Integer.parseInt(getPosition().getX());
+                yo=Integer.parseInt(getPosition().getY());
+                
+                for(Map.Entry<Coordonnees,Tuile> i : grille.getHSTuile().entrySet()){
+                    xn=Integer.parseInt((String)(i.getKey()).getX());
+                    yn=Integer.parseInt((String)(i.getKey()).getY());
+
+                    Tuile t = i.getValue();
+                    
+                    if((((xo==xn)&&(yo==yn))||(((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((i.getValue().getEtat().equals(Utils.EtatTuile.INONDEE)))){
+                        listeD.put( i.getKey(), i.getValue());
+                        System.out.println(Integer.toString(xn)+Integer.toString(yn));
+                        System.out.println((i.getValue()).getNomT());    
                     }        
                 }
 

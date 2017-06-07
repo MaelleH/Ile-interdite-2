@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.JOptionPane;
 import Model.Aventuriers.Aventurier;
+import com.sun.org.apache.xpath.internal.operations.Equals;
 
 /**
  *
@@ -33,6 +34,10 @@ public class Utils {
         @Override
         public String toString() {
             return this.libelle ;
+        }
+        
+        public boolean equals(EtatTuile t){
+            return this.libelle.equals(t.libelle);
         }
     }
 

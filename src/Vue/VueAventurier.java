@@ -31,6 +31,7 @@ import java.awt.event.MouseListener;
  
 public class VueAventurier  {
      
+    private final String nomAventurier;
     private final JPanel panelBoutons ;
     private final JPanel panelCentre ;
     private final JFrame window;
@@ -47,7 +48,7 @@ public class VueAventurier  {
     public VueAventurier (String nomJoueur, String nomAventurier, Color couleur, Observateur obs){
 
         this.controleur=obs;
-        
+        this.nomAventurier = nomAventurier;
         this.window = new JFrame();
         window.setSize(350, 200);
 
@@ -149,6 +150,10 @@ public class VueAventurier  {
         
     }  
 
+    public String getNomAventurier(){
+        return nomAventurier;
+    }
+    
      public JButton getBtnAutreAction() {
         return btnAutreAction;
     }
@@ -170,7 +175,9 @@ public class VueAventurier  {
     }
  
 
-    
+    public void setVisible(boolean b){
+        window.setVisible(b);
+    }
      
 }
 

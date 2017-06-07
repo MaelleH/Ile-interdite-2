@@ -4,9 +4,11 @@ import Model.CarteTrésor;
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
+import Util.Utils;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import static Util.Utils.EtatTuile.COULEE;
 import static Util.Utils.EtatTuile.INONDEE;
+import static Util.Utils.afficherInformation;
 import java.util.*;
 import java.util.HashMap;
 
@@ -46,11 +48,13 @@ public class Aventurier {
                 System.out.println(getPosition().getX()+getPosition().getY());
                 
             }
-            else if(this.getActionsRestantes()<0){
+            else if(this.getActionsRestantes()<1){
                 System.out.println("Plus d'actions....");
+                afficherInformation("Vous ne pouvez plus effectuer d'actions!");
             }
             else{
                 System.out.println("Déplacement impossible!");
+                afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");
             }
 	}
         
@@ -69,12 +73,13 @@ public class Aventurier {
                 xo=Integer.parseInt(getPosition().getX());
                 yo=Integer.parseInt(getPosition().getY());
                 
-                for(Map.Entry i: grille.getHSTuile().entrySet()){
+                for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
                     xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
                     yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
 
-                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&(((Tuile)i.getValue()).getEtat()!=COULEE)){
-                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                    
+                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
+                        listeD.put((Coordonnees) i.getKey(), i.getValue());
                         System.out.println(Integer.toString(xn)+Integer.toString(yn));
                         System.out.println(((Tuile)i.getValue()).getNomT());    
                     }        
@@ -92,14 +97,14 @@ public class Aventurier {
                 xo=Integer.parseInt(getPosition().getX());
                 yo=Integer.parseInt(getPosition().getY());
                 
-                for(Map.Entry i: grille.getHSTuile().entrySet()){
-                    xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
-                    yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
+                for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
+                    xn=Integer.parseInt((String)(i.getKey()).getX());
+                    yn=Integer.parseInt((String)(i.getKey()).getY());
 
-                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&(((Tuile)i.getValue()).getEtat()==ASSECHEE)){
-                        listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
+                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
+                        listeD.put( i.getKey(), i.getValue());
                         System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                        System.out.println(((Tuile)i.getValue()).getNomT());    
+                        System.out.println((i.getValue()).getNomT());    
                     }        
                 }
 
@@ -113,7 +118,7 @@ public class Aventurier {
             Scanner sc=new Scanner(System.in);
             if(assechementPossibleListe(grille).containsKey(c)){
                 if(getActionsRestantes()>0){
-                    
+                    grille.getTuile(c).assechement();
                     setActionsRestantes(getActionsRestantes()-1);
                 }
                 else{
@@ -125,8 +130,7 @@ public class Aventurier {
             }
             
             if(getNom().equals("Navigateur")){
-                System.out.println("Voulez vous assécher une deuxième case? oui/non");
-                if(sc.nextLine()=="oui"){
+                if(Utils.poserQuestion("Voulez-vous assêcher une deuxième case?")){
                     System.out.println("Entrer les nouvelles coordonnées");
                     if(assechementPossibleListe(grille).containsKey(c)){
                         setActionsRestantes(getActionsRestantes()-1);
@@ -176,6 +180,9 @@ public class Aventurier {
         this.actionsRestantes = actionsRestantes;
     }
 
+    public void resetActionsRestantes() {
+        this.actionsRestantes = ACTIONS_MAX;
+    }
     /**
      * @param position the position to set
      */

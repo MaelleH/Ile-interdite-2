@@ -99,7 +99,6 @@ public class Grille {
                 else{
                     int rand = (int) (Math.random()*max);
                     HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), (tuiles.get(rand)));
-                    System.out.println(Integer.toString(i)+Integer.toString(o)+tuiles.get(rand).getNomT());
                     tuiles.remove(rand);
                 }
 
@@ -152,9 +151,6 @@ public class Grille {
                 }
                 else{
                     HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
-                    System.out.println(tuiles.get(n).getNomT());
-                    System.out.println(Integer.toString(i)+Integer.toString(o));
-                    
                     n=n+1;
                 }
             }

@@ -1,37 +1,42 @@
 package Model;
 
 import Util.Utils;
+import Util.Utils.EtatTuile;
 
 
 public class Tuile {
 
-	private Utils.EtatTuile etat;
+	private EtatTuile etat;
 	private String tresor;
 	private NomTuile nomT;
         
         public Tuile (NomTuile nom,String tresor){
             this.nomT=nom;
             this.tresor=tresor;
-            this.etat=Utils.EtatTuile.ASSECHEE;
-
+            this.etat=EtatTuile.ASSECHEE;
+        }
+        public Tuile (NomTuile nom){
+            this.nomT=nom;
+            this.tresor="vide";
+            this.etat=EtatTuile.ASSECHEE;
         }
         
         public int hashMap(){
           return nomT.hashCode();
         }
         
-        public Tuile (NomTuile nom){
-            this.nomT=nom;
-            this.tresor="vide";
-            this.etat=Utils.EtatTuile.ASSECHEE;
-        }
         
         
-	public Utils.EtatTuile getEtat() {
+        
+	public EtatTuile getEtat() {
 		return this.etat;
 	}
 
-	public void setEtat(Utils.EtatTuile etat) {
+        public void assechement(){
+            setEtat(EtatTuile.ASSECHEE);
+        }
+        
+	public void setEtat(EtatTuile etat) {
 		this.etat = etat;
 	}
 

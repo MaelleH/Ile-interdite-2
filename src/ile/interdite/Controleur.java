@@ -24,21 +24,23 @@ import java.util.*;
 
 public class Controleur implements Observateur {
 
-	Collection<CarteTrésor> piocheCarteTrésor;
+	//Collection<CarteTrésor> piocheCarteTrésor;
 	private Grille grille;
         private ArrayList<Aventurier> aventuriers;
-        private VueAventurier vueAventurier;
+        private ArrayList<VueAventurier> vuesAventuriers;
         private VuePlateau vuePlateau;
-	private Collection<CarteTrésor> defausseCarteTrésor;
+	/*private Collection<CarteTrésor> defausseCarteTrésor;
 	private Collection<CarteInondation> piocheCarteInondation;
 	private Collection<CarteInondation> défausseCarteInondation;
-	private Collection<CarteInondation> défausseCarteCoulées;
+	private Collection<CarteInondation> défausseCarteCoulées;*/
 
         public Controleur() {
             initPartie();
+            lancerTour();
         }
         
         public void initPartie(){
+            //Créer la grille
             grille = new Grille();
             
             //Créer les Aventuriers
@@ -46,24 +48,49 @@ public class Controleur implements Observateur {
             vuePlateau = new VuePlateau();
             
             //Creér les vues de Aventuriers
+            vuesAventuriers = new ArrayList<>();
+            
             int i = 1;
+            VueAventurier vueAventurier;
             for(Aventurier a : aventuriers){
                 vueAventurier = new VueAventurier ("Joueur "+i,a.getNom(),getPionAventurier(a).getCouleur(),this);
+                vueAventurier.setVisible(false);
+                vuesAventuriers.add(vueAventurier);
                 i++;
             }
             
             
             
-            //Créer la grille et mettre à jour la vuePlateau
+            //Mise à jour du plateau
             updateVuePlateau();
             
             
         }
         
+        public void lancerTour(){
+            getVueAventurier(aventuriers.get(0)).setVisible(true);
+        }
         
+        public void finTour(){
+            getVueAventurier(aventuriers.get(0)).setVisible(false);
+            aventuriers.get(0).resetActionsRestantes();
+            setJoueurSuivant();
+        }
 
-
-	
+        public void setJoueurSuivant(){
+            Aventurier avenTmp = aventuriers.get(0);
+            aventuriers.remove(0);
+            aventuriers.add(avenTmp);
+        }
+        
+	public VueAventurier getVueAventurier(Aventurier a){
+            for(VueAventurier vA : vuesAventuriers){
+                if(vA.getNomAventurier().equals(a.getNom())){
+                    return vA;
+                }
+            }
+            return null;
+        }
 
 	/**
 	 * 
@@ -133,35 +160,60 @@ public class Controleur implements Observateur {
         public void traiterMessage(Message m) {
             //A Faire 
             String x,y;
-            x=Character.toString(m.getChampSaisieTxt().charAt(0));
-            y=Character.toString(m.getChampSaisieTxt().charAt(1));
-            
-            Coordonnees c = new Coordonnees(x,y);
             
             
+
+
+                switch (m.getBtnCliquéTxt()) {
+                    case ALLER:
+                        if(m.getChampSaisieTxt().length() != 2){
+                            Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
+                        }else{
+                
+            
+                            x=Character.toString(m.getChampSaisieTxt().charAt(0));
+                            y=Character.toString(m.getChampSaisieTxt().charAt(1));
+
+                            Coordonnees c = new Coordonnees(x,y);
+                            System.out.println("Déplacement! (" + x +","+ y +")");
+                            getAventurier(m.getJoueur()).deplacement(c,grille);
+
+                        }
+                        
+                        break;
+                    case ASSECHER:
+                        if(m.getChampSaisieTxt().length() != 2){
+                            Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
+                        }else{
+                
+            
+                            x=Character.toString(m.getChampSaisieTxt().charAt(0));
+                            y=Character.toString(m.getChampSaisieTxt().charAt(1));
+
+                            Coordonnees c = new Coordonnees(x,y);
+                            
+                            System.out.println("Assècher! (" + x +","+ y +")");
+                            getAventurier(m.getJoueur()).assecher(c,grille);
+
+                        }
+                        
+                        break;
+                    case AUTREACTION:
+                        System.out.println("Autre Action!");
+                        break;
+                    case TERMINERTOUR:
+                        System.out.println("Fin du Tour!");
+                        finTour();
+                        lancerTour();
+                        break;
+                    default:
+                        break;
+                }
+                updateVuePlateau();
             
             
-            switch (m.getBtnCliquéTxt()) {
-                case ALLER:
-                    System.out.println("Déplacement! (" + x +","+ y +")");
-                    getAv(m.getJoueur()).deplacement(c,grille);
-                    break;
-                case ASSECHER:
-                    System.out.println("Assècher! (" + x +","+ y +")");
-                    //assecher(inge, c);
-                    break;
-                case AUTREACTION:
-                    System.out.println("Autre Action! (" + x +","+ y +")");
-                    break;
-                case TERMINERTOUR:
-                    System.out.println("Fin du Tour! (" + x +","+ y +")");
-                    break;
-                default:
-                    break;
-            }
-            updateVuePlateau();
         }
-    public Aventurier getAv(String nom){
+    public Aventurier getAventurier(String nom){
         for(Aventurier i : aventuriers){
             if(i.getNom().equals(nom)){
                 return i;
