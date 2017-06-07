@@ -4,32 +4,24 @@ import Util.Utils;
 import java.util.*;
 
 public class Grille {
-
-        private HashMap<Coordonnees,Tuile> HSTuile;
-        private ArrayList<Tuile> tuiles = new ArrayList<>();
+    private HashMap<Coordonnees,Tuile> HSTuile;
 
     public Grille() {
         HSTuile = new HashMap<>();
         creerGrilleProf();
     }
         
-        
-        
-    
-    /**
-     * @return the HSTuile
-     */
     public HashMap<Coordonnees,Tuile> getHSTuile() {
         return HSTuile;
     }
 
-    /**
-     * @param HSTuile the HSTuile to set
-     */
     public void setHSTuile(HashMap<Coordonnees,Tuile> HSTuile) {
         this.HSTuile = HSTuile;
     }
-    public void creertuiles(){
+    
+    public ArrayList<Tuile> creertuiles(){
+        ArrayList<Tuile> tuiles = new ArrayList<>();
+        
         Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes);
         Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze);
         Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal");
@@ -80,12 +72,11 @@ public class Grille {
         tuiles.add(tuiletg);
         tuiles.add(tuilejm);
     
+        return tuiles;
     }
     
-    
-    
     public void creerGrille(){
-        creertuiles();
+        ArrayList<Tuile> tuiles = creertuiles();
 
         for (int i=1;i<=6;i++){
             for (int o=1;o<=6;o++){
@@ -106,8 +97,33 @@ public class Grille {
         }      
     }
     
-     
-
+    public void creerGrilleProf(){
+        ArrayList<Tuile> tuiles = creertuiles();
+        
+        int n=0;
+        for (int i=1;i<=6;i++){
+            for (int o=1;o<=6;o++){
+                if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
+                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
+                }
+                else{
+                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
+                    n=n+1;
+                }
+            }
+        }
+        
+        getTuile("Le Lagon Perdu").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Observatoire").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Le Jardin des Murmures").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("La Caverne du Brasier").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("La Porte de Bronze").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Le Jardin des Hurlements").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Le Marais Brumeux").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Le Rocher Fantome").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Le Temple de La Lune").setEtat(Utils.EtatTuile.COULEE);
+    }
     
     public Coordonnees getCoordTuile(String nomTuile){
         for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
@@ -135,39 +151,4 @@ public class Grille {
         }
         return null;
     }
-    
-    
-       
-
-    
-    
-    public void creerGrilleProf(){
-        creertuiles();
-        int n=0;
-        for (int i=1;i<=6;i++){
-            for (int o=1;o<=6;o++){
-                if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
-                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
-                }
-                else{
-                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
-                    n=n+1;
-                }
-            }
-        }
-        
-        getTuile("Le Lagon Perdu").setEtat(Utils.EtatTuile.INONDEE);
-        getTuile("Observatoire").setEtat(Utils.EtatTuile.INONDEE);
-        getTuile("Le Jardin des Murmures").setEtat(Utils.EtatTuile.INONDEE);
-        getTuile("La Caverne du Brasier").setEtat(Utils.EtatTuile.INONDEE);
-        getTuile("La Porte de Bronze").setEtat(Utils.EtatTuile.INONDEE);
-        getTuile("Le Jardin des Hurlements").setEtat(Utils.EtatTuile.INONDEE);
-        getTuile("Le Marais Brumeux").setEtat(Utils.EtatTuile.COULEE);
-        getTuile("Le Rocher Fantome").setEtat(Utils.EtatTuile.COULEE);
-        getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);
-        getTuile("Le Temple de La Lune").setEtat(Utils.EtatTuile.COULEE);
-        
-        
-    }
-    
 }

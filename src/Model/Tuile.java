@@ -6,26 +6,25 @@ import java.util.Objects;
 
 
 public class Tuile {
+    private EtatTuile etat;
+    private String tresor;
+    private NomTuile nomT;
 
-	private EtatTuile etat;
-	private String tresor;
-	private NomTuile nomT;
-        
-        public Tuile (NomTuile nom,String tresor){
-            this.nomT=nom;
-            this.tresor=tresor;
-            this.etat=EtatTuile.ASSECHEE;
-        }
-        public Tuile (NomTuile nom){
-            this.nomT=nom;
-            this.tresor="vide";
-            this.etat=EtatTuile.ASSECHEE;
-        }
+    public Tuile (NomTuile nom,String tresor){
+        this.nomT=nom;
+        this.tresor=tresor;
+        this.etat=EtatTuile.ASSECHEE;
+    }
+    public Tuile (NomTuile nom){
+        this.nomT=nom;
+        this.tresor="vide";
+        this.etat=EtatTuile.ASSECHEE;
+    }
 
-        @Override
-        public int hashCode() {
-            return etat.hashCode()+tresor.hashCode()+nomT.hashCode(); //To change body of generated methods, choose Tools | Templates.
-        }
+    @Override
+    public int hashCode() {
+        return etat.hashCode()+tresor.hashCode()+nomT.hashCode(); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -51,44 +50,30 @@ public class Tuile {
         return true;
     }
         
-        
-        
-        
-        
-        
-	public EtatTuile getEtat() {
-		return this.etat;
-	}
+    public EtatTuile getEtat() {
+            return this.etat;
+    }
 
-        public void assechement(){
-            setEtat(EtatTuile.ASSECHEE);
-        }
-        
-	public void setEtat(EtatTuile etat) {
-		this.etat = etat;
-	}
+    public void assechement(){
+        setEtat(EtatTuile.ASSECHEE);
+    }
 
-	public NomTuile getNomT() {
-		return this.nomT;
-	}
+    public void setEtat(EtatTuile etat) {
+            this.etat = etat;
+    }
 
-    /**
-     * @return the tresor
-     */
+    public NomTuile getNomT() {
+            return this.nomT;
+    }
+
     public String getTresor() {
         return tresor;
     }
 
-    /**
-     * @param tresor the tresor to set
-     */
     public void setTresor(String tresor) {
         this.tresor = tresor;
     }
 
-    /**
-     * @param nomT the nomT to set
-     */
     public void setNomT(NomTuile nomT) {
         this.nomT = nomT;
     }

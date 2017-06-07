@@ -102,7 +102,7 @@ public class Aventurier {
                         xn=Integer.parseInt((String)(i.getKey()).getX());
                         yn=Integer.parseInt((String)(i.getKey()).getY());
 
-                        if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
+                        if(((xo==xn && yo==yn)||(((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
                             listeD.put( i.getKey(), i.getValue());
                             System.out.println(Integer.toString(xn)+Integer.toString(yn));
                             System.out.println((i.getValue()).getNomT());    
@@ -130,7 +130,7 @@ public class Aventurier {
                 System.out.println("Assechement non possible ici!");
             }
             
-            if(getNom().equals("Navigateur")){
+            if(getNom().equals("Ingenieur")){
                 if(Utils.poserQuestion("Voulez-vous assêcher une deuxième case?")){
                     System.out.println("Entrer les nouvelles coordonnées");
                     if(assechementPossibleListe(grille).containsKey(c)){

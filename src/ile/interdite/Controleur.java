@@ -161,9 +161,6 @@ public class Controleur implements Observateur {
         //A Faire 
         String x,y;
 
-
-
-
             switch (m.getBtnCliquéTxt()) {
                 case ALLER:
                     if(m.getChampSaisieTxt().length() != 2){
@@ -194,6 +191,7 @@ public class Controleur implements Observateur {
 
                         System.out.println("Assècher! (" + x +","+ y +")");
                         getAventurier(m.getJoueur()).assecher(c,grille);
+                        
 
                     }
 
@@ -249,7 +247,6 @@ public class Controleur implements Observateur {
     }
               
     public void updateVuePlateau(){
-        
         ArrayList<Pion> pionAAfficher;
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
             pionAAfficher = new ArrayList<Pion>();
