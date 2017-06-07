@@ -14,6 +14,7 @@ public class Aventurier {
 	private int actionsRestantes;
 	private int ACTIONS_MAX = 3;
 	private Coordonnees position= new Coordonnees("3","3");
+        private boolean autreA=false;
        
     public Aventurier(){
         this.actionsRestantes=ACTIONS_MAX;
@@ -27,6 +28,10 @@ public class Aventurier {
 	public Coordonnees getPosition() {
 		return this.position;
 	}
+        
+        public void autreAction(Coordonnees c,Grille grille ){
+            afficherInformation("Vous n'avez pas d'action de bg!");
+        }
 
                 
 	/**
@@ -124,25 +129,26 @@ public class Aventurier {
                 }
                 else{
                     System.out.println("Plus d'actions....");
+                    afficherInformation("Vous ne pouvez plus effectuer d'actions!");
                 } 
             }  
             else{
                 System.out.println("Assechement non possible ici!");
+                afficherInformation("Vous ne pouvez pas assécher cette case!");
             }
             
-            if(getNom().equals("Ingenieur")){
-                if(Utils.poserQuestion("Voulez-vous assêcher une deuxième case?")){
+            /*if(getNom().equals("Ingenieur")){
+                if(Utils.poserQuestion("Voulez-vous assécher une deuxième case?")){
                     System.out.println("Entrer les nouvelles coordonnées");
                     if(assechementPossibleListe(grille).containsKey(c)){
                         setActionsRestantes(getActionsRestantes()-1);
                     }  
-                else{
-                    System.out.println("Assechement non possible ici!");
+                    else{
+                        System.out.println("Assechement non possible ici!");
+                        afficherInformation("Vous ne pouvez pas assécher cette case!");
+                    }
                 }
-                }
-                
-            
-            }
+            }*/
 	}
 
     /**
@@ -184,10 +190,27 @@ public class Aventurier {
     public void resetActionsRestantes() {
         this.actionsRestantes = ACTIONS_MAX;
     }
+    public void resetAutreA() {
+        this.setAutreA(false);
+    }
     /**
      * @param position the position to set
      */
     public void setPosition(Coordonnees position) {
         this.position = position;
+    }
+
+    /**
+     * @return the autreA
+     */
+    public boolean isAutreA() {
+        return autreA;
+    }
+
+    /**
+     * @param autreA the autreA to set
+     */
+    public void setAutreA(boolean autreA) {
+        this.autreA = autreA;
     }
 }
