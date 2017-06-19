@@ -14,7 +14,9 @@ import Model.Aventuriers.Messager;
 import Model.Aventuriers.Navigateur;
 import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
+import Model.EchelleNiveauEau;
 import Model.Helico;
+import Model.NomTuile;
 import Model.MonteeDesEaux;
 import Model.Sac;
 import Model.TresorBleu;
@@ -34,6 +36,7 @@ public class Controleur implements Observateur {
         private ArrayList<Aventurier> aventuriers;
         private ArrayList<VueAventurier> vuesAventuriers;
         
+        private EchelleNiveauEau niveauEau;
         private VuePlateau vuePlateau;
         private ArrayList<CarteTrésor> piocheCarteTrésor;
 	private ArrayList<CarteTrésor> defausseCarteTrésor;
@@ -194,6 +197,27 @@ public class Controleur implements Observateur {
                 return false;                
 	}
         
+    public boolean doitDefausser(Aventurier a) {
+            // TODO - implement Controleur.priseTresorPossible
+            return (a.getMainCarteTrésor().size()>5);
+    }
+    
+        public void initPiocheInnondation(){
+                for (NomTuile tuile : NomTuile.values()){
+                    CarteInondation carte = new CarteInondation(tuile);
+                    piocheCarteInondation.add(carte);
+                }
+        }
+
+        public CarteInondation picoherInnondation(Aventurier a){
+                return (piocheCarteInondation.get((0)));
+        }
+
+        
+        
+        
+        
+        
         
     @Override
     public void traiterMessage(Message m) {
@@ -349,5 +373,28 @@ public class Controleur implements Observateur {
         
         
         
+    }
+    public boolean isPerdu(){
+         if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("La Caverne des Ombres").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("La Caverne du Brasier").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("Le Palais de Corail").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Palais des Marees").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("Le Jardin des Murmures").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Jardin des Hurlements").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if(grille.getTuile("Heliport").getEtat()==EtatTuile.COULEE){
+             return true;
+         }
+         else if(niveauEau.getNiveauEau()==10){
+             return true;
+         }
+         else{
+             return false;
+         }
     }
 }
