@@ -52,20 +52,19 @@ public class Controleur implements Observateur {
         
         public Controleur() {
             lancerPartie();
-           // lancerTour();
+            
         }
         
         public void lancerPartie(){
             vueL= new VueLancement();
-            //initPartie();
         }
         
-        public void initPartie(){
+        public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
             //Créer la grille
             grille = new Grille();
             
             //Créer les Aventuriers
-            creationAventurier(4);
+            creationAventurier(nbj);
             vuePlateau = new VuePlateau();
             
             //Creér les vues de Aventuriers
@@ -85,7 +84,7 @@ public class Controleur implements Observateur {
             
             //Mise à jour du plateau
             updateVuePlateau();
-            
+            lancerTour();
             
         }
         
@@ -158,40 +157,6 @@ public class Controleur implements Observateur {
 		return aven1.getPosition() == aven2.getPosition();
                 
 	}
-
-	//TEST CASE PRENDRE TRESOR
-        
-	/* 
-	public void prendreTresor() {
-		// TODO - implement Controleur.prendreTresor
-                
-		if(priseTresorPossible(aventuriers.get(0))){
-                    TypeTrésor tresor =(grille.getHSTuile().get(aventuriers.get(0).getPosition()).getTresor());
-                    aventuriers.get(0).getMainCarteTrésor().remove(tresor);
-                }
-	}
-        */
-        
-        //TEST CASE PRENDRE TRESOR
-        
-	/*public boolean priseTresorPossible(Aventurier a) {
-		// TODO - implement Controleur.priseTresorPossible
-                TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
-                int stop=0;
-                
-                if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
-                    
-                    for(CarteTrésor i :a.getMainCarteTrésor()){
-                        if(!(i.getNomCT()).equals(tresor)){
-                          stop = stop +1;  
-                        }
-                    }
-                    if(stop<1){
-                        return true;
-                    }
-                }
-                return false;                
-	}*/
         
     public boolean doitDefausser(Aventurier a) {
             // TODO - implement Controleur.priseTresorPossible
@@ -219,6 +184,7 @@ public class Controleur implements Observateur {
     public void traiterMessage(Message m) {
         //A Faire 
         String x,y;
+        
 
             switch (m.getTypeMessage()) {
                 case ALLER:
@@ -300,6 +266,20 @@ public class Controleur implements Observateur {
                    else{
                        Utils.afficherInformation("Prise de trésor impossible");
                    }
+                   
+                case VAL2:
+                    x=m.getChampSaisieTxt();
+                    y=m.getJoueur();
+                    ArrayList<String> joueurs = new ArrayList<>();
+                    joueurs=m.getJoueurs();
+                    
+                    if(y.equals("2")||y.equals("3")||y.equals("4")){
+                       //initPartie(x,y,joueurs); 
+                    }
+                    
+                    
+                    
+                    break;
                         
                 case TERMINERTOUR:
                     System.out.println("Fin du Tour!");
