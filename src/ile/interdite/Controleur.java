@@ -154,28 +154,22 @@ public class Controleur implements Observateur {
                 
 	}
 
-	/**
-	 * 
-	 * @param a
-	 */
+	//TEST CASE PRENDRE TRESOR
+        
+	/* 
 	public void prendreTresor() {
 		// TODO - implement Controleur.prendreTresor
                 
 		if(priseTresorPossible(aventuriers.get(0))){
                     TypeTrésor tresor =(grille.getHSTuile().get(aventuriers.get(0).getPosition()).getTresor());
                     aventuriers.get(0).getMainCarteTrésor().remove(tresor);
-//PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
-
- 
                 }
 	}
-
-	/**
-	 * 
-	 * @param a
-     * @return 
-	 */
-	public boolean priseTresorPossible(Aventurier a) {
+        */
+        
+        //TEST CASE PRENDRE TRESOR
+        
+	/*public boolean priseTresorPossible(Aventurier a) {
 		// TODO - implement Controleur.priseTresorPossible
                 TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
                 int stop=0;
@@ -192,7 +186,7 @@ public class Controleur implements Observateur {
                     }
                 }
                 return false;                
-	}
+	}*/
         
     public boolean doitDefausser(Aventurier a) {
             // TODO - implement Controleur.priseTresorPossible
@@ -284,6 +278,24 @@ public class Controleur implements Observateur {
                     
                     
                     break;
+                case PRENDRETRESOR:
+                   Aventurier a = getAventurier(m.getJoueur());
+                   if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))&& a.prendreTresor(TypeTrésor.Pierre)){
+                            prisePierre=true;
+                    }
+                   else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))&& a.prendreTresor(TypeTrésor.Cristal)){
+                            priseCristal=true;
+                    }
+                   else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))&& a.prendreTresor(TypeTrésor.Calice)){
+                            priseCalice=true;
+                    }
+                   else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(TypeTrésor.Zéphyr)){
+                            priseZephyr=true;
+                    }
+                   else{
+                       Utils.afficherInformation("Prise de trésor impossible");
+                   }
+                        
                 case TERMINERTOUR:
                     System.out.println("Fin du Tour!");
                     finTour();
@@ -402,14 +414,27 @@ public class Controleur implements Observateur {
     }
     public boolean isGagne(){
         int nbavenheli=0;
+        int nbaventres=0;
+        boolean carteHeli=false;
         for (Aventurier atemp : aventuriers){
             if (grille.getTuile(atemp.getPosition())==grille.getTuile("Heliport")){
                 nbavenheli=nbavenheli+1;
             }
+            for (TypeTrésor tres : tresors){
+                for (CarteTrésor main : atemp.getMainCarteTrésor()){
+                    
+                    
+                    if("Hélicoptère".equals(main.getNomCT())){
+                        carteHeli=true;
+                    }
+                }                
+            }   
         }
-        if (nbavenheli==4){
-
+        if (nbavenheli==4 && nbaventres ==4 && carteHeli){
+            return true;
         }
-        return true;
+        else{
+            return false;
+        }
     }
 }

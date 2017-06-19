@@ -4,6 +4,7 @@ import Model.CarteTrésor;
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
+import Model.TypeTrésor;
 import Util.Utils;
 import static Util.Utils.afficherInformation;
 import java.util.*;
@@ -227,6 +228,38 @@ public class Aventurier {
     public void setAutreA(boolean autreA) {
         this.autreA = autreA;
     }
+    
+    public boolean priseTresorPossible(TypeTrésor tresor) {
+		// TODO - implement Controleur.priseTresorPossible
+                int stop=0;
+                
+                if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){
+                    
+                    for(CarteTrésor i :getMainCarteTrésor()){
+                        if(!(i.getNomCT()).equals(tresor)){
+                          stop = stop +1;  
+                        }
+                    }
+                    if(stop<1){
+                        return true;
+                    }
+                }
+                return false;                
+	}
+    public boolean prendreTresor(TypeTrésor tresor) {
+		// TODO - implement Controleur.prendreTresor
+                
+		if(priseTresorPossible(tresor)){
+                    getMainCarteTrésor().remove(tresor);
+//PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
+                    return true;
+ 
+                }
+                else{
+                    return false;
+                }
+	}
+        
     	/**
 	 * 
 	 * @param aven2
