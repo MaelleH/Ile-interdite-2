@@ -7,6 +7,8 @@ package Vue;
 
 
 import Model.Coordonnees;
+import Model.TypeTrésor;
+import static Model.TypeTrésor.Pierre;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import java.awt.Color;
@@ -60,7 +62,7 @@ public class VuePlateau {
                     
                     this.mainPanel.add(uneCase);
                 }else{
-                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,"pierre");
+                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,Pierre);
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     
                     this.mainPanel.add(uneCase);
@@ -71,7 +73,7 @@ public class VuePlateau {
     
     
     
-    public void updateCase(String coord,String nomCase,EtatTuile etatCase,String tresor,ArrayList<Utils.Pion> pionAAfficher){
+    public void updateCase(String coord,String nomCase,EtatTuile etatCase,TypeTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
         listeCases.get(coord).updateCase(nomCase, etatCase, tresor,pionAAfficher);
     }
     

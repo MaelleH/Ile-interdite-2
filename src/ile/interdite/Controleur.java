@@ -14,12 +14,13 @@ import Model.Aventuriers.Messager;
 import Model.Aventuriers.Navigateur;
 import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
+import Model.EchelleNiveauEau;
 import Model.Helico;
+import Model.NomTuile;
+import Model.MonteeDesEaux;
 import Model.Sac;
-import Model.TresorBleu;
-import Model.TresorGris;
-import Model.TresorJaune;
-import Model.TresorRouge;
+import Model.CarteTrésorTrophée;
+import Model.TypeTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
@@ -33,13 +34,15 @@ public class Controleur implements Observateur {
         private ArrayList<Aventurier> aventuriers;
         private ArrayList<VueAventurier> vuesAventuriers;
         
+        private EchelleNiveauEau niveauEau;
         private VuePlateau vuePlateau;
         private ArrayList<CarteTrésor> piocheCarteTrésor;
 	private ArrayList<CarteTrésor> defausseCarteTrésor;
 	private ArrayList<CarteInondation> piocheCarteInondation;
 	private ArrayList<CarteInondation> défausseCarteInondation;
 	private ArrayList<CarteInondation> défausseCarteCoulées;
-
+        private ArrayList<TypeTrésor> tresors;
+        
         public Controleur() {
             initPartie();
             lancerTour();
@@ -81,7 +84,9 @@ public class Controleur implements Observateur {
         public void finTour(){
             getVueAventurier(aventuriers.get(0)).setVisible(false);
             aventuriers.get(0).resetActionsRestantes();
+            aventuriers.get(0).piocherCT(piocheCarteTrésor);
             aventuriers.get(0).resetAutreA();
+            
             setJoueurSuivant();
         }
 
@@ -99,26 +104,32 @@ public class Controleur implements Observateur {
             }
             return null;
         }
+        
+
+        
 
         public void initCartetresor(){
             piocheCarteTrésor = new ArrayList<>();
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorJaune());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Calice));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorRouge());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Pierre));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorGris());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Zéphyr));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorBleu());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Cristal));
             }
             for(int i=0;i<3;i++){
                 piocheCarteTrésor.add(new Helico());
             }
             for(int i=0;i<2;i++){
                 piocheCarteTrésor.add(new Sac());
+            }
+            for(int i=0;i<3;i++){
+                piocheCarteTrésor.add(new MonteeDesEaux());
             }
             
             piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);
@@ -132,7 +143,7 @@ public class Controleur implements Observateur {
 	 */
 	public void donnerCarte(Aventurier aven1, Aventurier aven2) {
 		// TODO - implement Controleur.donnerCarte
-		
+		//TODO - TROUVER UN MOYEN DE RENTRER UNE DEUXIEME INOF A  PART SI LES BOUTONS SONT FAIT;
 	}
 
 	/**
@@ -150,13 +161,14 @@ public class Controleur implements Observateur {
 	 * 
 	 * @param a
 	 */
-	public void prendreTresor(Aventurier a) {
+	public void prendreTresor() {
 		// TODO - implement Controleur.prendreTresor
                 
-		if(priseTresorPossible(a)){
-                    String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
-                    a.getMainCarteTrésor().remove(tresor);
+		if(priseTresorPossible(aventuriers.get(0))){
+                    TypeTrésor tresor =(grille.getHSTuile().get(aventuriers.get(0).getPosition()).getTresor());
+                    aventuriers.get(0).getMainCarteTrésor().remove(tresor);
 //PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
+
  
                 }
 	}
@@ -168,7 +180,7 @@ public class Controleur implements Observateur {
 	 */
 	public boolean priseTresorPossible(Aventurier a) {
 		// TODO - implement Controleur.priseTresorPossible
-                String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
                 int stop=0;
                 
                 if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
@@ -189,6 +201,23 @@ public class Controleur implements Observateur {
             // TODO - implement Controleur.priseTresorPossible
             return (a.getMainCarteTrésor().size()>5);
     }
+    
+        public void initPiocheInnondation(){
+                for (NomTuile tuile : NomTuile.values()){
+                    CarteInondation carte = new CarteInondation(tuile);
+                    piocheCarteInondation.add(carte);
+                }
+        }
+
+        public CarteInondation picoherInnondation(Aventurier a){
+                return (piocheCarteInondation.get((0)));
+        }
+
+        
+        
+        
+        
+        
         
     @Override
     public void traiterMessage(Message m) {
@@ -309,7 +338,7 @@ public class Controleur implements Observateur {
                 String coord = e.getKey().getX() + e.getKey().getY();
                 String nomCase = e.getValue().getNomT().toString();
                 EtatTuile etatTuile = e.getValue().getEtat();
-                String tresor = e.getValue().getTresor();
+                TypeTrésor tresor = e.getValue().getTresor();
                 
                 for(Aventurier a : aventuriers){
                     if(a.getPosition().equals(e.getKey())){
@@ -344,5 +373,54 @@ public class Controleur implements Observateur {
         
         
         
+    }
+    public boolean isPerdu(){
+         if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("La Caverne des Ombres").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("La Caverne du Brasier").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("Le Palais de Corail").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Palais des Marees").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("Le Jardin des Murmures").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Jardin des Hurlements").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if(grille.getTuile("Heliport").getEtat()==EtatTuile.COULEE){
+             return true;
+         }
+         else if(niveauEau.getNiveauEau()==10){
+             return true;
+         }
+         else{
+             return false;
+         }
+    }
+    public boolean isGagne(){
+        int nbavenheli=0;
+        int nbaventres=0;
+        boolean carteHeli=false;
+        for (Aventurier atemp : aventuriers){
+            if (grille.getTuile(atemp.getPosition())==grille.getTuile("Heliport")){
+                nbavenheli=nbavenheli+1;
+            }
+            for (TypeTrésor tres : tresors){
+                for (CarteTrésor main : atemp.getMainCarteTrésor()){
+                    if(main.getNomCT()==tres.toString()){
+                        nbaventres=nbaventres+1;
+                    }
+                    if(main.getNomCT()=="Hélicoptère"){
+                        carteHeli=true;
+                    }
+                }                
+            }   
+        }
+        if (nbavenheli==4 && nbaventres ==4 && carteHeli){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
