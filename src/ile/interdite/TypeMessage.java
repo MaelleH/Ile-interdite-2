@@ -13,6 +13,7 @@ public enum TypeMessage {
     ALLER,
     ASSECHER,
     AUTREACTION,
-    TERMINERTOUR
+    TERMINERTOUR,
+    DONNERCARTE;
 
 }

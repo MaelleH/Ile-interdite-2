@@ -227,4 +227,31 @@ public class Aventurier {
     public void setAutreA(boolean autreA) {
         this.autreA = autreA;
     }
+    	/**
+	 * 
+	 * @param aven2
+     * @param carte
+	 */
+    public void donnerCarte(Aventurier aven2,CarteTrésor carte) {
+        int taille;
+        
+        if(this.mainCarteTrésor.contains(carte)){
+            //On verifie que l'aventurier a la carte, si il a :
+            
+            //On ajoute la carte a l'aventurier 2
+            aven2.getMainCarteTrésor().add(carte);
+            
+            //on recupere la taille de la main du joueur
+            taille=this.getMainCarteTrésor().size();
+            
+            //on enlève la ou les cartes "carte" de sa main
+            this.mainCarteTrésor.remove(carte);
+            
+            //on remet les cartes qu'on a enlevées en trop
+            for(int i=(this.getMainCarteTrésor().size());i<taille;i++ ){
+                this.mainCarteTrésor.add(carte);
+            }
+                
+        }
+    }
 }
