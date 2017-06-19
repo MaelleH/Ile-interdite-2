@@ -25,12 +25,14 @@ import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
 import Vue.VueAventurier;
+import Vue.VueLancement;
 import Vue.VuePlateau;
 
 public class Controleur implements Observateur {
 
 	//Collection<CarteTrésor> piocheCarteTrésor;
 	private Grille grille;
+        private VueLancement vueL;
         private ArrayList<Aventurier> aventuriers;
         private ArrayList<VueAventurier> vuesAventuriers;
         
@@ -43,15 +45,21 @@ public class Controleur implements Observateur {
 	private ArrayList<CarteInondation> défausseCarteCoulées;
         private ArrayList<TypeTrésor> tresors;
         
-        
+
         private boolean prisePierre;
-        private boolean priseCalice;
-        private boolean priseZephyr;
         private boolean priseCristal;
+        private boolean priseZephyr;
+        private boolean priseCalice;
+
         
         public Controleur() {
-            initPartie();
-            lancerTour();
+            lancerPartie();
+           // lancerTour();
+        }
+        
+        public void lancerPartie(){
+            vueL= new VueLancement();
+            //initPartie();
         }
         
         public void initPartie(){
@@ -142,16 +150,6 @@ public class Controleur implements Observateur {
             piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);
         }
         
-        
-	/**
-	 * 
-	 * @param aven1
-	 * @param aven2
-	 */
-	public void donnerCarte(Aventurier aven1, Aventurier aven2) {
-		// TODO - implement Controleur.donnerCarte
-		//TODO - TROUVER UN MOYEN DE RENTRER UNE DEUXIEME INOF A  PART SI LES BOUTONS SONT FAIT;
-	}
 
 	/**
 	 * 
@@ -260,6 +258,12 @@ public class Controleur implements Observateur {
                     }
 
                     break;
+                case DONNERCARTE:
+                    //if(donnationPossible(aventuriers.get(0), aven2)){
+                      //  aventuriers.get(0).donnerCarte(aven2, carte);
+                    //}
+                    break;
+                    
                 case AUTREACTION:
                     if(!getAventurier(m.getJoueur()).isAutreA()){
                         if(m.getChampSaisieTxt().length() != 2){
@@ -434,11 +438,6 @@ public class Controleur implements Observateur {
                 }                
             }   
         }
-        if (nbavenheli==4 && nbaventres ==4 && carteHeli){
-            return true;
-        }
-        else{
-            return false;
-        }
+            return nbavenheli==4 && priseCalice&& prisePierre && priseCristal && priseZephyr && carteHeli;
     }
 }
