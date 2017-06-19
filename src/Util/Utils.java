@@ -77,7 +77,35 @@ public class Utils {
             if (JAUNE.name().equals(name)) return JAUNE ;
             return null ;
         }
+        static Pion getFromAventName(NomAventurier nomA) {
+            if (nomA.toString().equals(NomAventurier.Explorateur.toString())) return ROUGE ;
+            if (nomA.toString().equals(NomAventurier.Ingenieur.toString())) return VERT ;
+            if (nomA.toString().equals(NomAventurier.Pilote.toString())) return BLEU ;
+            if (nomA.toString().equals(NomAventurier.Explorateur.toString())) return ORANGE ;
+            if (nomA.toString().equals(NomAventurier.Plongeur.toString())) return VIOLET ;
+            if (nomA.toString().equals(NomAventurier.Explorateur.toString())) return JAUNE ;
+            return null ;
+        }
     }
+    public static enum NomAventurier {
+        Explorateur("Explorateur"),
+        Pilote("Pilote"),
+        Navigateur("Navigateur"),
+        Ingenieur("Ingenieur"),
+        Plongeur("Plongeur"),
+        Messager("Messager") ;
+        
+        private String nom;
+
+        private NomAventurier(String nom) {
+            this.nom = nom;
+        }
+        @Override
+        public String toString() {
+            return this.nom ;
+        }
+        
+    }    
 
     public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
         if (Parameters.ALEAS) {

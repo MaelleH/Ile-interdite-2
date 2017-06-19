@@ -43,6 +43,12 @@ public class Controleur implements Observateur {
 	private ArrayList<CarteInondation> défausseCarteCoulées;
         private ArrayList<TypeTrésor> tresors;
         
+        
+        private boolean prisePierre;
+        private boolean priseCalice;
+        private boolean priseZephyr;
+        private boolean priseCristal;
+        
         public Controleur() {
             initPartie();
             lancerTour();

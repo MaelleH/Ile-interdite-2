@@ -247,17 +247,16 @@ public class Aventurier {
                 return false;                
 	}
     public boolean prendreTresor(TypeTrésor tresor) {
-		// TODO - implement Controleur.prendreTresor
-                
-		if(priseTresorPossible(tresor)){
-                    getMainCarteTrésor().remove(tresor);
-//PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
-                    return true;
- 
-                }
-                else{
-                    return false;
-                }
-	}
+        // TODO - implement Controleur.prendreTresor
+
+        if(priseTresorPossible(tresor)){
+            getMainCarteTrésor().remove(tresor);
+            return true;
+
+        }
+        else{
+            return false;
+        }
+    }
         
 }
