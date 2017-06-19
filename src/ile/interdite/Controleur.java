@@ -14,6 +14,12 @@ import Model.Aventuriers.Messager;
 import Model.Aventuriers.Navigateur;
 import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
+import Model.Helico;
+import Model.Sac;
+import Model.TresorBleu;
+import Model.TresorGris;
+import Model.TresorJaune;
+import Model.TresorRouge;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
@@ -26,11 +32,13 @@ public class Controleur implements Observateur {
 	private Grille grille;
         private ArrayList<Aventurier> aventuriers;
         private ArrayList<VueAventurier> vuesAventuriers;
+        
         private VuePlateau vuePlateau;
-	/*private Collection<CarteTrésor> defausseCarteTrésor;
-	private Collection<CarteInondation> piocheCarteInondation;
-	private Collection<CarteInondation> défausseCarteInondation;
-	private Collection<CarteInondation> défausseCarteCoulées;*/
+        private ArrayList<CarteTrésor> piocheCarteTrésor;
+	private ArrayList<CarteTrésor> defausseCarteTrésor;
+	private ArrayList<CarteInondation> piocheCarteInondation;
+	private ArrayList<CarteInondation> défausseCarteInondation;
+	private ArrayList<CarteInondation> défausseCarteCoulées;
 
         public Controleur() {
             initPartie();
@@ -56,7 +64,8 @@ public class Controleur implements Observateur {
                 vuesAventuriers.add(vueAventurier);
                 i++;
             }
-            
+            //Créer les cartes
+            initCartetresor();
             
             
             //Mise à jour du plateau
@@ -91,6 +100,31 @@ public class Controleur implements Observateur {
             return null;
         }
 
+        public void initCartetresor(){
+            piocheCarteTrésor = new ArrayList<>();
+            for(int i=0;i<5;i++){
+                piocheCarteTrésor.add(new TresorJaune());
+            }
+            for(int i=0;i<5;i++){
+                piocheCarteTrésor.add(new TresorRouge());
+            }
+            for(int i=0;i<5;i++){
+                piocheCarteTrésor.add(new TresorGris());
+            }
+            for(int i=0;i<5;i++){
+                piocheCarteTrésor.add(new TresorBleu());
+            }
+            for(int i=0;i<3;i++){
+                piocheCarteTrésor.add(new Helico());
+            }
+            for(int i=0;i<2;i++){
+                piocheCarteTrésor.add(new Sac());
+            }
+            
+            piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);
+        }
+        
+        
 	/**
 	 * 
 	 * @param aven1
@@ -105,9 +139,9 @@ public class Controleur implements Observateur {
 	 * 
 	 * @param aven1
 	 * @param aven2
+     * @return 
 	 */
 	public boolean donnationPossible(Aventurier aven1, Aventurier aven2) {
-		// TODO - implement Controleur.donnationPossible
 		return aven1.getPosition() == aven2.getPosition();
                 
 	}
@@ -150,10 +184,11 @@ public class Controleur implements Observateur {
                 }
                 return false;                
 	}
-	public boolean doitDefausser(Aventurier a) {
-		// TODO - implement Controleur.priseTresorPossible
-                return (a.getMainCarteTrésor().size()>5);
-        }
+        
+    public boolean doitDefausser(Aventurier a) {
+            // TODO - implement Controleur.priseTresorPossible
+            return (a.getMainCarteTrésor().size()>5);
+    }
         
     @Override
     public void traiterMessage(Message m) {
@@ -237,6 +272,7 @@ public class Controleur implements Observateur {
         return null;
     }    
     
+    
     public void creationAventurier(int nbjoueur){
         aventuriers = new ArrayList<>();
 
@@ -263,6 +299,7 @@ public class Controleur implements Observateur {
         
         aventuriers = aventuriersTemp;
     }
+    
               
     public void updateVuePlateau(){
         ArrayList<Pion> pionAAfficher;
@@ -297,6 +334,8 @@ public class Controleur implements Observateur {
         }
     }
         
+    
+    
     public static void main(String [] args) {
         // Instanciation de la fenêtre 
         Controleur controleur = new Controleur();

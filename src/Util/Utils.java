@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.JOptionPane;
 import Model.Aventuriers.Aventurier;
+import Model.CarteInondation;
+import Model.CarteTrésor;
 
 /**
  *
@@ -78,6 +80,18 @@ public class Utils {
     }
 
     public static ArrayList<Aventurier> melangerAventuriers(ArrayList<Aventurier> arrayList) {
+        if (Parameters.ALEAS) {
+            Collections.shuffle(arrayList);
+        }
+        return arrayList ;
+    }
+    public static ArrayList<CarteTrésor> melangerCT(ArrayList<CarteTrésor> arrayList) {
+        if (Parameters.ALEAS) {
+            Collections.shuffle(arrayList);
+        }
+        return arrayList ;
+    }
+    public static ArrayList<CarteInondation> melangerCI(ArrayList<CarteInondation> arrayList) {
         if (Parameters.ALEAS) {
             Collections.shuffle(arrayList);
         }

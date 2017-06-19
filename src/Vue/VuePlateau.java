@@ -41,6 +41,7 @@ public class VuePlateau {
         
         
         this.window.setVisible(true);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
     }
     
