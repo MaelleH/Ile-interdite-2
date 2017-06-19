@@ -1,6 +1,7 @@
 package Model.Aventuriers;
 
 import Model.Coordonnees;
+import Util.Utils;
 
 public class Navigateur extends Aventurier { 
     public Navigateur(Coordonnees position) {
@@ -8,7 +9,7 @@ public class Navigateur extends Aventurier {
     }
     
     @Override
-    public String getNom() {
-        return "Navigateur";
+    public Utils.NomAventurier getNom() {
+        return Utils.NomAventurier.Navigateur; //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -16,7 +16,7 @@ public class CarteTrésorTrophée extends CarteTrésor{
     }
 
     private void setNomCT(TypeTrésor nomCT) {
-       this.setNomCT(nomCT);
+       this.nomCT = nomCT;
     }
     
 }

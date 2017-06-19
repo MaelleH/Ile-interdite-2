@@ -14,6 +14,7 @@ import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import static Util.Utils.EtatTuile.COULEE;
 import static Util.Utils.EtatTuile.INONDEE;
+import Util.Utils.NomAventurier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +25,8 @@ public class Explorateur extends Aventurier {
     }
 
     @Override
-    public String getNom() {
-        return "Explorateur"; //To change body of generated methods, choose Tools | Templates.
+    public NomAventurier getNom() {
+        return NomAventurier.Explorateur; //To change body of generated methods, choose Tools | Templates.
     }
     
     

@@ -102,7 +102,7 @@ public class VueAventurier  {
         btnAller.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                controleur.traiterMessage(new Message(ALLER,position.getText(),nomAventurier));
+                //controleur.traiterMessage(new Message(ALLER,position.getText(),nomAventurier));
                 
             }
 
@@ -127,7 +127,7 @@ public class VueAventurier  {
         btnAssecher.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                           controleur.traiterMessage(new Message(ASSECHER,position.getText(),nomAventurier)); 
+                                           //controleur.traiterMessage(new Message(ASSECHER,position.getText(),nomAventurier)); 
                                         }
                                     }
         );
@@ -135,7 +135,7 @@ public class VueAventurier  {
         btnAutreAction.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(AUTREACTION,position.getText(),nomAventurier));
+                                            //controleur.traiterMessage(new Message(AUTREACTION,position.getText(),nomAventurier));
                                         }
                                     }
         );
@@ -143,7 +143,7 @@ public class VueAventurier  {
         btnTerminerTour.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            controleur.traiterMessage(new Message(TERMINERTOUR,position.getText(),nomAventurier));
+                                            //controleur.traiterMessage(new Message(TERMINERTOUR,position.getText(),nomAventurier));
                                         }
                                     }
         );

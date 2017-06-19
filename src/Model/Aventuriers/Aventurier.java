@@ -6,12 +6,13 @@ import Model.Grille;
 import Model.Tuile;
 import Model.TypeTrésor;
 import Util.Utils;
+import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;
 import java.util.*;
 import java.util.HashMap;
 
 public class Aventurier {
-	private Collection<CarteTrésor> mainCarteTrésor;
+	private ArrayList<CarteTrésor> mainCarteTrésor = new ArrayList<>();
 	private int actionsRestantes;
 	private int ACTIONS_MAX = 3;
 	private Coordonnees position= new Coordonnees("3","3");
@@ -84,7 +85,7 @@ public class Aventurier {
 	public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
                                 
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();
                 int xo,yo,xn,yn;
                 
                 xo=Integer.parseInt(getPosition().getX());
@@ -169,8 +170,8 @@ public class Aventurier {
     /**
      * @return the nom
      */
-    public String getNom() {
-        return "Aventurier";
+    public NomAventurier getNom() {
+        return NomAventurier.Aventurier;
     }
 
 
@@ -184,7 +185,7 @@ public class Aventurier {
     /**
      * @param mainCarteTrésor the mainCarteTrésor to set
      */
-    public void setMainCarteTrésor(Collection<CarteTrésor> mainCarteTrésor) {
+    public void setMainCarteTrésor(ArrayList<CarteTrésor> mainCarteTrésor) {
         this.mainCarteTrésor = mainCarteTrésor;
     }
 
@@ -247,18 +248,17 @@ public class Aventurier {
                 return false;                
 	}
     public boolean prendreTresor(TypeTrésor tresor) {
-		// TODO - implement Controleur.prendreTresor
-                
-		if(priseTresorPossible(tresor)){
-                    getMainCarteTrésor().remove(tresor);
-//PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
-                    return true;
- 
-                }
-                else{
-                    return false;
-                }
-	}
+        // TODO - implement Controleur.prendreTresor
+
+        if(priseTresorPossible(tresor)){
+            getMainCarteTrésor().remove(tresor);
+            return true;
+
+        }
+        else{
+            return false;
+        }
+    }
         
     	/**
 	 * 

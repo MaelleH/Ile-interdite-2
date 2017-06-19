@@ -6,6 +6,8 @@
 package ile.interdite;
 
 import Model.Aventuriers.Aventurier;
+import Model.Coordonnees;
+import Vue.PanelCase;
 import java.util.ArrayList;
 
 /**
@@ -14,9 +16,12 @@ import java.util.ArrayList;
  */
 public class Message {
     private TypeMessage typeMessage;
-    private String champSaisieTxt;
+    private PanelCase pC;
+    
+    private Coordonnees coord;
     private String joueur;
     private ArrayList<String> joueurs;
+    private String champSaisieTxt;
     
     public Message(TypeMessage typeMessage,String champSaisieTxt,String joueur) {
         this.typeMessage = typeMessage;
@@ -30,23 +35,22 @@ public class Message {
         this.joueurs= joueurs;
         this.joueur =joueur;
     }
+
+    public Message() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public TypeMessage getTypeMessage() {
         return typeMessage;
     }
 
-    public String getChampSaisieTxt() {
-        return champSaisieTxt;
-    }
+    
 
     public void setBtnCliquéTxt(TypeMessage btnCliquéTxt) {
         this.setTypeMessage(btnCliquéTxt);
     }
 
-    public void setChampSaisieTxt(String champSaisieTxt) {
-        this.champSaisieTxt = champSaisieTxt;
-    }
-
+    
     /**
      * @return the joueur
      */
@@ -61,24 +65,16 @@ public class Message {
         this.joueur = joueur;
     }
 
-    /**
-     * @param typeMessage the typeMessage to set
-     */
     public void setTypeMessage(TypeMessage typeMessage) {
-        this.typeMessage = typeMessage;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @return the joueurs
-     */
-    public ArrayList<String> getJoueurs() {
-        return joueurs;
+    public PanelCase getpC() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     * @param joueurs the joueurs to set
-     */
-    public void setJoueurs(ArrayList<String> joueurs) {
-        this.joueurs = joueurs;
+    public void setCoord(Coordonnees coordCase) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 }

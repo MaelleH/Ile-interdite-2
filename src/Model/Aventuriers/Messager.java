@@ -1,6 +1,7 @@
 package Model.Aventuriers;
 
 import Model.Coordonnees;
+import Util.Utils;
 
 public class Messager extends Aventurier {
     public Messager(Coordonnees position) {
@@ -8,8 +9,8 @@ public class Messager extends Aventurier {
     }
         
     @Override
-    public String getNom() {
-        return "Messager"; //To change body of generated methods, choose Tools | Templates.
+    public Utils.NomAventurier getNom() {
+        return Utils.NomAventurier.Messager; //To change body of generated methods, choose Tools | Templates.
     }
     
     /**
