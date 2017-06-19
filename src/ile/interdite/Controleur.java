@@ -41,7 +41,8 @@ public class Controleur implements Observateur {
 	private ArrayList<CarteInondation> piocheCarteInondation;
 	private ArrayList<CarteInondation> défausseCarteInondation;
 	private ArrayList<CarteInondation> défausseCarteCoulées;
-
+        private ArrayList<TypeTrésor> tresors;
+        
         public Controleur() {
             initPartie();
             lancerTour();
@@ -160,13 +161,14 @@ public class Controleur implements Observateur {
 	 * 
 	 * @param a
 	 */
-	public void prendreTresor(Aventurier a) {
+	public void prendreTresor() {
 		// TODO - implement Controleur.prendreTresor
                 
-		if(priseTresorPossible(a)){
-                    TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
-                    a.getMainCarteTrésor().remove(tresor);
+		if(priseTresorPossible(aventuriers.get(0))){
+                    TypeTrésor tresor =(grille.getHSTuile().get(aventuriers.get(0).getPosition()).getTresor());
+                    aventuriers.get(0).getMainCarteTrésor().remove(tresor);
 //PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
+
  
                 }
 	}
