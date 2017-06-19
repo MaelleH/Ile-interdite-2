@@ -405,7 +405,7 @@ public class Controleur implements Observateur {
             }
         }
         if (nbavenheli==4){
-            
+
         }
     }
 }
