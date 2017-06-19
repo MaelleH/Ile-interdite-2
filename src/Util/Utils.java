@@ -77,23 +77,24 @@ public class Utils {
             if (JAUNE.name().equals(name)) return JAUNE ;
             return null ;
         }
-        static Pion getFromAventName(NomAventurier nomA) {
+        public Pion getFromAventName(NomAventurier nomA) {
             if (nomA.toString().equals(NomAventurier.Explorateur.toString())) return ROUGE ;
             if (nomA.toString().equals(NomAventurier.Ingenieur.toString())) return VERT ;
             if (nomA.toString().equals(NomAventurier.Pilote.toString())) return BLEU ;
-            if (nomA.toString().equals(NomAventurier.Explorateur.toString())) return ORANGE ;
+            if (nomA.toString().equals(NomAventurier.Messager.toString())) return ORANGE ;
             if (nomA.toString().equals(NomAventurier.Plongeur.toString())) return VIOLET ;
-            if (nomA.toString().equals(NomAventurier.Explorateur.toString())) return JAUNE ;
+            if (nomA.toString().equals(NomAventurier.Navigateur.toString())) return JAUNE ;
             return null ;
         }
     }
     public static enum NomAventurier {
+        Aventurier("Aventurier"),
         Explorateur("Explorateur"),
         Pilote("Pilote"),
         Navigateur("Navigateur"),
         Ingenieur("Ingenieur"),
         Plongeur("Plongeur"),
-        Messager("Messager") ;
+        Messager("Messager");
         
         private String nom;
 

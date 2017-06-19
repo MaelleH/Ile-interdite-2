@@ -24,6 +24,7 @@ import Model.TypeTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
+import Vue.KitPanelAventurier;
 import Vue.VueAventurier;
 import Vue.VueLancement;
 import Vue.VuePlateau;
@@ -54,12 +55,12 @@ public class Controleur implements Observateur {
         
         public Controleur() {
             lancerPartie();
-           // lancerTour();
+            lancerTour();
         }
         
         public void lancerPartie(){
-            vueL= new VueLancement();
-            //initPartie();
+            //vueL= new VueLancement();
+            initPartie();
         }
         
         public void initPartie(){
@@ -67,12 +68,12 @@ public class Controleur implements Observateur {
             grille = new Grille();
             
             //Créer les Aventuriers
-            creationAventurier(4);
+            creationAventurier(3);
             
             
             //Creér les vues de Aventuriers
             vuesAventuriers = new ArrayList<>();
-            
+            /*
             int i = 1;
             VueAventurier vueAventurier;
             for(Aventurier a : aventuriers){
@@ -80,24 +81,30 @@ public class Controleur implements Observateur {
                 vueAventurier.setVisible(false);
                 vuesAventuriers.add(vueAventurier);
                 i++;
-            }
+            }*/
             //Créer les cartes
             initCartetresor();
             
             
             //Création et Mise à jour du plateau
-            vuePlateau = new VuePlateau();
+            int i = 1;
+            ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
+            for(Aventurier a : aventuriers){
+                kitsPanelAventurier.add(new KitPanelAventurier("Joueur "+i, a.getNom(), getPionAventurier(a).getCouleur()));
+                i++;
+            }
+            vuePlateau = new VuePlateau(kitsPanelAventurier,this);
             updateVuePlateau();
             
             
         }
         
         public void lancerTour(){
-            getVueAventurier(aventuriers.get(0)).setVisible(true);
+            vuePlateau.setActive(aventuriers.get(0).getNom());
         }
         
         public void finTour(){
-            getVueAventurier(aventuriers.get(0)).setVisible(false);
+            vuePlateau.setInactive(aventuriers.get(0).getNom());
             aventuriers.get(0).resetActionsRestantes();
             aventuriers.get(0).piocherCT(piocheCarteTrésor);
             aventuriers.get(0).resetAutreA();
@@ -111,14 +118,14 @@ public class Controleur implements Observateur {
             aventuriers.add(avenTmp);
         }
         
-	public VueAventurier getVueAventurier(Aventurier a){
+	/*public VueAventurier getVueAventurier(Aventurier a){
             for(VueAventurier vA : vuesAventuriers){
                 if(vA.getNomAventurier().equals(a.getNom())){
                     return vA;
                 }
             }
             return null;
-        }
+        }*/
         
 
         
@@ -221,51 +228,44 @@ public class Controleur implements Observateur {
     @Override
     public void traiterMessage(Message m) {
         //A Faire 
-        String x,y;
+        Coordonnees c;
+        
 
             switch (m.getTypeMessage()) {
                 case ALLER:
-                    if(m.getChampSaisieTxt().length() != 2){
-                        Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
-                    }else{
+                    vuePlateau.resShow();
+                    
+                        c = m.getCoord();
+                        System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
+                        aventuriers.get(0).deplacement(c,grille);
 
-
-                        x=Character.toString(m.getChampSaisieTxt().charAt(0));
-                        y=Character.toString(m.getChampSaisieTxt().charAt(1));
-
-                        Coordonnees c = new Coordonnees(x,y);
-                        System.out.println("Déplacement! (" + x +","+ y +")");
-                        getAventurier(m.getJoueur()).deplacement(c,grille);
-
-                    }
+                    
 
                     break;
                 case ASSECHER:
-                    if(m.getChampSaisieTxt().length() != 2){
-                        Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
-                    }else{
+                    vuePlateau.resShow();
+                    
 
 
-                        x=Character.toString(m.getChampSaisieTxt().charAt(0));
-                        y=Character.toString(m.getChampSaisieTxt().charAt(1));
+                        
+                        c = m.getCoord();
 
-                        Coordonnees c = new Coordonnees(x,y);
-
-                        System.out.println("Assècher! (" + x +","+ y +")");
-                        getAventurier(m.getJoueur()).assecher(c,grille);
+                        System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
+                        aventuriers.get(0).assecher(c,grille);
                         
 
-                    }
+                    
 
                     break;
                 case DONNERCARTE:
+                    vuePlateau.resShow();
                     //if(donnationPossible(aventuriers.get(0), aven2)){
                       //  aventuriers.get(0).donnerCarte(aven2, carte);
                     //}
                     break;
                     
                 case AUTREACTION:
-                    if(!getAventurier(m.getJoueur()).isAutreA()){
+                    /*if(!getAventurier(m.getJoueur()).isAutreA()){
                         if(m.getChampSaisieTxt().length() != 2){
                             Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
                         }else{
@@ -282,29 +282,39 @@ public class Controleur implements Observateur {
                     }
                     else{
                         Utils.afficherInformation("Super Action déja utilisée!");
-                    }
+                    }*/
                     
                     
                     break;
                 case PRENDRETRESOR:
-                   Aventurier a = getAventurier(m.getJoueur());
-                   if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))&& a.prendreTresor(TypeTrésor.Pierre)){
-                            prisePierre=true;
+                    vuePlateau.resShow();
+                    Aventurier a = getAventurier(m.getJoueur());
+                    if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))&& a.prendreTresor(TypeTrésor.Pierre)){
+                             prisePierre=true;
                     }
-                   else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))&& a.prendreTresor(TypeTrésor.Cristal)){
-                            priseCristal=true;
+                    else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))&& a.prendreTresor(TypeTrésor.Cristal)){
+                             priseCristal=true;
                     }
-                   else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))&& a.prendreTresor(TypeTrésor.Calice)){
-                            priseCalice=true;
+                    else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))&& a.prendreTresor(TypeTrésor.Calice)){
+                             priseCalice=true;
                     }
-                   else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(TypeTrésor.Zéphyr)){
-                            priseZephyr=true;
+                    else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(TypeTrésor.Zéphyr)){
+                             priseZephyr=true;
                     }
-                   else{
-                       Utils.afficherInformation("Prise de trésor impossible");
-                   }
-                        
+                    else{
+                        Utils.afficherInformation("Prise de trésor impossible");
+                    }
+                    break; 
+                case PROPOSER_DEPLACEMENT:
+                    vuePlateau.resShow();
+                    vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
+                    break;
+                case PROPOSER_ASSECHEMENT:
+                    vuePlateau.resShow();
+                    vuePlateau.showAssechables(aventuriers.get(0).assechementPossibleListe(grille).keySet());
+                    break;
                 case TERMINERTOUR:
+                    vuePlateau.resShow();
                     System.out.println("Fin du Tour!");
                     finTour();
                     lancerTour();
@@ -317,7 +327,7 @@ public class Controleur implements Observateur {
         
     public Aventurier getAventurier(String nom){
         for(Aventurier i : aventuriers){
-            if(i.getNom().equals(nom)){
+            if(i.getNom().toString().equals(nom)){
                 return i;
             }
         }
@@ -356,7 +366,7 @@ public class Controleur implements Observateur {
     public void updateVuePlateau(){
         ArrayList<Pion> pionAAfficher;
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
-            pionAAfficher = new ArrayList<Pion>();
+            pionAAfficher = new ArrayList<>();
             if(e.getValue() != null){
                 String coord = e.getKey().getX() + e.getKey().getY();
                 String nomCase = e.getValue().getNomT().toString();
@@ -375,7 +385,7 @@ public class Controleur implements Observateur {
     }
 
     public Pion getPionAventurier(Aventurier a){
-        switch(a.getNom()){
+        switch(a.getNom().toString()){
             case "Explorateur" : return Pion.ROUGE;
             case "Ingenieur" : return Pion.VERT;
             case "Messager" : return Pion.ORANGE;
@@ -398,27 +408,26 @@ public class Controleur implements Observateur {
         
     }
     public boolean isPerdu(){
-         if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)){
-             return true;
-         }
-         else if ((grille.getTuile("La Caverne des Ombres").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("La Caverne du Brasier").getEtat()==EtatTuile.COULEE)){
-             return true;
-         }
-         else if ((grille.getTuile("Le Palais de Corail").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Palais des Marees").getEtat()==EtatTuile.COULEE)){
-             return true;
-         }
-         else if ((grille.getTuile("Le Jardin des Murmures").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Jardin des Hurlements").getEtat()==EtatTuile.COULEE)){
-             return true;
-         }
-         else if(grille.getTuile("Heliport").getEtat()==EtatTuile.COULEE){
-             return true;
-         }
-         else if(niveauEau.getNiveauEau()==10){
-             return true;
-         }
-         else{
-             return false;
-         }
+        if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)){
+            return true;
+        }
+        else if ((grille.getTuile("La Caverne des Ombres").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("La Caverne du Brasier").getEtat()==EtatTuile.COULEE)){
+            return true;
+        }
+        else if ((grille.getTuile("Le Palais de Corail").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Palais des Marees").getEtat()==EtatTuile.COULEE)){
+            return true;
+        }
+        else if ((grille.getTuile("Le Jardin des Murmures").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Jardin des Hurlements").getEtat()==EtatTuile.COULEE)){
+            return true;
+        }
+        else if(grille.getTuile("Heliport").getEtat()==EtatTuile.COULEE){
+            return true;
+        }
+        else if(niveauEau.getNiveauEau()==10){
+            return true;
+        }
+        return false;
+         
     }
     public boolean isGagne(){
         int nbavenheli=0;

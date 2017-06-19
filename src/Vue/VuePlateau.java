@@ -6,18 +6,25 @@
 package Vue;
 
 
+
 import Model.Coordonnees;
 import Model.TypeTrésor;
 import static Model.TypeTrésor.Pierre;
 import Util.Utils;
 import Util.Utils.EtatTuile;
+import ile.interdite.Message;
+import ile.interdite.Observateur;
+import ile.interdite.TypeMessage;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+
 import java.awt.GridLayout;
-import java.awt.Insets;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Set;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -25,35 +32,55 @@ import javax.swing.JPanel;
  *
  * @author ferreijo
  */
-public class VuePlateau {
+public class VuePlateau implements Observateur{
     private JFrame window;
     private JPanel mainPanel;
+    private JPanel panelPlateau;
+    private JPanel panelAventuriers;
+    
+    private Observateur controleur;
+    private ArrayList<PanelAventurier> listePanelAventuriers;
+    
     
     private HashMap<String,PanelCase> listeCases = new HashMap<>();
-    private ArrayList<PanelAventurier> listeAventuriers = new ArrayList<>();
 
-    public VuePlateau() {
+    /**
+     *
+     * @param obs
+     */
+    public VuePlateau(ArrayList<KitPanelAventurier> kitsPanelsAventuriers,Observateur obs) {
+        listePanelAventuriers = new ArrayList<>();
+        controleur = obs;
+        
         this.window = new JFrame();
         window.setLocation(350, 0);
-        window.setSize(900, 900);
-        
+        window.setSize(1200, 900);
         window.setTitle("Ile Interdite");
-        mainPanel = new JPanel(new GridLayout(6,6));
-        window.add(mainPanel);
+        
+        mainPanel = new JPanel(new BorderLayout());
+        window.setLayout(new BorderLayout());
+        
+        panelPlateau = new JPanel(new GridLayout(6,6));
+        window.add(panelPlateau,BorderLayout.CENTER);
+        
+        panelAventuriers = new JPanel(new GridLayout(4, 1));
+        window.add(panelAventuriers,BorderLayout.WEST);
+        
+        
+        
+        
+        initPanelAventuriers(kitsPanelsAventuriers);
         initPlateau();
         
         
+     
         this.window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
     }
     
     public void initPlateau(){
         PanelCase uneCase;
-        this.window.add(mainPanel);
-        
-       
-        
+        this.window.add(panelPlateau);
         
         for(int i = 1; i<=6;i++){
             for(int j = 1; j<=6;j++){
@@ -61,12 +88,12 @@ public class VuePlateau {
                     uneCase = new PanelCase();
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     
-                    this.mainPanel.add(uneCase);
+                    this.panelPlateau.add(uneCase);
                 }else{
-                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,Pierre);
+                    uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,Pierre,this);
                     addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     
-                    this.mainPanel.add(uneCase);
+                    this.panelPlateau.add(uneCase);
                 }
             }
         }
@@ -76,11 +103,96 @@ public class VuePlateau {
     
     public void updateCase(String coord,String nomCase,EtatTuile etatCase,TypeTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
         listeCases.get(coord).updateCase(nomCase, etatCase, tresor,pionAAfficher);
+        
     }
     
     public void addListeCases(String key,PanelCase uneCase){
         this.listeCases.put(key, uneCase);
     }
+
+    private void initPanelAventuriers(ArrayList<KitPanelAventurier> kitsPanelsAventuriers) {
+        PanelAventurier panelA;
+        
+        for(KitPanelAventurier kitPanelA : kitsPanelsAventuriers){
+            panelA = new PanelAventurier(kitPanelA.getNomJoueur(),kitPanelA.getNomAventurier().toString(), kitPanelA.getCouleurAventurier(), getControleur());
+            panelAventuriers.add(panelA);
+            listePanelAventuriers.add(panelA);
+            
+            setInactive(kitPanelA.getNomAventurier());
+        }
+        
+        for(int i = 0;i<4-listePanelAventuriers.size();i++){
+            panelAventuriers.add(new JPanel());
+        }
+    }
+
+    public Observateur getControleur() {
+        return controleur;
+    }
     
+    public void setActive(Utils.NomAventurier nomA){
+        getPanelAventurier(nomA).setActive();
+    }
     
+    public void setInactive(Utils.NomAventurier nomA){
+        getPanelAventurier(nomA).setInactive();
+    }
+    
+    public PanelAventurier getPanelAventurier(Utils.NomAventurier nomA){
+        for(PanelAventurier panelA : listePanelAventuriers){
+            if(panelA.getNomAventurier().equals(nomA.toString())){
+                return panelA;
+            }
+        }
+        return null;
+    }
+    
+    public void resShow(){
+        for(String c : listeCases.keySet()){
+            listeCases.get(c).setEtatListener(0);
+        }
+    }
+    
+    public void showAssechables(Set<Coordonnees> listeCoordonnees){
+        for(Coordonnees c : listeCoordonnees){
+            listeCases.get(c.getX()+c.getY()).setEtatListener(2);
+        } 
+        
+    }
+    
+    public void showDeplacementPossible(Set<Coordonnees> listeCoordonnees){
+        for(Coordonnees c : listeCoordonnees){
+            listeCases.get(c.getX()+c.getY()).setEtatListener(1);
+        } 
+    }
+
+    @Override
+    public void traiterMessage(Message msg) {
+        Message m;
+        switch(msg.getTypeMessage()){
+            case ALLER:
+                m = new Message();
+                m.setTypeMessage(TypeMessage.ALLER);
+                m.setCoord(getCoordCase(msg.getpC()));
+                controleur.traiterMessage(m);
+                break;
+            case ASSECHER:
+                m = new Message();
+                m.setTypeMessage(TypeMessage.ASSECHER);
+                m.setCoord(getCoordCase(msg.getpC()));
+                controleur.traiterMessage(m);
+                break;
+            default: break;
+        }
+    }
+    
+    public Coordonnees getCoordCase(PanelCase pc){
+        for(String c : listeCases.keySet()){
+            if(listeCases.get(c).equals(pc)){
+                return new Coordonnees(Character.toString(c.charAt(0)), Character.toString(c.charAt(1)));
+            }
+        }
+        
+        return null;
+    }
 }

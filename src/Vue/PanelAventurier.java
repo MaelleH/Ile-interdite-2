@@ -19,6 +19,7 @@ import Util.Utils.Pion;
 import ile.interdite.Controleur;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
+import ile.interdite.TypeMessage;
 import static ile.interdite.TypeMessage.ALLER;
 import static ile.interdite.TypeMessage.ASSECHER;
 import static ile.interdite.TypeMessage.AUTREACTION;
@@ -33,7 +34,7 @@ import javax.swing.border.Border;
 public class PanelAventurier  extends JPanel{
      
     private final String nomAventurier;
-    /*private final String nomJoueur;*/
+    private final String nomJoueur;
     
     
     private final JPanel panelHaut;
@@ -49,32 +50,36 @@ public class PanelAventurier  extends JPanel{
     private final JButton btnTerminerTour;
     
     private Observateur controleur;
+
     
-    public PanelAventurier (/*String nomJoueur,*/ String nomAventurier, Color couleur, Observateur obs,int x,int y){
+    
+    
+    
+    public PanelAventurier (String nomJoueur, String nomAventurier, Color couleur, Observateur obs){
 
         this.controleur=obs;
         this.nomAventurier = nomAventurier;
-        /*this.nomJoueur = nomJoueur;*/
+        this.nomJoueur = nomJoueur;
         
         
         this.setLayout(new GridLayout(2, 1));
-        this.setSize(x, y);
         
 
         this.setBackground(new Color(230, 230, 230));
+        this.setBorder(BorderFactory.createLineBorder(couleur, 3));
         
         // ====================================Panel Haut===================================
         panelHaut = new JPanel(new BorderLayout());
-        this.setBorder(BorderFactory.createLineBorder(couleur, 10));
+        panelHaut.setBorder(BorderFactory.createLineBorder(couleur, 3));
         this.add(panelHaut);
         // NORD : le titre = nom de l'aventurier + nom du joueur sur la couleurActive du pion
         panelNomAventurier = new JPanel();
-        panelHaut.add(panelNomAventurier);
         panelNomAventurier.setBackground(couleur);
-        panelNomAventurier.add(new JLabel(nomAventurier,SwingConstants.CENTER ),BorderLayout.NORTH);
+        panelNomAventurier.add(new JLabel(nomJoueur+" ("+nomAventurier+")",SwingConstants.CENTER ));
+        panelHaut.add(panelNomAventurier,BorderLayout.NORTH);
         // CENTRE : 1 ligne pour position courante
         panelCartes = new JPanel();
-        panelHaut.add(panelCartes);
+        panelHaut.add(panelCartes,BorderLayout.CENTER);
         // ==================================================================================
 
         // ====================================Panel Bas====================================
@@ -103,13 +108,17 @@ public class PanelAventurier  extends JPanel{
         panelBoutons.add(btnTerminerTour);
         
         
+        
+        
         // ==================================================================================
         
         
         btnAller.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                           //controleur.traiterMessage(new Message(ALLER,position.getText(),nomAventurier));
+                                            Message m = new Message();
+                                            m.setTypeMessage(TypeMessage.PROPOSER_DEPLACEMENT);
+                                            controleur.traiterMessage(m);
                                         }
                                     }
         );
@@ -118,7 +127,9 @@ public class PanelAventurier  extends JPanel{
         btnAssecher.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                           //controleur.traiterMessage(new Message(ASSECHER,position.getText(),nomAventurier)); 
+                                           Message m = new Message();
+                                            m.setTypeMessage(TypeMessage.PROPOSER_ASSECHEMENT);
+                                            controleur.traiterMessage(m);
                                         }
                                     }
         );
@@ -126,7 +137,9 @@ public class PanelAventurier  extends JPanel{
         btnDonnerCarte.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            //controleur.traiterMessage(new Message(AUTREACTION,position.getText(),nomAventurier));
+                                            Message m = new Message();
+                                            m.setTypeMessage(TypeMessage.PROPOSER_DONATION_CARTE);
+                                            controleur.traiterMessage(m);
                                         }
                                     }
         );
@@ -134,7 +147,10 @@ public class PanelAventurier  extends JPanel{
         btnPrendreTresor.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            //controleur.traiterMessage(new Message(AUTREACTION,position.getText(),nomAventurier));
+                                            Message m = new Message();
+                                            m.setTypeMessage(TypeMessage.PRENDRETRESOR);
+                                            m.setJoueur(nomAventurier);
+                                            controleur.traiterMessage(m);
                                         }
                                     }
         );
@@ -142,7 +158,9 @@ public class PanelAventurier  extends JPanel{
         btnTerminerTour.addActionListener(new ActionListener() {
                                         @Override
                                         public void actionPerformed(ActionEvent e) {
-                                            //controleur.traiterMessage(new Message(TERMINERTOUR,position.getText(),nomAventurier));
+                                            Message m = new Message();
+                                            m.setTypeMessage(TypeMessage.TERMINERTOUR);
+                                            controleur.traiterMessage(m);
                                         }
                                     }
         );
@@ -156,8 +174,26 @@ public class PanelAventurier  extends JPanel{
         //this.position.setText(pos);
     }
 
-    
+    public void setActive(){
+        btnAller.setEnabled(true);
+        btnAssecher.setEnabled(true);
+        btnDonnerCarte.setEnabled(true);
+        btnPrendreTresor.setEnabled(true);
+        btnTerminerTour.setEnabled(true);
+        
+    }
+    public void setInactive(){
+        btnAller.setEnabled(false);
+        btnAssecher.setEnabled(false);
+        btnDonnerCarte.setEnabled(false);
+        btnPrendreTresor.setEnabled(false);
+        btnTerminerTour.setEnabled(false);
+        
+    }
 
+    public String getNomAventurier() {
+        return nomAventurier;
+    }
     
      
 }

@@ -14,8 +14,8 @@ public class Plongeur extends Aventurier {
         }
     
         @Override
-        public String getNom() {
-            return "Plongeur";
+        public Utils.NomAventurier getNom() {
+            return Utils.NomAventurier.Plongeur; //To change body of generated methods, choose Tools | Templates.
         }
 	/**
 	 * @param g
