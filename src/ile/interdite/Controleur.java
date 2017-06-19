@@ -19,10 +19,7 @@ import Model.Helico;
 import Model.NomTuile;
 import Model.MonteeDesEaux;
 import Model.Sac;
-import Model.TresorBleu;
-import Model.TresorGris;
-import Model.TresorJaune;
-import Model.TresorRouge;
+import Model.CarteTrésorTrophée;
 import Model.TypeTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
@@ -113,16 +110,16 @@ public class Controleur implements Observateur {
         public void initCartetresor(){
             piocheCarteTrésor = new ArrayList<>();
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorJaune());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Calice));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorRouge());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Pierre));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorGris());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Zéphyr));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorBleu());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Cristal));
             }
             for(int i=0;i<3;i++){
                 piocheCarteTrésor.add(new Helico());
