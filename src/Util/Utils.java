@@ -24,7 +24,7 @@ public class Utils {
         INONDEE("Inondée"),
         COULEE("Coulée");
 
-        String libelle ;
+        final String libelle ;
         
         EtatTuile(String libelle) {
             this.libelle = libelle ;
