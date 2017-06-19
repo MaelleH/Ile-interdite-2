@@ -43,6 +43,11 @@ public class Controleur implements Observateur {
 	private ArrayList<CarteInondation> défausseCarteCoulées;
         private ArrayList<TypeTrésor> tresors;
         
+        private boolean prisePierre;
+        private boolean priseCristal;
+        private boolean priseZephyr;
+        private boolean priseCalice;
+        
         public Controleur() {
             initPartie();
             lancerTour();
@@ -427,11 +432,6 @@ public class Controleur implements Observateur {
                 }                
             }   
         }
-        if (nbavenheli==4 && nbaventres ==4 && carteHeli){
-            return true;
-        }
-        else{
-            return false;
-        }
+            return nbavenheli==4 && priseCalice&& prisePierre && priseCristal && priseZephyr && carteHeli;
     }
 }
