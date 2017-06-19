@@ -381,8 +381,8 @@ public class Controleur implements Observateur {
          else if(grille.getTuile("Heliport").getEtat()==EtatTuile.COULEE){
              return true;
          }
-         else if(){
-             
+         else if(niveauEau.getNiveauEau()==10){
+             return true;
          }
          else{
              return false;
