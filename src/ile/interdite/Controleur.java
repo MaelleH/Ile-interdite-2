@@ -400,7 +400,12 @@ public class Controleur implements Observateur {
     public boolean isGagne(){
         int nbavenheli=0;
         for (Aventurier atemp : aventuriers){
-            atemp.getPosition()
+            if (grille.getTuile(atemp.getPosition())==grille.getTuile("Heliport")){
+                nbavenheli=nbavenheli+1;
+            }
+        }
+        if (nbavenheli==4){
+            
         }
     }
 }
