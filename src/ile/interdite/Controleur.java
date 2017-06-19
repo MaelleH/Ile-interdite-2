@@ -14,7 +14,9 @@ import Model.Aventuriers.Messager;
 import Model.Aventuriers.Navigateur;
 import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
+import Model.EchelleNiveauEau;
 import Model.Helico;
+import Model.NomTuile;
 import Model.Sac;
 import Model.TresorBleu;
 import Model.TresorGris;
@@ -33,6 +35,7 @@ public class Controleur implements Observateur {
         private ArrayList<Aventurier> aventuriers;
         private ArrayList<VueAventurier> vuesAventuriers;
         
+        private EchelleNiveauEau niveauEau;
         private VuePlateau vuePlateau;
         private ArrayList<CarteTrésor> piocheCarteTrésor;
 	private ArrayList<CarteTrésor> defausseCarteTrésor;
@@ -189,6 +192,23 @@ public class Controleur implements Observateur {
             // TODO - implement Controleur.priseTresorPossible
             return (a.getMainCarteTrésor().size()>5);
     }
+    
+        public void initPiocheInnondation(){
+                for (NomTuile tuile : NomTuile.values()){
+                    CarteInondation carte = new CarteInondation(tuile);
+                    piocheCarteInondation.add(carte);
+                }
+        }
+
+        public CarteInondation picoherInnondation(Aventurier a){
+                return (piocheCarteInondation.get((0)));
+        }
+
+        
+        
+        
+        
+        
         
     @Override
     public void traiterMessage(Message m) {
