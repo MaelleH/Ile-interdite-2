@@ -39,6 +39,7 @@ public class VueLancement {
         Font font;
         font = new Font("Arial",Font.BOLD,25);
         bv.setFont(font);
+        bv.setForeground(Color.pink);
         
         
         
