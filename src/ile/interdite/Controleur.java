@@ -68,7 +68,7 @@ public class Controleur implements Observateur {
             grille = new Grille();
             
             //Créer les Aventuriers
-            creationAventurier(3);
+            creationAventurier(4);
             
             
             //Creér les vues de Aventuriers
