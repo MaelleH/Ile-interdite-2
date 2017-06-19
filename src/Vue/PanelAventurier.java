@@ -30,10 +30,10 @@ import java.awt.event.MouseListener;
 import javax.swing.border.Border;
 
  
-public class panelAventurier  extends JPanel{
+public class PanelAventurier  extends JPanel{
      
     private final String nomAventurier;
-    private final String nomJoueur;
+    /*private final String nomJoueur;*/
     
     
     private final JPanel panelHaut;
@@ -50,11 +50,11 @@ public class panelAventurier  extends JPanel{
     
     private Observateur controleur;
     
-    public panelAventurier (String nomJoueur, String nomAventurier, Color couleur, Observateur obs,int x,int y){
+    public PanelAventurier (/*String nomJoueur,*/ String nomAventurier, Color couleur, Observateur obs,int x,int y){
 
         this.controleur=obs;
         this.nomAventurier = nomAventurier;
-        this.nomJoueur = nomJoueur;
+        /*this.nomJoueur = nomJoueur;*/
         
         
         this.setLayout(new GridLayout(2, 1));
@@ -106,29 +106,13 @@ public class panelAventurier  extends JPanel{
         // ==================================================================================
         
         
-        btnAller.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                //controleur.traiterMessage(new Message(ALLER,position.getText(),nomAventurier));
-                
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
+        btnAller.addActionListener(new ActionListener() {
+                                        @Override
+                                        public void actionPerformed(ActionEvent e) {
+                                           //controleur.traiterMessage(new Message(ALLER,position.getText(),nomAventurier));
+                                        }
+                                    }
+        );
         
         
         btnAssecher.addActionListener(new ActionListener() {
@@ -165,9 +149,6 @@ public class panelAventurier  extends JPanel{
         
     }  
 
-    public String getNomAventurier(){
-        return nomAventurier;
-    }
     
      
 

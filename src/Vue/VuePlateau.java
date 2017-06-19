@@ -30,6 +30,7 @@ public class VuePlateau {
     private JPanel mainPanel;
     
     private HashMap<String,PanelCase> listeCases = new HashMap<>();
+    private ArrayList<PanelAventurier> listeAventuriers = new ArrayList<>();
 
     public VuePlateau() {
         this.window = new JFrame();

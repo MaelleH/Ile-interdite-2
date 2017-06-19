@@ -54,7 +54,7 @@ public class Controleur implements Observateur {
             
             //Créer les Aventuriers
             creationAventurier(4);
-            vuePlateau = new VuePlateau();
+            
             
             //Creér les vues de Aventuriers
             vuesAventuriers = new ArrayList<>();
@@ -71,7 +71,8 @@ public class Controleur implements Observateur {
             initCartetresor();
             
             
-            //Mise à jour du plateau
+            //Création et Mise à jour du plateau
+            vuePlateau = new VuePlateau();
             updateVuePlateau();
             
             
