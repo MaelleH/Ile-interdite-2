@@ -32,7 +32,21 @@ public class Aventurier {
         public void autreAction(Coordonnees c,Grille grille ){
             afficherInformation("Vous n'avez pas d'action de bg!");
         }
+        public void piocherCT(ArrayList<CarteTrésor> piocheCarteTrésor){
+            getMainCarteTrésor().add(piocheCarteTrésor.get(0));
+            piocheCarteTrésor.remove(0);
+            
+            if(doitDefausser()){
+                //TODO
+                //PENSER A METTRE A JOUR LA DEFAUSSE
+                
+            }
+        }
 
+        public boolean doitDefausser() {
+            // TODO - implement Controleur.priseTresorPossible
+            return (getMainCarteTrésor().size()>5);
+        }
                 
 	/**
 	 * 

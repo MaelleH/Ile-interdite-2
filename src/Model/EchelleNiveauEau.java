@@ -6,13 +6,13 @@ public class EchelleNiveauEau {
 	private int niveauEau;
         private int nbInnond ;
 
-	public int getNbCartesInondation() {
-		// TODO - implement EchelleNiveauEau.getNbCartesInondation
-		throw new UnsupportedOperationException();
+    public int getNbCartesInondation() {
+	// TODO - implement EchelleNiveauEau.getNbCartesInondation
+            return 0;
 	}
-        public EchelleNiveauEau (int nivEau){
+    public EchelleNiveauEau (int nivEau){
             setNiveauEau(nivEau);
-        }
+    }
     public int getNiveauEau() {
         return niveauEau;
     }

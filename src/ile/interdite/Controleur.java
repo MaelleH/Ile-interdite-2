@@ -17,6 +17,7 @@ import Model.Aventuriers.Plongeur;
 import Model.EchelleNiveauEau;
 import Model.Helico;
 import Model.NomTuile;
+import Model.MonteeDesEaux;
 import Model.Sac;
 import Model.TresorBleu;
 import Model.TresorGris;
@@ -84,7 +85,9 @@ public class Controleur implements Observateur {
         public void finTour(){
             getVueAventurier(aventuriers.get(0)).setVisible(false);
             aventuriers.get(0).resetActionsRestantes();
+            aventuriers.get(0).piocherCT(piocheCarteTrésor);
             aventuriers.get(0).resetAutreA();
+            
             setJoueurSuivant();
         }
 
@@ -102,6 +105,9 @@ public class Controleur implements Observateur {
             }
             return null;
         }
+        
+
+        
 
         public void initCartetresor(){
             piocheCarteTrésor = new ArrayList<>();
@@ -123,6 +129,9 @@ public class Controleur implements Observateur {
             for(int i=0;i<2;i++){
                 piocheCarteTrésor.add(new Sac());
             }
+            for(int i=0;i<3;i++){
+                piocheCarteTrésor.add(new MonteeDesEaux());
+            }
             
             piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);
         }
@@ -135,7 +144,7 @@ public class Controleur implements Observateur {
 	 */
 	public void donnerCarte(Aventurier aven1, Aventurier aven2) {
 		// TODO - implement Controleur.donnerCarte
-		
+		//TODO - TROUVER UN MOYEN DE RENTRER UNE DEUXIEME INOF A  PART SI LES BOUTONS SONT FAIT;
 	}
 
 	/**
