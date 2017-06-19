@@ -397,13 +397,24 @@ public class Controleur implements Observateur {
     }
     public boolean isGagne(){
         int nbavenheli=0;
+        int nbaventres=0;
+        boolean carteHeli;
         for (Aventurier atemp : aventuriers){
             if (grille.getTuile(atemp.getPosition())==grille.getTuile("Heliport")){
                 nbavenheli=nbavenheli+1;
             }
+            for (CarteTrésor trestemp : atemp.getMainCarteTrésor()){
+                if (trestemp == ){
+                    
+                }
+                
+            }
+            if(atemp.){
+                
+            }
         }
-        if (nbavenheli==4){
-
+        if (nbavenheli==4 && nbaventres ==4){
+            
         }
         return true;
     }
