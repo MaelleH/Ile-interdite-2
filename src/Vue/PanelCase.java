@@ -5,6 +5,7 @@
  */
 package Vue;
 
+import Model.TypeTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
@@ -29,7 +30,7 @@ public class PanelCase extends JPanel{
     
     private String nomCase;
     private EtatTuile etatCase;
-    private String tresor;
+    private TypeTrésor tresor;
     
     private JLabel labelNomCase;
     private JPanel panelNomCase;
@@ -47,7 +48,7 @@ public class PanelCase extends JPanel{
         this.setBackground(Color.black);
     }
     
-    public PanelCase(String nomCase,EtatTuile etatCase,String tresor) {
+    public PanelCase(String nomCase,EtatTuile etatCase,TypeTrésor tresor) {
         typeCase = "ile";
         
         pionAAfficher = new ArrayList<>();
@@ -136,7 +137,7 @@ public class PanelCase extends JPanel{
     
     
     
-    public void updateCase(String nomCase,EtatTuile etatCase,String tresor,ArrayList<Utils.Pion> pionAAfficher){
+    public void updateCase(String nomCase,EtatTuile etatCase,TypeTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
         if (typeCase == "ile"){
             setNomCase(nomCase);
             setEtatCase(etatCase);
@@ -156,7 +157,7 @@ public class PanelCase extends JPanel{
         return etatCase;
     }
 
-    public String getTresor() {
+    public TypeTrésor getTresor() {
         return tresor;
     }
 
@@ -168,7 +169,7 @@ public class PanelCase extends JPanel{
         this.etatCase = etatCase;
     }
 
-    public void setTresor(String tresor) {
+    public void setTresor(TypeTrésor tresor) {
         this.tresor = tresor;
     }
     

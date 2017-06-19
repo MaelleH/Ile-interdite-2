@@ -23,6 +23,7 @@ import Model.TresorBleu;
 import Model.TresorGris;
 import Model.TresorJaune;
 import Model.TresorRouge;
+import Model.TypeTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
@@ -166,7 +167,7 @@ public class Controleur implements Observateur {
 		// TODO - implement Controleur.prendreTresor
                 
 		if(priseTresorPossible(a)){
-                    String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                    TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
                     a.getMainCarteTrésor().remove(tresor);
 //PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
  
@@ -180,7 +181,7 @@ public class Controleur implements Observateur {
 	 */
 	public boolean priseTresorPossible(Aventurier a) {
 		// TODO - implement Controleur.priseTresorPossible
-                String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
                 int stop=0;
                 
                 if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
@@ -338,7 +339,7 @@ public class Controleur implements Observateur {
                 String coord = e.getKey().getX() + e.getKey().getY();
                 String nomCase = e.getValue().getNomT().toString();
                 EtatTuile etatTuile = e.getValue().getEtat();
-                String tresor = e.getValue().getTresor();
+                TypeTrésor tresor = e.getValue().getTresor();
                 
                 for(Aventurier a : aventuriers){
                     if(a.getPosition().equals(e.getKey())){

@@ -11,9 +11,10 @@ package Model;
  */
 public enum TypeTrésor {
     	Calice("Calice"),
-        Crystal ("crystal"), 
-        Zéphir("Zéphir"),
-        Pierre("Pierre"); 
+        Cristal ("cristal"), 
+        Zéphyr("Zéphyr"),
+        Pierre("Pierre"),
+        Vide("vide"); 
 
 
         private String nomT = "";
