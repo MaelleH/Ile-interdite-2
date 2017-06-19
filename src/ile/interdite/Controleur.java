@@ -345,4 +345,27 @@ public class Controleur implements Observateur {
         
         
     }
+    public boolean isPerdu(){
+         if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("La Caverne des Ombres").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("La Caverne du Brasier").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("Le Palais de Corail").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Palais des Marees").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if ((grille.getTuile("Le Jardin des Murmures").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Jardin des Hurlements").getEtat()==EtatTuile.COULEE)){
+             return true;
+         }
+         else if(grille.getTuile("Heliport").getEtat()==EtatTuile.COULEE){
+             return true;
+         }
+         else if(){
+             
+         }
+         else{
+             return false;
+         }
+    }
 }
