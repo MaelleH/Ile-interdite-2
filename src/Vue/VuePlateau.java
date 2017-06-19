@@ -34,7 +34,7 @@ public class VuePlateau {
         window.setLocation(350, 0);
         window.setSize(900, 900);
         
-        window.setTitle("Vue de l'île");
+        window.setTitle("Ile Interdite");
         mainPanel = new JPanel(new GridLayout(6,6));
         window.add(mainPanel);
         initPlateau();

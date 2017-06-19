@@ -69,7 +69,7 @@ public class Aventurier {
 	public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
                                 
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();
                 int xo,yo,xn,yn;
                 
                 xo=Integer.parseInt(getPosition().getX());
