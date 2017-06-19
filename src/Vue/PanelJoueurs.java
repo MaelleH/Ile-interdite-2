@@ -31,6 +31,7 @@ public class PanelJoueurs extends JPanel{
     public PanelJoueurs() { 
         this.setLayout(new GridLayout(5,5));
         
+        
         panels = new ArrayList<>();
       
         panelHG = new JPanel();
@@ -67,8 +68,11 @@ public class PanelJoueurs extends JPanel{
         int i = 0;
         
         for(Pion p : pionAAfficher){
-            panels.get(i).setBackground(p.getCouleur());
-            i++;
+            if(p != null){
+                panels.get(i).setBackground(p.getCouleur());
+                i++;
+            }
+            
         }
         while (i<4) {            
             panels.get(i).setBackground(null);

@@ -12,18 +12,18 @@ import Model.Aventuriers.Aventurier;
  * @author ferreijo
  */
 public class Message {
-    private TypeMessage btnCliquéTxt;
+    private TypeMessage typeMessage;
     private String champSaisieTxt;
     private String joueur;
 
-    public Message(TypeMessage btnCliquéTxt,String champSaisieTxt,String joueur) {
-        this.btnCliquéTxt = btnCliquéTxt;
+    public Message(TypeMessage typeMessage,String champSaisieTxt,String joueur) {
+        this.typeMessage = typeMessage;
         this.champSaisieTxt = champSaisieTxt;
         this.joueur =joueur;
     }   
 
-    public TypeMessage getBtnCliquéTxt() {
-        return btnCliquéTxt;
+    public TypeMessage getTypeMessage() {
+        return typeMessage;
     }
 
     public String getChampSaisieTxt() {
@@ -31,7 +31,7 @@ public class Message {
     }
 
     public void setBtnCliquéTxt(TypeMessage btnCliquéTxt) {
-        this.btnCliquéTxt = btnCliquéTxt;
+        this.typeMessage = btnCliquéTxt;
     }
 
     public void setChampSaisieTxt(String champSaisieTxt) {

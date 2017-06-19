@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class Coordonnees{
 	private String x;
 	private String y;
@@ -8,7 +10,31 @@ public class Coordonnees{
         this.x = x;
         this.y = y;
     }
+    @Override
+    public int hashCode(){
+        return (x+y).hashCode();
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Coordonnees other = (Coordonnees) obj;
+        if (!Objects.equals(this.x, other.x)) {
+            return false;
+        }
+        if (!Objects.equals(this.y, other.y)) {
+            return false;
+        }
+        return true;
+    }
     /**
      * @return the x
      */
@@ -41,7 +67,13 @@ public class Coordonnees{
 
     
     public boolean equals(Coordonnees o) {
-        return (this.getX().equals(o.getX()) && this.getY().equals(o.getY())); //To change body of generated methods, choose Tools | Templates.
+        int xt = Integer.parseInt(this.getX());
+        int yt = Integer.parseInt(this.getY());
+        
+        int xo = Integer.parseInt(o.getX());
+        int yo = Integer.parseInt(o.getY());
+        
+        return (xt==xo) && (yt==yo); //To change body of generated methods, choose Tools | Templates.
     }
         
         

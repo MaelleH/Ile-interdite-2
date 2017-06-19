@@ -34,6 +34,10 @@ public class Utils {
         public String toString() {
             return this.libelle ;
         }
+        
+        public boolean equals(EtatTuile t){
+            return this.libelle.equals(t.libelle);
+        }
     }
 
     public static enum Pion {
