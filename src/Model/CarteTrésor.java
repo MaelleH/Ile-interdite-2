@@ -4,8 +4,8 @@ import Model.NomTuile;
 
 public class CarteTrésor {
 
-	private String nomCT ;
- 
+    private String nomCT ;
+
 
     public CarteTrésor(){
         
@@ -23,5 +23,7 @@ public class CarteTrésor {
     public void setNomCT(String nomCT) {
         this.nomCT = nomCT;
     }
+
+
     
 }
