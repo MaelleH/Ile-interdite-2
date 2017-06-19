@@ -388,4 +388,10 @@ public class Controleur implements Observateur {
              return false;
          }
     }
+    public boolean isGagne(){
+        int nbavenheli=0;
+        for (Aventurier atemp : aventuriers){
+            atemp.getPosition()
+        }
+    }
 }
