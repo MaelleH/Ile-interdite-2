@@ -19,10 +19,8 @@ import Model.Helico;
 import Model.NomTuile;
 import Model.MonteeDesEaux;
 import Model.Sac;
-import Model.TresorBleu;
-import Model.TresorGris;
-import Model.TresorJaune;
-import Model.TresorRouge;
+import Model.CarteTrésorTrophée;
+import Model.TypeTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
@@ -112,16 +110,16 @@ public class Controleur implements Observateur {
         public void initCartetresor(){
             piocheCarteTrésor = new ArrayList<>();
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorJaune());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Calice));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorRouge());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Pierre));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorGris());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Zéphyr));
             }
             for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new TresorBleu());
+                piocheCarteTrésor.add(new CarteTrésorTrophée(TypeTrésor.Cristal));
             }
             for(int i=0;i<3;i++){
                 piocheCarteTrésor.add(new Helico());
@@ -166,7 +164,7 @@ public class Controleur implements Observateur {
 		// TODO - implement Controleur.prendreTresor
                 
 		if(priseTresorPossible(a)){
-                    String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                    TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
                     a.getMainCarteTrésor().remove(tresor);
 //PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
  
@@ -180,7 +178,7 @@ public class Controleur implements Observateur {
 	 */
 	public boolean priseTresorPossible(Aventurier a) {
 		// TODO - implement Controleur.priseTresorPossible
-                String tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+                TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
                 int stop=0;
                 
                 if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
@@ -338,7 +336,7 @@ public class Controleur implements Observateur {
                 String coord = e.getKey().getX() + e.getKey().getY();
                 String nomCase = e.getValue().getNomT().toString();
                 EtatTuile etatTuile = e.getValue().getEtat();
-                String tresor = e.getValue().getTresor();
+                TypeTrésor tresor = e.getValue().getTresor();
                 
                 for(Aventurier a : aventuriers){
                     if(a.getPosition().equals(e.getKey())){
@@ -407,5 +405,6 @@ public class Controleur implements Observateur {
         if (nbavenheli==4){
 
         }
+        return true;
     }
 }

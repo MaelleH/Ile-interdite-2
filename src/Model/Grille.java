@@ -1,5 +1,9 @@
 package Model;
 
+import static Model.TypeTrésor.Calice;
+import static Model.TypeTrésor.Cristal;
+import static Model.TypeTrésor.Pierre;
+import static Model.TypeTrésor.Zéphyr;
 import Util.Utils;
 import java.util.*;
 
@@ -24,28 +28,28 @@ public class Grille {
         
         Tuile tuilepda = new Tuile(NomTuile.LePontdesAbimes);
         Tuile tuilepdb = new Tuile(NomTuile.LaPortedeBronze);
-        Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,"cristal");
+        Tuile tuilecdo = new Tuile(NomTuile.LaCavernedesOmbres,Cristal);
         Tuile tuilepdf = new Tuile(NomTuile.LaPortedeFer);
         Tuile tuilepdo = new Tuile(NomTuile.LaPortedOr);
         Tuile tuilefdo = new Tuile(NomTuile.LesFalaisesdelOubli);
-        Tuile tuilepdc = new Tuile(NomTuile.LePalaisdeCorail,"calice");
+        Tuile tuilepdc = new Tuile(NomTuile.LePalaisdeCorail,Calice);
         Tuile tuilepa = new Tuile(NomTuile.LaPortedArgent);
         Tuile tuilecdi = new Tuile(NomTuile.LesDunesdelIllusion);
         Tuile tuileh = new Tuile(NomTuile.Heliport);
         Tuile tuilpdc = new Tuile(NomTuile.LaPortedeCuivre);
-        Tuile tuilejh = new Tuile(NomTuile.LeJardindesHurlements,"zéphyr");
+        Tuile tuilejh = new Tuile(NomTuile.LeJardindesHurlements,Zéphyr);
         Tuile tuilefp = new Tuile(NomTuile.LaForetPourpre);
         Tuile tuilelp = new Tuile(NomTuile.LeLagonPerdu);
         Tuile tuilemb = new Tuile(NomTuile.LeMaraisBrumeux);
         Tuile tuileo = new Tuile(NomTuile.Observatoire);
         Tuile tuilerf = new Tuile(NomTuile.LeRocherFantome);
-        Tuile tuilecb = new Tuile(NomTuile.LaCaverneduBrasier,"cristal");
-        Tuile tuilets = new Tuile(NomTuile.LeTempleduSoleil,"pierre");
-        Tuile tuiletl = new Tuile(NomTuile.LeTempledeLaLune,"pierre");
-        Tuile tuilepm = new Tuile(NomTuile.LePalaisdesMarees,"calice");
+        Tuile tuilecb = new Tuile(NomTuile.LaCaverneduBrasier,Cristal);
+        Tuile tuilets = new Tuile(NomTuile.LeTempleduSoleil,Pierre);
+        Tuile tuiletl = new Tuile(NomTuile.LeTempledeLaLune,Pierre);
+        Tuile tuilepm = new Tuile(NomTuile.LePalaisdesMarees,Calice);
         Tuile tuilevc = new Tuile(NomTuile.LeValduCrepuscule);
         Tuile tuiletg = new Tuile(NomTuile.LaTourduGuet);
-        Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,"zéphyr");
+        Tuile tuilejm = new Tuile(NomTuile.LeJardindesMurmures,Zéphyr);
     
         tuiles.add(tuilepda);
         tuiles.add(tuilepdb);
