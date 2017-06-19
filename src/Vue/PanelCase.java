@@ -130,6 +130,7 @@ public class PanelCase extends JPanel{
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                
             }
 
             @Override
@@ -146,11 +147,11 @@ public class PanelCase extends JPanel{
             super.paintComponent(g);
             //Affichag de la bordure
             if(etatListener==0){
-                setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+                setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
             }else if(etatListener==1){
-                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(2,2,2,2), BorderFactory.createLineBorder(Color.black, 3)));
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Color.black, 2)));
             }else if(etatListener==2){
-                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(2,2,2,2), BorderFactory.createLineBorder(new Color(150,20,20), 3)));
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(new Color(150,20,20), 2)));
             }
             
             //Affichage du Nom de la Case
@@ -178,13 +179,13 @@ public class PanelCase extends JPanel{
             }
 
             //Affichage du trésor présent sur la Case
-            if(tresor.equals("cristal")){
+            if(tresor.equals(TypeTrésor.Cristal)){
                 panelTresor.setBackground(new Color(255,81,21));
-            }else if(tresor.equals("calice")){
+            }else if(tresor.equals(TypeTrésor.Calice)){
                 panelTresor.setBackground(new Color(60,130,140));
-            }else if(tresor.equals("zéphyr")){
+            }else if(tresor.equals(TypeTrésor.Zéphyr)){
                 panelTresor.setBackground(new Color(215,169,77));
-            }else if(tresor.equals("pierre")){
+            }else if(tresor.equals(TypeTrésor.Pierre)){
                 panelTresor.setBackground(new Color(89,79,108));
             }else{
                 panelTresor.setBackground(panelEtatCase.getBackground());
