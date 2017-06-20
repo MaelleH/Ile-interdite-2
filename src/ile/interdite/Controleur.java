@@ -49,6 +49,7 @@ public class Controleur implements Observateur {
 	private ArrayList<CarteInondation> defausseCarteCoulées;
         private ArrayList<NomTrésor> tresors;
 
+
         
         private boolean prisePierre;
         private boolean priseCristal;
@@ -70,12 +71,10 @@ public class Controleur implements Observateur {
             grille = new Grille();
             
             //Créer les Aventuriers
-
             creationAventurier(nbj);
             
             //Creér les vues de Aventuriers
             vuesAventuriers = new ArrayList<>();
-
             
             //Créer les cartes
             piocheCarteInondation = new ArrayList<>();
