@@ -3,53 +3,39 @@ package Model;
 public class EchelleNiveauEau {
 
 	
-	private int niveauEau;
-        private int nbInnond ;
+    private int niveauEau;
 
-    public int getNbCartesInondation() {
-	// TODO - implement EchelleNiveauEau.getNbCartesInondation
-            return 0;
-	}
+	
     public EchelleNiveauEau (int nivEau){
-            setNiveauEau(nivEau);
+        this.niveauEau = nivEau;
     }
+    
     public int getNiveauEau() {
         return niveauEau;
     }
 
-    public void setNiveauEau(int niveauEau) {
-        if (niveauEau==10){
-            // fin de partie pour niveau de l'eau à 10
-            System.out.print("partieFinie");
-        }
-        else {
-            if (niveauEau<2){
-                setNiveauEau(niveauEau);
-                setNbInnond(2);
-            }
-            else if (niveauEau>2 && niveauEau<6){
-                setNiveauEau(niveauEau);
-                setNbInnond(3);
-            }
-            else if (niveauEau>5 && niveauEau<8){
-                setNiveauEau(niveauEau);
-                setNbInnond(4);
-            }
-            else {
-                setNiveauEau(niveauEau);
-                setNbInnond(5);
-            }
-        }
+    public void monteeDesEaux() {   //augmentation du niveau d'inondation
+        this.niveauEau = getNiveauEau() + 1;
         
-        this.niveauEau = niveauEau;
+        if(getNiveauEau()==10){
+            System.out.println("Fin de Partie");
+        }
     }
 
-    public int getNbInnond() {
-        return nbInnond;
+    public int getNbInond() {       //nombre de cartes inondation à piocher en fonction du niveau d'inondation
+        int nbI=5;
+        if(getNiveauEau()<=2){
+            nbI = 1;
+        }else if(getNiveauEau()>=3 && getNiveauEau()<=5){
+            nbI = 2;
+        }
+        else if(getNiveauEau()>=6 && getNiveauEau()<=7){
+            nbI = 3;
+        }
+        else if(getNiveauEau()>=8 && getNiveauEau()<=9){
+            nbI = 4;
+        }
+        return nbI;
     }
-
-    public void setNbInnond(int nbInnond) {
-        this.nbInnond = nbInnond;
-    }
-            
- }
+}
+ 
