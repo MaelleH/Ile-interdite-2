@@ -117,6 +117,7 @@ public class Controleur implements Observateur {
     }
 
     public void lancerTour(){
+        //Vérification de la main de l'aventurier
         if(aventuriers.get(0).doitDefausser()){
             defausseCarteTrésor.addAll(aventuriers.get(0).getMainCarteTrésor());
             aventuriers.get(0).getMainCarteTrésor().clear();
@@ -128,6 +129,7 @@ public class Controleur implements Observateur {
     public void finTour(){
         vuePlateau.setInactive(aventuriers.get(0).getNom());
         aventuriers.get(0).resetActionsRestantes();
+        //pioche des 2 cartes trésor
         for(int i = 0;i<2;i++){
             if(piocheCarteTrésor.isEmpty()){
                 remplirPiocheTresor();
@@ -137,19 +139,19 @@ public class Controleur implements Observateur {
             
         }
         aventuriers.get(0).setMaxActions();
-
+        //picohe du nombre nécéssaire de cartes Inondation
         for (int c=1;c<=niveauEau.getNbInond();c++){
             inonderTuile();
         }
 
-        
+        //Passage au joueur suivant
         setJoueurSuivant();
     }
 
     public void setJoueurSuivant(){
         Aventurier avenTmp = aventuriers.get(0);
-        aventuriers.remove(0);
-        aventuriers.add(avenTmp);
+        aventuriers.remove(0);      //on enlève l'aventurier qui vient de jouer
+        aventuriers.add(avenTmp);   //On le met à la fin
     }
 
     /*public VueAventurier getVueAventurier(Aventurier a){
@@ -196,16 +198,16 @@ public class Controleur implements Observateur {
     }
 
     public void piocherCT(Aventurier a){
-        if(piocheCarteTrésor.isEmpty()){
-            remplirPiocheTresor();
+        if(piocheCarteTrésor.isEmpty()){                                        //si la pioche Trésor est vide
+            remplirPiocheTresor();                                              //On la remplit
         }
-        CarteTrésor carte= piocheCarteTrésor.get(0);
-        piocheCarteTrésor.remove(0);
+        CarteTrésor carte= piocheCarteTrésor.get(0);                            //On pioche une carte
+        piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
 
-        if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
-            monteeDesEaux();
+        if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
+            monteeDesEaux();                                                    //on augmente le niveau d'eau
         }else{
-            a.getMainCarteTrésor().add(carte);
+            a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
         }
 
 
@@ -213,14 +215,14 @@ public class Controleur implements Observateur {
         
     public void piocherDebutJeuCT(Aventurier a){
         CarteTrésor carte;
-        for(int i = 0;i<2;i++){
+        for(int i = 0;i<2;i++){             //pioche 2 cartes
             carte = piocheCarteTrésor.get(0);
-            while(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
-                Utils.melangerCT(piocheCarteTrésor);
-                carte = piocheCarteTrésor.get(0);
+            while(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){    //si la carte est une carte montée des eaux
+                Utils.melangerCT(piocheCarteTrésor);                                    //On mélange la picohe Trésor
+                carte = piocheCarteTrésor.get(0);                                       //On repioche une carte
             }
-            a.getMainCarteTrésor().add(carte);
-            piocheCarteTrésor.remove(0);
+            a.getMainCarteTrésor().add(carte);                                          //on ajoute cette carte à la main de l'aventurier
+            piocheCarteTrésor.remove(0);                                                //On enleve cette carte de la pioche Trésor
         }
     }
 
@@ -270,12 +272,11 @@ public class Controleur implements Observateur {
             return false;                
     }*/
 
-        
+
     public boolean doitDefausser(Aventurier a) {
             // TODO - implement Controleur.priseTresorPossible
             return (a.getMainCarteTrésor().size()>5);
     }
-    
        
     //initialisation de la pioche Inondation au début de la partie
     public void initPiocheInondation(){
@@ -318,38 +319,28 @@ public class Controleur implements Observateur {
                             for (Tuile ttemp : deplacement.values()){           //qui contient toutes les tuiles de la HashMap
                                   tuile.add(ttemp);
                             }
-                            
                             int taille = deplacement.size();
                             Random r = new Random();
-                            int valeur = 0 + r.nextInt(taille);                 //valeur = aléatoire entre 0 et taille de la HashMap
+                            int valeur = 0 + r.nextInt(taille);                 //valeur = aléatoire entre 0 et la taille de la HashMap
                             a.setActionsRestantes(1);
-                            Coordonnees coord = grille.getCoordTuile(tuile.get(valeur).getNomT().toString());   //l'aventurier se deplace sur la tuile d'index valeur
-                            
-                            
-                            a.deplacement(coord, grille);
+                            Coordonnees coord = grille.getCoordTuile(tuile.get(valeur).getNomT().toString());   //coord = coordonnées de la tuile d'index valeur
+                            a.deplacement(coord, grille);                       //l'aventurier se déplace sur la tuile de coordonnées coord
                         }
-                        
                     }
                 }
-                
-                
-                
-                
-                
-                
-                defausseCarteCoulées.add(cI);                           //et la carte est retirée
+                defausseCarteCoulées.add(cI);                                   //la carte est retirée
             }
-            piocheCarteInondation.remove(cI);                           //la carte est enlevée de la pioche
+            piocheCarteInondation.remove(cI);                                   //la carte est enlevée de la piocheInondation
             }
         }
     
     //si plus de carte dans la pioche
     public void remplirPiocheInondation(){
-        Utils.melangerCI(defausseCarteInondation);
-        for(CarteInondation ci : defausseCarteInondation){
+        Utils.melangerCI(defausseCarteInondation);                              //mélange de la defausse
+        for(CarteInondation ci : defausseCarteInondation){                      //On met chaque carte de la defausse dans la pioche
             piocheCarteInondation.add(ci);
         }
-        defausseCarteInondation.clear();
+        defausseCarteInondation.clear();                                        //On vide la defausse
     }
     
     public void monteeDesEaux(){
@@ -368,14 +359,11 @@ public class Controleur implements Observateur {
     //si plus de carte dans la pioche
     public void remplirPiocheTresor(){
         Collections.shuffle(defausseCarteTrésor);               //on mélange la défausse
-        for (CarteTrésor carte :defausseCarteTrésor ){      //on met toutes les cartes de la défausse dans la pioche
+        for (CarteTrésor carte :defausseCarteTrésor ){          //on met toutes les cartes de la défausse dans la pioche
             piocheCarteTrésor.add(carte);
         }
         defausseCarteTrésor.clear();                            //on vide la défausse
     }    
-        
-        
-        
         
         
     @Override
