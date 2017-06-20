@@ -12,4 +12,8 @@ public class Navigateur extends Aventurier {
     public Utils.NomAventurier getNom() {
         return Utils.NomAventurier.Navigateur; //To change body of generated methods, choose Tools | Templates.
     }
+    @Override
+    public int getMaxActions(){
+        return 4;
+    }
 }
