@@ -130,29 +130,39 @@ public class VueLancement {
         j4.add(new JLabel("Joueur 4 : "));TextField nj4 = new TextField("Killian");j4.add(nj4);
         
         JButton val2 = new JButton("Valider le nom des joueurs");
-        val2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Message m = new Message();
-
-                if (nbj.equals("2")){
-                    nomJ.add(nj1.getText());nomJ.add(nj2.getText());
-                }
-                else if(nbj.equals("3")){
-                    nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());
-                }
-                else if(nbj.equals("4")){
-                    nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());nomJ.add(nj4.getText());
-                }
-                m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
-                m.setJoueurs(nomJ);
-                m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
-                m.setTypeMessage(VAL2);
-                
-                controleur.traiterMessage(m);
-                main.setVisible(false);
+        
+        //Bouton pour valider les noms des joueurs et lancer le jeu
+        
+        
+        val2.addActionListener((ActionEvent e) -> {
+            Message m = new Message();
+            
+            if (nbj[listeNiv.getSelectedIndex()].equals("2")){
+                nomJ.add(nj1.getText());nomJ.add(nj2.getText());
                 
             }
+            else if(nbj[listeNiv.getSelectedIndex()].equals("3")){
+                nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());
+            }
+            else if(nbj[listeNiv.getSelectedIndex()].equals("4")){
+                nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());nomJ.add(nj4.getText());
+            }
+            m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
+            m.setJoueurs(nomJ);
+            m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
+            m.setTypeMessage(VAL2);
+            
+            System.out.println("debut nom");
+            for(String i : nomJ){
+                System.out.println(i);
+            }
+            System.out.println("fin nom");
+            
+            
+            
+            
+            controleur.traiterMessage(m);
+            main.setVisible(false);
         });
         joueurP.add(val2,SOUTH);
         welcomeP.add(val1,SOUTH);    
@@ -160,18 +170,14 @@ public class VueLancement {
         
         
                 
-        val1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                joueurP.setVisible(true);
-                j1.setVisible(true);j2.setVisible(true);j4.setVisible(false);j3.setVisible(false);
-                if(nbj[listeNiv.getSelectedIndex()].equals("3")){
-                    j3.setVisible(true);j4.setVisible(false);
-                }
-                else if(nbj[listeNiv.getSelectedIndex()].equals("4")){
-                    j3.setVisible(true);j4.setVisible(true);
-                }
-                
+        val1.addActionListener((ActionEvent e) -> {
+            joueurP.setVisible(true);
+            j1.setVisible(true);j2.setVisible(true);j4.setVisible(false);j3.setVisible(false);
+            if(nbj[listeNiv.getSelectedIndex()].equals("3")){
+                j3.setVisible(true);j4.setVisible(false);
+            }
+            else if(nbj[listeNiv.getSelectedIndex()].equals("4")){
+                j3.setVisible(true);j4.setVisible(true);
             }
         });
         

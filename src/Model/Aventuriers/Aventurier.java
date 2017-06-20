@@ -161,10 +161,15 @@ public class Aventurier {
     /**
      * @return the nom
      */
+    public String getNomS() {
+        return (NomAventurier.Aventurier).toString();
+    }
+    /**
+     * @return the nom
+     */
     public NomAventurier getNom() {
         return NomAventurier.Aventurier;
     }
-
 
     /**
      * @return the mainCarteTrésor
