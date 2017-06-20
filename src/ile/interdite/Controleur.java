@@ -61,7 +61,7 @@ public class Controleur implements Observateur {
         public void lancerPartie(){
             vueL= new VueLancement(this);
         }
-        //initialise le début d'une partie
+        //initialise le début d'une partie (les pioches,les défausses,difficulté
         public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
             //Créer la grille
             grille = new Grille();
