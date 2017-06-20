@@ -61,7 +61,7 @@ public class Controleur implements Observateur {
     public Controleur() {
         lancerPartie();
         
-        ArrayList<CarteTrésor> cartes = new ArrayList<>();
+        /*ArrayList<CarteTrésor> cartes = new ArrayList<>();
         cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
         cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
         cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
@@ -71,7 +71,7 @@ public class Controleur implements Observateur {
         cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
         cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
         
-        VueDefausse vued = new VueDefausse(2,cartes,this);
+        VueDefausse vued = new VueDefausse(2,cartes,this);*/
     }
 
     public void lancerPartie(){
@@ -293,7 +293,7 @@ public class Controleur implements Observateur {
     //inondation d'une tuile
         public void inonderTuile(){
             if (piocheCarteInondation.isEmpty()){                               //si la picohe est vide, cela veut dire que toute les cases sont coulées, le jeu est perdu
-                System.out.println("C'EST LA FIN");
+                remplirPiocheInondation();
             }else{                                                              //Sinon
             CarteInondation cI;                                         
             cI = piocheCarteInondation.get((0));                                //L'aventurier prend la premiere carte de la pioche
@@ -304,34 +304,26 @@ public class Controleur implements Observateur {
                 defausseCarteInondation.add(cI);                                //et le carte va dans la defausse
             }else if(t.getEtat()==EtatTuile.INONDEE){                           //si la tuile est assechée
                 t.setEtat(EtatTuile.COULEE);                                    //elle devient coulée
-                
-                
-                
-                
-                
-                
-                
-                                                                                //on vérifie si il y a des aventuriers sur cette case
+                //on vérifie si il y a des aventuriers sur cette case
                 for(Aventurier a : aventuriers){
                     if(a.getPosition().equals(co)){                             //si l'aventurier a est sur la case qui vient d'être coulée
                     //il se déplace vers une tuile qu'il peut atteindre
                         HashMap<Coordonnees,Tuile> deplacement;
                         deplacement = new HashMap<>();
-                        deplacement = a.deplacementPossibleListe(grille);
-                        if (deplacement.isEmpty()){
-                            System.out.println("fin");
-                        }else{
-                            ArrayList<Tuile> tuile = new ArrayList<>();
-                            for (Tuile ttemp : deplacement.values()){
+                        deplacement = a.deplacementPossibleListe(grille);       //HashMap de toutes les tuiles/coordonnées qu'il peut atteindre
+                        if (deplacement.isEmpty()){                             //si la liste est vie
+                            System.out.println("fin");                          //le jeu est fini
+                        }else{                                                  
+                            ArrayList<Tuile> tuile = new ArrayList<>();         //sinon on créer une arrayList de tuiles
+                            for (Tuile ttemp : deplacement.values()){           //qui contient toutes les tuiles de la HashMap
                                   tuile.add(ttemp);
                             }
                             
                             int taille = deplacement.size();
                             Random r = new Random();
-                            int valeur = 0 + r.nextInt(taille);
-                            System.out.println("aleatoire : " +valeur);
+                            int valeur = 0 + r.nextInt(taille);                 //valeur = aléatoire entre 0 et taille de la HashMap
                             a.setActionsRestantes(1);
-                            Coordonnees coord = grille.getCoordTuile(tuile.get(valeur).getNomT().toString());
+                            Coordonnees coord = grille.getCoordTuile(tuile.get(valeur).getNomT().toString());   //l'aventurier se deplace sur la tuile d'index valeur
                             
                             
                             a.deplacement(coord, grille);
