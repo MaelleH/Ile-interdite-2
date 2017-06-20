@@ -14,16 +14,15 @@ import java.util.HashMap;
 public class Aventurier {
 	private ArrayList<CarteTrésor> mainCarteTrésor = new ArrayList<>();
 	private int actionsRestantes;
-	private int ACTIONS_MAX = 3;
-	private Coordonnees position= new Coordonnees("3","3");
+	private Coordonnees position;
         private boolean autreA=false;
        
     public Aventurier(){
-        this.actionsRestantes=ACTIONS_MAX;
+        this.actionsRestantes=getMaxActions();
     }
     public Aventurier(Coordonnees position) {
         this.position=position;
-        this.actionsRestantes=ACTIONS_MAX;
+        this.actionsRestantes=getMaxActions();
     }
         
 
@@ -58,21 +57,17 @@ public class Aventurier {
 
 	 */
 	public void deplacement(Coordonnees c,Grille grille ) {
-
-            System.out.println("Position    aventurier" +getPosition().getX()+getPosition().getY());
             if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){
 		setPosition(c);
                 setActionsRestantes(getActionsRestantes()-1);
-                System.out.println(getPosition().getX()+getPosition().getY());
-                
             }
-            else if(this.getActionsRestantes()<1){
+            else if(this.getActionsRestantes()<1){                                                  //Si il n'a plus d'action
                 System.out.println("Plus d'actions....");
-                afficherInformation("Vous ne pouvez plus effectuer d'actions!");
+                afficherInformation("Vous ne pouvez plus effectuer d'actions!");                    //On affiche cette information
             }
-            else{
+            else{                                                                                   //Sinon
                 System.out.println("Déplacement impossible!");
-                afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");
+                afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");           //On affiche le fait qu'il ne puisse pas se déplacer vers la tuile
             }
 	}
         
@@ -88,19 +83,17 @@ public class Aventurier {
                 HashMap<Coordonnees,Tuile> listeD = new HashMap<>();
                 int xo,yo,xn,yn;
                 
-                xo=Integer.parseInt(getPosition().getX());
+                xo=Integer.parseInt(getPosition().getX());                  //Coordonnées du joueur
                 yo=Integer.parseInt(getPosition().getY());
                 
-                for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
-                    if(i.getValue()!=null){
-                        xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
+                for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){    //Pour chaque tuile de la grille
+                    if(i.getValue()!=null){                                             //Si la tuile n'est pas une tuile située dans les coins
+                        xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());  //On note ses coordonnées
                         yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
 
-                    
+                        //Si elle est adjacente à la tuile de l'aventurier et elle n'est pas coulée
                         if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
-                            listeD.put((Coordonnees) i.getKey(), i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println(((Tuile)i.getValue()).getNomT());    
+                            listeD.put((Coordonnees) i.getKey(), i.getValue());  
                         }    
                     }
                         
@@ -109,7 +102,7 @@ public class Aventurier {
 		return listeD;
                 
 	}
-
+        
         public HashMap assechementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.assécher
 		HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
@@ -124,9 +117,7 @@ public class Aventurier {
                         yn=Integer.parseInt((String)(i.getKey()).getY());
 
                         if(((xo==xn && yo==yn)||(((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
-                            listeD.put( i.getKey(), i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println((i.getValue()).getNomT());    
+                            listeD.put( i.getKey(), i.getValue());   
                         }     
                     }
                 }
@@ -136,19 +127,19 @@ public class Aventurier {
 
 	}
         
-        public void assecher(Coordonnees c,Grille grille) {
+        public void assecher(Coordonnees c,Grille grille) {         
 		// TODO - implement Controleur.assécher
-            if(assechementPossibleListe(grille).containsKey(c)){
-                if(getActionsRestantes()>0){
-                    grille.getTuile(c).assechement();
-                    setActionsRestantes(getActionsRestantes()-1);
+            if(assechementPossibleListe(grille).containsKey(c)){    //Si la tuile de coordonnée c est dans la liste assechementPossibleListe
+                if(getActionsRestantes()>0){                            //Si l'aventurier a encore au moins une action
+                    grille.getTuile(c).assechement();                   //Il asseche la tuile
+                    setActionsRestantes(getActionsRestantes()-1);       //On lui retire une acion
                 }
-                else{
+                else{                                                   //Sinon on l'informe qu'il n'a plus d'action
                     System.out.println("Plus d'actions....");
                     afficherInformation("Vous ne pouvez plus effectuer d'actions!");
                 } 
             }  
-            else{
+            else{                                                   //Sinon on l'informe qu'il ne peut pas assecher la tuile
                 System.out.println("Assechement non possible ici!");
                 afficherInformation("Vous ne pouvez pas assécher cette case!");
             }
@@ -204,7 +195,7 @@ public class Aventurier {
     }
 
     public void resetActionsRestantes() {
-        this.actionsRestantes = ACTIONS_MAX;
+        this.actionsRestantes = getMaxActions();
     }
     public void resetAutreA() {
         this.setAutreA(false);
@@ -234,9 +225,9 @@ public class Aventurier {
 		// TODO - implement Controleur.priseTresorPossible
                 int stop=0;
                 
-                if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){
+                if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){       
                     
-                    for(CarteTrésor i :getMainCarteTrésor()){
+                    for(CarteTrésor i :getMainCarteTrésor()){               
                         if(!(i.getNomCT()).equals(tresor)){
                           stop = stop +1;  
                         }
@@ -287,4 +278,8 @@ public class Aventurier {
                 
         }
     }
+    public int getMaxActions(){
+        return 3;
+    }
+    
 }
