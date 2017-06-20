@@ -19,8 +19,6 @@ public enum TypeMessage {
     PROPOSER_DEPLACEMENT,
     PROPOSER_ASSECHEMENT,
     PROPOSER_DONATION_CARTE,
-
-    VAL1,
     VAL2;
     
     

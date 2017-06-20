@@ -299,6 +299,13 @@ public class Controleur implements Observateur {
                     
 
                     break;
+                    
+                case VAL2:
+                        
+                    break;   
+                    
+                    
+                    
                 case DONNERCARTE:
                     vuePlateau.resShow();
                     //if(donnationPossible(aventuriers.get(0), aven2)){

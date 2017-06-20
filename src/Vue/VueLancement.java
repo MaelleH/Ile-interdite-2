@@ -7,7 +7,7 @@ package Vue;
 
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import static ile.interdite.TypeMessage.VAL1;
+import static ile.interdite.TypeMessage.VAL2;
 import java.awt.BorderLayout;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
@@ -15,26 +15,16 @@ import static java.awt.BorderLayout.SOUTH;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Panel;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javafx.scene.layout.Border;
-import static javafx.scene.paint.Color.color;
-import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.border.BevelBorder;
-import javax.swing.plaf.BorderUIResource;
-import static javafx.scene.paint.Color.color;
 
 /**
  *
@@ -69,7 +59,7 @@ public class VueLancement {
         
         //Fenetre principale
         main.setTitle("Préparation du jeu ...");
-        main.setSize(300, 400);
+        main.setSize(300, 300);
         main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         main.add(mainP);        
@@ -124,12 +114,16 @@ public class VueLancement {
         nomJoueurP = new JPanel(new GridLayout(2,2));
         joueurP.add(nomJoueurP,CENTER);
         
+        
         JPanel j1= new JPanel(new GridLayout(1, 2));j1.setVisible(false);
         JPanel j2= new JPanel(new GridLayout(1, 2));j2.setVisible(false);
         JPanel j3= new JPanel(new GridLayout(1, 2));j3.setVisible(false);
         JPanel j4= new JPanel(new GridLayout(1, 2));j4.setVisible(false);
         
         nomJoueurP.add(j1);nomJoueurP.add(j2);nomJoueurP.add(j3);nomJoueurP.add(j4);
+        
+        nomJ = new ArrayList<>();
+        
         
         j1.add(new JLabel("Joueur 1 : "));TextField nj1 = new TextField("Joaquim");j1.add(nj1);
         j2.add(new JLabel("Joueur 2 : "));TextField nj2 = new TextField("Arnaud");j2.add(nj2);
@@ -150,10 +144,11 @@ public class VueLancement {
                 else if(nbj.equals("4")){
                     nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());nomJ.add(nj4.getText());
                 }            
-                controleur.traiterMessage(new Message(VAL1,nivDif[listeDif.getSelectedIndex()],nbj[listeNiv.getSelectedIndex()],nomJ));
+                controleur.traiterMessage(new Message(VAL2,nivDif[listeDif.getSelectedIndex()],nbj[listeNiv.getSelectedIndex()],nomJ));
              
             }
         });
+        joueurP.add(val2,SOUTH);
         welcomeP.add(val1,SOUTH);    
         
         
