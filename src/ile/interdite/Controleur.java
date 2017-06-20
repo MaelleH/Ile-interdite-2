@@ -80,6 +80,7 @@ public class Controleur implements Observateur {
         piocheCarteTrésor = new ArrayList<>();
         defausseCarteCoulées = new ArrayList<>();
         defausseCarteInondation = new ArrayList<>();
+        defausseCarteTrésor = new ArrayList<>();
         initCartetresor();
         initPiocheInondation();
         for (int a=1;a<=6;a++){                 //inondation des 6 tuiles au début
@@ -104,7 +105,8 @@ public class Controleur implements Observateur {
 
     public void lancerTour(){
         if(aventuriers.get(0).doitDefausser()){
-            //
+            defausseCarteTrésor.addAll(aventuriers.get(0).getMainCarteTrésor());
+            aventuriers.get(0).getMainCarteTrésor().clear();
         }
         vuePlateau.setActive(aventuriers.get(0).getNom());
         
@@ -114,38 +116,20 @@ public class Controleur implements Observateur {
         vuePlateau.setInactive(aventuriers.get(0).getNom());
         aventuriers.get(0).resetActionsRestantes();
         for(int i = 0;i<2;i++){
-            piocherCT(aventuriers.get(0));
+            if(piocheCarteTrésor.isEmpty()){
+                remplirPiocheTresor();
+            }else{
+                piocherCT(aventuriers.get(0));
+            }
+            
         }
         aventuriers.get(0).resetAutreA();
 
         for (int c=1;c<=niveauEau.getNbInond();c++){
-            if (piocheCarteInondation.isEmpty()){
-                remplirPiocheInondation();
-
-            }
             inonderTuile();
         }
 
-        //voir si tout est coulé
-        int fi=0;
-        for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
-            if(e.getValue() != null){
-                if (e.getValue().getEtat()==EtatTuile.COULEE){
-                    fi = fi+1;
-
-                }
-                if (e.getValue().getNomT()==NomTuile.Heliport && e.getValue().getEtat()==EtatTuile.COULEE){
-                    fi=grille.getHSTuile().size();
-                    System.out.println("plus d'heliport");
-                }
-            }
-        }
-
-
-        if (fi>=grille.getHSTuile().size()){
-            System.out.println("C'EST LA FIN");
-
-        }
+        
         setJoueurSuivant();
     }
 
@@ -206,7 +190,7 @@ public class Controleur implements Observateur {
         piocheCarteTrésor.remove(0);
 
         if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
-            //monteedeseaux
+            monteeDesEaux();
         }else{
             a.getMainCarteTrésor().add(carte);
         }
@@ -296,7 +280,7 @@ public class Controleur implements Observateur {
     //inondation d'une tuile
     public void inonderTuile(){
         if (piocheCarteInondation.isEmpty()){
-            System.out.println("C'EST LA FIN aaaaaaaa");
+            remplirPiocheInondation();
         }else{
         CarteInondation cI;
         cI = piocheCarteInondation.get((0));
@@ -325,11 +309,24 @@ public class Controleur implements Observateur {
     
     //si plus de carte dans la pioche
     public void remplirPiocheInondation(){
-        Collections.shuffle(defausseCarteInondation);               //on mélange la défausse
-        for (CarteInondation tuile :defausseCarteInondation ){      //on met toutes les cartes de la défausse dans la pioche
-            piocheCarteInondation.add(tuile);
+        Utils.melangerCI(defausseCarteInondation);
+        for(CarteInondation ci : defausseCarteInondation){
+            piocheCarteInondation.add(ci);
         }
-        defausseCarteInondation.clear();                            //on vide la défausse
+        defausseCarteInondation.clear();
+    }
+    
+    public void monteeDesEaux(){
+        niveauEau.monteeDesEaux();
+        Utils.melangerCI(defausseCarteInondation);
+        for(CarteInondation ci : piocheCarteInondation){
+            defausseCarteInondation.add(ci);
+        }
+        piocheCarteInondation.clear();
+        for(CarteInondation ci : defausseCarteInondation){
+            piocheCarteInondation.add(ci);
+        }
+        defausseCarteInondation.clear();
     }
 
     //si plus de carte dans la pioche
@@ -338,7 +335,7 @@ public class Controleur implements Observateur {
         for (CarteTrésor carte :defausseCarteTrésor ){      //on met toutes les cartes de la défausse dans la pioche
             piocheCarteTrésor.add(carte);
         }
-        defausseCarteInondation.clear();                            //on vide la défausse
+        defausseCarteTrésor.clear();                            //on vide la défausse
     }    
         
         

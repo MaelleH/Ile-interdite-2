@@ -39,7 +39,7 @@ public class Aventurier {
 
         public boolean doitDefausser() {
             // TODO - implement Controleur.priseTresorPossible
-            return (getMainCarteTrésor().size()>5);
+            return (getMainCarteTrésor().size())>5;
         }
                 
 	//déplace un aventurier
