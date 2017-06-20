@@ -45,13 +45,11 @@ public class Controleur implements Observateur {
         private ArrayList<CarteTrésor> piocheCarteTrésor;
 	private ArrayList<CarteTrésor> defausseCarteTrésor;
 	private ArrayList<CarteInondation> piocheCarteInondation;
-	private ArrayList<CarteInondation> défausseCarteInondation;
-	private ArrayList<CarteInondation> défausseCarteCoulées;
-        private ArrayList<NomTrésor> tresors;
-        
 	private ArrayList<CarteInondation> defausseCarteInondation;
-	private ArrayList<CarteInondation> defausseCarteCoulées; 
+	private ArrayList<CarteInondation> defausseCarteCoulées;
+        private ArrayList<NomTrésor> tresors;
 
+        
         private boolean prisePierre;
         private boolean priseCristal;
         private boolean priseZephyr;
@@ -60,20 +58,24 @@ public class Controleur implements Observateur {
         
         public Controleur() {
             lancerPartie();
-            lancerTour();
+            
         }
         
         public void lancerPartie(){
-            //vueL= new VueLancement();
-            initPartie();
+            vueL= new VueLancement(this);
         }
         
-        public void initPartie(){
+        public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
             //Créer la grille
             grille = new Grille();
             
             //Créer les Aventuriers
-            creationAventurier(4);
+
+            creationAventurier(nbj);
+            
+            //Creér les vues de Aventuriers
+            vuesAventuriers = new ArrayList<>();
+
             
             //Créer les cartes
             piocheCarteInondation = new ArrayList<>();
@@ -88,15 +90,16 @@ public class Controleur implements Observateur {
             
             
             //Création et Mise à jour du plateau
-            int i = 1;
+            int i = 0;
             ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
             for(Aventurier a : aventuriers){
-                kitsPanelAventurier.add(new KitPanelAventurier("Joueur "+i, a.getNom(), getPionAventurier(a).getCouleur()));
+                kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(), getPionAventurier(a).getCouleur()));
                 i++;
             }
             vuePlateau = new VuePlateau(kitsPanelAventurier,this);
             updateVuePlateau();
             niveauEau = new EchelleNiveauEau(1);
+            lancerTour();
             
         }
         
@@ -198,6 +201,7 @@ public class Controleur implements Observateur {
                 
 	}
 
+
 	//TEST CASE PRENDRE TRESOR
         
 	/* 
@@ -231,6 +235,7 @@ public class Controleur implements Observateur {
                 }
                 return false;                
 	}*/
+
         
     public boolean doitDefausser(Aventurier a) {
             // TODO - implement Controleur.priseTresorPossible
@@ -297,8 +302,9 @@ public class Controleur implements Observateur {
         
     @Override
     public void traiterMessage(Message m) {
-        //A Faire 
         Coordonnees c;
+            int entier = 0;
+        //A Faire 
         
 
             switch (m.getTypeMessage()) {
@@ -327,6 +333,22 @@ public class Controleur implements Observateur {
                     
 
                     break;
+                    
+                case VAL2:
+                    if(m.getNivDif().equals("Novice")){
+                        entier=1;
+                    }else if(m.getNivDif().equals("Normal")){
+                       entier=2; 
+                    }else if(m.getNivDif().equals("Expert")){
+                       entier=3; 
+                    }else if(m.getNivDif().equals("Légendaire")){
+                       entier=4; 
+                    }
+                        initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
+                    break;   
+                    
+                    
+                    
                 case DONNERCARTE:
                     vuePlateau.resShow();
                     //if(donnationPossible(aventuriers.get(0), aven2)){
@@ -371,18 +393,11 @@ public class Controleur implements Observateur {
                     else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(NomTrésor.Zéphyr)){
                              priseZephyr=true;
                     }
-                    else{
-                        Utils.afficherInformation("Prise de trésor impossible");
-                    }
-                    break; 
-                case PROPOSER_DEPLACEMENT:
-                    vuePlateau.resShow();
-                    vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
+                case RELANCERJEU:
+                        lancerPartie();
+                    
                     break;
-                case PROPOSER_ASSECHEMENT:
-                    vuePlateau.resShow();
-                    vuePlateau.showAssechables(aventuriers.get(0).assechementPossibleListe(grille).keySet());
-                    break;
+                    
                 case TERMINERTOUR:
                     vuePlateau.resShow();
                     System.out.println("Fin du Tour!");
