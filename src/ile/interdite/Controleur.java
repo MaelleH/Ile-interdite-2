@@ -72,8 +72,8 @@ public class Controleur implements Observateur {
             
             
             //Creér les vues de Aventuriers
-            vuesAventuriers = new ArrayList<>();
-            /*
+            /*vuesAventuriers = new ArrayList<>();
+            
             int i = 1;
             VueAventurier vueAventurier;
             for(Aventurier a : aventuriers){
