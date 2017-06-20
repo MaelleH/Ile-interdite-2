@@ -1,17 +1,17 @@
 package Model;
 
 
-import static Model.TypeTrésor.Vide;
+import static Model.NomTrésor.Vide;
 import Util.Utils.EtatTuile;
 import java.util.Objects;
 
 
 public class Tuile {
     private EtatTuile etat;
-    private TypeTrésor tresor;
+    private NomTrésor tresor;
     private NomTuile nomT;
 
-    public Tuile (NomTuile nom,TypeTrésor tresor){
+    public Tuile (NomTuile nom,NomTrésor tresor){
         this.nomT=nom;
         this.tresor=tresor;
         this.etat=EtatTuile.ASSECHEE;
@@ -67,11 +67,11 @@ public class Tuile {
             return this.nomT;
     }
 
-    public TypeTrésor getTresor() {
+    public NomTrésor getTresor() {
         return tresor;
     }
 
-    public void setTresor(TypeTrésor tresor) {
+    public void setTresor(NomTrésor tresor) {
         this.tresor = tresor;
     }
 

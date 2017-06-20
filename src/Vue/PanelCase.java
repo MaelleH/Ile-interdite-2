@@ -5,7 +5,7 @@
  */
 package Vue;
 
-import Model.TypeTrésor;
+import Model.NomTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
@@ -38,7 +38,7 @@ public class PanelCase extends JPanel{
     
     private String nomCase;
     private EtatTuile etatCase;
-    private TypeTrésor tresor;
+    private NomTrésor tresor;
     
     private JLabel labelNomCase;
     private JPanel panelNomCase;
@@ -56,7 +56,7 @@ public class PanelCase extends JPanel{
         this.setBackground(Color.black);
     }
     
-    public PanelCase(String nomCase,EtatTuile etatCase,TypeTrésor tresor,Observateur obs) {
+    public PanelCase(String nomCase,EtatTuile etatCase,NomTrésor tresor,Observateur obs) {
         typeCase = "ile";
         etatListener = 0;
         controleur = obs;
@@ -179,13 +179,13 @@ public class PanelCase extends JPanel{
             }
 
             //Affichage du trésor présent sur la Case
-            if(tresor.equals(TypeTrésor.Cristal)){
+            if(tresor.equals(NomTrésor.Cristal)){
                 panelTresor.setBackground(new Color(255,81,21));
-            }else if(tresor.equals(TypeTrésor.Calice)){
+            }else if(tresor.equals(NomTrésor.Calice)){
                 panelTresor.setBackground(new Color(60,130,140));
-            }else if(tresor.equals(TypeTrésor.Zéphyr)){
+            }else if(tresor.equals(NomTrésor.Zéphyr)){
                 panelTresor.setBackground(new Color(215,169,77));
-            }else if(tresor.equals(TypeTrésor.Pierre)){
+            }else if(tresor.equals(NomTrésor.Pierre)){
                 panelTresor.setBackground(new Color(89,79,108));
             }else{
                 panelTresor.setBackground(panelEtatCase.getBackground());
@@ -197,7 +197,7 @@ public class PanelCase extends JPanel{
     
     
     
-    public void updateCase(String nomCase,EtatTuile etatCase,TypeTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
+    public void updateCase(String nomCase,EtatTuile etatCase,NomTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
         if (typeCase == "ile"){
             setNomCase(nomCase);
             setEtatCase(etatCase);
@@ -221,7 +221,7 @@ public class PanelCase extends JPanel{
         return etatCase;
     }
 
-    public TypeTrésor getTresor() {
+    public NomTrésor getTresor() {
         return tresor;
     }
 
@@ -233,7 +233,7 @@ public class PanelCase extends JPanel{
         this.etatCase = etatCase;
     }
 
-    public void setTresor(TypeTrésor tresor) {
+    public void setTresor(NomTrésor tresor) {
         this.tresor = tresor;
     }
 
