@@ -20,7 +20,7 @@ public class Pilote extends Aventurier {
         public Utils.NomAventurier getNom() {
             return Utils.NomAventurier.Pilote; //To change body of generated methods, choose Tools | Templates.
         }
-        
+        //créer le pouvoir de se déplacer n'importe où une fois par tour pour le pilote
         @Override
         public void autreAction(Coordonnees c,Grille grille ) {
 

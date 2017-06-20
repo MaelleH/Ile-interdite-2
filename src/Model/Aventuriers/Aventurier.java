@@ -1,10 +1,12 @@
 package Model.Aventuriers;
 
 import Model.CarteTrésor;
+import Model.CarteTrésorTrophée;
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
-import Model.TypeTrésor;
+import Model.NomTrésor;
+import Model.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;
@@ -33,6 +35,7 @@ public class Aventurier {
         public void autreAction(Coordonnees c,Grille grille ){
             afficherInformation("Vous n'avez pas d'action de bg!");
         }
+        //pioche des cartes
         public void piocherCT(ArrayList<CarteTrésor> piocheCarteTrésor){
             getMainCarteTrésor().add(piocheCarteTrésor.get(0));
             piocheCarteTrésor.remove(0);
@@ -43,19 +46,13 @@ public class Aventurier {
                 //reset la pioche si plus de carte
             }
         }
-
+        //vérifie si le joueur doit défausser
         public boolean doitDefausser() {
             // TODO - implement Controleur.priseTresorPossible
             return (getMainCarteTrésor().size()>5);
         }
                 
-	/**
-	 * 
-	 * @param a
-     * @param grille
-         * @param c
-
-	 */
+	//déplace un aventurier
 	public void deplacement(Coordonnees c,Grille grille ) {
             if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){
 		setPosition(c);
@@ -72,11 +69,7 @@ public class Aventurier {
 	}
         
         
-        /**
-	 * 
-     * @param grille
-     * @return 
-	 */
+        //donne les cases sur lesquelles un jouer peut se déplacer
 	public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
                                 
@@ -102,7 +95,7 @@ public class Aventurier {
 		return listeD;
                 
 	}
-        
+        //donne les cases asséchables pour un joueur
         public HashMap assechementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.assécher
 		HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
@@ -126,7 +119,7 @@ public class Aventurier {
 
 
 	}
-        
+        //assèche une case
         public void assecher(Coordonnees c,Grille grille) {         
 		// TODO - implement Controleur.assécher
             if(assechementPossibleListe(grille).containsKey(c)){    //Si la tuile de coordonnée c est dans la liste assechementPossibleListe
@@ -220,25 +213,30 @@ public class Aventurier {
     public void setAutreA(boolean autreA) {
         this.autreA = autreA;
     }
-    
-    public boolean priseTresorPossible(TypeTrésor tresor) {
+    //vérifie si le joueur peut prendre le trésor donner
+    public boolean priseTresorPossible(NomTrésor tresor) {
 		// TODO - implement Controleur.priseTresorPossible
-                int stop=0;
+                int nbCartes=0;
+                CarteTrésorTrophée iBis;
                 
                 if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){       
                     
                     for(CarteTrésor i :getMainCarteTrésor()){               
-                        if(!(i.getNomCT()).equals(tresor)){
-                          stop = stop +1;  
+                        if((i.getTypeCarteTresor()).equals(TypeCarteTresor.Tresor)){
+                            iBis = (CarteTrésorTrophée) i;
+                            if(iBis.getNomT().equals(tresor)){
+                               nbCartes = nbCartes +1;  
+                            }
                         }
                     }
-                    if(stop<1){
+                    if(nbCartes>=1){
                         return true;
                     }
                 }
                 return false;                
 	}
-    public boolean prendreTresor(TypeTrésor tresor) {
+    //le joueur prend le trésor donné
+    public boolean prendreTresor(NomTrésor tresor) {
         // TODO - implement Controleur.prendreTresor
 
         if(priseTresorPossible(tresor)){
@@ -251,12 +249,9 @@ public class Aventurier {
         }
     }
         
-    	/**
-	 * 
-	 * @param aven2
-     * @param carte
-	 */
+    //le joueur donne une carte à un aventurier donné	
     public void donnerCarte(Aventurier aven2,CarteTrésor carte) {
+        
         int taille;
         
         if(this.mainCarteTrésor.contains(carte)){

@@ -9,16 +9,16 @@ package Model;
  *
  * @author heyrendm
  */
-public enum TypeTrésor {
+public enum NomTrésor {
     	Calice("Calice"),
-        Cristal ("cristal"), 
-        Zéphyr("Zéphyr"),
+        Cristal ("Cristal"), 
+        Zéphyr("Zephyr"),
         Pierre("Pierre"),
         Vide("vide"); 
 
 
         private String nomT = "";
-        TypeTrésor(String nomT){
+        NomTrésor(String nomT){
                this.nomT=nomT;
         }
 

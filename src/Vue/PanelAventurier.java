@@ -1,6 +1,7 @@
 package Vue;
 
 
+import Model.NomTrésor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -28,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.border.Border;
 
  
@@ -39,6 +41,7 @@ public class PanelAventurier  extends JPanel{
     
     private final JPanel panelHaut;
     private final JPanel panelCartes;
+    private ArrayList<PanelCarteTresor> listeCarteTresor;
     private final JPanel panelNomAventurier;
     
     private final JPanel panelBas;
@@ -60,6 +63,8 @@ public class PanelAventurier  extends JPanel{
         this.controleur=obs;
         this.nomAventurier = nomAventurier;
         this.nomJoueur = nomJoueur;
+        listeCarteTresor = new ArrayList<>();
+        listeCarteTresor.add(new PanelCarteTrophee(NomTrésor.Cristal));
         
         
         this.setLayout(new GridLayout(2, 1));
@@ -78,7 +83,16 @@ public class PanelAventurier  extends JPanel{
         panelNomAventurier.add(new JLabel(nomJoueur+" ("+nomAventurier+")",SwingConstants.CENTER ));
         panelHaut.add(panelNomAventurier,BorderLayout.NORTH);
         // CENTRE : 1 ligne pour position courante
-        panelCartes = new JPanel();
+        panelCartes = new JPanel(new GridLayout(1, 9));
+        panelCartes.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+        
+        for(PanelCarteTresor panelCartTres : listeCarteTresor){
+            panelCartes.add(panelCartTres);
+        }
+        for(int i = listeCarteTresor.size();i<9;i++){
+            panelCartes.add(new JPanel());
+        }
+        
         panelHaut.add(panelCartes,BorderLayout.CENTER);
         // ==================================================================================
 
