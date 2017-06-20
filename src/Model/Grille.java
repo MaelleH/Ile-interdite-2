@@ -1,9 +1,9 @@
 package Model;
 
-import static Model.TypeTrésor.Calice;
-import static Model.TypeTrésor.Cristal;
-import static Model.TypeTrésor.Pierre;
-import static Model.TypeTrésor.Zéphyr;
+import static Model.NomTrésor.Calice;
+import static Model.NomTrésor.Cristal;
+import static Model.NomTrésor.Pierre;
+import static Model.NomTrésor.Zéphyr;
 import Util.Utils;
 import java.util.*;
 

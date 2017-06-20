@@ -8,8 +8,8 @@ package Vue;
 
 
 import Model.Coordonnees;
-import Model.TypeTrésor;
-import static Model.TypeTrésor.Pierre;
+import Model.NomTrésor;
+import static Model.NomTrésor.Pierre;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import ile.interdite.Message;
@@ -101,7 +101,7 @@ public class VuePlateau implements Observateur{
     
     
     
-    public void updateCase(String coord,String nomCase,EtatTuile etatCase,TypeTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
+    public void updateCase(String coord,String nomCase,EtatTuile etatCase,NomTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
         listeCases.get(coord).updateCase(nomCase, etatCase, tresor,pionAAfficher);
         
     }
@@ -194,5 +194,12 @@ public class VuePlateau implements Observateur{
         }
         
         return null;
+    }
+    
+    public void setAllInactive(){
+        resShow();
+        for(PanelAventurier a :listePanelAventuriers){
+            a.setInactive();
+        }
     }
 }

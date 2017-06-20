@@ -10,13 +10,21 @@ package Model;
  * @author heyrendm
  */
 public class CarteTrésorTrophée extends CarteTrésor{
-    private TypeTrésor nomCT;
-    public CarteTrésorTrophée(TypeTrésor nomCT) {
-        this.setNomCT(nomCT);
+    private NomTrésor nomT;
+    public CarteTrésorTrophée(NomTrésor nomT) {
+        this.setNomT(nomT);
     }
 
-    private void setNomCT(TypeTrésor nomCT) {
-       this.nomCT = nomCT;
+    private void setNomT(NomTrésor nomT) {
+       this.nomT = nomT;
     }
     
+    @Override
+    public TypeCarteTresor getTypeCarteTresor() {
+        return TypeCarteTresor.Tresor;
+    }  
+
+    public NomTrésor getNomT() {
+        return nomT;
+    }
 }

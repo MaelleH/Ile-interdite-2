@@ -1,10 +1,12 @@
 package Model.Aventuriers;
 
 import Model.CarteTrésor;
+import Model.CarteTrésorTrophée;
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
-import Model.TypeTrésor;
+import Model.NomTrésor;
+import Model.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;
@@ -221,24 +223,28 @@ public class Aventurier {
         this.autreA = autreA;
     }
     
-    public boolean priseTresorPossible(TypeTrésor tresor) {
+    public boolean priseTresorPossible(NomTrésor tresor) {
 		// TODO - implement Controleur.priseTresorPossible
-                int stop=0;
+                int nbCartes=0;
+                CarteTrésorTrophée iBis;
                 
                 if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){       
                     
                     for(CarteTrésor i :getMainCarteTrésor()){               
-                        if(!(i.getNomCT()).equals(tresor)){
-                          stop = stop +1;  
+                        if((i.getTypeCarteTresor()).equals(TypeCarteTresor.Tresor)){
+                            iBis = (CarteTrésorTrophée) i;
+                            if(iBis.getNomT().equals(tresor)){
+                               nbCartes = nbCartes +1;  
+                            }
                         }
                     }
-                    if(stop<1){
+                    if(nbCartes>=1){
                         return true;
                     }
                 }
                 return false;                
 	}
-    public boolean prendreTresor(TypeTrésor tresor) {
+    public boolean prendreTresor(NomTrésor tresor) {
         // TODO - implement Controleur.prendreTresor
 
         if(priseTresorPossible(tresor)){
@@ -257,6 +263,7 @@ public class Aventurier {
      * @param carte
 	 */
     public void donnerCarte(Aventurier aven2,CarteTrésor carte) {
+        
         int taille;
         
         if(this.mainCarteTrésor.contains(carte)){
