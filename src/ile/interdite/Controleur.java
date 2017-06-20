@@ -59,8 +59,8 @@ public class Controleur implements Observateur {
         }
         
         public void lancerPartie(){
-            vueL= new VueLancement();
-            //initPartie();
+            //vueL= new VueLancement();
+            initPartie();
         }
         
         public void initPartie(){
