@@ -382,18 +382,8 @@ public class Controleur implements Observateur {
             default: return null;
         }
     }
-        
     
-    
-    public static void main(String [] args) {
-        // Instanciation de la fenêtre 
-        Controleur controleur = new Controleur();
-        
-        
-        
-        
-        
-    }
+    //méthode qui vérifie si la partie est perdue.
     public boolean isPerdu(){
          if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)){
              return true;
@@ -417,6 +407,7 @@ public class Controleur implements Observateur {
              return false;
          }
     }
+    // méthode pour vérifier si les joueurs ont gagné
     public boolean isGagne(){
         int nbavenheli=0;
         int nbaventres=0;
@@ -437,4 +428,12 @@ public class Controleur implements Observateur {
         }
             return nbavenheli==4 && priseCalice&& prisePierre && priseCristal && priseZephyr && carteHeli;
     }
+        
+    
+    
+    public static void main(String [] args) {
+        // Instanciation de la fenêtre 
+        Controleur controleur = new Controleur();    
+    }
+    
 }

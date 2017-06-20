@@ -14,7 +14,6 @@ public enum TypeMessage {
     ASSECHER,
     AUTREACTION,
     PRENDRETRESOR,
-    TERMINERTOUR
     TERMINERTOUR,
     DONNERCARTE;
 
