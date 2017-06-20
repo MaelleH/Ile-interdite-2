@@ -7,6 +7,7 @@ package Vue;
 
 
 
+import Model.CarteTrésor;
 import Model.Coordonnees;
 import Model.NomTrésor;
 import static Model.NomTrésor.Pierre;
@@ -138,7 +139,7 @@ public class VuePlateau implements Observateur{
         PanelAventurier panelA;
         
         for(KitPanelAventurier kitPanelA : kitsPanelsAventuriers){
-            panelA = new PanelAventurier(kitPanelA.getNomJoueur(),kitPanelA.getNomAventurier().toString(), kitPanelA.getCouleurAventurier(), getControleur());
+            panelA = new PanelAventurier(kitPanelA.getNomJoueur(),kitPanelA.getNomAventurier().toString(), kitPanelA.getCouleurAventurier(),kitPanelA.getCartes(), getControleur());
             panelAventuriers.add(panelA);
             listePanelAventuriers.add(panelA);
             
@@ -224,6 +225,14 @@ public class VuePlateau implements Observateur{
         resShow();
         for(PanelAventurier a :listePanelAventuriers){
             a.setInactive();
+        }
+    }
+    
+    public void updateMainAventurier(String nomA,ArrayList<CarteTrésor> cartes){
+        for(PanelAventurier pnA : listePanelAventuriers){
+            if(pnA.getNomAventurier().equals(nomA)){
+                pnA.setListeCarteTresor(cartes);
+            }
         }
     }
 }

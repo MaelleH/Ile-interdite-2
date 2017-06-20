@@ -1,7 +1,12 @@
 package Vue;
 
 
+import Model.Activable;
+import Model.CarteTrésor;
+import Model.CarteTrésorTrophée;
 import Model.NomTrésor;
+import Model.TypeCarteActivable;
+import Model.TypeCarteTresor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -25,6 +30,7 @@ import static ile.interdite.TypeMessage.ALLER;
 import static ile.interdite.TypeMessage.ASSECHER;
 import static ile.interdite.TypeMessage.AUTREACTION;
 import static ile.interdite.TypeMessage.TERMINERTOUR;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -58,14 +64,13 @@ public class PanelAventurier  extends JPanel{
     
     
     
-    public PanelAventurier (String nomJoueur, String nomAventurier, Color couleur, Observateur obs){
+    public PanelAventurier (String nomJoueur, String nomAventurier, Color couleur, ArrayList<CarteTrésor> cartes, Observateur obs){
 
         this.controleur=obs;
         this.nomAventurier = nomAventurier;
         this.nomJoueur = nomJoueur;
         listeCarteTresor = new ArrayList<>();
-        listeCarteTresor.add(new PanelCarteTrophee(NomTrésor.Cristal));
-        
+        setListeCarteTresor(cartes);
         
         this.setLayout(new GridLayout(2, 1));
         
@@ -85,13 +90,9 @@ public class PanelAventurier  extends JPanel{
         // CENTRE : 1 ligne pour position courante
         panelCartes = new JPanel(new GridLayout(1, 9));
         panelCartes.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+        initPanelCarte();
         
-        for(PanelCarteTresor panelCartTres : listeCarteTresor){
-            panelCartes.add(panelCartTres);
-        }
-        for(int i = listeCarteTresor.size();i<9;i++){
-            panelCartes.add(new JPanel());
-        }
+        
         
         panelHaut.add(panelCartes,BorderLayout.CENTER);
         // ==================================================================================
@@ -181,8 +182,46 @@ public class PanelAventurier  extends JPanel{
         
     }  
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        initPanelCarte();
+    }
+
     
-     
+    
+    
+    public void setListeCarteTresor(ArrayList<CarteTrésor> cartes){
+        listeCarteTresor.clear();
+        PanelCarteActivable carteActi;
+        PanelCarteTrophee carteTrophee;
+        for(CarteTrésor carte : cartes){
+            if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
+                carteActi = new PanelCarteActivable(((Activable) carte).getTypeCarteActivable());
+                listeCarteTresor.add(carteActi);
+            }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
+                carteTrophee = new PanelCarteTrophee(((CarteTrésorTrophée) carte).getNomT());
+                listeCarteTresor.add(carteTrophee);
+            }
+        }
+        this.repaint();
+    }
+    
+    public void initPanelCarte(){
+        panelCartes.removeAll();
+        for(PanelCarteTresor panelCartTres : listeCarteTresor){
+            panelCartes.add(panelCartTres);
+        }
+        if(listeCarteTresor.size()<5){
+            for(int i = listeCarteTresor.size();i<5;i++){
+                panelCartes.add(new JPanel());
+            }
+        }
+    }
+          
+    
 
     public void setPosition(String pos) {
         //this.position.setText(pos);
@@ -209,7 +248,7 @@ public class PanelAventurier  extends JPanel{
         return nomAventurier;
     }
     
-     
+    
 }
 
  

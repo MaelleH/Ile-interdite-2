@@ -29,7 +29,6 @@ public class PanelCarteTrophee extends PanelCarteTresor{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
-        
         try {
             Image image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+nomTrésor+".png"));
             g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);

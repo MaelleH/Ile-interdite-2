@@ -10,6 +10,7 @@ import Model.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;
+import ile.interdite.Controleur;
 import java.util.*;
 import java.util.HashMap;
 
@@ -35,16 +36,8 @@ public class Aventurier {
         public void autreAction(Coordonnees c,Grille grille ){
             afficherInformation("Vous n'avez pas d'action de bg!");
         }
-        public void piocherCT(ArrayList<CarteTrésor> piocheCarteTrésor){
-            getMainCarteTrésor().add(piocheCarteTrésor.get(0));
-            piocheCarteTrésor.remove(0);
-            
-            if(doitDefausser()){
-                //TODO
-                //PENSER A METTRE A JOUR LA DEFAUSSE
-                //reset la pioche si plus de carte
-            }
-        }
+        
+        
 
         public boolean doitDefausser() {
             // TODO - implement Controleur.priseTresorPossible
@@ -171,7 +164,7 @@ public class Aventurier {
     /**
      * @return the mainCarteTrésor
      */
-    public Collection<CarteTrésor> getMainCarteTrésor() {
+    public ArrayList<CarteTrésor> getMainCarteTrésor() {
         return mainCarteTrésor;
     }
 

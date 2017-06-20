@@ -5,6 +5,7 @@
  */
 package Vue;
 
+import Model.CarteTrésor;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import static ile.interdite.TypeMessage.VAL2;

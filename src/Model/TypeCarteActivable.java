@@ -10,7 +10,6 @@ package Model;
  * @author ferreijo
  */
 public enum TypeCarteActivable {
-    Sac,
-    Helicoptere,
-    undefined;
+    SacsDeSable,
+    Helicoptere;
 }
