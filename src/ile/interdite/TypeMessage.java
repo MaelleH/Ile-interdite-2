@@ -20,7 +20,6 @@ public enum TypeMessage {
     PROPOSER_ASSECHEMENT,
     PROPOSER_DONATION_CARTE,
     RELANCERJEU,
-    REGLES,
     VAL2;
     
     

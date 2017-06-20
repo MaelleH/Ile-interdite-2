@@ -397,11 +397,8 @@ public class Controleur implements Observateur {
                         lancerPartie();
                     
                     break;
-                case REGLES:
-                        
-                    
-                // si le joueur appui sur terminer tour ,fini son tour et lance le tour du joueur prochain
-                    break;    
+                
+                // si le joueur appui sur terminer tour ,fini son tour et lance le tour du joueur prochain    
                 case TERMINERTOUR:
                     vuePlateau.resShow();
                     System.out.println("Fin du Tour!");

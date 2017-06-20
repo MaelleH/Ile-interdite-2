@@ -7,7 +7,6 @@ package Vue;
 
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import static ile.interdite.TypeMessage.REGLES;
 import static ile.interdite.TypeMessage.VAL2;
 import java.awt.BorderLayout;
 import static java.awt.BorderLayout.CENTER;
@@ -187,9 +186,6 @@ public class VueLancement {
         //Bouton regles
         JButton regles = new JButton("Règles");
         regles.addActionListener((ActionEvent e) -> {
-            Message m = new Message();
-            m.setTypeMessage(REGLES);  
-            controleur.traiterMessage(m);
         });
         valider.add(regles);
         validerJ.add(regles);
