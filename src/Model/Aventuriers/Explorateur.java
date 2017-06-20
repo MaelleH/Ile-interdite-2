@@ -31,7 +31,7 @@ public class Explorateur extends Aventurier {
     
     
     
-
+    //permet à l'explorateur de se déplacer en diagonale
     @Override
     public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
@@ -57,7 +57,7 @@ public class Explorateur extends Aventurier {
                 
 	}
       
-        
+        //permet à l'explorateur d'asséecher en diagonale
         @Override
         public HashMap assechementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible

@@ -18,6 +18,8 @@ public class Messager extends Aventurier {
     * @param aven1
     * @param aven2
     */
+    
+    //permet au messagerde toujours donner des cartes
    public boolean donnerCartePossible(Aventurier aven1, Aventurier aven2) {
            // TODO - implement Messager.donnerCarte
            return true;
