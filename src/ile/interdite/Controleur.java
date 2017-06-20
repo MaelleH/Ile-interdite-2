@@ -27,13 +27,14 @@ import Util.Utils.Pion;
 import Vue.KitPanelAventurier;
 import Vue.VueAventurier;
 import Vue.VueLancement;
+import Vue.VueLancement2;
 import Vue.VuePlateau;
 
 public class Controleur implements Observateur {
 
 	//Collection<CarteTrésor> piocheCarteTrésor;
 	private Grille grille;
-        private VueLancement vueL;
+        private VueLancement2 vueL;
         private ArrayList<Aventurier> aventuriers;
         private ArrayList<VueAventurier> vuesAventuriers;
         
@@ -59,7 +60,7 @@ public class Controleur implements Observateur {
         }
         
         public void lancerPartie(){
-            vueL= new VueLancement(this);
+            vueL= new VueLancement2(this);
         }
         
         public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
@@ -355,7 +356,10 @@ public class Controleur implements Observateur {
                         lancerPartie();
                     
                     break;
+                case REGLES:
+                        
                     
+                    break;    
                 case TERMINERTOUR:
                     vuePlateau.resShow();
                     System.out.println("Fin du Tour!");

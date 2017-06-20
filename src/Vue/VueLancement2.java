@@ -14,15 +14,25 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -34,10 +44,13 @@ import javax.swing.JPanel;
  *
  * @author heyrendm
  */
-public class VueLancement {
+public class VueLancement2 {
     private Observateur controleur;
     private JFrame main;
+    
     private JPanel mainP;
+    private JPanel mainPBas;
+    private JLabel mainPHaut;
     
     private JPanel welcomeP;
     private JPanel joueurP;
@@ -52,11 +65,21 @@ public class VueLancement {
     private final JComboBox listeDif = new JComboBox(nivDif);
    
 
-    public VueLancement(Observateur obs) {
+    public VueLancement2(Observateur obs) {
         controleur= obs;
         main = new JFrame();
-        mainP = new JPanel();
-        Color c;
+        mainP = new JPanel(new BorderLayout());
+        
+        ImageIcon tresorImage = new ImageIcon(System.getProperty("user.dir")+"/src/Vue/tresors.jpg");
+        
+        mainPHaut = new JLabel((Icon) tresorImage);
+        mainPHaut.setSize(mainP.getWidth(),mainP.getHeight());
+        
+        mainPBas = new JPanel();
+        mainP.add(mainPHaut,NORTH);
+        mainP.add(mainPBas,SOUTH);
+        
+        
         welcomeP = new JPanel(new BorderLayout());
         JPanel choixP = new JPanel(new BorderLayout());
         
@@ -84,15 +107,12 @@ public class VueLancement {
         
         
         //Panneau de depart
-        c = new Color(1,13,31);
-        mainP.add(welcomeP);
-        welcomeP.setBackground(c);        
+        
+        mainP.add(welcomeP,CENTER);        
         welcomeP.add(choixP,CENTER); 
         
         //Titre 
         JLabel bv= new JLabel("WELCOME", (int) JLabel.CENTER_ALIGNMENT);
-        c = new Color(255,11,117);     
-        bv.setForeground(c);
         welcomeP.add(bv,NORTH);
     
         
@@ -106,7 +126,7 @@ public class VueLancement {
         //Difficulté
         JPanel choixDif = new JPanel();
         choixP.add(choixDif,CENTER);
-        choixDif.setBorder(BorderFactory.createLineBorder(c));
+        choixDif.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         choixDif.setBorder(BorderFactory.createTitledBorder("Difficulté"));
         
         // Déclaration de la combobox
