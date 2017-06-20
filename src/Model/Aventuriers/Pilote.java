@@ -3,6 +3,7 @@ package Model.Aventuriers;
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
+import Util.Utils;
 import static Util.Utils.EtatTuile.COULEE;
 import static Util.Utils.afficherInformation;
 import java.util.HashMap;
@@ -16,8 +17,8 @@ public class Pilote extends Aventurier {
         }
 
         @Override
-        public String getNom() {
-            return "Pilote";
+        public Utils.NomAventurier getNom() {
+            return Utils.NomAventurier.Pilote; //To change body of generated methods, choose Tools | Templates.
         }
         
         @Override

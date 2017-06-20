@@ -6,23 +6,23 @@ import Model.Grille;
 import Model.Tuile;
 import Model.TypeTrésor;
 import Util.Utils;
+import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;
 import java.util.*;
 import java.util.HashMap;
 
 public class Aventurier {
-	private Collection<CarteTrésor> mainCarteTrésor;
+	private ArrayList<CarteTrésor> mainCarteTrésor = new ArrayList<>();
 	private int actionsRestantes;
-	private int ACTIONS_MAX = 3;
-	private Coordonnees position= new Coordonnees("3","3");
+	private Coordonnees position;
         private boolean autreA=false;
        
     public Aventurier(){
-        this.actionsRestantes=ACTIONS_MAX;
+        this.actionsRestantes=getMaxActions();
     }
     public Aventurier(Coordonnees position) {
         this.position=position;
-        this.actionsRestantes=ACTIONS_MAX;
+        this.actionsRestantes=getMaxActions();
     }
         
 
@@ -57,12 +57,10 @@ public class Aventurier {
 
 	 */
 	public void deplacement(Coordonnees c,Grille grille ) {
-
-            System.out.println("Position    aventurier" +getPosition().getX()+getPosition().getY());
             if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){
 		setPosition(c);
                 setActionsRestantes(getActionsRestantes()-1);
-                System.out.println(getPosition().getX()+getPosition().getY());
+                
                 
             }
             else if(this.getActionsRestantes()<1){
@@ -84,7 +82,7 @@ public class Aventurier {
 	public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
                                 
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();
                 int xo,yo,xn,yn;
                 
                 xo=Integer.parseInt(getPosition().getX());
@@ -97,9 +95,7 @@ public class Aventurier {
 
                     
                         if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
-                            listeD.put((Coordonnees) i.getKey(), i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println(((Tuile)i.getValue()).getNomT());    
+                            listeD.put((Coordonnees) i.getKey(), i.getValue());  
                         }    
                     }
                         
@@ -123,9 +119,7 @@ public class Aventurier {
                         yn=Integer.parseInt((String)(i.getKey()).getY());
 
                         if(((xo==xn && yo==yn)||(((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
-                            listeD.put( i.getKey(), i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println((i.getValue()).getNomT());    
+                            listeD.put( i.getKey(), i.getValue());   
                         }     
                     }
                 }
@@ -169,8 +163,8 @@ public class Aventurier {
     /**
      * @return the nom
      */
-    public String getNom() {
-        return "Aventurier";
+    public NomAventurier getNom() {
+        return NomAventurier.Aventurier;
     }
 
 
@@ -184,7 +178,7 @@ public class Aventurier {
     /**
      * @param mainCarteTrésor the mainCarteTrésor to set
      */
-    public void setMainCarteTrésor(Collection<CarteTrésor> mainCarteTrésor) {
+    public void setMainCarteTrésor(ArrayList<CarteTrésor> mainCarteTrésor) {
         this.mainCarteTrésor = mainCarteTrésor;
     }
 
@@ -203,7 +197,7 @@ public class Aventurier {
     }
 
     public void resetActionsRestantes() {
-        this.actionsRestantes = ACTIONS_MAX;
+        this.actionsRestantes = getMaxActions();
     }
     public void resetAutreA() {
         this.setAutreA(false);
@@ -247,18 +241,17 @@ public class Aventurier {
                 return false;                
 	}
     public boolean prendreTresor(TypeTrésor tresor) {
-		// TODO - implement Controleur.prendreTresor
-                
-		if(priseTresorPossible(tresor)){
-                    getMainCarteTrésor().remove(tresor);
-//PENSER A METTRE UN ATTRIBUT TRESOR QUELQUE PART
-                    return true;
- 
-                }
-                else{
-                    return false;
-                }
-	}
+        // TODO - implement Controleur.prendreTresor
+
+        if(priseTresorPossible(tresor)){
+            getMainCarteTrésor().remove(tresor);
+            return true;
+
+        }
+        else{
+            return false;
+        }
+    }
         
     	/**
 	 * 
@@ -287,4 +280,8 @@ public class Aventurier {
                 
         }
     }
+    public int getMaxActions(){
+        return 3;
+    }
+    
 }

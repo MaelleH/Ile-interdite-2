@@ -6,6 +6,8 @@
 package ile.interdite;
 
 import Model.Aventuriers.Aventurier;
+import Model.Coordonnees;
+import Vue.PanelCase;
 
 /**
  *
@@ -13,31 +15,24 @@ import Model.Aventuriers.Aventurier;
  */
 public class Message {
     private TypeMessage typeMessage;
-    private String champSaisieTxt;
+    private PanelCase pC;
+    
+    private Coordonnees coord;
     private String joueur;
 
-    public Message(TypeMessage typeMessage,String champSaisieTxt,String joueur) {
-        this.typeMessage = typeMessage;
-        this.champSaisieTxt = champSaisieTxt;
-        this.joueur =joueur;
-    }   
+     
 
     public TypeMessage getTypeMessage() {
         return typeMessage;
     }
 
-    public String getChampSaisieTxt() {
-        return champSaisieTxt;
-    }
+    
 
     public void setBtnCliquéTxt(TypeMessage btnCliquéTxt) {
-        this.typeMessage = btnCliquéTxt;
+        this.setTypeMessage(btnCliquéTxt);
     }
 
-    public void setChampSaisieTxt(String champSaisieTxt) {
-        this.champSaisieTxt = champSaisieTxt;
-    }
-
+    
     /**
      * @return the joueur
      */
@@ -51,4 +46,26 @@ public class Message {
     public void setJoueur(String joueur) {
         this.joueur = joueur;
     }
+
+    public void setTypeMessage(TypeMessage typeMessage) {
+        this.typeMessage = typeMessage;
+    }
+
+    public Coordonnees getCoord() {
+        return coord;
+    }
+
+    public void setCoord(Coordonnees coord) {
+        this.coord = coord;
+    }
+
+    public PanelCase getpC() {
+        return pC;
+    }
+
+    public void setpC(PanelCase pC) {
+        this.pC = pC;
+    }
+
+    
 }

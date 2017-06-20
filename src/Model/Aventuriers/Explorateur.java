@@ -14,6 +14,7 @@ import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import static Util.Utils.EtatTuile.COULEE;
 import static Util.Utils.EtatTuile.INONDEE;
+import Util.Utils.NomAventurier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +25,8 @@ public class Explorateur extends Aventurier {
     }
 
     @Override
-    public String getNom() {
-        return "Explorateur"; //To change body of generated methods, choose Tools | Templates.
+    public NomAventurier getNom() {
+        return NomAventurier.Explorateur; //To change body of generated methods, choose Tools | Templates.
     }
     
     
@@ -47,9 +48,7 @@ public class Explorateur extends Aventurier {
                     yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
                     if(i.getValue()!=null){
                         if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((! i.getValue().getEtat().equals(Utils.EtatTuile.COULEE)))){
-                            listeD.put((Coordonnees) i.getKey(), i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println(((Tuile)i.getValue()).getNomT());    
+                            listeD.put((Coordonnees) i.getKey(), i.getValue());   
                         }  
                     }
                 }
@@ -75,9 +74,7 @@ public class Explorateur extends Aventurier {
                         yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
 
                         if(((xo==xn && yo==yn)||((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((i.getValue().getEtat().equals(Utils.EtatTuile.INONDEE)))){
-                            listeD.put( i.getKey(), i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println(((Tuile)i.getValue()).getNomT());    
+                            listeD.put( i.getKey(), i.getValue());   
                         }        
                     }
                 }

@@ -9,13 +9,19 @@ import Model.TypeTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
+import ile.interdite.Message;
+import ile.interdite.Observateur;
+import ile.interdite.TypeMessage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Observable;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,6 +33,8 @@ import javax.swing.SwingConstants;
  */
 public class PanelCase extends JPanel{
     private String typeCase;
+    private int etatListener; /*0 pour inactive,1 pour cliquable#deplacement,2 pour cliquable#assechement*/
+    private Observateur controleur;
     
     private String nomCase;
     private EtatTuile etatCase;
@@ -48,8 +56,10 @@ public class PanelCase extends JPanel{
         this.setBackground(Color.black);
     }
     
-    public PanelCase(String nomCase,EtatTuile etatCase,TypeTrésor tresor) {
+    public PanelCase(String nomCase,EtatTuile etatCase,TypeTrésor tresor,Observateur obs) {
         typeCase = "ile";
+        etatListener = 0;
+        controleur = obs;
         
         pionAAfficher = new ArrayList<>();
         
@@ -59,7 +69,7 @@ public class PanelCase extends JPanel{
         
         //Parametrage du PanelCase
         setLayout(new GridLayout(3,1));
-        setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        
         
         
         //Affichage du Nom de la Case
@@ -89,11 +99,61 @@ public class PanelCase extends JPanel{
         panelBas.add(panelTresor);
         panelBas.add(panelJoueurs);
         this.add(panelBas);
+        
+        
+        PanelCase pC= this;
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(etatListener==0){
+                    /*Mais rien ne se passe...*/
+                }else if(etatListener==1){
+                    Message m = new Message();
+                    m.setTypeMessage(TypeMessage.ALLER);
+                    m.setpC(pC);
+                    controleur.traiterMessage(m);
+                }else if(etatListener==2){
+                    Message m = new Message();
+                    m.setTypeMessage(TypeMessage.ASSECHER);
+                    m.setpC(pC);
+                    controleur.traiterMessage(m);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+        
+        
         if(typeCase == "ile"){
+            super.paintComponent(g);
+            //Affichag de la bordure
+            if(etatListener==0){
+                setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+            }else if(etatListener==1){
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Color.black, 2)));
+            }else if(etatListener==2){
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(new Color(150,20,20), 2)));
+            }
+            
             //Affichage du Nom de la Case
             labelNomCase.setText(nomCase);
 
@@ -119,13 +179,13 @@ public class PanelCase extends JPanel{
             }
 
             //Affichage du trésor présent sur la Case
-            if(tresor.equals("cristal")){
+            if(tresor.equals(TypeTrésor.Cristal)){
                 panelTresor.setBackground(new Color(255,81,21));
-            }else if(tresor.equals("calice")){
+            }else if(tresor.equals(TypeTrésor.Calice)){
                 panelTresor.setBackground(new Color(60,130,140));
-            }else if(tresor.equals("zéphyr")){
+            }else if(tresor.equals(TypeTrésor.Zéphyr)){
                 panelTresor.setBackground(new Color(215,169,77));
-            }else if(tresor.equals("pierre")){
+            }else if(tresor.equals(TypeTrésor.Pierre)){
                 panelTresor.setBackground(new Color(89,79,108));
             }else{
                 panelTresor.setBackground(panelEtatCase.getBackground());
@@ -152,6 +212,10 @@ public class PanelCase extends JPanel{
     public String getNomCase() {
         return nomCase;
     }
+    
+    public int getEtatListener() {
+        return etatListener;
+    }
 
     public EtatTuile getEtatCase() {
         return etatCase;
@@ -171,6 +235,10 @@ public class PanelCase extends JPanel{
 
     public void setTresor(TypeTrésor tresor) {
         this.tresor = tresor;
+    }
+
+    public void setEtatListener(int etatListener) {
+        this.etatListener = etatListener;
     }
     
     
