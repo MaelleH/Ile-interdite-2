@@ -123,7 +123,7 @@ public class Controleur implements Observateur {
             }
             
         }
-        aventuriers.get(0).resetAutreA();
+        aventuriers.get(0).setMaxActions();
 
         for (int c=1;c<=niveauEau.getNbInond();c++){
             inonderTuile();
@@ -278,34 +278,65 @@ public class Controleur implements Observateur {
     }
 
     //inondation d'une tuile
-    public void inonderTuile(){
-        if (piocheCarteInondation.isEmpty()){
-            remplirPiocheInondation();
-        }else{
-        CarteInondation cI;
-        cI = piocheCarteInondation.get((0));
-        Tuile t = grille.getTuile(cI.getNomTuile().toString());
-        Coordonnees co = grille.getCoordTuile(cI.getNomTuile().toString());
-        if (t.getEtat()==EtatTuile.ASSECHEE){                       //si la tuile est assechée
-            t.setEtat(EtatTuile.INONDEE);                           //elle devient inondée
-            defausseCarteInondation.add(cI);                        //et le carte va dans la defausse
-        }else if(t.getEtat()==EtatTuile.INONDEE){                   //si la tuile est assechée
-            t.setEtat(EtatTuile.COULEE);                            //elle devient coulée
-
-
-            //vérifier si il y a des aventuriers sur cette case
-            for(Aventurier a : aventuriers){
-                if(a.getPosition().equals(co)){                     //si l'aventurier est sur la case qui vient d'être coulée
-
+        public void inonderTuile(){
+            if (piocheCarteInondation.isEmpty()){                               //si la picohe est vide, cela veut dire que toute les cases sont coulées, le jeu est perdu
+                System.out.println("C'EST LA FIN");
+            }else{                                                              //Sinon
+            CarteInondation cI;                                         
+            cI = piocheCarteInondation.get((0));                                //L'aventurier prend la premiere carte de la pioche
+            Tuile t = grille.getTuile(cI.getNomTuile().toString());             //t = tuile correspondante à la carte
+            Coordonnees co = grille.getCoordTuile(cI.getNomTuile().toString()); 
+            if (t.getEtat()==EtatTuile.ASSECHEE){                               //si la tuile est assechée
+                t.setEtat(EtatTuile.INONDEE);                                   //elle devient inondée
+                defausseCarteInondation.add(cI);                                //et le carte va dans la defausse
+            }else if(t.getEtat()==EtatTuile.INONDEE){                           //si la tuile est assechée
+                t.setEtat(EtatTuile.COULEE);                                    //elle devient coulée
+                
+                
+                
+                
+                
+                
+                
+                                                                                //on vérifie si il y a des aventuriers sur cette case
+                for(Aventurier a : aventuriers){
+                    if(a.getPosition().equals(co)){                             //si l'aventurier a est sur la case qui vient d'être coulée
+                    //il se déplace vers une tuile qu'il peut atteindre
+                        HashMap<Coordonnees,Tuile> deplacement;
+                        deplacement = new HashMap<>();
+                        deplacement = a.deplacementPossibleListe(grille);
+                        if (deplacement.isEmpty()){
+                            System.out.println("fin");
+                        }else{
+                            ArrayList<Tuile> tuile = new ArrayList<>();
+                            for (Tuile ttemp : deplacement.values()){
+                                  tuile.add(ttemp);
+                            }
+                            
+                            int taille = deplacement.size();
+                            Random r = new Random();
+                            int valeur = 0 + r.nextInt(taille);
+                            System.out.println("aleatoire : " +valeur);
+                            a.setActionsRestantes(1);
+                            Coordonnees coord = grille.getCoordTuile(tuile.get(valeur).getNomT().toString());
+                            
+                            
+                            a.deplacement(coord, grille);
+                        }
+                        
+                    }
                 }
+                
+                
+                
+                
+                
+                
+                defausseCarteCoulées.add(cI);                           //et la carte est retirée
             }
-
-
-            defausseCarteCoulées.add(cI);                           //et la carte est retirée
+            piocheCarteInondation.remove(cI);                           //la carte est enlevée de la pioche
+            }
         }
-        piocheCarteInondation.remove(cI);                           //la carte est enlevée de la pioche
-        }
-    }
     
     //si plus de carte dans la pioche
     public void remplirPiocheInondation(){
