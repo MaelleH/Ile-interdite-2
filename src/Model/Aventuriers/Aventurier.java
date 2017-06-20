@@ -40,7 +40,7 @@ public class Aventurier {
             if(doitDefausser()){
                 //TODO
                 //PENSER A METTRE A JOUR LA DEFAUSSE
-                
+                //reset la pioche si plus de carte
             }
         }
 
@@ -264,7 +264,7 @@ public class Aventurier {
             
             //On ajoute la carte a l'aventurier 2
             aven2.getMainCarteTrésor().add(carte);
-            
+                               
             //on recupere la taille de la main du joueur
             taille=this.getMainCarteTrésor().size();
             
