@@ -14,16 +14,15 @@ import java.util.HashMap;
 public class Aventurier {
 	private ArrayList<CarteTrésor> mainCarteTrésor = new ArrayList<>();
 	private int actionsRestantes;
-	private int ACTIONS_MAX = 3;
-	private Coordonnees position= new Coordonnees("3","3");
+	private Coordonnees position;
         private boolean autreA=false;
        
     public Aventurier(){
-        this.actionsRestantes=ACTIONS_MAX;
+        this.actionsRestantes=getMaxActions();
     }
     public Aventurier(Coordonnees position) {
         this.position=position;
-        this.actionsRestantes=ACTIONS_MAX;
+        this.actionsRestantes=getMaxActions();
     }
         
 
@@ -58,13 +57,9 @@ public class Aventurier {
 
 	 */
 	public void deplacement(Coordonnees c,Grille grille ) {
-
-            System.out.println("Position    aventurier" +getPosition().getX()+getPosition().getY());
-            if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){      //Si l'aventurier possède au moins 1 action et peut se déplacer sur la tuile
-		setPosition(c);                                                                     //On change sa position
-                setActionsRestantes(getActionsRestantes()-1);                                       //On lui retire une action
-                System.out.println(getPosition().getX()+getPosition().getY());
-                
+            if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){
+		setPosition(c);
+                setActionsRestantes(getActionsRestantes()-1);
             }
             else if(this.getActionsRestantes()<1){                                                  //Si il n'a plus d'action
                 System.out.println("Plus d'actions....");
@@ -98,9 +93,7 @@ public class Aventurier {
 
                         //Si elle est adjacente à la tuile de l'aventurier et elle n'est pas coulée
                         if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
-                            listeD.put((Coordonnees) i.getKey(), i.getValue());         //On l'ajoute dans la liste des tuiles possibles
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println(((Tuile)i.getValue()).getNomT());    
+                            listeD.put((Coordonnees) i.getKey(), i.getValue());  
                         }    
                     }
                         
@@ -124,9 +117,7 @@ public class Aventurier {
                         yn=Integer.parseInt((String)(i.getKey()).getY());
 
                         if(((xo==xn && yo==yn)||(((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)))){
-                            listeD.put( i.getKey(), i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println((i.getValue()).getNomT());    
+                            listeD.put( i.getKey(), i.getValue());   
                         }     
                     }
                 }
@@ -204,7 +195,7 @@ public class Aventurier {
     }
 
     public void resetActionsRestantes() {
-        this.actionsRestantes = ACTIONS_MAX;
+        this.actionsRestantes = getMaxActions();
     }
     public void resetAutreA() {
         this.setAutreA(false);
@@ -287,4 +278,8 @@ public class Aventurier {
                 
         }
     }
+    public int getMaxActions(){
+        return 3;
+    }
+    
 }
