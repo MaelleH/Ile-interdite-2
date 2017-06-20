@@ -168,40 +168,6 @@ public class Controleur implements Observateur {
 		return aven1.getPosition() == aven2.getPosition();
                 
 	}
-
-	//TEST CASE PRENDRE TRESOR
-        
-	/* 
-	public void prendreTresor() {
-		// TODO - implement Controleur.prendreTresor
-                
-		if(priseTresorPossible(aventuriers.get(0))){
-                    TypeTrésor tresor =(grille.getHSTuile().get(aventuriers.get(0).getPosition()).getTresor());
-                    aventuriers.get(0).getMainCarteTrésor().remove(tresor);
-                }
-	}
-        */
-        
-        //TEST CASE PRENDRE TRESOR
-        
-	/*public boolean priseTresorPossible(Aventurier a) {
-		// TODO - implement Controleur.priseTresorPossible
-                TypeTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
-                int stop=0;
-                
-                if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
-                    
-                    for(CarteTrésor i :a.getMainCarteTrésor()){
-                        if(!(i.getNomCT()).equals(tresor)){
-                          stop = stop +1;  
-                        }
-                    }
-                    if(stop<1){
-                        return true;
-                    }
-                }
-                return false;                
-	}*/
         
     public boolean doitDefausser(Aventurier a) {
             // TODO - implement Controleur.priseTresorPossible
