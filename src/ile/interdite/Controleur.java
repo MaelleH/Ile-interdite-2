@@ -61,7 +61,7 @@ public class Controleur implements Observateur {
         public void lancerPartie(){
             vueL= new VueLancement(this);
         }
-        
+        //initialise le début d'une partie
         public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
             //Créer la grille
             grille = new Grille();
@@ -101,7 +101,7 @@ public class Controleur implements Observateur {
         public void lancerTour(){
             vuePlateau.setActive(aventuriers.get(0).getNom());
         }
-        
+        //fini le tour d'un joueur
         public void finTour(){
             vuePlateau.setInactive(aventuriers.get(0).getNom());
             aventuriers.get(0).resetActionsRestantes();
@@ -137,7 +137,7 @@ public class Controleur implements Observateur {
             
             setJoueurSuivant();
         }
-
+        //
         public void setJoueurSuivant(){
             Aventurier avenTmp = aventuriers.get(0);
             aventuriers.remove(0);
@@ -155,7 +155,7 @@ public class Controleur implements Observateur {
         
 
         
-
+        // créer la pioche de carte trésor
         public void initCartetresor(){
             piocheCarteTrésor = new ArrayList<>();
             for(int i=0;i<5;i++){
@@ -351,6 +351,7 @@ public class Controleur implements Observateur {
                     else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(TypeTrésor.Zéphyr)){
                              priseZephyr=true;
                     }
+                // si le joueur appui sur terminer tour ,fini son tour et lance le tour du joueur prochain
                 case TERMINERTOUR:
                     vuePlateau.resShow();
                     System.out.println("Fin du Tour!");
@@ -372,7 +373,7 @@ public class Controleur implements Observateur {
         return null;
     }    
     
-    
+    //créer aléatoirement les joueurs de la partie en fonction du nombre voulu
     public void creationAventurier(int nbjoueur){
         aventuriers = new ArrayList<>();
 
@@ -421,7 +422,7 @@ public class Controleur implements Observateur {
             }
         }
     }
-
+    
     public Pion getPionAventurier(Aventurier a){
         switch(a.getNom().toString()){
             case "Explorateur" : return Pion.ROUGE;
