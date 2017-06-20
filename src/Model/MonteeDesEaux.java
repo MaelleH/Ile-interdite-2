@@ -10,7 +10,7 @@ public class MonteeDesEaux extends CarteTrésor {
 	
     
 	public void moveMarqueur() {
-	    niveau.setNiveauEau(niveau.getNiveauEau()+1);
+	    //niveau.setNiveauEau(niveau.getNiveauEau()+1);
 	}
         public void resetEtPioche(){
             /**CarteInondation.resetTasInnond();
