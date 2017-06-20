@@ -40,7 +40,7 @@ public class Aventurier {
             if(doitDefausser()){
                 //TODO
                 //PENSER A METTRE A JOUR LA DEFAUSSE
-                
+                //reset la pioche si plus de carte
             }
         }
 
