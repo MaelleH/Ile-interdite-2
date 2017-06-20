@@ -32,6 +32,7 @@ import Vue.VueAventurier;
 import Vue.VueDefausse;
 import Vue.VueLancement;
 import Vue.VuePlateau;
+import jdk.nashorn.internal.ir.BreakNode;
 
 public class Controleur implements Observateur {
 
@@ -61,17 +62,7 @@ public class Controleur implements Observateur {
     public Controleur() {
         lancerPartie();
         
-        ArrayList<CarteTrésor> cartes = new ArrayList<>();
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
         
-        VueDefausse vued = new VueDefausse(2,cartes,this);
     }
 
     public void lancerPartie(){
@@ -118,9 +109,10 @@ public class Controleur implements Observateur {
 
     public void lancerTour(){
         if(aventuriers.get(0).doitDefausser()){
-            defausseCarteTrésor.addAll(aventuriers.get(0).getMainCarteTrésor());
-            aventuriers.get(0).getMainCarteTrésor().clear();
+            VueDefausse vued = new VueDefausse(aventuriers.get(0).getMainCarteTrésor().size()-5,aventuriers.get(0).getMainCarteTrésor(),this);
+            return;
         }
+        
         vuePlateau.setActive(aventuriers.get(0).getNom());
         
     }
@@ -396,6 +388,7 @@ public class Controleur implements Observateur {
                 c = m.getCoord();
                 System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).deplacement(c,grille);
+                updateVuePlateau();
                 break;
 
             case ASSECHER:
@@ -424,7 +417,13 @@ public class Controleur implements Observateur {
                   //  aventuriers.get(0).donnerCarte(aven2, carte);
                 //}
                 break;
-            
+            case DEFAUSSER:
+                vuePlateau.resShow();
+                for(CarteTrésor carte : m.getListeCarteTresorADefausse()){
+                    aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                }
+                vuePlateau.setActive(aventuriers.get(0).getNom());
+                break;
             case PROPOSER_ASSECHEMENT:
                 vuePlateau.resShow();
                 vuePlateau.showAssechables(aventuriers.get(0).assechementPossibleListe(grille).keySet());
@@ -512,6 +511,9 @@ public class Controleur implements Observateur {
     
               
     public void updateVuePlateau(){
+        for(Aventurier a : aventuriers){
+            vuePlateau.updateMainAventurier(a.getNom().toString(), a.getMainCarteTrésor());
+        }
         ArrayList<Pion> pionAAfficher;
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
             pionAAfficher = new ArrayList<>();
@@ -530,9 +532,7 @@ public class Controleur implements Observateur {
                 vuePlateau.updateCase(coord, nomCase, etatTuile, tresor, pionAAfficher);
             }
         }
-        for(Aventurier a : aventuriers){
-            vuePlateau.updateMainAventurier(a.getNom().toString(), a.getMainCarteTrésor());
-        }
+        
     }
     
     public Pion getPionAventurier(Aventurier a){

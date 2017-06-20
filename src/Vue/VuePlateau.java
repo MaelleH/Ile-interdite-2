@@ -229,7 +229,9 @@ public class VuePlateau implements Observateur{
         for(PanelAventurier pnA : listePanelAventuriers){
             if(pnA.getNomAventurier().equals(nomA)){
                 pnA.setListeCarteTresor(cartes);
+                
             }
+            pnA.repaint();
         }
     }
 }

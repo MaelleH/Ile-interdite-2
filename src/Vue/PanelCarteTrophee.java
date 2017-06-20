@@ -5,6 +5,7 @@
  */
 package Vue;
 
+import Model.CarteTrésorTrophée;
 import Model.NomTrésor;
 import Model.TypeCarteTresor;
 import java.awt.Color;
@@ -24,13 +25,15 @@ import javax.swing.BorderFactory;
  * @author ferreijo
  */
 public class PanelCarteTrophee extends PanelCarteTresor{
-    private NomTrésor nomTrésor;
     
-    
-    public PanelCarteTrophee(NomTrésor nomTrésor){
-        super(TypeCarteTresor.Tresor);
-        this.nomTrésor = nomTrésor;
-        
+    Image image;
+    public PanelCarteTrophee(CarteTrésorTrophée carteTrésorTrophée){
+        super(carteTrésorTrophée);
+        try {
+            image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+getNomTrésor()+".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PanelCarteTrophee.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -59,23 +62,21 @@ public class PanelCarteTrophee extends PanelCarteTresor{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
-        try {
-            Image image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+nomTrésor+".png"));
-            int borderWidth = this.getInsets().left+this.getInsets().right;
-            int borderHeight = this.getInsets().top+this.getInsets().bottom;
-            g.drawImage(image, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
             
+        int borderWidth = this.getInsets().left+this.getInsets().right;
+        int borderHeight = this.getInsets().top+this.getInsets().bottom;
+        g.drawImage(image, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
             
-        } catch (IOException ex) {
-            Logger.getLogger(PanelCarteTrophee.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
         if(clicked){
             setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), BorderFactory.createLineBorder(Color.gray,2)));
         }else{
             setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));                
         }
         
+    }
+
+    public NomTrésor getNomTrésor() {
+        return ((CarteTrésorTrophée)super.getCarteTrésor()).getNomT();
     }
     
     

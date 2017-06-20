@@ -27,4 +27,16 @@ public class CarteTrésorTrophée extends CarteTrésor{
     public NomTrésor getNomT() {
         return nomT;
     }
+
+    
+    public boolean equals(CarteTrésor c) {
+        if(super.equals(c)){
+            return this.getNomT().toString().equals(((CarteTrésorTrophée)c).getNomT());
+        }else{
+            return false;
+        }
+    }
+
+    
+    
 }

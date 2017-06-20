@@ -5,6 +5,7 @@
  */
 package Vue;
 
+import Model.CarteTrésor;
 import Model.TypeCarteTresor;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -14,15 +15,26 @@ import javax.swing.JPanel;
  * @author ferreijo
  */
 public abstract class PanelCarteTresor extends JPanel{
-    private TypeCarteTresor type;
+    private CarteTrésor carteTrésor;
     protected boolean clicked;
     
-    public PanelCarteTresor(TypeCarteTresor type){
+    public PanelCarteTresor(CarteTrésor carteTrésor){
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        this.type = type;
+        this.carteTrésor = carteTrésor;
     }
     
     public boolean getClicked(){
         return clicked;
+    }
+    public TypeCarteTresor getTypeCarteTresor(){
+        return getCarteTrésor().getTypeCarteTresor();
+    }
+
+    public CarteTrésor getCarteTrésor() {
+        return carteTrésor;
+    }
+
+    public void setCarteTrésor(CarteTrésor carteTrésor) {
+        this.carteTrésor = carteTrésor;
     }
 }

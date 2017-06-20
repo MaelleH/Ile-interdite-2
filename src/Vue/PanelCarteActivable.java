@@ -5,6 +5,8 @@
  */
 package Vue;
 
+import Model.Activable;
+import Model.CarteTrésorTrophée;
 import Model.TypeCarteActivable;
 import Model.TypeCarteTresor;
 import java.awt.Graphics;
@@ -21,24 +23,25 @@ import javax.swing.BorderFactory;
  * @author ferreijo
  */
 public class PanelCarteActivable extends PanelCarteTresor{
-    private TypeCarteActivable typeActivable;
-    public PanelCarteActivable(TypeCarteActivable typeActivable){
-        super(TypeCarteTresor.Activable);
-        this.typeActivable=typeActivable;
+    Image image ;
+    public PanelCarteActivable(Activable activable){
+        super(activable);
+        try {
+            image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+getTypeActivable().toString()+".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PanelCarteActivable.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
-        
-        
-        try {
-            Image image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+typeActivable.toString()+".png"));
-            g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
-        } catch (IOException ex) {
-            Logger.getLogger(PanelCarteTrophee.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+               
+    }
+
+    public TypeCarteActivable getTypeActivable() {
+        return ((Activable)super.getCarteTrésor()).getTypeCarteActivable();
     }
     
 }

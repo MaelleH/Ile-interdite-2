@@ -43,7 +43,7 @@ public class PanelAventurier  extends JPanel{
      
     private final String nomAventurier;
     private final String nomJoueur;
-    
+    private Color couleur;
     
     private final JPanel panelHaut;
     private final JPanel panelCartes;
@@ -70,7 +70,7 @@ public class PanelAventurier  extends JPanel{
         this.nomAventurier = nomAventurier;
         this.nomJoueur = nomJoueur;
         listeCarteTresor = new ArrayList<>();
-        setListeCarteTresor(cartes);
+        this.couleur = couleur;
         
         this.setLayout(new GridLayout(2, 1));
         
@@ -179,16 +179,16 @@ public class PanelAventurier  extends JPanel{
                                         }
                                     }
         );
-        
+        setListeCarteTresor(cartes);
     }  
 
-    @Override
+    /*@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
         
         
         initPanelCarte();
-    }
+    }*/
 
     
     
@@ -199,17 +199,13 @@ public class PanelAventurier  extends JPanel{
         PanelCarteTrophee carteTrophee;
         for(CarteTrésor carte : cartes){
             if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
-                carteActi = new PanelCarteActivable(((Activable) carte).getTypeCarteActivable());
+                carteActi = new PanelCarteActivable(((Activable) carte));
                 listeCarteTresor.add(carteActi);
             }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(((CarteTrésorTrophée) carte).getNomT());
+                carteTrophee = new PanelCarteTrophee((CarteTrésorTrophée) carte);
                 listeCarteTresor.add(carteTrophee);
             }
         }
-        this.repaint();
-    }
-    
-    public void initPanelCarte(){
         panelCartes.removeAll();
         for(PanelCarteTresor panelCartTres : listeCarteTresor){
             panelCartes.add(panelCartTres);
@@ -219,6 +215,11 @@ public class PanelAventurier  extends JPanel{
                 panelCartes.add(new JPanel());
             }
         }
+        revalidate();
+    }
+    
+    public void initPanelCarte(){
+        
     }
           
     
@@ -233,7 +234,7 @@ public class PanelAventurier  extends JPanel{
         btnDonnerCarte.setEnabled(true);
         btnPrendreTresor.setEnabled(true);
         btnTerminerTour.setEnabled(true);
-        
+        this.setBorder(BorderFactory.createLineBorder(Color.black, 3));
     }
     public void setInactive(){
         btnAller.setEnabled(false);
@@ -241,7 +242,7 @@ public class PanelAventurier  extends JPanel{
         btnDonnerCarte.setEnabled(false);
         btnPrendreTresor.setEnabled(false);
         btnTerminerTour.setEnabled(false);
-        
+        this.setBorder(BorderFactory.createLineBorder(couleur, 3));
     }
 
     public String getNomAventurier() {
