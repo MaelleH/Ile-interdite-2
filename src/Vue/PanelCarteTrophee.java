@@ -7,13 +7,17 @@ package Vue;
 
 import Model.NomTrésor;
 import Model.TypeCarteTresor;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 
 /**
  *
@@ -21,9 +25,35 @@ import javax.imageio.ImageIO;
  */
 public class PanelCarteTrophee extends PanelCarteTresor{
     private NomTrésor nomTrésor;
+    
+    
     public PanelCarteTrophee(NomTrésor nomTrésor){
         super(TypeCarteTresor.Tresor);
         this.nomTrésor = nomTrésor;
+        
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                clicked = !clicked;
+                repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
     }
 
     @Override
@@ -31,9 +61,19 @@ public class PanelCarteTrophee extends PanelCarteTresor{
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
         try {
             Image image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+nomTrésor+".png"));
-            g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+            int borderWidth = this.getInsets().left+this.getInsets().right;
+            int borderHeight = this.getInsets().top+this.getInsets().bottom;
+            g.drawImage(image, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(PanelCarteTrophee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(clicked){
+            setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), BorderFactory.createLineBorder(Color.gray,2)));
+        }else{
+            setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));                
         }
         
     }

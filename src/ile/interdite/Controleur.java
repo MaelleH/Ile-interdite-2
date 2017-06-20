@@ -29,6 +29,7 @@ import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
 import Vue.KitPanelAventurier;
 import Vue.VueAventurier;
+import Vue.VueDefausse;
 import Vue.VueLancement;
 import Vue.VuePlateau;
 
@@ -59,6 +60,18 @@ public class Controleur implements Observateur {
 
     public Controleur() {
         lancerPartie();
+        
+        ArrayList<CarteTrésor> cartes = new ArrayList<>();
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        
+        VueDefausse vued = new VueDefausse(2,cartes,this);
     }
 
     public void lancerPartie(){

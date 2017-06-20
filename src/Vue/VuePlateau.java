@@ -18,7 +18,6 @@ import ile.interdite.Observateur;
 import ile.interdite.TypeMessage;
 import static ile.interdite.TypeMessage.RELANCERJEU;
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
@@ -26,9 +25,7 @@ import java.awt.event.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Observable;
 import java.util.Set;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
