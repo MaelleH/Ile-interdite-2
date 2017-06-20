@@ -8,6 +8,7 @@ package ile.interdite;
 import Model.Aventuriers.Aventurier;
 import Model.Coordonnees;
 import Vue.PanelCase;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,18 +20,29 @@ public class Message {
     
     private Coordonnees coord;
     private String joueur;
+       
+    private ArrayList<String> joueurs;
+    private String nivDif;
+    
+    public Message(){}
+    
+    
+    public Message(TypeMessage typeMessage,String champSaisieTxt,String joueur) {
+        this.typeMessage = typeMessage;
+        this.joueur =joueur;
+    }   
+    public Message(TypeMessage typeMessage,String champSaisieTxt,String joueur,ArrayList<String> joueurs) {
+        this.typeMessage = typeMessage;
+        this.joueurs =new ArrayList<>();
+        this.joueurs= joueurs;
+        this.joueur =joueur;
+    }
 
-     
-
+    
     public TypeMessage getTypeMessage() {
         return typeMessage;
     }
 
-    
-
-    public void setBtnCliquéTxt(TypeMessage btnCliquéTxt) {
-        this.setTypeMessage(btnCliquéTxt);
-    }
 
     
     /**
@@ -47,25 +59,67 @@ public class Message {
         this.joueur = joueur;
     }
 
+    /**
+     * @param typeMessage the typeMessage to set
+     */
     public void setTypeMessage(TypeMessage typeMessage) {
         this.typeMessage = typeMessage;
     }
 
-    public Coordonnees getCoord() {
-        return coord;
-    }
-
-    public void setCoord(Coordonnees coord) {
-        this.coord = coord;
-    }
-
+    /**
+     * @return the pC
+     */
     public PanelCase getpC() {
         return pC;
     }
 
+    /**
+     * @param pC the pC to set
+     */
     public void setpC(PanelCase pC) {
         this.pC = pC;
     }
 
-    
+    /**
+     * @return the coord
+     */
+    public Coordonnees getCoord() {
+        return coord;
+    }
+
+    /**
+     * @param coord the coord to set
+     */
+    public void setCoord(Coordonnees coord) {
+        this.coord = coord;
+    }
+
+    /**
+     * @return the joueurs
+     */
+    public ArrayList<String> getJoueurs() {
+        return joueurs;
+    }
+
+    /**
+     * @param joueurs the joueurs to set
+     */
+    public void setJoueurs(ArrayList<String> joueurs) {
+        this.joueurs = joueurs;
+    }
+
+    /**
+     * @return the nivDif
+     */
+    public String getNivDif() {
+        return nivDif;
+    }
+
+    /**
+     * @param nivDif the nivDif to set
+     */
+    public void setNivDif(String nivDif) {
+        this.nivDif = nivDif;
+    }
+
 }

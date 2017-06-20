@@ -12,7 +12,7 @@ public class Grille {
 
     public Grille() {
         HSTuile = new HashMap<>();
-        creerGrilleProf();
+        creerGrille();
     }
         
     public HashMap<Coordonnees,Tuile> getHSTuile() {

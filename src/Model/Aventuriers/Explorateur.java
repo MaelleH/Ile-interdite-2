@@ -46,7 +46,7 @@ public class Explorateur extends Aventurier {
                 for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
                     xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
                     yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
-                    if(i.getValue()!=null){
+                    if(i.getValue()!=null){         //Il peut aussi se déplacer en diagonale
                         if((((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((! i.getValue().getEtat().equals(Utils.EtatTuile.COULEE)))){
                             listeD.put((Coordonnees) i.getKey(), i.getValue());   
                         }  
@@ -72,7 +72,7 @@ public class Explorateur extends Aventurier {
                     if(i.getValue()!=null){
                         xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
                         yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
-
+                        //Il peut aussi assecher en diagonale
                         if(((xo==xn && yo==yn)||((xo==xn+1||(xo==xn-1))&&(yo==yn-1||yo==yn+1))||((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1))))&&((i.getValue().getEtat().equals(Utils.EtatTuile.INONDEE)))){
                             listeD.put( i.getKey(), i.getValue());   
                         }        
