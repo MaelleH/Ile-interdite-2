@@ -150,6 +150,7 @@ public class VueLancement {
                 m.setTypeMessage(VAL2);
                 
                 controleur.traiterMessage(m);
+                main.setVisible(false);
                 
             }
         });
