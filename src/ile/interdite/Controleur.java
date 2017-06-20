@@ -71,15 +71,7 @@ public class Controleur implements Observateur {
             
             //Creér les vues de Aventuriers
             vuesAventuriers = new ArrayList<>();
-            /*
-            int i = 1;
-            VueAventurier vueAventurier;
-            for(Aventurier a : aventuriers){
-                vueAventurier = new VueAventurier ("Joueur "+i,a.getNom(),getPionAventurier(a).getCouleur(),this);
-                vueAventurier.setVisible(false);
-                vuesAventuriers.add(vueAventurier);
-                i++;
-            }*/
+            
             //Créer les cartes
             piocheCarteInondation = new ArrayList<>();
             piocheCarteTrésor = new ArrayList<>();
@@ -93,10 +85,10 @@ public class Controleur implements Observateur {
             
             
             //Création et Mise à jour du plateau
-            int i = 1;
+            int i = 0;
             ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
             for(Aventurier a : aventuriers){
-                kitsPanelAventurier.add(new KitPanelAventurier("Joueur "+i, a.getNom(), getPionAventurier(a).getCouleur()));
+                kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(), getPionAventurier(a).getCouleur()));
                 i++;
             }
             vuePlateau = new VuePlateau(kitsPanelAventurier,this);
