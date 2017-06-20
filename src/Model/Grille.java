@@ -22,7 +22,7 @@ public class Grille {
     public void setHSTuile(HashMap<Coordonnees,Tuile> HSTuile) {
         this.HSTuile = HSTuile;
     }
-    
+    //créer les tuilles du plateau
     public ArrayList<Tuile> creertuiles(){
         ArrayList<Tuile> tuiles = new ArrayList<>();
         
@@ -78,7 +78,7 @@ public class Grille {
     
         return tuiles;
     }
-    
+    //créer une grille aléatoirement
     public void creerGrille(){
         ArrayList<Tuile> tuiles = creertuiles();
 
@@ -100,7 +100,7 @@ public class Grille {
             }
         }      
     }
-    
+    //créer la grille donner dans le sujet
     public void creerGrilleProf(){
         ArrayList<Tuile> tuiles = creertuiles();
         
@@ -128,7 +128,7 @@ public class Grille {
         getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);
         getTuile("Le Temple de La Lune").setEtat(Utils.EtatTuile.COULEE);
     }
-    
+    //donne les coordonnées d'une tuile
     public Coordonnees getCoordTuile(String nomTuile){
         for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
             if(e.getValue()!=null && e.getValue().getNomT().toString().equals(nomTuile)){
@@ -137,7 +137,7 @@ public class Grille {
         }
         return null;
     }
-    
+    //donne une Tuile en fonction d'un nom donné
     public Tuile getTuile(String nomTuile){
         for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
             if(e.getValue()!=null && e.getValue().getNomT().toString().equals(nomTuile)){
@@ -146,7 +146,7 @@ public class Grille {
         }
         return null;
     }
-    
+    //donne une tuile en fonction de coordonnées donné
     public Tuile getTuile(Coordonnees coord){
         for (Map.Entry<Coordonnees, Tuile> e : HSTuile.entrySet()) {
             if(e.getValue()!=null && e.getKey().equals(coord)){

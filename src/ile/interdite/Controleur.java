@@ -94,6 +94,7 @@ public class Controleur implements Observateur {
             kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(),a.getMainCarteTrésor(), getPionAventurier(a).getCouleur()));
             i++;
         }
+
         vuePlateau = new VuePlateau(kitsPanelAventurier,this);
         updateVuePlateau();
         niveauEau = new EchelleNiveauEau(nivdif);
@@ -120,15 +121,18 @@ public class Controleur implements Observateur {
         for (int c=1;c<=niveauEau.getNbInond();c++){
             if (piocheCarteInondation.isEmpty()){
                 remplirPiocheInondation();
+
             }
             inonderTuile();
         }
+
         //voir si tout est coulé
         int fi=0;
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
             if(e.getValue() != null){
                 if (e.getValue().getEtat()==EtatTuile.COULEE){
                     fi = fi+1;
+
                 }
                 if (e.getValue().getNomT()==NomTuile.Heliport && e.getValue().getEtat()==EtatTuile.COULEE){
                     fi=grille.getHSTuile().size();
@@ -137,8 +141,10 @@ public class Controleur implements Observateur {
             }
         }
 
+
         if (fi>=grille.getHSTuile().size()){
             System.out.println("C'EST LA FIN");
+
         }
         setJoueurSuivant();
     }
@@ -160,6 +166,7 @@ public class Controleur implements Observateur {
         
 
         
+
 
     public void initCartetresor(){
         piocheCarteTrésor = new ArrayList<>();
@@ -408,6 +415,7 @@ public class Controleur implements Observateur {
                 lancerPartie();
                 break;
 
+
             case TERMINERTOUR:
                 vuePlateau.resShow();
                 System.out.println("Fin du Tour!");
@@ -419,6 +427,7 @@ public class Controleur implements Observateur {
                 break;
         }
         updateVuePlateau();
+
     }
         
     
@@ -432,7 +441,7 @@ public class Controleur implements Observateur {
         return null;
     }    
     
-    
+    //créer aléatoirement les joueurs de la partie en fonction du nombre voulu
     public void creationAventurier(int nbjoueur){
         aventuriers = new ArrayList<>();
 
@@ -484,7 +493,7 @@ public class Controleur implements Observateur {
             vuePlateau.updateMainAventurier(a.getNom().toString(), a.getMainCarteTrésor());
         }
     }
-
+    
     public Pion getPionAventurier(Aventurier a){
         switch(a.getNom().toString()){
             case "Explorateur" : return Pion.ROUGE;

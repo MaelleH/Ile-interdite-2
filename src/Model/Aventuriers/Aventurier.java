@@ -36,21 +36,13 @@ public class Aventurier {
         public void autreAction(Coordonnees c,Grille grille ){
             afficherInformation("Vous n'avez pas d'action de bg!");
         }
-        
-        
 
         public boolean doitDefausser() {
             // TODO - implement Controleur.priseTresorPossible
             return (getMainCarteTrésor().size()>5);
         }
                 
-	/**
-	 * 
-	 * @param a
-     * @param grille
-         * @param c
-
-	 */
+	//déplace un aventurier
 	public void deplacement(Coordonnees c,Grille grille ) {
             if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){
 		setPosition(c);
@@ -67,11 +59,7 @@ public class Aventurier {
 	}
         
         
-        /**
-	 * 
-     * @param grille
-     * @return 
-	 */
+        //donne les cases sur lesquelles un jouer peut se déplacer
 	public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible
                                 
@@ -97,7 +85,7 @@ public class Aventurier {
 		return listeD;
                 
 	}
-        
+        //donne les cases asséchables pour un joueur
         public HashMap assechementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.assécher
 		HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
@@ -121,7 +109,7 @@ public class Aventurier {
 
 
 	}
-        
+        //assèche une case
         public void assecher(Coordonnees c,Grille grille) {         
 		// TODO - implement Controleur.assécher
             if(assechementPossibleListe(grille).containsKey(c)){    //Si la tuile de coordonnée c est dans la liste assechementPossibleListe
@@ -215,7 +203,7 @@ public class Aventurier {
     public void setAutreA(boolean autreA) {
         this.autreA = autreA;
     }
-    
+    //vérifie si le joueur peut prendre le trésor donner
     public boolean priseTresorPossible(NomTrésor tresor) {
 		// TODO - implement Controleur.priseTresorPossible
                 int nbCartes=0;
@@ -237,6 +225,7 @@ public class Aventurier {
                 }
                 return false;                
 	}
+    //le joueur prend le trésor donné
     public boolean prendreTresor(NomTrésor tresor) {
         // TODO - implement Controleur.prendreTresor
 
@@ -250,11 +239,7 @@ public class Aventurier {
         }
     }
         
-    	/**
-	 * 
-	 * @param aven2
-     * @param carte
-	 */
+    //le joueur donne une carte à un aventurier donné	
     public void donnerCarte(Aventurier aven2,CarteTrésor carte) {
         
         int taille;

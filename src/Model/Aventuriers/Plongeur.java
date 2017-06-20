@@ -22,7 +22,7 @@ public class Plongeur extends Aventurier {
 	 * @param o
          * @param n
      * @return */
-	 
+	//permet au plongeur de traverser les cases innondées et coulées pour 1 action
         @Override
         public HashMap deplacementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.deplacementPossible

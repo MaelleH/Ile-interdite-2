@@ -13,7 +13,7 @@ public class EchelleNiveauEau {
     public int getNiveauEau() {
         return niveauEau;
     }
-
+    //change l'echelle de niveau d'eau si on pioche une montée des eaux
     public void monteeDesEaux() {   //augmentation du niveau d'inondation
         this.niveauEau = getNiveauEau() + 1;
         
@@ -21,8 +21,8 @@ public class EchelleNiveauEau {
             System.out.println("Fin de Partie");
         }
     }
-
-    public int getNbInond() {       //nombre de cartes inondation à piocher en fonction du niveau d'inondation
+    //retourne le nombre de carte innondation à piocher en fin de tour/montée des eaux
+    public int getNbInond() {       
         int nbI=5;
         if(getNiveauEau()<=2){
             nbI = 1;
