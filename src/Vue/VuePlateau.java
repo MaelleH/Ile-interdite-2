@@ -15,10 +15,13 @@ import Util.Utils.EtatTuile;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import ile.interdite.TypeMessage;
+import static ile.interdite.TypeMessage.RELANCERJEU;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +29,7 @@ import java.util.Observable;
 import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -75,7 +79,27 @@ public class VuePlateau implements Observateur{
         
      
         this.window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        window.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                
+                JOptionPane d = new JOptionPane(); 
+                String YNM[]={ "Oui", "Non", "Menu Principal"};
+                int rO = JOptionPane.showOptionDialog(d, "Voulez vous vraiment quitter?", "Quitter?",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,YNM,YNM[0]);
+                
+                if (rO==JOptionPane.YES_OPTION){
+                    window.dispose();
+                }
+                else if (rO==JOptionPane.CANCEL_OPTION){
+                    window.dispose();
+                    Message m = new Message();
+                    m.setTypeMessage(RELANCERJEU);
+                    controleur.traiterMessage(m);
+                }
+            }
+            
+        });
     }
     
     public void initPlateau(){

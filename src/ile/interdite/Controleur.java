@@ -351,6 +351,11 @@ public class Controleur implements Observateur {
                     else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(TypeTrésor.Zéphyr)){
                              priseZephyr=true;
                     }
+                case RELANCERJEU:
+                        lancerPartie();
+                    
+                    break;
+                    
                 case TERMINERTOUR:
                     vuePlateau.resShow();
                     System.out.println("Fin du Tour!");

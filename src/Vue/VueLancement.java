@@ -18,12 +18,15 @@ import java.awt.GridLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -58,10 +61,23 @@ public class VueLancement {
         
         
         
+        main.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        main.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int reponse = JOptionPane.showConfirmDialog(main,"Voulez vous vraiment quitter?", "Quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                if (reponse==JOptionPane.YES_OPTION){
+                    main.dispose();
+                }
+            }
+            
+        });
+        
+        
+        
         //Fenetre principale
         main.setTitle("Préparation du jeu ...");
-        main.setSize(300, 300);
-        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.setSize(300, 350);
         
         main.add(mainP);        
         
@@ -134,41 +150,45 @@ public class VueLancement {
         //Bouton pour valider les noms des joueurs et lancer le jeu
         
         
-        val2.addActionListener((ActionEvent e) -> {
-            Message m = new Message();
-            
-            if (nbj[listeNiv.getSelectedIndex()].equals("2")){
-                nomJ.add(nj1.getText());nomJ.add(nj2.getText());
+        val2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message m = new Message();
                 
+                switch (nbj[listeNiv.getSelectedIndex()]) {
+                    case "2":
+                        nomJ.add(nj1.getText());
+                        nomJ.add(nj2.getText());
+                        break;
+                    case "3":
+                        nomJ.add(nj1.getText());
+                        nomJ.add(nj2.getText());
+                        nomJ.add(nj3.getText());
+                        break;
+                    case "4":
+                        nomJ.add(nj1.getText());
+                        nomJ.add(nj2.getText());
+                        nomJ.add(nj3.getText());
+                        nomJ.add(nj4.getText());
+                        break;
+                    default:
+                        break;
+                }
+                
+                m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
+                m.setJoueurs(nomJ);
+                m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
+                m.setTypeMessage(VAL2);
+             
+                controleur.traiterMessage(m);
+                main.dispose();
             }
-            else if(nbj[listeNiv.getSelectedIndex()].equals("3")){
-                nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());
-            }
-            else if(nbj[listeNiv.getSelectedIndex()].equals("4")){
-                nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());nomJ.add(nj4.getText());
-            }
-            m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
-            m.setJoueurs(nomJ);
-            m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
-            m.setTypeMessage(VAL2);
-            
-            System.out.println("debut nom");
-            for(String i : nomJ){
-                System.out.println(i);
-            }
-            System.out.println("fin nom");
-            
-            
-            
-            
-            controleur.traiterMessage(m);
-            main.setVisible(false);
         });
         joueurP.add(val2,SOUTH);
         welcomeP.add(val1,SOUTH);    
         
         
-        
+        //Bouton pour afficher les noms des joueurs
                 
         val1.addActionListener((ActionEvent e) -> {
             joueurP.setVisible(true);
@@ -189,8 +209,6 @@ public class VueLancement {
         
         main.setVisible(true);
     }
-    
-    
-    
+
     
 }

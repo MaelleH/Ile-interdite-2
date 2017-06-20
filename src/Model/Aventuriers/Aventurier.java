@@ -158,12 +158,7 @@ public class Aventurier {
             }*/
 	}
 
-    /**
-     * @return the nom
-     */
-    public String getNomS() {
-        return (NomAventurier.Aventurier).toString();
-    }
+                                                 
     /**
      * @return the nom
      */
