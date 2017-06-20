@@ -74,8 +74,8 @@ public class Pilote extends Aventurier {
         
         @Override
         public void resetActionsRestantes() {
-        setMaxActions();
-        pouvoirUtilise=false;                                                                       //On réinitialise le pouvoir du pilote à chaque debut de tour
+        setMaxActions();                                    //On réinitialise ses actions
+        pouvoirUtilise=false;                               //On réinitialise le pouvoir du pilote à chaque debut de tour
         System.out.println("Pouvoir du pilote reinitialsé");
     }
         
