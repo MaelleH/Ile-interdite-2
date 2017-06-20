@@ -39,16 +39,17 @@ public class VueLancement {
     private JPanel joueurP;
     private JPanel nomJoueurP;
     
-    private ArrayList<String> nomJ;
+    private ArrayList<String> nomJ = new ArrayList<>();;
     
     private final String[] nbj = new String[]{"2","3","4"};
     private final String[] nivDif= new String[]{"Novice","Normal","Expert","Légendaire"};
     
-    private final JComboBox listeNiv;
-    private final JComboBox listeDif;
+    private final JComboBox listeNiv = new JComboBox(nbj);
+    private final JComboBox listeDif = new JComboBox(nivDif);
    
 
-    public VueLancement() {
+    public VueLancement(Observateur obs) {
+        controleur= obs;
         main = new JFrame();
         mainP = new JPanel(new GridLayout(2, 1));
         Color c;
@@ -87,7 +88,6 @@ public class VueLancement {
         choixP.add(choixnbj,NORTH);
         //nbj 
         choixnbj.add(new JLabel("Nombre de joueurs : "));
-        listeNiv = new JComboBox(nbj);
         choixnbj.add(listeNiv);
         
         //Difficulté
@@ -97,7 +97,6 @@ public class VueLancement {
         choixDif.setBorder(BorderFactory.createTitledBorder("Difficulté"));
         
         // Déclaration de la combobox
-        listeDif = new JComboBox(nivDif);
         choixDif.add(listeDif);
         //bouton dif
         
@@ -122,7 +121,7 @@ public class VueLancement {
         
         nomJoueurP.add(j1);nomJoueurP.add(j2);nomJoueurP.add(j3);nomJoueurP.add(j4);
         
-        nomJ = new ArrayList<>();
+
         
         
         j1.add(new JLabel("Joueur 1 : "));TextField nj1 = new TextField("Joaquim");j1.add(nj1);
@@ -134,6 +133,7 @@ public class VueLancement {
         val2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Message m = new Message();
 
                 if (nbj.equals("2")){
                     nomJ.add(nj1.getText());nomJ.add(nj2.getText());
@@ -143,9 +143,14 @@ public class VueLancement {
                 }
                 else if(nbj.equals("4")){
                     nomJ.add(nj1.getText());nomJ.add(nj2.getText());nomJ.add(nj3.getText());nomJ.add(nj4.getText());
-                }            
-                controleur.traiterMessage(new Message(VAL2,nivDif[listeDif.getSelectedIndex()],nbj[listeNiv.getSelectedIndex()],nomJ));
-             
+                }
+                m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
+                m.setJoueurs(nomJ);
+                m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
+                m.setTypeMessage(VAL2);
+                
+                controleur.traiterMessage(m);
+                
             }
         });
         joueurP.add(val2,SOUTH);

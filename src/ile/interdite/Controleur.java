@@ -59,7 +59,7 @@ public class Controleur implements Observateur {
         }
         
         public void lancerPartie(){
-            vueL= new VueLancement();
+            vueL= new VueLancement(this);
         }
         
         public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
@@ -68,7 +68,6 @@ public class Controleur implements Observateur {
             
             //Créer les Aventuriers
             creationAventurier(nbj);
-            vuePlateau = new VuePlateau();
             
             //Creér les vues de Aventuriers
             vuesAventuriers = new ArrayList<>();
@@ -270,6 +269,7 @@ public class Controleur implements Observateur {
     @Override
     public void traiterMessage(Message m) {
         Coordonnees c;
+            int entier = 0;
         //A Faire 
         
 
@@ -301,7 +301,16 @@ public class Controleur implements Observateur {
                     break;
                     
                 case VAL2:
-                        
+                    if(m.getNivDif().equals("Novice")){
+                        entier=1;
+                    }else if(m.getNivDif().equals("Normal")){
+                       entier=2; 
+                    }else if(m.getNivDif().equals("Expert")){
+                       entier=3; 
+                    }else if(m.getNivDif().equals("Légendaire")){
+                       entier=4; 
+                    }
+                        initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
                     break;   
                     
                     
