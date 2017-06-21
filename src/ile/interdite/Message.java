@@ -8,10 +8,12 @@ package ile.interdite;
 import Util.TypeMessage;
 import Model.Aventuriers.Aventurier;
 import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
 import Util.Coordonnees;
 import Vue.panels.PanelAventurier;
 import Vue.panels.PanelCarteActivable;
 import Vue.panels.PanelCarteTresor;
+import Vue.panels.PanelCarteTrophee;
 import Vue.panels.PanelCase;
 import java.util.ArrayList;
 
@@ -24,6 +26,7 @@ public class Message {
     private PanelCase pC;
     
     private PanelAventurier pA;
+    private PanelCarteTrophee pCT;
     private PanelCarteActivable pCA;
     
     private Coordonnees coord;
@@ -32,6 +35,9 @@ public class Message {
        
     private ArrayList<String> joueurs;
     private String nivDif;
+    
+    private Aventurier aventurierRecepteur;
+    private CarteTrésorTrophée CTTrophée;
     
     public Message(){}
     
@@ -153,6 +159,30 @@ public class Message {
 
     public void setpCA(PanelCarteActivable pCA) {
         this.pCA = pCA;
+    }
+
+    public PanelCarteTrophee getpCT() {
+        return pCT;
+    }
+
+    public void setpCT(PanelCarteTrophee pCT) {
+        this.pCT = pCT;
+    }
+
+    public Aventurier getAventurierRecepteur() {
+        return aventurierRecepteur;
+    }
+
+    public CarteTrésorTrophée getCTTrophée() {
+        return CTTrophée;
+    }
+
+    public void setAventurierRecepteur(Aventurier aventurierRecepteur) {
+        this.aventurierRecepteur = aventurierRecepteur;
+    }
+
+    public void setCTTrophée(CarteTrésorTrophée CTTrophée) {
+        this.CTTrophée = CTTrophée;
     }
 
 }

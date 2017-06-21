@@ -14,7 +14,8 @@ public class Messager extends Aventurier {
     }
     
     //permet au messagerde toujours pouvoir donner des cartes
-   public boolean donnerCartePossible(Aventurier aven1, Aventurier aven2) {
-           return true;
-   }
+    @Override
+    public boolean donnerCartePossible( Aventurier aven2) {
+         return true;
+    }
 }

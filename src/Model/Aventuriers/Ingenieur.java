@@ -45,10 +45,10 @@ public class Ingenieur extends Aventurier {
     
 
     @Override
-    public void donnerCarte(Aventurier aven2, CarteTrésor carte) {
+    public boolean donnerCartePossible(Aventurier aven2) {
         //Reset du pouvoir
         setAssechementBonus(false);
-        super.donnerCarte(aven2, carte);
+        return super.donnerCartePossible(aven2);
     }
 
     @Override

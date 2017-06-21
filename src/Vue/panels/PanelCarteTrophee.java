@@ -8,6 +8,9 @@ package Vue.panels;
 import Model.cartesTresor.CarteTrésorTrophée;
 import Util.NomTrésor;
 import Util.TypeCarteTresor;
+import Util.TypeMessage;
+import ile.interdite.Message;
+import ile.interdite.Observateur;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -28,8 +31,10 @@ import javax.swing.JPanel;
  */
 public class PanelCarteTrophee extends PanelCarteTresor{
     Image image;
-    public PanelCarteTrophee(int type,CarteTrésorTrophée carteTrésorTrophée){
+    Observateur controleur;
+    public PanelCarteTrophee(int type,CarteTrésorTrophée carteTrésorTrophée,Observateur obs){
         super(type,carteTrésorTrophée);
+        controleur = obs;
         try {
             image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+getNomTrésor()+".png"));
         } catch (IOException ex) {
@@ -38,9 +43,13 @@ public class PanelCarteTrophee extends PanelCarteTresor{
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(getType()==0){
-                    setClicked(!getClicked());
-                    repaint();
+                setClicked(!getClicked());
+                repaint();
+                if(getType()==2){
+                    Message msg = new Message();
+                    msg.setTypeMessage(TypeMessage.GetClicked);
+                    msg.setpCT((PanelCarteTrophee)e.getSource());
+                    controleur.traiterMessage(msg);
                 }
             }
 

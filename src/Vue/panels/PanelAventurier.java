@@ -186,7 +186,7 @@ public class PanelAventurier  extends JPanel implements Observateur{
                 carteActi = new PanelCarteActivable(1,((Activable) carte),this);
                 listeCarteTresor.add(carteActi);
             }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(1,(CarteTrésorTrophée) carte);
+                carteTrophee = new PanelCarteTrophee(1,(CarteTrésorTrophée) carte,null);
                 listeCarteTresor.add(carteTrophee);
             }
         }
