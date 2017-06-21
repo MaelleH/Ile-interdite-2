@@ -124,6 +124,7 @@ public class Controleur implements Observateur {
             
         }
         aventuriers.get(0).setMaxActions();
+        
         //picohe du nombre nécéssaire de cartes Inondation
         for (int c=1;c<=niveauEau.getNbInond();c++){
             inonderTuile();
@@ -134,9 +135,9 @@ public class Controleur implements Observateur {
     }
 
     public void setJoueurSuivant(){
-        Aventurier avenTmp = aventuriers.get(0);
-        aventuriers.remove(0);      //on enlève l'aventurier qui vient de jouer
-        aventuriers.add(avenTmp);   //On le met à la fin
+        Aventurier avenTmp = aventuriers.get(0);    //On enregistre l'aventuier actuel dans une variable
+        aventuriers.remove(0);                      //on enleve l'aventurier de la liste aventuriers
+        aventuriers.add(avenTmp);                   //On utilise la variable pour mettre l'aventurier a la fin de la liste 
     }
 
     /*public VueAventurier getVueAventurier(Aventurier a){
@@ -155,28 +156,28 @@ public class Controleur implements Observateur {
     public void initCartetresor(){
         piocheCarteTrésor = new ArrayList<>();
         for(int i=0;i<5;i++){
-            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Calice));
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Calice));    //ajout des 5 cartes tresor calice
         }
         for(int i=0;i<5;i++){
-            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Pierre));
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Pierre));    //ajout des 5 cartes tresor pierre
         }
         for(int i=0;i<5;i++){
-            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Zéphyr));
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Zéphyr));    //ajout des 5 cartes tresor zephyr
         }
         for(int i=0;i<5;i++){
-            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Cristal));
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Cristal));   //ajout des 5 cartes tresor cristal
         }
         for(int i=0;i<3;i++){
-            piocheCarteTrésor.add(new Helico());
+            piocheCarteTrésor.add(new Helico());                                //ajout des 3 cartes helicoptere
         }
         for(int i=0;i<2;i++){
-            piocheCarteTrésor.add(new Sac());
+            piocheCarteTrésor.add(new Sac());                                   //ajout des 3 cartes sac
         }
         for(int i=0;i<2;i++){
-            piocheCarteTrésor.add(new MonteeDesEaux());
+            piocheCarteTrésor.add(new MonteeDesEaux());                         //ajout des 2 cartes montée des eaux
         }
 
-        piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);
+        piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);                 //melange de la picohe tresor
         for(Aventurier a : aventuriers){
             piocherDebutJeuCT(a);
         }
@@ -258,7 +259,6 @@ public class Controleur implements Observateur {
 
 
     public boolean doitDefausser(Aventurier a) {
-            // TODO - implement Controleur.priseTresorPossible
             return (a.getMainCarteTrésor().size()>5);
     }
        
@@ -341,7 +341,7 @@ public class Controleur implements Observateur {
 
     //si plus de carte dans la pioche
     public void remplirPiocheTresor(){
-        Utils.melangerCT(defausseCarteTrésor);               //on mélange la défausse
+        Utils.melangerCT(defausseCarteTrésor);                  //on mélange la défausse
         for (CarteTrésor carte :defausseCarteTrésor ){          //on met toutes les cartes de la défausse dans la pioche
             piocheCarteTrésor.add(carte);
         }
