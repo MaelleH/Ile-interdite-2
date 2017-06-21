@@ -7,6 +7,7 @@ package Vue;
 
 
 
+import Model.CarteTrésor;
 import Model.Coordonnees;
 import Model.NomTrésor;
 import static Model.NomTrésor.Pierre;
@@ -17,7 +18,6 @@ import ile.interdite.Observateur;
 import ile.interdite.TypeMessage;
 import static ile.interdite.TypeMessage.RELANCERJEU;
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
@@ -25,9 +25,7 @@ import java.awt.event.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Observable;
 import java.util.Set;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -138,7 +136,7 @@ public class VuePlateau implements Observateur{
         PanelAventurier panelA;
         
         for(KitPanelAventurier kitPanelA : kitsPanelsAventuriers){
-            panelA = new PanelAventurier(kitPanelA.getNomJoueur(),kitPanelA.getNomAventurier().toString(), kitPanelA.getCouleurAventurier(), getControleur());
+            panelA = new PanelAventurier(kitPanelA.getNomJoueur(),kitPanelA.getNomAventurier().toString(), kitPanelA.getCouleurAventurier(),kitPanelA.getCartes(), getControleur());
             panelAventuriers.add(panelA);
             listePanelAventuriers.add(panelA);
             
@@ -224,6 +222,14 @@ public class VuePlateau implements Observateur{
         resShow();
         for(PanelAventurier a :listePanelAventuriers){
             a.setInactive();
+        }
+    }
+    
+    public void updateMainAventurier(String nomA,ArrayList<CarteTrésor> cartes){
+        for(PanelAventurier pnA : listePanelAventuriers){
+            if(pnA.getNomAventurier().equals(nomA)){
+                pnA.setListeCarteTresor(cartes);
+            }
         }
     }
 }

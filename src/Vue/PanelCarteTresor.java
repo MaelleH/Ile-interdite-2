@@ -15,8 +15,14 @@ import javax.swing.JPanel;
  */
 public abstract class PanelCarteTresor extends JPanel{
     private TypeCarteTresor type;
+    protected boolean clicked;
     
     public PanelCarteTresor(TypeCarteTresor type){
+        this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.type = type;
+    }
+    
+    public boolean getClicked(){
+        return clicked;
     }
 }

@@ -1,46 +1,25 @@
-package Model.Aventuriers;
+ package Model.Aventuriers;
 
 import Model.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
 import Util.Utils;
-import static Util.Utils.EtatTuile.COULEE;
 import static Util.Utils.afficherInformation;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Pilote extends Aventurier {
         
-	private boolean pouvoirUtilise;
+	private boolean pouvoirUtilise ;
         public Pilote(Coordonnees position) {
             super(position);
         }
 
         @Override
         public Utils.NomAventurier getNom() {
-            return Utils.NomAventurier.Pilote; //To change body of generated methods, choose Tools | Templates.
+            return Utils.NomAventurier.Pilote;
         }
         //créer le pouvoir de se déplacer n'importe où une fois par tour pour le pilote
-        @Override
-        public void autreAction(Coordonnees c,Grille grille ) {
-
-            System.out.println("Position aventurier" +getPosition().getX()+getPosition().getY());
-            if(this.getActionsRestantes()>0&&autreActionListe(grille).containsKey(c)){
-		setPosition(c);
-                setActionsRestantes(getActionsRestantes()-1);
-                System.out.println(getPosition().getX()+getPosition().getY());
-                
-            }
-            else if(this.getActionsRestantes()<1){
-                System.out.println("Plus d'actions....");
-                afficherInformation("Vous ne pouvez plus effectuer d'actions!");
-            }
-            else{
-                System.out.println("Déplacement impossible!");
-                afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");
-            }
-	}
-        
         
         
         public HashMap autreActionListe(Grille grille) {
@@ -48,25 +27,83 @@ public class Pilote extends Aventurier {
                                 
                 HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
                 int xo,yo,xn,yn;
-                
-                xo=Integer.parseInt(getPosition().getX());
+                xo=Integer.parseInt(getPosition().getX());              //coordonnées du joueur
                 yo=Integer.parseInt(getPosition().getY());
-                
-                for(Map.Entry i: grille.getHSTuile().entrySet()){
-                    xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
-                    yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
-                    if(i.getValue()!=null){
-                        if((((Tuile)i.getValue()).getEtat()!=COULEE)){
-                            listeD.put((Coordonnees) i.getKey(),(Tuile) i.getValue());
-                            System.out.println(Integer.toString(xn)+Integer.toString(yn));
-                            System.out.println(((Tuile)i.getValue()).getNomT());    
-                        } 
+                if(pouvoirUtilise==false){                                                                                                      //si il peut utiliser son pouvoir
+                    for (Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){                                                       //Pour chaque tuile de la grille
+                        xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
+                        yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
+                        if (i.getValue()!=null){                                                                                                //Si la tuile existe,
+                            if (i.getValue().getEtat()!=Utils.EtatTuile.COULEE  ){                                                              //qu'elle n'est pas coulée
+                                if (  (xn==xo && (yn==yo-1 || yn==yo+1))  ||  (yn==yo && (xn==xo-1 || xn==xo+1))  ||  (xn==xo && yn==yo)  ){
+                                }else{                                                                                                          //et qu'elle n'est pas adjacente
+                                    listeD.put((Coordonnees) i.getKey(), i.getValue());                                                         //elle est ajoutée à la liste des tuiles possibles avec le pouvoir
+                                }
+                            }
+                        }
                     }
                 }
-
 		return listeD;
-                
+	}
+        
+        @Override
+        public void deplacement(Coordonnees c,Grille grille ) {
+            if (this.getActionsRestantes() > 0){                                                //Si l'aventurier a encore au moins une action
+                if (pouvoirUtilise==true){                                                          //si le pouvoir a été utilisé
+                    if (this.getActionsRestantes() > 0 && (deplacementPossibleListe(grille).containsKey(c)) ){  //et que la tuile voulue est dans la liste des tuiles adjacentes
+                        setPosition(c);                                                             //l'aventurier se déplace
+                    }
+                }else if (this.getActionsRestantes() > 0 && ((deplacementPossibleListe(grille).containsKey(c)) || autreActionListe(grille).containsKey(c))){    //si le pouvoir est disponible et que la tuile est non coulée
+                        if (autreActionListe(grille).containsKey(c)){                               //si la tuile est dans la liste des tuiles non adjacentes
+                            System.out.println("Pouvoir utilisé pour ce deplacement ");
+                            pouvoirUtilise=true;}                                                   //le pouvoir est utilisé pour effectuer le déplacement
+                        setPosition(c);                                                             //l'aventurier se déplace
+                }
+                setActionsRestantes(getActionsRestantes()-1);                                       //on lui enleve une action
+            }else if(this.getActionsRestantes()<1){                                             //Si il n'a plus d'action
+                System.out.println("Plus d'actions....");
+                afficherInformation("Vous ne pouvez plus effectuer d'actions!");                    //On affiche cette information
+            }
+            else{                                                                               //Sinon (encore au moins une action mais la tuile n'est pas dans les listes
+                System.out.println("Déplacement impossible!");
+                afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");           //On affiche le fait qu'il ne puisse pas se déplacer vers la tuile
+            }
 	}
         
         
+        
+        @Override
+        public void resetActionsRestantes() {
+        setMaxActions();                                    //On réinitialise ses actions
+        pouvoirUtilise=false;                               //On réinitialise le pouvoir du pilote à chaque debut de tour
+        System.out.println("Pouvoir du pilote reinitialsé");
+    }
+        
+        
+        @Override
+        public HashMap deplacementPossibleListe(Grille grille){
+            
+            HashMap<Coordonnees,Tuile> listeD = new HashMap<>();        //liste des cases adjacentes non coulées
+            HashMap<Coordonnees,Tuile> listeAutre = new HashMap<>();    //liste des cases non adjacentes non coulées
+            int xo,yo,xn,yn;
+
+            xo=Integer.parseInt(getPosition().getX());                  //Coordonnées de l'aventurier
+            yo=Integer.parseInt(getPosition().getY());
+            for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){        //Pour chaque tuile de la grille
+                xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());          //Coordonnées de la tuile
+                yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
+                if(i.getValue()!=null){         //Si la tuile est adjacente à la tuile de l'aventurier et non coulée
+                    if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
+                        listeD.put((Coordonnees) i.getKey(), i.getValue());             //On ajoute cette tuile dans la liste de déplacements possibles
+                    }
+                }
+            }
+            listeAutre = autreActionListe(grille);                      //listeAutre = liste de toutes les tuiles non coulées non adjacentes
+            for (Map.Entry<Coordonnees,Tuile> i : listeAutre.entrySet()){
+                listeD.put(i.getKey(),i.getValue());
+            }
+            
+            return listeD;
+        }
+
 }

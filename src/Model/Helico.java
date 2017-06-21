@@ -2,8 +2,9 @@ package Model;
 
 public class Helico extends Activable {
 
-    public Helico() {
-        
+    @Override
+    public TypeCarteActivable getTypeCarteActivable() {
+        return TypeCarteActivable.Helicoptere;
     }
     
 }

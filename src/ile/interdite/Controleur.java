@@ -28,387 +28,433 @@ import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
 import Vue.KitPanelAventurier;
+import Vue.Regles;
 import Vue.VueAventurier;
+
 import Vue.VueLancement;
-import Vue.VueLancement2;
 import Vue.VuePlateau;
 
 public class Controleur implements Observateur {
 
-	//Collection<CarteTrésor> piocheCarteTrésor;
-	private Grille grille;
-        private VueLancement2 vueL;
-        private ArrayList<Aventurier> aventuriers;
-        private ArrayList<VueAventurier> vuesAventuriers;
-        
-        private EchelleNiveauEau niveauEau;
-        private VuePlateau vuePlateau;
-        private ArrayList<CarteTrésor> piocheCarteTrésor;
-	private ArrayList<CarteTrésor> defausseCarteTrésor;
-	private ArrayList<CarteInondation> piocheCarteInondation;
-	private ArrayList<CarteInondation> defausseCarteInondation;
-	private ArrayList<CarteInondation> defausseCarteCoulées;
-        private ArrayList<NomTrésor> tresors;
+    //Collection<CarteTrésor> piocheCarteTrésor;
+    private Grille grille;
+    private VueLancement vueL;
+    private Regles vueR;
+    private ArrayList<Aventurier> aventuriers;
+    private ArrayList<VueAventurier> vuesAventuriers;
+
+    private EchelleNiveauEau niveauEau;
+    private VuePlateau vuePlateau;
+    private ArrayList<CarteTrésor> piocheCarteTrésor;
+    private ArrayList<CarteTrésor> defausseCarteTrésor;
+    private ArrayList<CarteInondation> piocheCarteInondation;
+    private ArrayList<CarteInondation> defausseCarteInondation;
+    private ArrayList<CarteInondation> defausseCarteCoulées;
+    private ArrayList<NomTrésor> tresors;
 
 
+
+    private boolean prisePierre;
+    private boolean priseCristal;
+    private boolean priseZephyr;
+    private boolean priseCalice;
+
+
+    public Controleur() {
+        lancerPartie();
         
-        private boolean prisePierre;
-        private boolean priseCristal;
-        private boolean priseZephyr;
-        private boolean priseCalice;
+        /*ArrayList<CarteTrésor> cartes = new ArrayList<>();
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
+        
+        VueDefausse vued = new VueDefausse(2,cartes,this);*/
+    }
+
+    public void lancerPartie(){
+        vueL= new VueLancement(this);
+    }
+    public void lireRegle(){
+        vueR= new Regles(this);
+    }
+    public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
+        //Créer la grille
+        grille = new Grille();
+
+        //Créer les Aventuriers
+        creationAventurier(nbj);
+
+        //Creér les vues de Aventuriers
+        vuesAventuriers = new ArrayList<>();
+
+        //Créer les cartes
+        piocheCarteInondation = new ArrayList<>();
+        piocheCarteTrésor = new ArrayList<>();
+        defausseCarteCoulées = new ArrayList<>();
+        defausseCarteInondation = new ArrayList<>();
+        defausseCarteTrésor = new ArrayList<>();
+        initCartetresor();
+        initPiocheInondation();
+        for (int a=1;a<=6;a++){                 //inondation des 6 tuiles au début
+            inonderTuile();
+        }
+
+
+        //Création et Mise à jour du plateau
+        int i = 0;
+        ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
+        for(Aventurier a : aventuriers){
+            kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(),a.getMainCarteTrésor(), getPionAventurier(a).getCouleur()));
+            i++;
+        }
+
+        vuePlateau = new VuePlateau(kitsPanelAventurier,this);
+        updateVuePlateau();
+        niveauEau = new EchelleNiveauEau(nivdif);
+        lancerTour();
+
+    }
+
+    public void lancerTour(){
+        //Vérification de la main de l'aventurier
+        if(aventuriers.get(0).doitDefausser()){
+            defausseCarteTrésor.addAll(aventuriers.get(0).getMainCarteTrésor());
+            aventuriers.get(0).getMainCarteTrésor().clear();
+        }
+        vuePlateau.setActive(aventuriers.get(0).getNom());
+        
+    }
+
+    public void finTour(){
+        vuePlateau.setInactive(aventuriers.get(0).getNom());
+        aventuriers.get(0).resetActionsRestantes();
+        //pioche des 2 cartes trésor
+        for(int i = 0;i<2;i++){
+            if(piocheCarteTrésor.isEmpty()){
+                remplirPiocheTresor();
+            }else{
+                piocherCT(aventuriers.get(0));
+            }
+            
+        }
+        aventuriers.get(0).setMaxActions();
+        //picohe du nombre nécéssaire de cartes Inondation
+        for (int c=1;c<=niveauEau.getNbInond();c++){
+            inonderTuile();
+        }
+
+        //Passage au joueur suivant
+        setJoueurSuivant();
+    }
+
+    public void setJoueurSuivant(){
+        Aventurier avenTmp = aventuriers.get(0);
+        aventuriers.remove(0);      //on enlève l'aventurier qui vient de jouer
+        aventuriers.add(avenTmp);   //On le met à la fin
+    }
+
+    /*public VueAventurier getVueAventurier(Aventurier a){
+        for(VueAventurier vA : vuesAventuriers){
+            if(vA.getNomAventurier().equals(a.getNom())){
+                return vA;
+            }
+        }
+        return null;
+    }*/
+        
 
         
-        public Controleur() {
-            lancerPartie();
-            
-        }
-        
-        public void lancerPartie(){
-            vueL= new VueLancement2(this);
-        }
-        //initialise le début d'une partie (les pioches,les défausses,difficulté
-        public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
-            //Créer la grille
-            grille = new Grille();
-            
-            //Créer les Aventuriers
-            creationAventurier(nbj);
-            
-            //Creér les vues de Aventuriers
-            vuesAventuriers = new ArrayList<>();
-            
-            //Créer les cartes
-            piocheCarteInondation = new ArrayList<>();
-            piocheCarteTrésor = new ArrayList<>();
-            defausseCarteCoulées = new ArrayList<>();
-            defausseCarteInondation = new ArrayList<>();
-            initCartetresor();
-            initPiocheInondation();
-            for (int a=1;a<=6;a++){                 //inondation des 6 tuiles au début
-                inonderTuile();
-            }
-            
-            
-            //Création et Mise à jour du plateau
-            int i = 0;
-            ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
-            for(Aventurier a : aventuriers){
-                kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(), getPionAventurier(a).getCouleur()));
-                i++;
-            }
-            vuePlateau = new VuePlateau(kitsPanelAventurier,this);
-            updateVuePlateau();
-            niveauEau = new EchelleNiveauEau(1);
-            lancerTour();
-            
-        }
-        
-        public void lancerTour(){
-            vuePlateau.setActive(aventuriers.get(0).getNom());
-        }
-        //fini le tour d'un joueur
-        public void finTour(){
-            vuePlateau.setInactive(aventuriers.get(0).getNom());
-            aventuriers.get(0).resetActionsRestantes();
-            aventuriers.get(0).piocherCT(piocheCarteTrésor);
-            aventuriers.get(0).resetAutreA();
-            
-            for (int c=1;c<=niveauEau.getNbInond();c++){
-                if (piocheCarteInondation.isEmpty()){
-                    nouvellePile();
-                }
-                inonderTuile();
-            }
-            //voir si tout est coulé
-            int fi=0;
-            for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
-                if(e.getValue() != null){
-                    if (e.getValue().getEtat()==EtatTuile.COULEE){
-                        fi = fi+1;
-                    }
-                    if (e.getValue().getNomT()==NomTuile.Heliport && e.getValue().getEtat()==EtatTuile.COULEE){
-                        fi=grille.getHSTuile().size();
-                        System.out.println("plus d'heliport");
-                    }
-                }
-            }
-            
-            if (fi>=grille.getHSTuile().size()){
-                System.out.println("C'EST LA FIN");
-            }
-            
-            
-            
-            
-            setJoueurSuivant();
-        }
-        //
-        public void setJoueurSuivant(){
-            Aventurier avenTmp = aventuriers.get(0);
-            aventuriers.remove(0);
-            aventuriers.add(avenTmp);
-        }
-        
-	/*public VueAventurier getVueAventurier(Aventurier a){
-            for(VueAventurier vA : vuesAventuriers){
-                if(vA.getNomAventurier().equals(a.getNom())){
-                    return vA;
-                }
-            }
-            return null;
-        }*/
-        
 
-        
-        // créer la pioche de carte trésor
-        public void initCartetresor(){
-            piocheCarteTrésor = new ArrayList<>();
-            for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Calice));
-            }
-            for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Pierre));
-            }
-            for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Zéphyr));
-            }
-            for(int i=0;i<5;i++){
-                piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Cristal));
-            }
-            for(int i=0;i<3;i++){
-                piocheCarteTrésor.add(new Helico());
-            }
-            for(int i=0;i<2;i++){
-                piocheCarteTrésor.add(new Sac());
-            }
-            for(int i=0;i<2;i++){
-                piocheCarteTrésor.add(new MonteeDesEaux());
-            }
-            
-            piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);
+
+    public void initCartetresor(){
+        piocheCarteTrésor = new ArrayList<>();
+        for(int i=0;i<5;i++){
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Calice));
         }
+        for(int i=0;i<5;i++){
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Pierre));
+        }
+        for(int i=0;i<5;i++){
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Zéphyr));
+        }
+        for(int i=0;i<5;i++){
+            piocheCarteTrésor.add(new CarteTrésorTrophée(NomTrésor.Cristal));
+        }
+        for(int i=0;i<3;i++){
+            piocheCarteTrésor.add(new Helico());
+        }
+        for(int i=0;i<2;i++){
+            piocheCarteTrésor.add(new Sac());
+        }
+        for(int i=0;i<2;i++){
+            piocheCarteTrésor.add(new MonteeDesEaux());
+        }
+
+        piocheCarteTrésor= Utils.melangerCT(piocheCarteTrésor);
+        for(Aventurier a : aventuriers){
+            piocherDebutJeuCT(a);
+        }
+    }
+
+    public void piocherCT(Aventurier a){
+        if(piocheCarteTrésor.isEmpty()){                                        //si la pioche Trésor est vide
+            remplirPiocheTresor();                                              //On la remplit
+        }
+        CarteTrésor carte= piocheCarteTrésor.get(0);                            //On pioche une carte
+        piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
+
+        if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
+            monteeDesEaux();                                                    //on augmente le niveau d'eau
+        }else{
+            a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
+        }
+
+
+    }
         
-        
-        
-	/**
-	 * 
-	 * @param aven1
-	 * @param aven2
-     * @return 
-	 */
-	public boolean donnationPossible(Aventurier aven1, Aventurier aven2) {
-		return aven1.getPosition() == aven2.getPosition();
-                
+    public void piocherDebutJeuCT(Aventurier a){
+        CarteTrésor carte;
+        for(int i = 0;i<2;i++){             //pioche 2 cartes
+            carte = piocheCarteTrésor.get(0);
+            while(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){    //si la carte est une carte montée des eaux
+                Utils.melangerCT(piocheCarteTrésor);                                    //On mélange la picohe Trésor
+                carte = piocheCarteTrésor.get(0);                                       //On repioche une carte
+            }
+            a.getMainCarteTrésor().add(carte);                                          //on ajoute cette carte à la main de l'aventurier
+            piocheCarteTrésor.remove(0);                                                //On enleve cette carte de la pioche Trésor
+        }
+    }
+
+    /**
+     * 
+     * @param aven1
+     * @param aven2
+ * @return 
+     */
+    public boolean donnationPossible(Aventurier aven1, Aventurier aven2) {
+            return aven1.getPosition() == aven2.getPosition();
+
 	}
 
+    //TEST CASE PRENDRE TRESOR
 
-	//TEST CASE PRENDRE TRESOR
-        
-	/* 
-	public void prendreTresor() {
-		// TODO - implement Controleur.prendreTresor
-                
-		if(priseTresorPossible(aventuriers.get(0))){
-                    NomTrésor tresor =(grille.getHSTuile().get(aventuriers.get(0).getPosition()).getTresor());
-                    aventuriers.get(0).getMainCarteTrésor().remove(tresor);
-                }
-	}
-        */
-        
-        //TEST CASE PRENDRE TRESOR
-        
-	/*public boolean priseTresorPossible(Aventurier a) {
-		// TODO - implement Controleur.priseTresorPossible
-                NomTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
-                int stop=0;
-                
-                if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
-                    
-                    for(CarteTrésor i :a.getMainCarteTrésor()){
-                        if(!(i.getNomCT()).equals(tresor)){
-                          stop = stop +1;  
-                        }
-                    }
-                    if(stop<1){
-                        return true;
+    /* 
+    public void prendreTresor() {
+            // TODO - implement Controleur.prendreTresor
+
+            if(priseTresorPossible(aventuriers.get(0))){
+                NomTrésor tresor =(grille.getHSTuile().get(aventuriers.get(0).getPosition()).getTresor());
+                aventuriers.get(0).getMainCarteTrésor().remove(tresor);
+            }
+    }
+    */
+
+    //TEST CASE PRENDRE TRESOR
+
+    /*public boolean priseTresorPossible(Aventurier a) {
+            // TODO - implement Controleur.priseTresorPossible
+            NomTrésor tresor =(grille.getHSTuile().get(a.getPosition()).getTresor());
+            int stop=0;
+
+            if ((a.getMainCarteTrésor().size()>4)&&(tresor!=null)){
+
+                for(CarteTrésor i :a.getMainCarteTrésor()){
+                    if(!(i.getNomCT()).equals(tresor)){
+                      stop = stop +1;  
                     }
                 }
-                return false;                
-	}*/
+                if(stop<1){
+                    return true;
+                }
+            }
+            return false;                
+    }*/
 
-        
+
     public boolean doitDefausser(Aventurier a) {
             // TODO - implement Controleur.priseTresorPossible
             return (a.getMainCarteTrésor().size()>5);
     }
-    
        
     //initialisation de la pioche Inondation au début de la partie
-        public void initPiocheInondation(){
-            for (NomTuile tuile : NomTuile.values()){   //la pioche de base est constituée de toutes les tuiles
-                CarteInondation carte = new CarteInondation(tuile);
-                Tuile t = grille.getTuile(carte.getNomTuile().toString());
-                //if (t.getEtat()!=EtatTuile.COULEE){ //si c'est grilleProf
-                    piocheCarteInondation.add(carte);       //mise de toutes les tuiles de la grille dans la pioche
-                //}
-            }
-            
-            Collections.shuffle(piocheCarteInondation); //on mélange la pioche
-        }
-        
-        //inondation d'une tuile
-        public void inonderTuile(){
-            if (piocheCarteInondation.isEmpty()){
-                System.out.println("C'EST LA FIN aaaaaaaa");
-            }else{
-            CarteInondation cI;
-            cI = piocheCarteInondation.get((0));
-            Tuile t = grille.getTuile(cI.getNomTuile().toString());
-            Coordonnees co = grille.getCoordTuile(cI.getNomTuile().toString());
-            if (t.getEtat()==EtatTuile.ASSECHEE){                       //si la tuile est assechée
-                t.setEtat(EtatTuile.INONDEE);                           //elle devient inondée
-                defausseCarteInondation.add(cI);                        //et le carte va dans la defausse
-            }else if(t.getEtat()==EtatTuile.INONDEE){                   //si la tuile est assechée
-                t.setEtat(EtatTuile.COULEE);                            //elle devient coulée
-                
-                
-                //vérifier si il y a des aventuriers sur cette case
-                for(Aventurier a : aventuriers){
-                    if(a.getPosition().equals(co)){                     //si l'aventurier est sur la case qui vient d'être coulée
-                        
-                    }
-                }
-                
-                
-                defausseCarteCoulées.add(cI);                           //et la carte est retirée
-            }
-            piocheCarteInondation.remove(cI);                           //la carte est enlevée de la pioche
-            }
-        }
-        //si plus de carte dans la pioche
-        public void nouvellePile(){
-            Collections.shuffle(defausseCarteInondation);               //on mélange la défausse
-            for (CarteInondation tuile :defausseCarteInondation ){      //on met toutes les cartes de la défausse dans la pioche
-                piocheCarteInondation.add(tuile);
-            }
-            defausseCarteInondation.clear();                            //on vide la défausse
+    public void initPiocheInondation(){
+        for (NomTuile tuile : NomTuile.values()){   //la pioche de base est constituée de toutes les tuiles
+            CarteInondation carte = new CarteInondation(tuile);
+            Tuile t = grille.getTuile(carte.getNomTuile().toString());
+            //if (t.getEtat()!=EtatTuile.COULEE){ //si c'est grilleProf
+                piocheCarteInondation.add(carte);       //mise de toutes les tuiles de la grille dans la pioche
+            //}
         }
 
-        
-        
-        
-        
+        Collections.shuffle(piocheCarteInondation); //on mélange la pioche
+    }
+
+    //inondation d'une tuile
+        public void inonderTuile(){
+            if (piocheCarteInondation.isEmpty()){                               //si la picohe est vide, cela veut dire que toute les cases sont coulées, le jeu est perdu
+                remplirPiocheInondation();
+            }else{                                                              //Sinon
+            CarteInondation cI;                                         
+            cI = piocheCarteInondation.get((0));                                //L'aventurier prend la premiere carte de la pioche
+            Tuile t = grille.getTuile(cI.getNomTuile().toString());             //t = tuile correspondante à la carte
+            Coordonnees co = grille.getCoordTuile(cI.getNomTuile().toString()); 
+            if (t.getEtat()==EtatTuile.ASSECHEE){                               //si la tuile est assechée
+                t.setEtat(EtatTuile.INONDEE);                                   //elle devient inondée
+                defausseCarteInondation.add(cI);                                //et le carte va dans la defausse
+            }else if(t.getEtat()==EtatTuile.INONDEE){                           //si la tuile est assechée
+                t.setEtat(EtatTuile.COULEE);                                    //elle devient coulée
+                //on vérifie si il y a des aventuriers sur cette case
+                for(Aventurier a : aventuriers){
+                    if(a.getPosition().equals(co)){                             //si l'aventurier a est sur la case qui vient d'être coulée
+                    //il se déplace vers une tuile qu'il peut atteindre
+                        HashMap<Coordonnees,Tuile> deplacement;
+                        deplacement = new HashMap<>();
+                        deplacement = a.deplacementPossibleListe(grille);       //HashMap de toutes les tuiles/coordonnées qu'il peut atteindre
+                        if (deplacement.isEmpty()){                             //si la liste est vie
+                            System.out.println("fin");                          //le jeu est fini
+                        }else{                                                  
+                            ArrayList<Tuile> tuile = new ArrayList<>();         //sinon on créer une arrayList de tuiles
+                            for (Tuile ttemp : deplacement.values()){           //qui contient toutes les tuiles de la HashMap
+                                  tuile.add(ttemp);
+                            }
+                            int taille = deplacement.size();
+                            Random r = new Random();
+                            int valeur = 0 + r.nextInt(taille);                 //valeur = aléatoire entre 0 et la taille de la HashMap
+                            a.setActionsRestantes(1);
+                            Coordonnees coord = grille.getCoordTuile(tuile.get(valeur).getNomT().toString());   //coord = coordonnées de la tuile d'index valeur
+                            a.deplacement(coord, grille);                       //l'aventurier se déplace sur la tuile de coordonnées coord
+                        }
+                    }
+                }
+                defausseCarteCoulées.add(cI);                                   //la carte est retirée
+            }
+            piocheCarteInondation.remove(cI);                                   //la carte est enlevée de la piocheInondation
+            }
+        }
+    
+    //si plus de carte dans la pioche
+    public void remplirPiocheInondation(){
+        Utils.melangerCI(defausseCarteInondation);                              //mélange de la defausse
+        for(CarteInondation ci : defausseCarteInondation){                      //On met chaque carte de la defausse dans la pioche
+            piocheCarteInondation.add(ci);
+        }
+        defausseCarteInondation.clear();                                        //On vide la defausse
+    }
+    
+    public void monteeDesEaux(){
+        niveauEau.monteeDesEaux();
+        Utils.melangerCI(defausseCarteInondation);
+        for(CarteInondation ci : piocheCarteInondation){
+            defausseCarteInondation.add(ci);
+        }
+        piocheCarteInondation.clear();
+        for(CarteInondation ci : defausseCarteInondation){
+            piocheCarteInondation.add(ci);
+        }
+        defausseCarteInondation.clear();
+    }
+
+    //si plus de carte dans la pioche
+    public void remplirPiocheTresor(){
+        Collections.shuffle(defausseCarteTrésor);               //on mélange la défausse
+        for (CarteTrésor carte :defausseCarteTrésor ){          //on met toutes les cartes de la défausse dans la pioche
+            piocheCarteTrésor.add(carte);
+        }
+        defausseCarteTrésor.clear();                            //on vide la défausse
+    }    
         
         
     @Override
     public void traiterMessage(Message m) {
         Coordonnees c;
-            int entier = 0;
-        //A Faire 
-        
+        int entier = 0;
+        switch (m.getTypeMessage()) {
+            case ALLER:
+                vuePlateau.resShow();
+                c = m.getCoord();
+                System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
+                aventuriers.get(0).deplacement(c,grille);
+                break;
 
-            switch (m.getTypeMessage()) {
-                case ALLER:
-                    vuePlateau.resShow();
-                    
-                        c = m.getCoord();
-                        System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
-                        aventuriers.get(0).deplacement(c,grille);
+            case ASSECHER:
+                vuePlateau.resShow();
+                c = m.getCoord();
+                System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
+                aventuriers.get(0).assecher(c,grille);
+                break;
 
-                    
+            case VAL2:
+                if(m.getNivDif().equals("Novice")){
+                    entier=1;
+                }else if(m.getNivDif().equals("Normal")){
+                   entier=2; 
+                }else if(m.getNivDif().equals("Expert")){
+                   entier=3; 
+                }else if(m.getNivDif().equals("Légendaire")){
+                   entier=4; 
+                }
+                    initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
+                break;   
 
-                    break;
-                case ASSECHER:
-                    vuePlateau.resShow();
+            case DONNERCARTE:
+                vuePlateau.resShow();
+                //if(donnationPossible(aventuriers.get(0), aven2)){
+                  //  aventuriers.get(0).donnerCarte(aven2, carte);
+                //}
+                break;
+            case REGLES :
+                    lireRegle();
                     
+                break;
+            case PROPOSER_ASSECHEMENT:
+                vuePlateau.resShow();
+                vuePlateau.showAssechables(aventuriers.get(0).assechementPossibleListe(grille).keySet());
+                break;
+
+            case PROPOSER_DEPLACEMENT:
+                vuePlateau.resShow();
+                vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
+                break;
+
+            case PRENDRETRESOR:
+                vuePlateau.resShow();
+                Aventurier a = getAventurier(m.getJoueur());
+                if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))&& a.prendreTresor(NomTrésor.Pierre)){
+                         prisePierre=true;
+                }
+                else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))&& a.prendreTresor(NomTrésor.Cristal)){
+                         priseCristal=true;
+                }
+                else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))&& a.prendreTresor(NomTrésor.Calice)){
+                         priseCalice=true;
+                }
+                else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(NomTrésor.Zéphyr)){
+                         priseZephyr=true;
+                }
+                break;
+
+            case RELANCERJEU:
+                lancerPartie();
+                break;
 
 
-                        
-                        c = m.getCoord();
-
-                        System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
-                        aventuriers.get(0).assecher(c,grille);
-                        
-
-                    
-
-                    break;
-                    
-                case VAL2:
-                    if(m.getNivDif().equals("Novice")){
-                        entier=1;
-                    }else if(m.getNivDif().equals("Normal")){
-                       entier=2; 
-                    }else if(m.getNivDif().equals("Expert")){
-                       entier=3; 
-                    }else if(m.getNivDif().equals("Légendaire")){
-                       entier=4; 
-                    }
-                        initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
-                    break;   
-                    
-                    
-                    
-                case DONNERCARTE:
-                    vuePlateau.resShow();
-                    //if(donnationPossible(aventuriers.get(0), aven2)){
-                      //  aventuriers.get(0).donnerCarte(aven2, carte);
-                    //}
-                    break;
-                    
-                case AUTREACTION:
-                    /*if(!getAventurier(m.getJoueur()).isAutreA()){
-                        if(m.getChampSaisieTxt().length() != 2){
-                            Utils.afficherInformation("La position saisie ne respecte pas le format attendu!\n(saisir \"xy\"tel que x et y les coordonnées de la case )");
-                        }else{
-                         x=Character.toString(m.getChampSaisieTxt().charAt(0));
-                         y=Character.toString(m.getChampSaisieTxt().charAt(1));
-
-                         Coordonnees c = new Coordonnees(x,y);
-
-                         System.out.println("Autre Action!");
-
-                         getAventurier(m.getJoueur()).autreAction(c,grille);
-                         getAventurier(m.getJoueur()).setAutreA(true);
-                        } 
-                    }
-                    else{
-                        Utils.afficherInformation("Super Action déja utilisée!");
-                    }*/
-                    
-                    
-                    break;
-                case PRENDRETRESOR:
-                    vuePlateau.resShow();
-                    Aventurier a = getAventurier(m.getJoueur());
-                    if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))&& a.prendreTresor(NomTrésor.Pierre)){
-                             prisePierre=true;
-                    }
-                    else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))&& a.prendreTresor(NomTrésor.Cristal)){
-                             priseCristal=true;
-                    }
-                    else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))&& a.prendreTresor(NomTrésor.Calice)){
-                             priseCalice=true;
-                    }
-                    else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(NomTrésor.Zéphyr)){
-                             priseZephyr=true;
-                    }
-                case RELANCERJEU:
-                        lancerPartie();
-                    
-                    break;
+            case TERMINERTOUR:
+                vuePlateau.resShow();
+                System.out.println("Fin du Tour!");
+                finTour();
+                lancerTour();
+                break;
                 
-                // si le joueur appui sur terminer tour ,fini son tour et lance le tour du joueur prochain    
-                case TERMINERTOUR:
-                    vuePlateau.resShow();
-                    System.out.println("Fin du Tour!");
-                    finTour();
-                    lancerTour();
-                    break;
-                default:
-                    break;
-            }
-            updateVuePlateau();
+            default:
+                break;
+        }
+        updateVuePlateau();
+
     }
         
     
@@ -469,6 +515,9 @@ public class Controleur implements Observateur {
                 
                 vuePlateau.updateCase(coord, nomCase, etatTuile, tresor, pionAAfficher);
             }
+        }
+        for(Aventurier a : aventuriers){
+            vuePlateau.updateMainAventurier(a.getNom().toString(), a.getMainCarteTrésor());
         }
     }
     

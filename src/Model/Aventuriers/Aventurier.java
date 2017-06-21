@@ -10,6 +10,7 @@ import Model.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;
+import ile.interdite.Controleur;
 import java.util.*;
 import java.util.HashMap;
 
@@ -18,7 +19,7 @@ public class Aventurier {
 	private int actionsRestantes;
 	private Coordonnees position;
         private boolean autreA=false;
-       
+        
     public Aventurier(){
         this.actionsRestantes=getMaxActions();
     }
@@ -26,16 +27,12 @@ public class Aventurier {
         this.position=position;
         this.actionsRestantes=getMaxActions();
     }
-        
-
+    
+    
 	public Coordonnees getPosition() {
 		return this.position;
 	}
         
-        public void autreAction(Coordonnees c,Grille grille ){
-            afficherInformation("Vous n'avez pas d'action de bg!");
-        }
-        //pioche des cartes
         public void piocherCT(ArrayList<CarteTrésor> piocheCarteTrésor){
             getMainCarteTrésor().add(piocheCarteTrésor.get(0));
             piocheCarteTrésor.remove(0);
@@ -43,18 +40,18 @@ public class Aventurier {
             if(doitDefausser()){
                 //TODO
                 //PENSER A METTRE A JOUR LA DEFAUSSE
-                //reset la pioche si plus de carte
+                
             }
         }
-        //vérifie si le joueur doit défausser
+
         public boolean doitDefausser() {
             // TODO - implement Controleur.priseTresorPossible
-            return (getMainCarteTrésor().size()>5);
+            return (getMainCarteTrésor().size())>5;
         }
                 
 	//déplace un aventurier
 	public void deplacement(Coordonnees c,Grille grille ) {
-            if(this.getActionsRestantes()>0&&deplacementPossibleListe(grille).containsKey(c)){
+            if(this.getActionsRestantes() > 0 && deplacementPossibleListe(grille).containsKey(c)){
 		setPosition(c);
                 setActionsRestantes(getActionsRestantes()-1);
             }
@@ -86,15 +83,16 @@ public class Aventurier {
 
                         //Si elle est adjacente à la tuile de l'aventurier et elle n'est pas coulée
                         if(((((xo==xn))&&(yo==yn-1||yo==yn+1))||((yo==yn)&&(xo==xn-1||xo==xn+1)))&&((! grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.COULEE)))){
-                            listeD.put((Coordonnees) i.getKey(), i.getValue());  
+                            listeD.put((Coordonnees) i.getKey(), i.getValue());         //On l'ajoute dans la liste de déplacements possibles
                         }    
                     }
-                        
+                    
                 }
-
+                
 		return listeD;
                 
 	}
+
         //donne les cases asséchables pour un joueur
         public HashMap assechementPossibleListe(Grille grille) {
 		// TODO - implement Controleur.assécher
@@ -162,7 +160,7 @@ public class Aventurier {
     /**
      * @return the mainCarteTrésor
      */
-    public Collection<CarteTrésor> getMainCarteTrésor() {
+    public ArrayList<CarteTrésor> getMainCarteTrésor() {
         return mainCarteTrésor;
     }
 
@@ -188,10 +186,11 @@ public class Aventurier {
     }
 
     public void resetActionsRestantes() {
-        this.actionsRestantes = getMaxActions();
+        setMaxActions();
     }
-    public void resetAutreA() {
-        this.setAutreA(false);
+    
+    public void setMaxActions(){
+        this.actionsRestantes = getMaxActions();
     }
     /**
      * @param position the position to set
@@ -278,3 +277,4 @@ public class Aventurier {
     }
     
 }
+ 

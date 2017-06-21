@@ -2,8 +2,10 @@ package Model;
 
 public class Sac extends Activable {
 
-    public Sac() {
-        
+    @Override
+    public TypeCarteActivable getTypeCarteActivable() {
+        return TypeCarteActivable.SacsDeSable;
     }
+
     
 }
