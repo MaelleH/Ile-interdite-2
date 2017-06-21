@@ -8,29 +8,17 @@ package Vue;
 import Util.Couleur;
 import static Util.TypeMessage.REJOUER;
 import static Util.TypeMessage.RELANCERJEU;
-import static Util.TypeMessage.VAL2;
-import Vue.panels.PanelCarteTrophee;
 import ile.interdite.Message;
-import ile.interdite.Observateur;
-import static java.awt.BorderLayout.NORTH;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,17 +31,17 @@ import javax.swing.SwingConstants;
  *
  * @author heyrendm
  */
-public class VueWin  extends JFrame{
+public class VueLoose  extends JFrame{
     //private Observateur controleur;
     private JFrame main;
     private JPanel mainP;
 
-    public VueWin() {
+    public VueLoose() {
         //controleur= obs;
         
         // CReation de la fenetre
         main = new JFrame();
-        main.setTitle("Vous avez gagnés!");
+        main.setTitle("Vous avez perdu ... ");
         main.setSize(600, 250);
         main.setBackground(Color.WHITE);
         
@@ -63,7 +51,7 @@ public class VueWin  extends JFrame{
         main.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e) {
-                int reponse = JOptionPane.showConfirmDialog(main,"Quitter le jeu?", "VOulez vous quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                int reponse = JOptionPane.showConfirmDialog(main,"Quitter le jeu?", "Voulez vous quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                 if (reponse==JOptionPane.YES_OPTION){
                     main.dispose();
                 }
@@ -71,21 +59,7 @@ public class VueWin  extends JFrame{
 
             
         });
-        
-        
-        Toolkit tk = Toolkit.getDefaultToolkit();
-
-        Image img; 
-        try {
-            img=tk.getImage(VueWin.class.getResource("/Vue/Imagewin/firework.gif"));
-        } catch (Exception e) {
-            img=tk.getImage(VueWin.class.getResource("/Vue/Imagewin/firework.gif"));
-        }
-        Cursor monCurseur = tk.createCustomCursor(img, new Point(10, 10), "heli");
-        main.setCursor(monCurseur);
-        
-        
-        
+       
         //panel principal
         mainP= new JPanel(new GridLayout(2,1));
         main.add(mainP);
@@ -100,8 +74,8 @@ public class VueWin  extends JFrame{
             JPanel titreP= new JPanel(new GridLayout(2, 1));
             hautP.add(titreP);
             
-            JLabel titreA = new JLabel("Bravo!",SwingConstants.CENTER);
-            JLabel titreG = new JLabel("Vous avez gagné!",SwingConstants.CENTER);
+            JLabel titreA = new JLabel("Dommage ...",SwingConstants.CENTER);
+            JLabel titreG = new JLabel("Vous avez perdu ...",SwingConstants.CENTER);
             Font f= new Font("Arial", 20, 20);
             titreA.setFont(f);
             titreA.setForeground(Couleur.VIOLET_FONCE.getColor());
@@ -180,7 +154,7 @@ public class VueWin  extends JFrame{
     
     
    public static void main(String [] args){
-        VueWin v= new VueWin();
+        VueLoose v= new VueLoose();
         
     }
     
