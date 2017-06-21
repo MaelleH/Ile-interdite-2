@@ -64,8 +64,7 @@ public class Pilote extends Aventurier {
             }else if(this.getActionsRestantes()<1){                                             //Si il n'a plus d'action
                 System.out.println("Plus d'actions....");
                 afficherInformation("Vous ne pouvez plus effectuer d'actions!");                    //On affiche cette information
-            }
-            else{                                                                               //Sinon (encore au moins une action mais la tuile n'est pas dans les listes
+            }else{                                                                               //Sinon (encore au moins une action mais la tuile n'est pas dans les listes
                 System.out.println("Déplacement impossible!");
                 afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");           //On affiche le fait qu'il ne puisse pas se déplacer vers la tuile
             }
