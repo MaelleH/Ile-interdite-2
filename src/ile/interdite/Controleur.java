@@ -99,7 +99,7 @@ public class Controleur implements Observateur {
     public void lancerTour(){
         //Vérification de la main de l'aventurier
         if(aventuriers.get(0).doitDefausser()){
-            VueDefausse vued = new VueDefausse(aventuriers.get(0).getMainCarteTrésor().size()-5,aventuriers.get(0).getMainCarteTrésor(),this);
+            vuePlateau.popUpDefausse(aventuriers.get(0).getMainCarteTrésor());
             return;
         }
         
@@ -324,6 +324,7 @@ public class Controleur implements Observateur {
     }
     
     public void monteeDesEaux(){
+        vuePlateau.popUpMonteeDesEaux();
         niveauEau.monteeDesEaux();
         Utils.melangerCI(defausseCarteInondation);
         for(CarteInondation ci : piocheCarteInondation){

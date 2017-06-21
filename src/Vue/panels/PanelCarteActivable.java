@@ -68,7 +68,7 @@ public class PanelCarteActivable extends PanelCarteTresor{
         g.drawImage(image, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
             
         if(clicked){
-            setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), BorderFactory.createLineBorder(Color.gray,2)));
+            setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), BorderFactory.createLineBorder(Color.black,2)));
         }else{
             setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));                
         }

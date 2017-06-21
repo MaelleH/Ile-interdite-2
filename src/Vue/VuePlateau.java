@@ -16,6 +16,7 @@ import Util.NomTrésor;
 import static Util.NomTrésor.Pierre;
 import Util.Utils;
 import Util.Utils.EtatTuile;
+import Vue.panels.PanelFadingPopUP;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import ile.interdite.TypeMessage;
@@ -42,6 +43,7 @@ public class VuePlateau implements Observateur{
     private JPanel mainPanel;
     private JPanel panelPlateau;
     private JPanel panelAventuriers;
+    VueDefausse vueDefausse;
     
     private Observateur controleur;
     private ArrayList<PanelAventurier> listePanelAventuriers;
@@ -91,9 +93,15 @@ public class VuePlateau implements Observateur{
                 
                 if (rO==JOptionPane.YES_OPTION){
                     window.dispose();
+                    if(vueDefausse!=null){
+                        vueDefausse.dispose();
+                    }
                 }
                 else if (rO==JOptionPane.CANCEL_OPTION){
                     window.dispose();
+                     if(vueDefausse!=null){
+                        vueDefausse.dispose();
+                    }
                     Message m = new Message();
                     m.setTypeMessage(RELANCERJEU);
                     controleur.traiterMessage(m);
@@ -124,7 +132,10 @@ public class VuePlateau implements Observateur{
         }
     }
     
-    
+    public void popUpMonteeDesEaux() {
+        PanelFadingPopUP popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
+        popUp.setLocation((((int)window.getLocation().getX())+((int)panelPlateau.getLocation().getX())+(panelPlateau.getWidth()/2)-(popUp.getWidth()/2)),((int)window.getLocation().getY())+((int)panelPlateau.getLocation().getY())+(panelPlateau.getHeight()/2)-(popUp.getHeight()/2));
+    }
     
     public void updateCase(String coord,String nomCase,EtatTuile etatCase,NomTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
         listeCases.get(coord).updateCase(nomCase, etatCase, tresor,pionAAfficher);
@@ -135,6 +146,10 @@ public class VuePlateau implements Observateur{
         this.listeCases.put(key, uneCase);
     }
 
+    public void disposeDefausse(){
+        vueDefausse.dispose();
+    }
+    
     private void initPanelAventuriers(ArrayList<KitPanelAventurier> kitsPanelsAventuriers) {
         PanelAventurier panelA;
         
@@ -151,6 +166,10 @@ public class VuePlateau implements Observateur{
         }
     }
 
+    public void popUpDefausse(ArrayList<CarteTrésor> mainCarteTrésor){
+        vueDefausse = new VueDefausse(mainCarteTrésor.size()-5,mainCarteTrésor,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2),controleur);
+    }
+    
     public Observateur getControleur() {
         return controleur;
     }
