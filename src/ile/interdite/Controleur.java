@@ -348,7 +348,7 @@ public class Controleur implements Observateur {
 
     //si plus de carte dans la pioche
     public void remplirPiocheTresor(){
-        Collections.shuffle(defausseCarteTrésor);               //on mélange la défausse
+        Utils.melangerCT(defausseCarteTrésor);               //on mélange la défausse
         for (CarteTrésor carte :defausseCarteTrésor ){          //on met toutes les cartes de la défausse dans la pioche
             piocheCarteTrésor.add(carte);
         }
@@ -399,6 +399,7 @@ public class Controleur implements Observateur {
                 vuePlateau.resShow();
                 for(CarteTrésor carte : m.getListeCarteTresorADefausse()){
                     aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                    defausseCarteTrésor.add(carte);
                 }
                 vuePlateau.setActive(aventuriers.get(0).getNom());
                 break;
