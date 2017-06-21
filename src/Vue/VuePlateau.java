@@ -18,8 +18,8 @@ import Util.Utils;
 import Util.Utils.EtatTuile;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import ile.interdite.TypeMessage;
-import static ile.interdite.TypeMessage.RELANCERJEU;
+import Util.TypeMessage;
+import static Util.TypeMessage.RELANCERJEU;
 import java.awt.BorderLayout;
 
 import java.awt.GridLayout;

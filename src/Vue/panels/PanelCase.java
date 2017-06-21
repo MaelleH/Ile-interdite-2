@@ -13,7 +13,7 @@ import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import ile.interdite.TypeMessage;
+import Util.TypeMessage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;

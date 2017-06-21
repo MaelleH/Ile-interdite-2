@@ -5,6 +5,7 @@
  */
 package ile.interdite;
 
+import Util.TypeMessage;
 import Model.Aventuriers.Aventurier;
 import Model.cartesTresor.CarteTrésor;
 import Util.Coordonnees;
