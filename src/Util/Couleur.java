@@ -19,6 +19,7 @@ public enum Couleur {
     BLEU(new Color(55,194,198)),
     BLEU_CLAIR(new Color(0, 100, 250)),
     BLEU_FONCE(new Color(10, 10, 200)),
+    BLEU_FONCE_BEAU(new Color(38,55,91)),
     BLEU_CALICE(new Color(60,130,140)),
     ORANGE(new Color(255, 148, 0)),
     VIOLET(new Color(204, 94, 255)),

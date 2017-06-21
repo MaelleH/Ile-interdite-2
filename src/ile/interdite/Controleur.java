@@ -29,6 +29,7 @@ import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
 import Vue.panels.KitPanelAventurier;
 import Vue.VueLancement;
+import Vue.VueLoose;
 import Vue.VuePlateau;
 import Vue.VueWin;
 
@@ -394,12 +395,7 @@ public class Controleur implements Observateur {
                     }
                 }
                 
-                if(true){
-                    
-                    VueWin vue = new VueWin(this);
-                    
-                }
-                
+                VueLoose vue = new VueLoose(this);
                 
                 
                 break;
@@ -544,7 +540,7 @@ public class Controleur implements Observateur {
 
             case RELANCERJEU:
                 lancerPartie();
-                
+                vuePlateau.dispose();
                 
                 break;
                 

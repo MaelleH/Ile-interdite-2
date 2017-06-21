@@ -9,6 +9,7 @@ import Util.Couleur;
 import static Util.TypeMessage.REJOUER;
 import static Util.TypeMessage.RELANCERJEU;
 import ile.interdite.Message;
+import ile.interdite.Observateur;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -32,17 +33,17 @@ import javax.swing.SwingConstants;
  * @author heyrendm
  */
 public class VueLoose  extends JFrame{
-    //private Observateur controleur;
+    private Observateur controleur;
     private JFrame main;
     private JPanel mainP;
 
-    public VueLoose() {
-        //controleur= obs;
+    public VueLoose(Observateur obs) {
+        controleur= obs;
         
         // CReation de la fenetre
         main = new JFrame();
         main.setTitle("Vous avez perdu ... ");
-        main.setSize(600, 250);
+        main.setSize(600, 300);
         main.setBackground(Color.WHITE);
         
         Font fMain= new Font("Arial", 15, 15);
@@ -67,7 +68,8 @@ public class VueLoose  extends JFrame{
         JPanel hautP= new JPanel(new GridLayout(1,3));
         mainP.add(hautP);
         
-            JLabel firework2 = new JLabel(new ImageIcon(getClass().getResource("/Vue/Imagewin/firework.gif" )));
+        
+            JLabel firework2 = new JLabel(new ImageIcon(getClass().getResource("/Vue/Imagewin/perduGoutte.gif" )));
             hautP.add(firework2);
             
             //Titre Bravo
@@ -79,19 +81,28 @@ public class VueLoose  extends JFrame{
             Font f= new Font("Arial", 20, 20);
             titreA.setFont(f);
             titreA.setForeground(Couleur.VIOLET_FONCE.getColor());
-            
             titreG.setFont(f);
             titreG.setForeground(Couleur.VIOLET_FONCE.getColor());
             
             titreP.add(titreA);
             titreP.add(titreG);
             
-            JLabel firework1 = new JLabel(new ImageIcon(getClass().getResource("/Vue/Imagewin/firework.gif" )));
+            JLabel firework1 = new JLabel(new ImageIcon(getClass().getResource("/Vue/Imagewin/perduGoutte.gif" )));
             
             hautP.add(firework1);
             
         
         
+            Toolkit tk = Toolkit.getDefaultToolkit();
+
+            Image img; 
+            try {
+                img=tk.getImage(getClass().getResource("/Vue/Imagewin/goutte.png"));
+            } catch (Exception e) {
+                img=tk.getImage(getClass().getResource("/Vue/Imagewin/goutte.png"));
+            }
+            Cursor monCurseur = tk.createCustomCursor(img, new Point(0, 0), "goutte");
+            main.setCursor(monCurseur);        
         
         
         
@@ -116,7 +127,7 @@ public class VueLoose  extends JFrame{
             rej.addActionListener((ActionEvent e) -> {
                 Message m = new Message();
                 m.setTypeMessage(REJOUER);
-                //controleur.traiterMessage(m);
+                controleur.traiterMessage(m);
                 main.dispose();
             }); 
         bouP.add(rej);
@@ -127,7 +138,7 @@ public class VueLoose  extends JFrame{
                 main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(REJOUER);
-                //controleur.traiterMessage(m);
+                controleur.traiterMessage(m);
             });
             bouP.add(quitter);
         //Bouton pour menu principal
@@ -136,7 +147,7 @@ public class VueLoose  extends JFrame{
                 main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(RELANCERJEU);
-                //controleur.traiterMessage(m);
+                controleur.traiterMessage(m);
 
             });
             bouP.add(mp);
@@ -152,13 +163,7 @@ public class VueLoose  extends JFrame{
         
     }
     
-    
-   public static void main(String [] args){
-        VueLoose v= new VueLoose();
-        
-    }
-    
-    
+
     
     
     
