@@ -98,7 +98,7 @@ public class Controleur implements Observateur {
     public void lancerTour(){
         //Vérification de la main de l'aventurier
         if(aventuriers.get(0).doitDefausser()){
-            VueDefausse vued = new VueDefausse(aventuriers.get(0).getMainCarteTrésor().size()-5,aventuriers.get(0).getMainCarteTrésor(),this);
+            vuePlateau.popUpDefausse(aventuriers.get(0).getMainCarteTrésor());
             return;
         }
         
@@ -317,6 +317,7 @@ public class Controleur implements Observateur {
     }
     
     public void monteeDesEaux(){
+        vuePlateau.popUpMonteeDesEaux();
         niveauEau.monteeDesEaux();
         Utils.melangerCI(defausseCarteInondation);                              //On melange la defausse des cartes inondation
         for(CarteInondation ci : piocheCarteInondation){                        //on ajoute la pioche a la defausse 
@@ -342,6 +343,7 @@ public class Controleur implements Observateur {
     @Override
     public void traiterMessage(Message m) {
         Coordonnees c;
+        Activable carteASupp;
         int entier = 0;
         switch (m.getTypeMessage()) {
             case ALLER:
@@ -358,6 +360,39 @@ public class Controleur implements Observateur {
                 System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).assecher(c,grille);
                 updateVuePlateau();
+
+                break;
+                
+            case ALLER_HELICO:
+                vuePlateau.resShow();
+                c = m.getCoord();
+                System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
+                aventuriers.get(0).setPosition(c);
+                for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
+                    if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
+                        if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.Helicoptere)){
+                            aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                            updateVuePlateau();
+                            break;
+                        }
+                    }
+                }
+                break;
+
+            case ASSECHER_SAC:
+                vuePlateau.resShow();
+                c = m.getCoord();
+                System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
+                for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
+                    if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
+                        if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.SacsDeSable)){
+                            aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                            updateVuePlateau();
+                            break;
+                        }
+                    }
+                }
+
                 break;
 
             case VAL2:
@@ -396,6 +431,11 @@ public class Controleur implements Observateur {
                 }
                 vuePlateau.setActive(aventuriers.get(0).getNom());
                 updateVuePlateau();
+
+                break;
+            
+
+
             case PROPOSER_ASSECHEMENT:
                 vuePlateau.resShow();
                 vuePlateau.showAssechables(aventuriers.get(0).assechementPossibleListe(grille).keySet());
@@ -404,10 +444,32 @@ public class Controleur implements Observateur {
 
             case PROPOSER_DEPLACEMENT:
                 vuePlateau.resShow();
-                vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
-                updateVuePlateau();        
+
+                try {
+                    Pilote pilote = (Pilote)aventuriers.get(0);
+                    vuePlateau.showDeplacementPossible(pilote.deplacementPossibleListe(grille).keySet(),pilote.autreActionListe(grille).keySet());
+                } catch (Exception e) {
+                    vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
+                }
+                updateVuePlateau();
+                break;
+            case PROPOSER_ASSECHEMENT_SAC:
+                vuePlateau.resShow();
+                if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
+                    vuePlateau.showAssechablesSac(assechementPossibleSac().keySet());
+                    m.getpCA().setClicked(!m.getpCA().getClicked()); 
+                }
+
                 break;
 
+            case PROPOSER_DEPLACEMENT_HELICO:
+                vuePlateau.resShow();
+                if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
+                    vuePlateau.showDeplacementPossibeHelico(deplacementPossibeHelico().keySet());
+                    m.getpCA().setClicked(!m.getpCA().getClicked()); 
+                }
+                break;
+                     
             case PRENDRETRESOR:
                 vuePlateau.resShow();
                 Aventurier a = getAventurier(m.getJoueur());
@@ -447,7 +509,35 @@ public class Controleur implements Observateur {
 
     }
         
+    public HashMap<Coordonnees,Tuile> assechementPossibleSac(){
+        HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+        
+
+        for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
+            if(i.getValue()!=null){
+                
+                if(grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)){
+                    listeD.put( i.getKey(), i.getValue());   
+                }     
+            }
+        }
+        return listeD;
+    }
     
+    public HashMap<Coordonnees,Tuile> deplacementPossibeHelico(){
+        HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+        
+
+        for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
+            if(i.getValue()!=null){
+                
+                if(grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)||grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.ASSECHEE)){
+                    listeD.put( i.getKey(), i.getValue());   
+                }     
+            }
+        }
+        return listeD;
+    }
     
     public Aventurier getAventurier(String nom){
         for(Aventurier i : aventuriers){

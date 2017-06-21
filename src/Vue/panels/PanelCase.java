@@ -32,7 +32,7 @@ import javax.swing.SwingConstants;
  */
 public class PanelCase extends JPanel{
     private String typeCase;
-    private int etatListener; /*0 pour inactive,1 pour cliquable#deplacement,2 pour cliquable#assechement*/
+    private int etatListener; /*0 pour inactive,1 pour cliquable#deplacement,2 pour cliquable#assechement,3 pour cliquable#deplacementPvPilote,4 pour cliquable#assechemen_sac,5pour cliquable#depla_helico*/
     private Observateur controleur;
     
     private String nomCase;
@@ -106,7 +106,7 @@ public class PanelCase extends JPanel{
             public void mouseClicked(MouseEvent e) {
                 if(etatListener==0){
                     /*Mais rien ne se passe...*/
-                }else if(etatListener==1){
+                }else if(etatListener==1||etatListener==3){
                     Message m = new Message();
                     m.setTypeMessage(TypeMessage.ALLER);
                     m.setpC(pC);
@@ -114,6 +114,16 @@ public class PanelCase extends JPanel{
                 }else if(etatListener==2){
                     Message m = new Message();
                     m.setTypeMessage(TypeMessage.ASSECHER);
+                    m.setpC(pC);
+                    controleur.traiterMessage(m);
+                }else if(etatListener==4){
+                    Message m = new Message();
+                    m.setTypeMessage(TypeMessage.ASSECHER_SAC);
+                    m.setpC(pC);
+                    controleur.traiterMessage(m);
+                }else if(etatListener==5){
+                    Message m = new Message();
+                    m.setTypeMessage(TypeMessage.ALLER_HELICO);
                     m.setpC(pC);
                     controleur.traiterMessage(m);
                 }
@@ -151,6 +161,12 @@ public class PanelCase extends JPanel{
                 setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.ORANGE.getColor(), 4)));
             }else if(etatListener==2){      //si la case est assechable
                 setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.DEEP_ROSE.getColor(), 4)));
+            }else if(etatListener==3){
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.BLEU_FONCE.getColor(), 4)));
+            }else if(etatListener==4){
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.DEEP_ROSE.getColor(), 4)));
+            }else if(etatListener==5){
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.ORANGE.getColor(), 4)));
             }
             
             //Affichage du Nom de la Case

@@ -94,10 +94,7 @@ public class Pilote extends Aventurier {
                 }
             }
         }
-        listeAutre = autreActionListe(grille);                      //listeAutre = liste de toutes les tuiles non coulées non adjacentes
-        for (Map.Entry<Coordonnees,Tuile> i : listeAutre.entrySet()){
-            listeD.put(i.getKey(),i.getValue());                    //On ajoute la liste des tuiles non coulées non adjacentes à la liste des tuiles possibles
-        }
+        
         return listeD;
     }
 
