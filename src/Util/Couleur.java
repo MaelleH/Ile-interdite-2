@@ -29,6 +29,8 @@ public enum Couleur {
     GRIS_CLAIR(new Color(230, 230, 230)),
     DARK_ROUGE(new Color(150,20,20)),
     BLEU_ASSECHEMENT(new Color(66,243,219)),
+    DESERT(new Color(224,210,173)),
+    VIOLET_FONCE(new Color(36, 32, 108)),
     DEEP_ROSE(new Color (255,11,117));
     private Color color;
     Couleur(Color c){

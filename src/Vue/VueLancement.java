@@ -40,6 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Util.Couleur;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -48,6 +49,8 @@ import Util.Couleur;
 public class VueLancement {
     private Observateur controleur;
     private JFrame main;
+    
+    private Regles regle;
 
     
     private JPanel welcomeP;
@@ -81,6 +84,7 @@ public class VueLancement {
         Font fMain= new Font("Arial", 15, 15);
         main.setFont(fMain);
         
+        regle = new Regles();
             //Le Fond
                 PanelIleHaut ileHaut = new PanelIleHaut();
                 main.setContentPane(ileHaut);   
@@ -93,8 +97,7 @@ public class VueLancement {
             main.add(welcomeP);
             
             //Creation du label Titre du panel central
-            Label titreW = new Label("Bienvenue sur l'île interdite!");
-            titreW.setAlignment((int) CENTER_ALIGNMENT);
+            Label titreW = new Label("Bienvenue sur l'île interdite!",SwingConstants.CENTER);
             Font f= new Font("Arial", 18, 18);
             titreW.setFont(f);
             welcomeP.add(titreW,NORTH);
@@ -106,9 +109,7 @@ public class VueLancement {
                     //Bouton regles
                         JButton regles = new JButton("Règles");
                         regles.addActionListener((ActionEvent e) -> {
-                            Message m = new Message();
-                            m.setTypeMessage(REGLES);
-                            controleur.traiterMessage(m);
+                            regle.setVisible(true);
                         }); 
                         valRe.add(regles);
                         
@@ -162,8 +163,7 @@ public class VueLancement {
                     joueurP = new JPanel(new BorderLayout());
                     
                     //Creation du label Titre du panel joueur
-                        Label titreJ = new Label("Choisissez vos noms d'aventuriers : ");
-                        titreJ.setAlignment((int) CENTER_ALIGNMENT);
+                        Label titreJ = new Label("Choisissez vos noms d'aventuriers : ",SwingConstants.CENTER);
                         titreJ.setFont(f);
                         joueurP.add(titreJ,NORTH);
                     
@@ -194,9 +194,7 @@ public class VueLancement {
                             //BOUTON REGLES
                             JButton regles2 = new JButton("Règles");
                                 regles2.addActionListener((ActionEvent e) -> {
-                                    Message m = new Message();
-                                    m.setTypeMessage(REGLES);
-                                    controleur.traiterMessage(m);
+                                    regle.setVisible(true);
                                 }); 
                             valRe2.add(regles2);
                         
@@ -242,6 +240,7 @@ public class VueLancement {
                                         m.setTypeMessage(VAL2);
 
                                         controleur.traiterMessage(m);
+                                        regle.dispose();
                                         main.dispose();
                                     }
                                 });
@@ -256,6 +255,7 @@ public class VueLancement {
                 int reponse = JOptionPane.showConfirmDialog(main,"Voulez vous vraiment quitter?", "Quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                 if (reponse==JOptionPane.YES_OPTION){
                     main.dispose();
+                    regle.dispose();
                 }
             }
             
@@ -266,7 +266,7 @@ public class VueLancement {
         main.setVisible(true);
     }
 
-     public class PanelIleHaut extends JPanel{
+    public class PanelIleHaut extends JPanel{
         
         public PanelIleHaut(){
         }
