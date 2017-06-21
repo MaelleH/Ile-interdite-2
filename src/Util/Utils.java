@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import Model.Aventuriers.Aventurier;
 import Model.CarteInondation;
 import Model.cartesTresor.CarteTrésor;
+import Util.Couleur;
 
 /**
  *
@@ -43,12 +44,12 @@ public class Utils {
     }
 
     public static enum Pion {
-        ROUGE("Rouge", new Color(255, 0, 0)),
-        VERT("Vert", new Color(0, 195, 0)),
-        BLEU("Bleu", new Color(55,194,198)),
-        ORANGE("Orange", new Color(255, 148, 0)),
-        VIOLET("Violet", new Color(204, 94, 255)),
-        JAUNE("Jaune", new Color(255, 255, 0)) ;    
+        ROUGE("Rouge", Couleur.ROUGE.getColor()),
+        VERT("Vert", Couleur.VERT.getColor()),
+        BLEU("Bleu", Couleur.BLEU.getColor()),
+        ORANGE("Orange", Couleur.ORANGE.getColor()),
+        VIOLET("Violet", Couleur.VIOLET.getColor()),
+        JAUNE("Jaune", Couleur.JAUNE.getColor()) ;    
 
         private final String libelle ;
         private final Color couleur ;

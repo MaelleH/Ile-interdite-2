@@ -172,9 +172,9 @@ public class Aventurier {
                 int nbCartes=0;
                 CarteTrésorTrophée iBis;
                 
-                if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){
+                if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){ 
                     for(CarteTrésor i :getMainCarteTrésor()){               
-                        if((i.getTypeCarteTresor()).equals(TypeCarteTresor.Tresor)){
+                        if((i.getTypeCarteTresor()).equals(TypeCarteTresor.Tresor)){    
                             iBis = (CarteTrésorTrophée) i;
                             if(iBis.getNomT().equals(tresor)){
                                nbCartes = nbCartes +1;  
@@ -189,10 +189,8 @@ public class Aventurier {
 	}
     //le joueur prend le trésor donné
     public boolean prendreTresor(NomTrésor tresor) {
-        // TODO - implement Controleur.prendreTresor
-
-        if(priseTresorPossible(tresor)){
-            getMainCarteTrésor().remove(tresor);
+        if(priseTresorPossible(tresor)){                //Si il peut prendre le tresor
+            getMainCarteTrésor().remove(tresor);        //One enleve les cartes trésor correspondantes de sa main
             return true;
         }else{
             return false;

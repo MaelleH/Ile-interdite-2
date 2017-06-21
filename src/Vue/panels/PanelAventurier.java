@@ -4,8 +4,6 @@ package Vue.panels;
 import Model.cartesTresor.Activable;
 import Model.cartesTresor.CarteTrésor;
 import Model.cartesTresor.CarteTrésorTrophée;
-import Util.NomTrésor;
-import Util.TypeCarteActivable;
 import Util.TypeCarteTresor;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,29 +12,15 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import static javax.swing.SwingConstants.CENTER;
-import javax.swing.border.MatteBorder;
-import Util.Utils.Pion;
-import ile.interdite.Controleur;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import ile.interdite.TypeMessage;
-import static ile.interdite.TypeMessage.ALLER;
-import static ile.interdite.TypeMessage.ASSECHER;
-import static ile.interdite.TypeMessage.AUTREACTION;
-import static ile.interdite.TypeMessage.TERMINERTOUR;
-import java.awt.Graphics;
+import Util.TypeMessage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.border.Border;
 
  
 public class PanelAventurier  extends JPanel{
