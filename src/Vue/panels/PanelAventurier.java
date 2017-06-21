@@ -23,7 +23,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
  
-public class PanelAventurier  extends JPanel{
+public class PanelAventurier  extends JPanel implements Observateur{
      
     private final String nomAventurier;
     private final String nomJoueur;
@@ -183,10 +183,10 @@ public class PanelAventurier  extends JPanel{
         PanelCarteTrophee carteTrophee;
         for(CarteTrésor carte : cartes){
             if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
-                carteActi = new PanelCarteActivable(((Activable) carte));
+                carteActi = new PanelCarteActivable(1,((Activable) carte),this);
                 listeCarteTresor.add(carteActi);
             }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee((CarteTrésorTrophée) carte);
+                carteTrophee = new PanelCarteTrophee(1,(CarteTrésorTrophée) carte);
                 listeCarteTresor.add(carteTrophee);
             }
         }
@@ -231,6 +231,23 @@ public class PanelAventurier  extends JPanel{
 
     public String getNomAventurier() {
         return nomAventurier;
+    }
+
+    @Override
+    public void traiterMessage(Message msg) {
+        switch(msg.getTypeMessage()){
+            case PROPOSER_ASSECHEMENT_SAC :
+                msg.setpA(this);
+                controleur.traiterMessage(msg);
+                break;
+
+            case PROPOSER_DEPLACEMENT_HELICO:
+                msg.setpA(this);
+                controleur.traiterMessage(msg);
+                break;
+            
+        }
+        
     }
     
     

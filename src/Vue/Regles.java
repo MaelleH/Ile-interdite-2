@@ -229,5 +229,21 @@ public class Regles extends JFrame{
         
     }
     }
+    
+    
+    
+    /*
+    Messager : Le messager peut donner ses cartes trésor à un aventurier sans être sur la même tuile que celui-ci.
+    
+    Explorateur : L'explorateur peut se déplacer et assécher à la diagonale de la tuile sur laquelle il se trouve.
+    
+    Ingénieur : L'ingénieur n'utilise qu'une action si il assèche deux tuiles sans se déplacer entre temps.
+    
+    Navigateur : Le navigateur bénéficie de 4 actions par tour.
+    
+    Pilote : Le pilote peut, une fois par tour, se déplacer sur la tuile de son choix.
+    
+    Plongeur : Le plongeur peut traverser les tuiles inondées et celle coulées si elles rejoingnent une tuile asséchée.
+    */
 }  
 

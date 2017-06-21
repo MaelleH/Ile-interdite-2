@@ -9,6 +9,8 @@ import Util.TypeMessage;
 import Model.Aventuriers.Aventurier;
 import Model.cartesTresor.CarteTrésor;
 import Util.Coordonnees;
+import Vue.panels.PanelAventurier;
+import Vue.panels.PanelCarteActivable;
 import Vue.panels.PanelCarteTresor;
 import Vue.panels.PanelCase;
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 public class Message {
     private TypeMessage typeMessage;
     private PanelCase pC;
+    
+    private PanelAventurier pA;
+    private PanelCarteActivable pCA;
     
     private Coordonnees coord;
     private String joueur;
@@ -132,6 +137,22 @@ public class Message {
 
     public void setListeCarteTresorADefausse(ArrayList<CarteTrésor> listeCarteTresorADefausse) {
         this.listeCarteTresorADefausse = listeCarteTresorADefausse;
+    }
+
+    public PanelAventurier getpA() {
+        return pA;
+    }
+
+    public void setpA(PanelAventurier pA) {
+        this.pA = pA;
+    }
+
+    public PanelCarteActivable getpCA() {
+        return pCA;
+    }
+
+    public void setpCA(PanelCarteActivable pCA) {
+        this.pCA = pCA;
     }
 
 }
