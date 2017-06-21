@@ -10,7 +10,6 @@ import Util.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;
-import ile.interdite.Controleur;
 import java.util.*;
 import java.util.HashMap;
 
@@ -51,7 +50,7 @@ public class Aventurier {
         if(this.getActionsRestantes() > 0 && deplacementPossibleListe(grille).containsKey(c)){
             setPosition(c);
             setActionsRestantes(getActionsRestantes()-1);
-        } else if(this.getActionsRestantes()<1){                                        //Si il n'a plus d'action
+        }else if(this.getActionsRestantes()<1){                                        //Si il n'a plus d'action
             System.out.println("Plus d'actions....");
             afficherInformation("Vous ne pouvez plus effectuer d'actions!");            //On affiche cette information
         }else{                                                                          //Sinon
@@ -82,7 +81,7 @@ public class Aventurier {
         return listeD;
     }
 
-    //donne les cases asséchables pour un joueur
+    //donne les cases asséchables pour un joueur, meme principe que deplacementPossibleListe
     public HashMap assechementPossibleListe(Grille grille) {
         HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
         int xo,yo,xn,yn;
@@ -170,12 +169,10 @@ public class Aventurier {
     
     //vérifie si le joueur peut prendre le trésor
     public boolean priseTresorPossible(NomTrésor tresor) {
-		// TODO - implement Controleur.priseTresorPossible
                 int nbCartes=0;
                 CarteTrésorTrophée iBis;
                 
-                if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){       
-                    
+                if ((getMainCarteTrésor().size()>4)&&(tresor!=null)){
                     for(CarteTrésor i :getMainCarteTrésor()){               
                         if((i.getTypeCarteTresor()).equals(TypeCarteTresor.Tresor)){
                             iBis = (CarteTrésorTrophée) i;
@@ -197,20 +194,17 @@ public class Aventurier {
         if(priseTresorPossible(tresor)){
             getMainCarteTrésor().remove(tresor);
             return true;
-
-        }
-        else{
+        }else{
             return false;
         }
     }
         
     //le joueur donne une carte à un aventurier donné	
     public void donnerCarte(Aventurier aven2,CarteTrésor carte) {
-        
         int taille;
         
         if(this.mainCarteTrésor.contains(carte)){
-            //On verifie que l'aventurier a la carte, si il a :
+            //On verifie que l'aventurier a la carte, si il l'a :
             
             //On ajoute la carte a l'aventurier 2
             aven2.getMainCarteTrésor().add(carte);
