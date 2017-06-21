@@ -6,10 +6,10 @@
 package ile.interdite;
 
 import Model.Aventuriers.Aventurier;
-import Model.CarteTrésor;
-import Model.Coordonnees;
-import Vue.PanelCarteTresor;
-import Vue.PanelCase;
+import Model.cartesTresor.CarteTrésor;
+import Util.Coordonnees;
+import Vue.panels.PanelCarteTresor;
+import Vue.panels.PanelCase;
 import java.util.ArrayList;
 
 /**

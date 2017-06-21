@@ -1,6 +1,6 @@
 package Model.Aventuriers;
 
-import Model.Coordonnees;
+import Util.Coordonnees;
 import Util.Utils;
 
 public class Messager extends Aventurier {

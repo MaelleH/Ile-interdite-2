@@ -1,12 +1,12 @@
-package Vue;
+package Vue.panels;
 
 
-import Model.Activable;
-import Model.CarteTrésor;
-import Model.CarteTrésorTrophée;
-import Model.NomTrésor;
-import Model.TypeCarteActivable;
-import Model.TypeCarteTresor;
+import Model.cartesTresor.Activable;
+import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Util.NomTrésor;
+import Util.TypeCarteActivable;
+import Util.TypeCarteTresor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 

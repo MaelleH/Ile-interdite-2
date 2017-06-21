@@ -6,7 +6,7 @@
 
 package Model.Aventuriers;
 
-import Model.Coordonnees;
+import Util.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
 import Util.Utils;

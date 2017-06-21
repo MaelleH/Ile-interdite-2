@@ -1,9 +1,9 @@
 package Model.Aventuriers;
 
-import Model.CarteTrésor;
-import Model.Coordonnees;
+import Model.cartesTresor.CarteTrésor;
+import Util.Coordonnees;
 import Model.Grille;
-import Model.NomTrésor;
+import Util.NomTrésor;
 import Util.Utils;
 import static Util.Utils.afficherInformation;
 

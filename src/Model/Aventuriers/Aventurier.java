@@ -1,12 +1,12 @@
 package Model.Aventuriers;
 
-import Model.CarteTrésor;
-import Model.CarteTrésorTrophée;
-import Model.Coordonnees;
+import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Util.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
-import Model.NomTrésor;
-import Model.TypeCarteTresor;
+import Util.NomTrésor;
+import Util.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.NomAventurier;
 import static Util.Utils.afficherInformation;

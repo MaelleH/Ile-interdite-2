@@ -5,13 +5,16 @@
  */
 package Vue;
 
-import Model.Activable;
-import Model.CarteTrésor;
-import Model.CarteTrésorTrophée;
-import Model.Helico;
-import Model.Sac;
-import Model.TypeCarteActivable;
-import Model.TypeCarteTresor;
+import Vue.panels.PanelCarteTresor;
+import Vue.panels.PanelCarteTrophee;
+import Vue.panels.PanelCarteActivable;
+import Model.cartesTresor.Activable;
+import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Model.cartesTresor.Helico;
+import Model.cartesTresor.Sac;
+import Util.TypeCarteActivable;
+import Util.TypeCarteTresor;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import ile.interdite.TypeMessage;

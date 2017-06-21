@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vue;
+package Vue.panels;
 
-import Model.Activable;
-import Model.CarteTrésorTrophée;
-import Model.TypeCarteActivable;
-import Model.TypeCarteTresor;
+import Model.cartesTresor.Activable;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Util.TypeCarteActivable;
+import Util.TypeCarteTresor;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;

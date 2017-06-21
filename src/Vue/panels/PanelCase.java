@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vue;
+package Vue.panels;
 
-import Model.NomTrésor;
+import Vue.panels.PanelJoueurs;
+import Util.NomTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import static Util.Utils.EtatTuile.ASSECHEE;

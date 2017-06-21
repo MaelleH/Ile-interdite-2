@@ -1,4 +1,7 @@
-package Model;
+package Model.cartesTresor;
+
+import Util.TypeCarteActivable;
+import Util.TypeCarteTresor;
 
 public abstract class Activable extends CarteTrésor {
     @Override

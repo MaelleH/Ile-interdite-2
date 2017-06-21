@@ -1,9 +1,11 @@
 package Model;
 
-import static Model.NomTrésor.Calice;
-import static Model.NomTrésor.Cristal;
-import static Model.NomTrésor.Pierre;
-import static Model.NomTrésor.Zéphyr;
+import Util.Coordonnees;
+import Util.NomTuile;
+import static Util.NomTrésor.Calice;
+import static Util.NomTrésor.Cristal;
+import static Util.NomTrésor.Pierre;
+import static Util.NomTrésor.Zéphyr;
 import Util.Utils;
 import java.util.*;
 

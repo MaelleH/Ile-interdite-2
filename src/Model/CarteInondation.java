@@ -1,5 +1,6 @@
 package Model;
 
+import Util.NomTuile;
 import java.util.ArrayList;
 
 public class CarteInondation {

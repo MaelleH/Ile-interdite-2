@@ -1,6 +1,7 @@
-package Model;
+package Model.cartesTresor;
 
-import Model.NomTuile;
+import Util.NomTuile;
+import Util.TypeCarteTresor;
 
 public abstract class CarteTrésor {
     public abstract TypeCarteTresor getTypeCarteTresor();

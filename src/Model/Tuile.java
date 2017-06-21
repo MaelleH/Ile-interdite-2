@@ -1,7 +1,9 @@
 package Model;
 
 
-import static Model.NomTrésor.Vide;
+import Util.NomTrésor;
+import Util.NomTuile;
+import static Util.NomTrésor.Vide;
 import Util.Utils.EtatTuile;
 import java.util.Objects;
 
