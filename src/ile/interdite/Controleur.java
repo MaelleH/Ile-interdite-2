@@ -27,12 +27,10 @@ import Util.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
-import Vue.Regles;
-import Vue.VueAventurier;
 import Vue.panels.KitPanelAventurier;
-import Vue.VueDefausse;
 import Vue.VueLancement;
 import Vue.VuePlateau;
+import Vue.VueWin;
 
 public class Controleur implements Observateur {
 
@@ -54,6 +52,9 @@ public class Controleur implements Observateur {
     private boolean priseCristal;
     private boolean priseZephyr;
     private boolean priseCalice;
+    
+    private int nbJoueurs,nivDif;
+    private ArrayList<String> nomJ;
 
 
     public Controleur() {
@@ -66,7 +67,13 @@ public class Controleur implements Observateur {
     public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
         //Créer la grille
         grille = new Grille();
-
+        
+        //Sauver les valeurs
+        this.nbJoueurs=nbj;
+        this.nivDif=nivdif;
+        this.nomJ=nomJ;
+        
+        
         //Créer les Aventuriers
         creationAventurier(nbj);
 
@@ -386,8 +393,9 @@ public class Controleur implements Observateur {
                     }
                 }
                 
-                if(isGagne()){
+                if(true){
                     
+                    VueWin vue = new VueWin(this);
                     
                 }
                 
@@ -507,7 +515,7 @@ public class Controleur implements Observateur {
 
             case PROPOSER_DEPLACEMENT_HELICO:
                 vuePlateau.resShow();
-                if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
+                if(m.getpA().getNomAventurier().equals(aventuriers.get(0).getNom().toString())){
                     m.getpCA().setClicked(!m.getpCA().getClicked()); 
                     if(m.getpCA().getClicked()){
                         vuePlateau.showDeplacementPossibeHelico(deplacementPossibeHelico().keySet());
@@ -535,8 +543,14 @@ public class Controleur implements Observateur {
 
             case RELANCERJEU:
                 lancerPartie();
+                
+                
                 break;
-
+                
+            case REJOUER:
+                initPartie(nbJoueurs, nivDif, nomJ);
+                
+                break;
 
             case TERMINERTOUR:
                 vuePlateau.resShow();

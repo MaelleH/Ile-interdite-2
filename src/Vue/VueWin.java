@@ -6,6 +6,7 @@
 package Vue;
 
 import Util.Couleur;
+import static Util.TypeMessage.QUITTER;
 import static Util.TypeMessage.REJOUER;
 import static Util.TypeMessage.RELANCERJEU;
 import static Util.TypeMessage.VAL2;
@@ -44,12 +45,12 @@ import javax.swing.SwingConstants;
  * @author heyrendm
  */
 public class VueWin  extends JFrame{
-    //private Observateur controleur;
+    private Observateur controleur;
     private JFrame main;
     private JPanel mainP;
 
-    public VueWin() {
-        //controleur= obs;
+    public VueWin(Observateur obs) {
+        controleur= obs;
         
         // CReation de la fenetre
         main = new JFrame();
@@ -77,11 +78,11 @@ public class VueWin  extends JFrame{
 
         Image img; 
         try {
-            img=tk.getImage(VueWin.class.getResource("/Vue/Imagewin/firework.gif"));
+            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
         } catch (Exception e) {
-            img=tk.getImage(VueWin.class.getResource("/Vue/Imagewin/firework.gif"));
+            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
         }
-        Cursor monCurseur = tk.createCustomCursor(img, new Point(10, 10), "heli");
+        Cursor monCurseur = tk.createCustomCursor(img, new Point(0, 0), "heli");
         main.setCursor(monCurseur);
         
         
@@ -142,7 +143,7 @@ public class VueWin  extends JFrame{
             rej.addActionListener((ActionEvent e) -> {
                 Message m = new Message();
                 m.setTypeMessage(REJOUER);
-                //controleur.traiterMessage(m);
+                controleur.traiterMessage(m);
                 main.dispose();
             }); 
         bouP.add(rej);
@@ -152,8 +153,8 @@ public class VueWin  extends JFrame{
             quitter.addActionListener((ActionEvent e) -> {
                 main.dispose();
                 Message m = new Message();
-                m.setTypeMessage(REJOUER);
-                //controleur.traiterMessage(m);
+                m.setTypeMessage(QUITTER);
+                controleur.traiterMessage(m);
             });
             bouP.add(quitter);
         //Bouton pour menu principal
@@ -162,7 +163,7 @@ public class VueWin  extends JFrame{
                 main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(RELANCERJEU);
-                //controleur.traiterMessage(m);
+                controleur.traiterMessage(m);
 
             });
             bouP.add(mp);
@@ -176,17 +177,7 @@ public class VueWin  extends JFrame{
         
         
         
-    }
-    
-    
-   public static void main(String [] args){
-        VueWin v= new VueWin();
-        
-    }
-    
-    
-    
-    
+    }  
     
 
 }

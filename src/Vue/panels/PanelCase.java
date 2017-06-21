@@ -6,7 +6,6 @@
 package Vue.panels;
 
 import Util.Couleur;
-import Vue.panels.PanelJoueurs;
 import Util.NomTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
