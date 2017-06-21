@@ -166,7 +166,7 @@ public class VueWin  extends JFrame{
 
             });
             bouP.add(mp);
-        main.setVisible(true);
+        
         main.setLocationRelativeTo(null);
         main.setResizable(false);
         
@@ -175,7 +175,7 @@ public class VueWin  extends JFrame{
         
         
         
-        
+        main.setVisible(true);
     }
     
     
