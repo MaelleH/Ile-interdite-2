@@ -119,8 +119,7 @@ public class Controleur implements Observateur {
     public void lancerTour(){
         //Vérification de la main de l'aventurier
         if(aventuriers.get(0).doitDefausser()){
-            defausseCarteTrésor.addAll(aventuriers.get(0).getMainCarteTrésor());
-            aventuriers.get(0).getMainCarteTrésor().clear();
+            VueDefausse vued = new VueDefausse(aventuriers.get(0).getMainCarteTrésor().size()-5, aventuriers.get(0).getMainCarteTrésor(), this);
         }
         vuePlateau.setActive(aventuriers.get(0).getNom());
         
