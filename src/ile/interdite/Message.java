@@ -5,6 +5,7 @@
  */
 package ile.interdite;
 
+import Util.TypeMessage;
 import Model.Aventuriers.Aventurier;
 import Model.Coordonnees;
 import Vue.PanelCase;

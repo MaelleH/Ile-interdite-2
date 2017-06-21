@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ile.interdite;
+package Util;
 
 /**
  *
@@ -19,8 +19,10 @@ public enum TypeMessage {
     PROPOSER_DEPLACEMENT,
     PROPOSER_ASSECHEMENT,
     PROPOSER_DONATION_CARTE,
-    RELANCERJEU,
+    RELANCERJEU,    
+    REGLES,
     VAL2;
+
     
     
 }

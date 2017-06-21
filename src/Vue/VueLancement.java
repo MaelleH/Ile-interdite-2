@@ -7,8 +7,8 @@ package Vue;
 
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import static ile.interdite.TypeMessage.REGLES;
-import static ile.interdite.TypeMessage.VAL2;
+import static Util.TypeMessage.REGLES;
+import static Util.TypeMessage.VAL2;
 import java.awt.BorderLayout;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
