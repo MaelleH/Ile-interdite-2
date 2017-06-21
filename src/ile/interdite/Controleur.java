@@ -28,11 +28,9 @@ import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
 import Vue.panels.KitPanelAventurier;
-import Vue.VueAventurier;
 import Vue.VueDefausse;
 import Vue.VueLancement;
 import Vue.VuePlateau;
-import jdk.nashorn.internal.ir.BreakNode;
 
 public class Controleur implements Observateur {
 
@@ -40,7 +38,6 @@ public class Controleur implements Observateur {
     private Grille grille;
     private VueLancement vueL;
     private ArrayList<Aventurier> aventuriers;
-    private ArrayList<VueAventurier> vuesAventuriers;
 
     private EchelleNiveauEau niveauEau;
     private VuePlateau vuePlateau;
@@ -63,7 +60,7 @@ public class Controleur implements Observateur {
         lancerPartie();
     }
 
-    public void lancerPartie(){
+    public final void lancerPartie(){
         vueL= new VueLancement(this);
     }
 
@@ -73,9 +70,6 @@ public class Controleur implements Observateur {
 
         //Créer les Aventuriers
         creationAventurier(nbj);
-
-        //Creér les vues de Aventuriers
-        vuesAventuriers = new ArrayList<>();
 
         //Créer les cartes
         piocheCarteInondation = new ArrayList<>();
@@ -89,7 +83,6 @@ public class Controleur implements Observateur {
             inonderTuile();
         }
 
-
         //Création et Mise à jour du plateau
         int i = 0;
         ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
@@ -97,12 +90,10 @@ public class Controleur implements Observateur {
             kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(),a.getMainCarteTrésor(), getPionAventurier(a).getCouleur()));
             i++;
         }
-
         vuePlateau = new VuePlateau(kitsPanelAventurier,this);
         updateVuePlateau();
         niveauEau = new EchelleNiveauEau(nivdif);
         lancerTour();
-
     }
 
     public void lancerTour(){
@@ -300,7 +291,6 @@ public class Controleur implements Observateur {
                     if(a.getPosition().equals(co)){                             //si l'aventurier a est sur la case qui vient d'être coulée
                     //il se déplace vers une tuile qu'il peut atteindre
                         HashMap<Coordonnees,Tuile> deplacement;
-                        deplacement = new HashMap<>();
                         deplacement = a.deplacementPossibleListe(grille);       //HashMap de toutes les tuiles/coordonnées qu'il peut atteindre
                         if (deplacement.isEmpty()){                             //si la liste est vie
                             System.out.println("fin");                          //le jeu est fini
@@ -377,17 +367,24 @@ public class Controleur implements Observateur {
                 break;
 
             case VAL2:
-                if(m.getNivDif().equals("Novice")){
-                    entier=1;
-                }else if(m.getNivDif().equals("Normal")){
-                   entier=2; 
-                }else if(m.getNivDif().equals("Expert")){
-                   entier=3; 
-                }else if(m.getNivDif().equals("Légendaire")){
-                   entier=4; 
+                switch (m.getNivDif()) {
+                    case "Novice":
+                        entier=1;
+                        break;
+                    case "Normal":
+                        entier=2;
+                        break;
+                    case "Expert":
+                        entier=3;
+                        break;
+                    case "Légendaire":
+                        entier=4;
+                        break;
+                    default:
+                        break;
                 }
-                    initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
-                break;   
+                initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
+                break;      
 
             case DONNERCARTE:
                 vuePlateau.resShow();
