@@ -17,7 +17,7 @@ public class Plongeur extends Aventurier {
         return Utils.NomAventurier.Plongeur;
     }
 
-    //permet au plongeur de traverser les cases innondées et coulées pour 1 action
+    //permet au plongeur de traverser les cases innondées et coulées pour une action
     @Override
     public HashMap deplacementPossibleListe(Grille grille) {
             HashMap<Coordonnees,Tuile> listeATraiter = new HashMap<>();
