@@ -637,13 +637,13 @@ public class Controleur implements Observateur {
         else if(niveauEau.getNiveauEau()==10){
             return true;
         }
-        for (Aventurier aTMP : aventuriers){
-            Tuile t = grille.getTuile(aTMP.getPosition());
-            if(t.getEtat()==EtatTuile.COULEE){                                  //si l'aventurier est sur la case coulée
+        for (Aventurier aTMP : aventuriers){                                    //pour chaque aventurier
+            Tuile t = grille.getTuile(aTMP.getPosition());                      //on note sa tuile
+            if(t.getEtat()==EtatTuile.COULEE){                                  //si la tuile est coulée
                 HashMap<Coordonnees,Tuile> deplacement;
-                deplacement = aTMP.deplacementPossibleListe(grille);            //HashMap de toutes les tuiles/coordonnées qu'il peut atteindre
-                if (deplacement.isEmpty()){                                     //si la liste est vide
-                    return true;                                                    //alors la partie est perdue
+                deplacement = aTMP.deplacementPossibleListe(grille);                //on fait une HashMap de toutes les tuiles qu'il peut atteindre
+                if (deplacement.isEmpty()){                                         //si la liste est vide
+                    return true;                                                        //alors la partie est perdue
                 }
             }
         }
