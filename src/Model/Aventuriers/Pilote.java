@@ -11,6 +11,7 @@ import java.util.Map;
 public class Pilote extends Aventurier {
         
 	private boolean pouvoirUtilise ;
+        
         public Pilote(Coordonnees position) {
             super(position);
         }
@@ -23,27 +24,27 @@ public class Pilote extends Aventurier {
         
         
         public HashMap autreActionListe(Grille grille) {
-		// TODO - implement Controleur.deplacementPossible
-                                
-                HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
-                int xo,yo,xn,yn;
-                xo=Integer.parseInt(getPosition().getX());              //coordonnées du joueur
-                yo=Integer.parseInt(getPosition().getY());
-                if(pouvoirUtilise==false){                                                                                                      //si il peut utiliser son pouvoir
-                    for (Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){                                                       //Pour chaque tuile de la grille
-                        xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
-                        yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
-                        if (i.getValue()!=null){                                                                                                //Si la tuile existe,
-                            if (i.getValue().getEtat()!=Utils.EtatTuile.COULEE  ){                                                              //qu'elle n'est pas coulée
-                                if (  (xn==xo && (yn==yo-1 || yn==yo+1))  ||  (yn==yo && (xn==xo-1 || xn==xo+1))  ||  (xn==xo && yn==yo)  ){
-                                }else{                                                                                                          //et qu'elle n'est pas adjacente
-                                    listeD.put((Coordonnees) i.getKey(), i.getValue());                                                         //elle est ajoutée à la liste des tuiles possibles avec le pouvoir
-                                }
+            // TODO - implement Controleur.deplacementPossible
+
+            HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+            int xo,yo,xn,yn;
+            xo=Integer.parseInt(getPosition().getX());              //coordonnées du joueur
+            yo=Integer.parseInt(getPosition().getY());
+            if(pouvoirUtilise==false){                                                                                                      //si il peut utiliser son pouvoir
+                for (Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){                                                       //Pour chaque tuile de la grille
+                    xn=Integer.parseInt((String)((Coordonnees)i.getKey()).getX());
+                    yn=Integer.parseInt((String)((Coordonnees)i.getKey()).getY());
+                    if (i.getValue()!=null){                                                                                                //Si la tuile existe,
+                        if (i.getValue().getEtat()!=Utils.EtatTuile.COULEE  ){                                                              //qu'elle n'est pas coulée
+                            if (  (xn==xo && (yn==yo-1 || yn==yo+1))  ||  (yn==yo && (xn==xo-1 || xn==xo+1))  ||  (xn==xo && yn==yo)  ){
+                            }else{                                                                                                          //et qu'elle n'est pas adjacente
+                                listeD.put((Coordonnees) i.getKey(), i.getValue());                                                         //elle est ajoutée à la liste des tuiles possibles avec le pouvoir
                             }
                         }
                     }
                 }
-		return listeD;
+            }
+            return listeD;
 	}
         
         @Override
@@ -74,10 +75,10 @@ public class Pilote extends Aventurier {
         
         @Override
         public void resetActionsRestantes() {
-        setMaxActions();                                    //On réinitialise ses actions
-        pouvoirUtilise=false;                               //On réinitialise le pouvoir du pilote à chaque debut de tour
-        System.out.println("Pouvoir du pilote reinitialsé");
-    }
+            setMaxActions();                                    //On réinitialise ses actions
+            pouvoirUtilise=false;                               //On réinitialise le pouvoir du pilote à chaque debut de tour
+            System.out.println("Pouvoir du pilote reinitialsé");
+        }
         
         
         @Override
@@ -102,7 +103,6 @@ public class Pilote extends Aventurier {
             for (Map.Entry<Coordonnees,Tuile> i : listeAutre.entrySet()){
                 listeD.put(i.getKey(),i.getValue());
             }
-            
             return listeD;
         }
 

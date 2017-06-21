@@ -18,7 +18,6 @@ public class Aventurier {
 	private ArrayList<CarteTrésor> mainCarteTrésor = new ArrayList<>();
 	private int actionsRestantes;
 	private Coordonnees position;
-        private boolean autreA=false;
         
     public Aventurier(){
         this.actionsRestantes=getMaxActions();
@@ -199,19 +198,7 @@ public class Aventurier {
         this.position = position;
     }
 
-    /**
-     * @return the autreA
-     */
-    public boolean isAutreA() {
-        return autreA;
-    }
-
-    /**
-     * @param autreA the autreA to set
-     */
-    public void setAutreA(boolean autreA) {
-        this.autreA = autreA;
-    }
+    
     //vérifie si le joueur peut prendre le trésor donner
     public boolean priseTresorPossible(NomTrésor tresor) {
 		// TODO - implement Controleur.priseTresorPossible
