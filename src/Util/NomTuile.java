@@ -1,4 +1,4 @@
-package Model;
+package Util;
 
 public enum NomTuile {
 	LePontdesAbimes("Le Pont des Abimes"),

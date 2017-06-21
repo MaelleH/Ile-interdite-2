@@ -5,9 +5,16 @@
  */
 package ile.interdite;
 
+import Util.TypeMessage;
 import Model.Aventuriers.Aventurier;
-import Model.Coordonnees;
-import Vue.PanelCase;
+import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Util.Coordonnees;
+import Vue.panels.PanelAventurier;
+import Vue.panels.PanelCarteActivable;
+import Vue.panels.PanelCarteTresor;
+import Vue.panels.PanelCarteTrophee;
+import Vue.panels.PanelCase;
 import java.util.ArrayList;
 
 /**
@@ -18,11 +25,19 @@ public class Message {
     private TypeMessage typeMessage;
     private PanelCase pC;
     
+    private PanelAventurier pA;
+    private PanelCarteTrophee pCT;
+    private PanelCarteActivable pCA;
+    
     private Coordonnees coord;
     private String joueur;
+    private ArrayList<CarteTrésor> listeCarteTresorADefausse;
        
     private ArrayList<String> joueurs;
     private String nivDif;
+    
+    private Aventurier aventurierRecepteur;
+    private CarteTrésorTrophée CTTrophée;
     
     public Message(){}
     
@@ -120,6 +135,54 @@ public class Message {
      */
     public void setNivDif(String nivDif) {
         this.nivDif = nivDif;
+    }
+
+    public ArrayList<CarteTrésor> getListeCarteTresorADefausse() {
+        return listeCarteTresorADefausse;
+    }
+
+    public void setListeCarteTresorADefausse(ArrayList<CarteTrésor> listeCarteTresorADefausse) {
+        this.listeCarteTresorADefausse = listeCarteTresorADefausse;
+    }
+
+    public PanelAventurier getpA() {
+        return pA;
+    }
+
+    public void setpA(PanelAventurier pA) {
+        this.pA = pA;
+    }
+
+    public PanelCarteActivable getpCA() {
+        return pCA;
+    }
+
+    public void setpCA(PanelCarteActivable pCA) {
+        this.pCA = pCA;
+    }
+
+    public PanelCarteTrophee getpCT() {
+        return pCT;
+    }
+
+    public void setpCT(PanelCarteTrophee pCT) {
+        this.pCT = pCT;
+    }
+
+    public Aventurier getAventurierRecepteur() {
+        return aventurierRecepteur;
+    }
+
+    public CarteTrésorTrophée getCTTrophée() {
+        return CTTrophée;
+    }
+
+    public void setAventurierRecepteur(Aventurier aventurierRecepteur) {
+        this.aventurierRecepteur = aventurierRecepteur;
+    }
+
+    public void setCTTrophée(CarteTrésorTrophée CTTrophée) {
+        this.CTTrophée = CTTrophée;
     }
 
 }

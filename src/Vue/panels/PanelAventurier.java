@@ -1,12 +1,10 @@
-package Vue;
+package Vue.panels;
 
 
-import Model.Activable;
-import Model.CarteTrésor;
-import Model.CarteTrésorTrophée;
-import Model.NomTrésor;
-import Model.TypeCarteActivable;
-import Model.TypeCarteTresor;
+import Model.cartesTresor.Activable;
+import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Util.TypeCarteTresor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -14,36 +12,22 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import static javax.swing.SwingConstants.CENTER;
-import javax.swing.border.MatteBorder;
-import Util.Utils.Pion;
-import ile.interdite.Controleur;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import ile.interdite.TypeMessage;
-import static ile.interdite.TypeMessage.ALLER;
-import static ile.interdite.TypeMessage.ASSECHER;
-import static ile.interdite.TypeMessage.AUTREACTION;
-import static ile.interdite.TypeMessage.TERMINERTOUR;
-import java.awt.Graphics;
+import Util.TypeMessage;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import javax.swing.border.Border;
 
  
-public class PanelAventurier  extends JPanel{
+public class PanelAventurier  extends JPanel implements Observateur{
      
     private final String nomAventurier;
     private final String nomJoueur;
-    
+    private Color couleur;
     
     private final JPanel panelHaut;
     private final JPanel panelCartes;
@@ -70,7 +54,7 @@ public class PanelAventurier  extends JPanel{
         this.nomAventurier = nomAventurier;
         this.nomJoueur = nomJoueur;
         listeCarteTresor = new ArrayList<>();
-        setListeCarteTresor(cartes);
+        this.couleur = couleur;
         
         this.setLayout(new GridLayout(2, 1));
         
@@ -179,16 +163,16 @@ public class PanelAventurier  extends JPanel{
                                         }
                                     }
         );
-        
+        setListeCarteTresor(cartes);
     }  
 
-    @Override
+    /*@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
         
         
         initPanelCarte();
-    }
+    }*/
 
     
     
@@ -199,14 +183,14 @@ public class PanelAventurier  extends JPanel{
         PanelCarteTrophee carteTrophee;
         for(CarteTrésor carte : cartes){
             if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
-                carteActi = new PanelCarteActivable(((Activable) carte).getTypeCarteActivable());
+                carteActi = new PanelCarteActivable(1,((Activable) carte),this);
                 listeCarteTresor.add(carteActi);
             }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(((CarteTrésorTrophée) carte).getNomT());
+                carteTrophee = new PanelCarteTrophee(1,(CarteTrésorTrophée) carte,null);
                 listeCarteTresor.add(carteTrophee);
             }
         }
-        this.repaint();
+        initPanelCarte();
     }
     
     public void initPanelCarte(){
@@ -219,6 +203,7 @@ public class PanelAventurier  extends JPanel{
                 panelCartes.add(new JPanel());
             }
         }
+        revalidate();
     }
           
     
@@ -233,7 +218,7 @@ public class PanelAventurier  extends JPanel{
         btnDonnerCarte.setEnabled(true);
         btnPrendreTresor.setEnabled(true);
         btnTerminerTour.setEnabled(true);
-        
+        this.setBorder(BorderFactory.createLineBorder(Color.black, 3));
     }
     public void setInactive(){
         btnAller.setEnabled(false);
@@ -241,11 +226,28 @@ public class PanelAventurier  extends JPanel{
         btnDonnerCarte.setEnabled(false);
         btnPrendreTresor.setEnabled(false);
         btnTerminerTour.setEnabled(false);
-        
+        this.setBorder(BorderFactory.createLineBorder(couleur, 3));
     }
 
     public String getNomAventurier() {
         return nomAventurier;
+    }
+
+    @Override
+    public void traiterMessage(Message msg) {
+        switch(msg.getTypeMessage()){
+            case PROPOSER_ASSECHEMENT_SAC :
+                msg.setpA(this);
+                controleur.traiterMessage(msg);
+                break;
+
+            case PROPOSER_DEPLACEMENT_HELICO:
+                msg.setpA(this);
+                controleur.traiterMessage(msg);
+                break;
+            
+        }
+        
     }
     
     

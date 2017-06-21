@@ -1,6 +1,7 @@
 package Vue;
 
 
+import Util.Couleur;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -49,7 +50,7 @@ public class VueAventurier  {
         mainPanel = new JPanel(new BorderLayout());
         this.window.add(mainPanel);
 
-        mainPanel.setBackground(new Color(230, 230, 230));
+        mainPanel.setBackground(Couleur.GRIS_CLAIR.getColor());
         mainPanel.setBorder(BorderFactory.createLineBorder(couleur, 2)) ;
 
         // =================================================================================
