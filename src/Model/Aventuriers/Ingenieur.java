@@ -17,18 +17,18 @@ public class Ingenieur extends Aventurier {
     
     @Override
     public Utils.NomAventurier getNom() {
-        return Utils.NomAventurier.Ingenieur; //To change body of generated methods, choose Tools | Templates.
+        return Utils.NomAventurier.Ingenieur;
     }
 
     @Override
     public void assecher(Coordonnees c, Grille grille) {
-        if(assechementPossibleListe(grille).containsKey(c)){        //Si la tuile de coordonnée c est dans la liste assechementPossibleListe
-            if(getAssechementBonus()||getActionsRestantes()>0){     //Si l'ingénieur a encore au moins une action ou utilise son assechement bonus
-                grille.getTuile(c).assechement();                   //Il asseche la tuile
-                if(getAssechementBonus()){
+        if(assechementPossibleListe(grille).containsKey(c)){        //Si la tuile de coordonnées c est dans la liste assechementPossibleListe
+            if(getAssechementBonus()||getActionsRestantes()>0){         //Si l'ingénieur a encore au moins une action ou utilise son assechement bonus
+                grille.getTuile(c).assechement();                           //Il asseche la tuile
+                if(getAssechementBonus()){                                  
                     setAssechementBonus(false);
                 }else{
-                    setActionsRestantes(getActionsRestantes()-1);   //On lui retire une action si il n'utilise pas son assechement bonus
+                    setActionsRestantes(getActionsRestantes()-1);           //On lui retire une action si il n'utilise pas son assechement bonus
                     setAssechementBonus(true);
                 }
                        

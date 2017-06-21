@@ -5,6 +5,8 @@
  */
 package Vue.panels;
 
+import Util.Couleur;
+import Vue.panels.PanelJoueurs;
 import Util.NomTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
@@ -146,44 +148,43 @@ public class PanelCase extends JPanel{
             if(etatListener==0){
                 setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
             }else if(etatListener==1){
-                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Color.black, 2)));
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.ORANGE.getColor(), 4)));
             }else if(etatListener==2){
-                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(new Color(150,20,20), 2)));
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.DEEP_ROSE.getColor(), 4)));
             }
             
             //Affichage du Nom de la Case
             labelNomCase.setText(nomCase);
-
+            
             //Affichage de l'état de la case
+            Color c = null;
             if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
+                c = Couleur.DARK_ROUGE.getColor();
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(new Color(150,20,20));
-                panelEtatCase.setBackground(new Color(150,20,20));
-                panelBas.setBackground(new Color(150,20,20));
-                panelJoueurs.setBackground(new Color(150,20,20));
+                
             }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
+                c = Couleur.BLEU_CLAIR.getColor();
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(new Color(0, 100, 250));
-                panelEtatCase.setBackground(new Color(0, 100, 250));
-                panelBas.setBackground(new Color(0, 100, 250));
-                panelJoueurs.setBackground(new Color(0, 100, 250));
+                
             }else if(etatCase.toString().equals(EtatTuile.COULEE.toString())){
+                c = Couleur.BLEU_FONCE.getColor();
                 labelEtatCase.setText(etatCase.toString());
-                panelNomCase.setBackground(new Color(10, 10, 200));
-                panelEtatCase.setBackground(new Color(10, 10, 200));
-                panelBas.setBackground(new Color(10, 10, 200));
-                panelJoueurs.setBackground(new Color(10, 10, 200));
+                
             }
+                panelNomCase.setBackground(c);
+                panelEtatCase.setBackground(c);
+                panelBas.setBackground(c);
+                panelJoueurs.setBackground(c);
 
             //Affichage du trésor présent sur la Case
             if(tresor.equals(NomTrésor.Cristal)){
-                panelTresor.setBackground(new Color(255,81,21));
+                panelTresor.setBackground(Couleur.TOMATE.getColor());
             }else if(tresor.equals(NomTrésor.Calice)){
-                panelTresor.setBackground(new Color(60,130,140));
+                panelTresor.setBackground(Couleur.BLEU_CALICE.getColor());
             }else if(tresor.equals(NomTrésor.Zéphyr)){
-                panelTresor.setBackground(new Color(215,169,77));
+                panelTresor.setBackground(Couleur.JAUNE_GOLDE.getColor());
             }else if(tresor.equals(NomTrésor.Pierre)){
-                panelTresor.setBackground(new Color(89,79,108));
+                panelTresor.setBackground(Couleur.MAUVE.getColor());
             }else{
                 panelTresor.setBackground(panelEtatCase.getBackground());
             }

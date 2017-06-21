@@ -73,7 +73,7 @@ public class Coordonnees{
         int xo = Integer.parseInt(o.getX());
         int yo = Integer.parseInt(o.getY());
         
-        return (xt==xo) && (yt==yo); //To change body of generated methods, choose Tools | Templates.
+        return (xt==xo) && (yt==yo);
     }
         
         

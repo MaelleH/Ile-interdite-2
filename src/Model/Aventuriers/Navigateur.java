@@ -14,6 +14,6 @@ public class Navigateur extends Aventurier {
     }
     @Override
     public int getMaxActions(){
-        return 4;
+        return 4;               //Le navigateur possède 4 actions
     }
 }
