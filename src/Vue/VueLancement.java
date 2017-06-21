@@ -29,6 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import Util.Couleur;
 
 /**
  *
@@ -84,7 +85,7 @@ public class VueLancement {
         
         
         //Panneau de depart
-        c = new Color(1,13,31);
+        c = Couleur.NOIR.getColor();
         mainP.add(welcomeP);
         welcomeP.setBackground(c);        
         welcomeP.add(choixP); 
@@ -95,7 +96,7 @@ public class VueLancement {
         Font font;
         font = new Font("Arial",Font.BOLD,25);
         bv.setFont(font);
-        c = new Color(255,11,117);     
+        c = Couleur.DEEP_ROSE.getColor();     
         bv.setForeground(c);
         welcomeP.add(bv,NORTH);
     
