@@ -5,22 +5,34 @@
  */
 package Vue;
 
+import Util.Couleur;
+import static Util.Couleur.DESERT;
 import static Util.TypeMessage.REGLES;
 import static Util.TypeMessage.VAL2;
+import Vue.panels.PanelCarteTrophee;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import java.awt.BorderLayout;
+import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
+import java.awt.Color;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,13 +54,15 @@ public class Regles extends JFrame{
     
     private JButton suivant;
     private JButton pred;
+    private String[] listeR = new String[]{"But","Tour","FinW","FinL"};
     
     public Regles(){
         
         //Fenetre regles
         main = new JFrame();
         main.setTitle("Règles");
-        main.setSize(400, 400);
+        main.setSize(700, 800);
+        main.setBackground(Color.WHITE);
         
         Font fMain= new Font("Arial", 15, 15);
         main.setFont(fMain);
@@ -68,20 +82,53 @@ public class Regles extends JFrame{
         //Panel principal
         mainP = new JPanel(new BorderLayout());
         main.add(mainP);
+        mainP.setBackground(Couleur.DESERT.getColor());
+        
             //Creation du label Titre du panel central
             JLabel titreR = new JLabel("Règles du jeu",SwingConstants.CENTER);
-            Font f= new Font("Arial", 18, 18);
+            Font f= new Font("Arial", 20, 20);
             titreR.setFont(f);
+            titreR.setForeground(Couleur.VIOLET_FONCE.getColor());
             mainP.add(titreR,NORTH);
             
             //Creation du panel central 1
-            p1 = new JPanel(new GridLayout(1,5));
+                p1 = new JPanel(new GridLayout(4,1));
+                mainP.add(p1,CENTER);
+                p1.setVisible(true);
+                //On insere les images des règles
+                    for(String i : listeR){
+                        p1.add(new PanelBut(i));
+                    }
+                    
+
+            //Creation du panel central 2
+                p2 = new JPanel(new GridLayout(5,1));
+                p2.setVisible(false);
+                JLabel but2 = new JLabel("2");
+                p2.add(but2);
+                p2.setBackground(Couleur.DESERT.getColor());
+                
             
             
-        
-        
-        
-        
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            //Creation du panel central 3
+                p3 = new JPanel(new GridLayout(5,1));
+                p3.setVisible(false);
+                JLabel but3 = new JLabel("3");
+                p3.add(but3);
+            
+            
+            
+            
             
             
             
@@ -92,20 +139,32 @@ public class Regles extends JFrame{
             JPanel pMenuB= new JPanel(new GridLayout(1, 3));
                         mainP.add(pMenuB,SOUTH);
                             //BOUTON Pred
-                            pred = new JButton("Précedent");
-                            pred.setEnabled(false);
-                                pred.addActionListener((ActionEvent e) -> {
-                                  if(p2.isEnabled()){
-                                      p2.remove(mainP);
-                                      p1.add(mainP); 
-                                      pred.setEnabled(false);
-                                  }
-                                  else if(p3.isEnabled()){
-                                      p3.remove(mainP);
-                                      p2.add(mainP);
-                                  }
-                                }); 
-                            pMenuB.add(pred);
+                                pred = new JButton("Précedent");
+                                pred.setEnabled(false);
+                                    pred.addActionListener((ActionEvent e) -> {
+                                      if(p2.isVisible()){
+                                          p2.setVisible(false);
+                                          mainP.remove(p2);
+
+                                          mainP.add(p1,CENTER);
+                                          p1.setVisible(true);
+
+                                          pred.setEnabled(false);
+                                      }
+                                      else if(p3.isVisible()){
+
+                                          mainP.remove(p3);
+                                          p3.setVisible(false);
+
+                                          mainP.add(p2,CENTER);
+                                          p2.setVisible(true);
+
+                                          suivant.setEnabled(true);
+
+
+                                      }
+                                    }); 
+                                pMenuB.add(pred);
                         
                             //Bouton RETOUR
                                 JButton retour = new JButton("Fermer la fenêtre");
@@ -113,17 +172,28 @@ public class Regles extends JFrame{
                                     main.dispose();
                                 });
                                 pMenuB.add(retour);
+                                
                             //Bouton Suivant
                                 suivant = new JButton("Suivant");
                                 suivant.addActionListener((ActionEvent e) -> {
-                                    if(p2.isEnabled()){
-                                      p2.remove(mainP);
-                                      p3.add(mainP);
+                                    if(p2.isVisible()){
+                                        
+                                      p2.setVisible(false);
+                                      mainP.remove(p2);
+                                      
+                                      p3.setVisible(true);
+                                      mainP.add(p3,CENTER);
+                                      
                                       suivant.setEnabled(false);
-                                  }
-                                    else if(p1.isEnabled()){
-                                      p1.remove(mainP);
-                                      p2.add(mainP);
+                                    }
+                                    else if(p1.isVisible()){
+                                        
+                                      p1.setVisible(false);
+                                      mainP.remove(p1);
+                                      
+                                      p2.setVisible(true);
+                                      mainP.add(p2,CENTER);
+                                      
                                       pred.setEnabled(true);
                                   }
         });
@@ -134,4 +204,30 @@ public class Regles extends JFrame{
     public void setVisible(boolean b){
           main.setVisible(b);
     }
-}
+    
+    @Override
+    public void dispose(){
+          main.dispose();
+    }    
+    
+    public class PanelBut extends JPanel{
+        String nom;
+        public PanelBut(String nom){
+            this.nom=nom;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+
+            try {
+                Image image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/Imageregles/"+nom+".png"));
+                g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+            } catch (IOException ex) {
+                Logger.getLogger(PanelCarteTrophee.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    }
+    }
+}  
+

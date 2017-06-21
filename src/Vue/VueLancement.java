@@ -266,7 +266,7 @@ public class VueLancement {
         main.setVisible(true);
     }
 
-     public class PanelIleHaut extends JPanel{
+    public class PanelIleHaut extends JPanel{
         
         public PanelIleHaut(){
         }
