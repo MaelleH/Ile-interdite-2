@@ -5,11 +5,9 @@
  */
 package Vue.panels;
 
-import Vue.panels.PanelJoueurs;
 import Util.NomTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
-import static Util.Utils.EtatTuile.ASSECHEE;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import Util.TypeMessage;
@@ -17,12 +15,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Observable;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
