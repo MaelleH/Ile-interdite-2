@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vue;
+package Vue.panels;
 
 
-import Model.CarteTrésor;
+import Model.cartesTresor.CarteTrésor;
 import Util.Utils.NomAventurier;
 import java.awt.Color;
 import java.util.ArrayList;

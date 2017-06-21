@@ -13,7 +13,7 @@ import java.util.Collections;
 import javax.swing.JOptionPane;
 import Model.Aventuriers.Aventurier;
 import Model.CarteInondation;
-import Model.CarteTrésor;
+import Model.cartesTresor.CarteTrésor;
 
 /**
  *

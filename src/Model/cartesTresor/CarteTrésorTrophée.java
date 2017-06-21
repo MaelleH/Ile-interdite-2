@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package Model.cartesTresor;
+
+import Util.NomTrésor;
+import Util.TypeCarteTresor;
 
 /**
  *
@@ -27,4 +30,16 @@ public class CarteTrésorTrophée extends CarteTrésor{
     public NomTrésor getNomT() {
         return nomT;
     }
+
+    
+    public boolean equals(CarteTrésor c) {
+        if(super.equals(c)){
+            return this.getNomT().toString().equals(((CarteTrésorTrophée)c).getNomT());
+        }else{
+            return false;
+        }
+    }
+
+    
+    
 }

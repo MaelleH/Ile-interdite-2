@@ -1,4 +1,6 @@
-package Model;
+package Model.cartesTresor;
+
+import Util.TypeCarteTresor;
 
 public class MonteeDesEaux extends CarteTrésor {
     @Override

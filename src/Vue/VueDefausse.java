@@ -5,10 +5,18 @@
  */
 package Vue;
 
-import Model.Activable;
-import Model.CarteTrésor;
-import Model.CarteTrésorTrophée;
-import Model.TypeCarteTresor;
+import Vue.panels.PanelCarteTresor;
+import Vue.panels.PanelCarteTrophee;
+import Vue.panels.PanelCarteActivable;
+import Model.cartesTresor.Activable;
+import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Model.cartesTresor.Helico;
+import Model.cartesTresor.Sac;
+import Util.TypeCarteActivable;
+import Util.TypeCarteTresor;
+import Util.TypeMessage;
+import ile.interdite.Message;
 import ile.interdite.Observateur;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,6 +29,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -34,7 +43,7 @@ public class VueDefausse {
     private JPanel mainPanel;
     
     private JPanel panelIndications;
-    private Label labelIndications;
+    private JLabel labelIndications;
     
     private JPanel panelCartes;
     private ArrayList<PanelCarteTresor> listeCarteTresor;
@@ -64,7 +73,7 @@ public class VueDefausse {
         panelIndications.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.black));
         mainPanel.add(panelIndications,BorderLayout.NORTH);
         
-        labelIndications = new Label("Vous devez défausser "+toDump+" cartes");
+        labelIndications = new JLabel("Vous devez défausser au moins "+toDump+" cartes");
         panelIndications.add(labelIndications);
         
         //Partie Centre = Selection
@@ -87,19 +96,21 @@ public class VueDefausse {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int nb = 0;
-                ArrayList<PanelCarteTresor> listeCarteTresorADefausse = new ArrayList<>();
+                ArrayList<CarteTrésor> listeCarteTresorADefausse = new ArrayList<>();
                         
                 for(PanelCarteTresor pnC : listeCarteTresor){
                     if(pnC.getClicked()){
                         nb++;
-                        listeCarteTresorADefausse.add(pnC);
+                        listeCarteTresorADefausse.add(pnC.getCarteTrésor());
                     }
                 }
-                System.out.println("Le joueur veut défausser "+nb+" cartes!");
-                if(nb==toDump){
-                    System.out.println("Et il a le droit!");
+                if(nb>=toDump){
+                    Message m = new Message();
+                    m.setTypeMessage(TypeMessage.DEFAUSSER);
+                    m.setListeCarteTresorADefausse(listeCarteTresorADefausse);
+                    controleur.traiterMessage(m);
+                    window.dispose();
                 }
-                
             }
         });
         
@@ -113,10 +124,10 @@ public class VueDefausse {
         PanelCarteTrophee carteTrophee;
         for(CarteTrésor carte : cartes){
             if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
-                carteActi = new PanelCarteActivable(((Activable) carte).getTypeCarteActivable());
+                carteActi = new PanelCarteActivable(((Activable) carte));
                 listeCarteTresor.add(carteActi);
             }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(((CarteTrésorTrophée) carte).getNomT());
+                carteTrophee = new PanelCarteTrophee(((CarteTrésorTrophée) carte));
                 listeCarteTresor.add(carteTrophee);
             }
         }

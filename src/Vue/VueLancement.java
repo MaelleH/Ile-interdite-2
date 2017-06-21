@@ -5,10 +5,12 @@
  */
 package Vue;
 
+import Model.cartesTresor.CarteTrésor;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import static Util.TypeMessage.REGLES;
 import static Util.TypeMessage.VAL2;
+import Vue.panels.PanelCarteTrophee;
 import java.awt.BorderLayout;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;

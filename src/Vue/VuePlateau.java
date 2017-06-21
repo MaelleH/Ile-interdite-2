@@ -7,10 +7,13 @@ package Vue;
 
 
 
-import Model.CarteTrésor;
-import Model.Coordonnees;
-import Model.NomTrésor;
-import static Model.NomTrésor.Pierre;
+import Vue.panels.KitPanelAventurier;
+import Vue.panels.PanelAventurier;
+import Vue.panels.PanelCase;
+import Model.cartesTresor.CarteTrésor;
+import Util.Coordonnees;
+import Util.NomTrésor;
+import static Util.NomTrésor.Pierre;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import ile.interdite.Message;
@@ -229,7 +232,9 @@ public class VuePlateau implements Observateur{
         for(PanelAventurier pnA : listePanelAventuriers){
             if(pnA.getNomAventurier().equals(nomA)){
                 pnA.setListeCarteTresor(cartes);
+                
             }
+            pnA.repaint();
         }
     }
 }

@@ -1,13 +1,13 @@
 package ile.interdite;
 
-import Model.Activable;
+import Model.cartesTresor.Activable;
 import java.util.*;
 
 import Model.CarteInondation;
-import Model.Coordonnees;
+import Util.Coordonnees;
 import Model.Grille;
 import Model.Tuile;
-import Model.CarteTrésor;
+import Model.cartesTresor.CarteTrésor;
 import Model.Aventuriers.Aventurier;
 import Model.Aventuriers.Explorateur;
 import Model.Aventuriers.Ingenieur;
@@ -16,21 +16,20 @@ import Model.Aventuriers.Navigateur;
 import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
 import Model.EchelleNiveauEau;
-import Model.Helico;
-import Model.NomTuile;
-import Model.MonteeDesEaux;
-import Model.Sac;
-import Model.CarteTrésorTrophée;
-import Model.NomTrésor;
-import Model.TypeCarteActivable;
-import Model.TypeCarteTresor;
+import Model.cartesTresor.Helico;
+import Util.NomTuile;
+import Model.cartesTresor.MonteeDesEaux;
+import Model.cartesTresor.Sac;
+import Model.cartesTresor.CarteTrésorTrophée;
+import Util.NomTrésor;
+import Util.TypeCarteActivable;
+import Util.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
-import Vue.KitPanelAventurier;
 import Vue.Regles;
-import Vue.VueAventurier;
-
+import Vue.panels.KitPanelAventurier;
+import Vue.VueDefausse;
 import Vue.VueLancement;
 import Vue.VuePlateau;
 
@@ -41,7 +40,6 @@ public class Controleur implements Observateur {
     private VueLancement vueL;
     private Regles vueR;
     private ArrayList<Aventurier> aventuriers;
-    private ArrayList<VueAventurier> vuesAventuriers;
 
     private EchelleNiveauEau niveauEau;
     private VuePlateau vuePlateau;
@@ -62,21 +60,9 @@ public class Controleur implements Observateur {
 
     public Controleur() {
         lancerPartie();
-        
-        /*ArrayList<CarteTrésor> cartes = new ArrayList<>();
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        cartes.add(new CarteTrésorTrophée(NomTrésor.Calice));
-        
-        VueDefausse vued = new VueDefausse(2,cartes,this);*/
     }
 
-    public void lancerPartie(){
+    public final void lancerPartie(){
         vueL= new VueLancement(this);
     }
     public void lireRegle(){
@@ -88,9 +74,6 @@ public class Controleur implements Observateur {
 
         //Créer les Aventuriers
         creationAventurier(nbj);
-
-        //Creér les vues de Aventuriers
-        vuesAventuriers = new ArrayList<>();
 
         //Créer les cartes
         piocheCarteInondation = new ArrayList<>();
@@ -104,7 +87,6 @@ public class Controleur implements Observateur {
             inonderTuile();
         }
 
-
         //Création et Mise à jour du plateau
         int i = 0;
         ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
@@ -112,20 +94,19 @@ public class Controleur implements Observateur {
             kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(),a.getMainCarteTrésor(), getPionAventurier(a).getCouleur()));
             i++;
         }
-
         vuePlateau = new VuePlateau(kitsPanelAventurier,this);
         updateVuePlateau();
         niveauEau = new EchelleNiveauEau(nivdif);
         lancerTour();
-
     }
 
     public void lancerTour(){
         //Vérification de la main de l'aventurier
         if(aventuriers.get(0).doitDefausser()){
-            defausseCarteTrésor.addAll(aventuriers.get(0).getMainCarteTrésor());
-            aventuriers.get(0).getMainCarteTrésor().clear();
+            VueDefausse vued = new VueDefausse(aventuriers.get(0).getMainCarteTrésor().size()-5,aventuriers.get(0).getMainCarteTrésor(),this);
+            return;
         }
+        
         vuePlateau.setActive(aventuriers.get(0).getNom());
         
     }
@@ -313,7 +294,6 @@ public class Controleur implements Observateur {
                     if(a.getPosition().equals(co)){                             //si l'aventurier a est sur la case qui vient d'être coulée
                     //il se déplace vers une tuile qu'il peut atteindre
                         HashMap<Coordonnees,Tuile> deplacement;
-                        deplacement = new HashMap<>();
                         deplacement = a.deplacementPossibleListe(grille);       //HashMap de toutes les tuiles/coordonnées qu'il peut atteindre
                         if (deplacement.isEmpty()){                             //si la liste est vie
                             System.out.println("fin");                          //le jeu est fini
@@ -361,7 +341,7 @@ public class Controleur implements Observateur {
 
     //si plus de carte dans la pioche
     public void remplirPiocheTresor(){
-        Collections.shuffle(defausseCarteTrésor);               //on mélange la défausse
+        Utils.melangerCT(defausseCarteTrésor);               //on mélange la défausse
         for (CarteTrésor carte :defausseCarteTrésor ){          //on met toutes les cartes de la défausse dans la pioche
             piocheCarteTrésor.add(carte);
         }
@@ -379,6 +359,7 @@ public class Controleur implements Observateur {
                 c = m.getCoord();
                 System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).deplacement(c,grille);
+                updateVuePlateau();
                 break;
 
             case ASSECHER:
@@ -389,17 +370,24 @@ public class Controleur implements Observateur {
                 break;
 
             case VAL2:
-                if(m.getNivDif().equals("Novice")){
-                    entier=1;
-                }else if(m.getNivDif().equals("Normal")){
-                   entier=2; 
-                }else if(m.getNivDif().equals("Expert")){
-                   entier=3; 
-                }else if(m.getNivDif().equals("Légendaire")){
-                   entier=4; 
+                switch (m.getNivDif()) {
+                    case "Novice":
+                        entier=1;
+                        break;
+                    case "Normal":
+                        entier=2;
+                        break;
+                    case "Expert":
+                        entier=3;
+                        break;
+                    case "Légendaire":
+                        entier=4;
+                        break;
+                    default:
+                        break;
                 }
-                    initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
-                break;   
+                initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
+                break;      
 
             case DONNERCARTE:
                 vuePlateau.resShow();
@@ -407,6 +395,13 @@ public class Controleur implements Observateur {
                   //  aventuriers.get(0).donnerCarte(aven2, carte);
                 //}
                 break;
+            case DEFAUSSER:
+                vuePlateau.resShow();
+                for(CarteTrésor carte : m.getListeCarteTresorADefausse()){
+                    aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                    defausseCarteTrésor.add(carte);
+                }
+                vuePlateau.setActive(aventuriers.get(0).getNom());
             case REGLES :
                     lireRegle();
                     
@@ -498,6 +493,9 @@ public class Controleur implements Observateur {
     
               
     public void updateVuePlateau(){
+        for(Aventurier a : aventuriers){
+            vuePlateau.updateMainAventurier(a.getNom().toString(), a.getMainCarteTrésor());
+        }
         ArrayList<Pion> pionAAfficher;
         for(Map.Entry<Coordonnees,Tuile> e : grille.getHSTuile().entrySet()){
             pionAAfficher = new ArrayList<>();
@@ -516,9 +514,7 @@ public class Controleur implements Observateur {
                 vuePlateau.updateCase(coord, nomCase, etatTuile, tresor, pionAAfficher);
             }
         }
-        for(Aventurier a : aventuriers){
-            vuePlateau.updateMainAventurier(a.getNom().toString(), a.getMainCarteTrésor());
-        }
+        
     }
     
     public Pion getPionAventurier(Aventurier a){

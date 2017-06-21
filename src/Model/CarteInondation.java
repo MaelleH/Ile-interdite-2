@@ -1,20 +1,17 @@
 package Model;
 
-import java.util.ArrayList;
+import Util.NomTuile;
 
 public class CarteInondation {
 
-	private NomTuile nomCarte;
-        
-        public CarteInondation(NomTuile nomCarte){
-            this.nomCarte = nomCarte;
-        }
-        
-        public NomTuile getNomTuile(){
-            return nomCarte;
-        }
-        
-        
-        
+    private NomTuile nomCarte;
 
+    public CarteInondation(NomTuile nomCarte){
+        this.nomCarte = nomCarte;
+    }
+
+    public NomTuile getNomTuile(){
+        return nomCarte;
+    }
+        
 } 

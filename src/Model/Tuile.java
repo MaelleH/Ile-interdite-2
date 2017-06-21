@@ -1,10 +1,10 @@
 package Model;
 
-
-import static Model.NomTrésor.Vide;
+import Util.NomTrésor;
+import Util.NomTuile;
+import static Util.NomTrésor.Vide;
 import Util.Utils.EtatTuile;
 import java.util.Objects;
-
 
 public class Tuile {
     private EtatTuile etat;
@@ -16,6 +16,7 @@ public class Tuile {
         this.tresor=tresor;
         this.etat=EtatTuile.ASSECHEE;
     }
+    
     public Tuile (NomTuile nom){
         this.nomT=nom;
         this.tresor=Vide;
@@ -24,7 +25,7 @@ public class Tuile {
 
     @Override
     public int hashCode() {
-        return etat.hashCode()+tresor.hashCode()+nomT.hashCode(); //To change body of generated methods, choose Tools | Templates.
+        return etat.hashCode()+tresor.hashCode()+nomT.hashCode();
     }
 
     @Override

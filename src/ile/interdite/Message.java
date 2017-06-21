@@ -7,8 +7,10 @@ package ile.interdite;
 
 import Util.TypeMessage;
 import Model.Aventuriers.Aventurier;
-import Model.Coordonnees;
-import Vue.PanelCase;
+import Model.cartesTresor.CarteTrésor;
+import Util.Coordonnees;
+import Vue.panels.PanelCarteTresor;
+import Vue.panels.PanelCase;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +23,7 @@ public class Message {
     
     private Coordonnees coord;
     private String joueur;
+    private ArrayList<CarteTrésor> listeCarteTresorADefausse;
        
     private ArrayList<String> joueurs;
     private String nivDif;
@@ -121,6 +124,14 @@ public class Message {
      */
     public void setNivDif(String nivDif) {
         this.nivDif = nivDif;
+    }
+
+    public ArrayList<CarteTrésor> getListeCarteTresorADefausse() {
+        return listeCarteTresorADefausse;
+    }
+
+    public void setListeCarteTresorADefausse(ArrayList<CarteTrésor> listeCarteTresorADefausse) {
+        this.listeCarteTresorADefausse = listeCarteTresorADefausse;
     }
 
 }

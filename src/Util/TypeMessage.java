@@ -21,7 +21,7 @@ public enum TypeMessage {
     PROPOSER_DONATION_CARTE,
     RELANCERJEU,    
     REGLES,
-    VAL2;
+    VAL2, DEFAUSSER;
 
     
     
