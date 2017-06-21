@@ -366,6 +366,7 @@ public class Controleur implements Observateur {
                 System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).assecher(c,grille);
                 updateVuePlateau();
+
                 break;
                 
             case ALLER_HELICO:
@@ -397,6 +398,7 @@ public class Controleur implements Observateur {
                         }
                     }
                 }
+
                 break;
 
             case VAL2:
@@ -435,8 +437,10 @@ public class Controleur implements Observateur {
                 }
                 vuePlateau.setActive(aventuriers.get(0).getNom());
                 updateVuePlateau();
+
                 break;
             
+
 
             case PROPOSER_ASSECHEMENT:
                 vuePlateau.resShow();
@@ -461,6 +465,7 @@ public class Controleur implements Observateur {
                     vuePlateau.showAssechablesSac(assechementPossibleSac().keySet());
                     m.getpCA().setClicked(!m.getpCA().getClicked()); 
                 }
+
                 break;
 
             case PROPOSER_DEPLACEMENT_HELICO:

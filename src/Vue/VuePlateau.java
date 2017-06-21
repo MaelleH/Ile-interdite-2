@@ -206,6 +206,8 @@ public class VuePlateau implements Observateur{
     public void showDeplacementPossible(Set<Coordonnees> listeCoordonnees){
         for(Coordonnees c : listeCoordonnees){
             listeCases.get(c.getX()+c.getY()).setEtatListener(1);
+            
+            
         } 
     }
     public void showDeplacementPossible(Set<Coordonnees> listeCoordonneesDeplaNormal,Set<Coordonnees> listeCoordonneesDeplaPv){
