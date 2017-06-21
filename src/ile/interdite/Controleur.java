@@ -113,10 +113,10 @@ public class Controleur implements Observateur {
         //pioche des 2 cartes trésor
         for(int i = 0;i<2;i++){
             if(piocheCarteTrésor.isEmpty()){    //si la pioche tresor est vide
-                remplirPiocheTresor();          //on la remplit
-            }else{
-                piocherCT(aventuriers.get(0));  //l'aventurier pioche une carte
-            }
+                remplirPiocheTresor();              //on la remplit
+            }//else{
+            piocherCT(aventuriers.get(0));  //l'aventurier pioche une carte
+            //}
             
         }
         aventuriers.get(0).setMaxActions();
@@ -307,7 +307,7 @@ public class Controleur implements Observateur {
             }
         }
     
-    //si plus de carte dans la pioche
+    //si il n'y a plus de carte dans la pioche
     public void remplirPiocheInondation(){
         Utils.melangerCI(defausseCarteInondation);                              //mélange de la defausse
         for(CarteInondation ci : defausseCarteInondation){                      //On met chaque carte de la defausse dans la pioche
@@ -663,7 +663,7 @@ public class Controleur implements Observateur {
                 }                
             }   
         }
-            return nbavenheli==4 && priseCalice&& prisePierre && priseCristal && priseZephyr && carteHeli;
+            return nbavenheli==aventuriers.size() && priseCalice&& prisePierre && priseCristal && priseZephyr && carteHeli;
     }
         
     
