@@ -637,6 +637,17 @@ public class Controleur implements Observateur {
         else if(niveauEau.getNiveauEau()==10){
             return true;
         }
+        for (Aventurier aTMP : aventuriers){
+            Tuile t = grille.getTuile(aTMP.getPosition());
+            if(t.getEtat()==EtatTuile.COULEE){                                  //si l'aventurier est sur la case coulée
+                HashMap<Coordonnees,Tuile> deplacement;
+                deplacement = aTMP.deplacementPossibleListe(grille);            //HashMap de toutes les tuiles/coordonnées qu'il peut atteindre
+                if (deplacement.isEmpty()){                                     //si la liste est vide
+                    return true;                                                    //alors la partie est perdue
+                }
+            }
+        }
+            
         return false;
          
     }
@@ -651,9 +662,7 @@ public class Controleur implements Observateur {
                 nbavenheli=nbavenheli+1;
             }
             for (NomTrésor tres : tresors){
-                for (CarteTrésor main : atemp.getMainCarteTrésor()){
-                    
-                    
+                for (CarteTrésor main : atemp.getMainCarteTrésor()){           
                     if(main.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                         carteActivable = (Activable) main;
                         if(carteActivable.getTypeCarteActivable().equals(TypeCarteActivable.Helicoptere)){
