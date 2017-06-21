@@ -108,6 +108,7 @@ public class Controleur implements Observateur {
         if(aventuriers.get(0).doitDefausser()){
             vuePlateau.popUpDefausse(aventuriers.get(0).getMainCarteTrésor());
             return;
+
         }
         
         vuePlateau.setActive(aventuriers.get(0).getNom());

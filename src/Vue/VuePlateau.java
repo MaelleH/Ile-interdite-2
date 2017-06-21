@@ -152,8 +152,13 @@ public class VuePlateau implements Observateur{
     }
 
     public void dispose(){
-        vueDefausse.dispose();
-        vueDonnerCarte.dispose();
+        window.dispose();
+        if(vueDefausse!=null){
+            vueDefausse.dispose();
+        }
+        if(vueDonnerCarte!=null){
+            vueDonnerCarte.dispose();
+        }
     }
     
     private void initPanelAventuriers(ArrayList<KitPanelAventurier> kitsPanelsAventuriers) {
