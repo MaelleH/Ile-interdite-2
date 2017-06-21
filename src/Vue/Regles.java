@@ -203,6 +203,7 @@ public class Regles extends JFrame{
     @Override
     public void setVisible(boolean b){
           main.setVisible(b);
+          main.setLocationRelativeTo(null);
     }
     
     @Override

@@ -383,6 +383,14 @@ public class Controleur implements Observateur {
                         }
                     }
                 }
+                
+                if(isGagne()){
+                    
+                    
+                }
+                
+                
+                
                 break;
 
             case ASSECHER_SAC:
@@ -496,7 +504,6 @@ public class Controleur implements Observateur {
 
             case RELANCERJEU:
                 lancerPartie();
-                updateVuePlateau();
                 break;
 
 

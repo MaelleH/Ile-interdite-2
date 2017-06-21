@@ -99,7 +99,7 @@ public class VuePlateau implements Observateur{
                 }
                 else if (rO==JOptionPane.CANCEL_OPTION){
                     window.dispose();
-                     if(vueDefausse!=null){
+                    if(vueDefausse!=null){
                         vueDefausse.dispose();
                     }
                     Message m = new Message();

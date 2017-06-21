@@ -209,41 +209,38 @@ public class VueLancement {
                                 valRe2.add(retour);
                             //Bouton pour valider les noms des joueurs et lancer le jeu
                                 JButton val2 = new JButton("Valider");
-                                val2.addActionListener(new ActionListener() {
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        Message m = new Message();
-
-                                        switch (nbj[listeNiv.getSelectedIndex()]) {
-                                            case "2":
-                                                nomJ.add(nj1.getText());
-                                                nomJ.add(nj2.getText());
-                                                break;
-                                            case "3":
-                                                nomJ.add(nj1.getText());
-                                                nomJ.add(nj2.getText());
-                                                nomJ.add(nj3.getText());
-                                                break;
-                                            case "4":
-                                                nomJ.add(nj1.getText());
-                                                nomJ.add(nj2.getText());
-                                                nomJ.add(nj3.getText());
-                                                nomJ.add(nj4.getText());
-                                                break;
-                                            default:
-                                                break;
-                                        }
-
-                                        m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
-                                        m.setJoueurs(nomJ);
-                                        m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
-                                        m.setTypeMessage(VAL2);
-
-                                        controleur.traiterMessage(m);
-                                        regle.dispose();
-                                        main.dispose();
+                                val2.addActionListener((ActionEvent e) -> {
+                                    Message m = new Message();
+                                    
+                                    switch (nbj[listeNiv.getSelectedIndex()]) {
+                                        case "2":
+                                            nomJ.add(nj1.getText());
+                                            nomJ.add(nj2.getText());
+                                            break;
+                                        case "3":
+                                            nomJ.add(nj1.getText());
+                                            nomJ.add(nj2.getText());
+                                            nomJ.add(nj3.getText());
+                                            break;
+                                        case "4":
+                                            nomJ.add(nj1.getText());
+                                            nomJ.add(nj2.getText());
+                                            nomJ.add(nj3.getText());
+                                            nomJ.add(nj4.getText());
+                                            break;
+                                        default:
+                                            break;
                                     }
-                                });
+                                    
+                                    m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
+                                    m.setJoueurs(nomJ);
+                                    m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
+                                    m.setTypeMessage(VAL2);
+                                    
+                                    controleur.traiterMessage(m);
+                                    regle.dispose();
+                                    main.dispose();
+        });
                                 valRe2.add(val2);
                 
         //Operation lorsqu'on ferme le main            
@@ -264,6 +261,7 @@ public class VueLancement {
         
     
         main.setVisible(true);
+        main.setLocationRelativeTo(null);
     }
 
     public class PanelIleHaut extends JPanel{
