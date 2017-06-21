@@ -9,6 +9,9 @@ import Model.cartesTresor.Activable;
 import Model.cartesTresor.CarteTrésorTrophée;
 import Util.TypeCarteActivable;
 import Util.TypeCarteTresor;
+import Util.TypeMessage;
+import ile.interdite.Message;
+import ile.interdite.Observateur;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -26,9 +29,11 @@ import javax.swing.BorderFactory;
  * @author ferreijo
  */
 public class PanelCarteActivable extends PanelCarteTresor{
+    Observateur controleur;
     Image image ;
-    public PanelCarteActivable(Activable activable){
-        super(activable);
+    public PanelCarteActivable(int type,Activable activable,Observateur obs){
+        super(type,activable);
+        controleur = obs;
         try {
             image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+getTypeActivable().toString()+".png"));
         } catch (IOException ex) {
@@ -37,7 +42,21 @@ public class PanelCarteActivable extends PanelCarteTresor{
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                clicked = !clicked;
+                setClicked(!getClicked()); 
+                if(getType()==1){
+                    Message m = new Message();
+                    if(getTypeActivable().equals(TypeCarteActivable.Helicoptere)){
+                        m = new Message();
+                        m.setTypeMessage(TypeMessage.PROPOSER_DEPLACEMENT_HELICO);
+                        m.setpCA((PanelCarteActivable)e.getSource());
+                        controleur.traiterMessage(m);
+                    }else if(getTypeActivable().equals(TypeCarteActivable.SacsDeSable)){
+                        m = new Message();
+                        m.setTypeMessage(TypeMessage.PROPOSER_ASSECHEMENT_SAC);
+                        m.setpCA((PanelCarteActivable)e.getSource());
+                        controleur.traiterMessage(m);
+                    }
+                }
                 repaint();
             }
 
@@ -67,16 +86,18 @@ public class PanelCarteActivable extends PanelCarteTresor{
         int borderHeight = this.getInsets().top+this.getInsets().bottom;
         g.drawImage(image, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
             
-        if(clicked){
+        if(getClicked()){
             setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), BorderFactory.createLineBorder(Color.black,2)));
         }else{
             setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));                
         }
-               
+        revalidate();
     }
 
     public TypeCarteActivable getTypeActivable() {
         return ((Activable)super.getCarteTrésor()).getTypeCarteActivable();
     }
     
+    
+   
 }

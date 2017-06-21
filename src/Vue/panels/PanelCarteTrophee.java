@@ -19,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -26,8 +28,8 @@ import javax.swing.BorderFactory;
  */
 public class PanelCarteTrophee extends PanelCarteTresor{
     Image image;
-    public PanelCarteTrophee(CarteTrésorTrophée carteTrésorTrophée){
-        super(carteTrésorTrophée);
+    public PanelCarteTrophee(int type,CarteTrésorTrophée carteTrésorTrophée){
+        super(type,carteTrésorTrophée);
         try {
             image = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/ImagesCartesTresor/"+getNomTrésor()+".png"));
         } catch (IOException ex) {
@@ -36,8 +38,10 @@ public class PanelCarteTrophee extends PanelCarteTresor{
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                clicked = !clicked;
-                repaint();
+                if(getType()==0){
+                    setClicked(!getClicked());
+                    repaint();
+                }
             }
 
             @Override
@@ -66,7 +70,7 @@ public class PanelCarteTrophee extends PanelCarteTresor{
         int borderHeight = this.getInsets().top+this.getInsets().bottom;
         g.drawImage(image, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
             
-        if(clicked){
+        if(getClicked()){
             setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3), BorderFactory.createLineBorder(Color.black,2)));
         }else{
             setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));                

@@ -208,6 +208,26 @@ public class VuePlateau implements Observateur{
             listeCases.get(c.getX()+c.getY()).setEtatListener(1);
         } 
     }
+    public void showDeplacementPossible(Set<Coordonnees> listeCoordonneesDeplaNormal,Set<Coordonnees> listeCoordonneesDeplaPv){
+        for(Coordonnees c : listeCoordonneesDeplaNormal){
+            listeCases.get(c.getX()+c.getY()).setEtatListener(1);
+        }
+        for(Coordonnees c : listeCoordonneesDeplaPv){
+            listeCases.get(c.getX()+c.getY()).setEtatListener(3);
+        } 
+    }
+    
+    public void showAssechablesSac(Set<Coordonnees> listeCoordonnees){
+        for(Coordonnees c : listeCoordonnees){
+            listeCases.get(c.getX()+c.getY()).setEtatListener(4);
+        } 
+        
+    }
+    public void showDeplacementPossibeHelico(Set<Coordonnees> listeCoordonnees){
+        for(Coordonnees c : listeCoordonnees){
+            listeCases.get(c.getX()+c.getY()).setEtatListener(5);
+        } 
+    }
 
     @Override
     public void traiterMessage(Message msg) {
@@ -222,6 +242,19 @@ public class VuePlateau implements Observateur{
             case ASSECHER:
                 m = new Message();
                 m.setTypeMessage(TypeMessage.ASSECHER);
+                m.setCoord(getCoordCase(msg.getpC()));
+                controleur.traiterMessage(m);
+                break;
+            case ALLER_HELICO:
+                m = new Message();
+                m.setTypeMessage(TypeMessage.ALLER_HELICO);
+                m.setCoord(getCoordCase(msg.getpC()));
+                controleur.traiterMessage(m);
+                break;
+
+            case ASSECHER_SAC:
+                m = new Message();
+                m.setTypeMessage(TypeMessage.ASSECHER_SAC);
                 m.setCoord(getCoordCase(msg.getpC()));
                 controleur.traiterMessage(m);
                 break;

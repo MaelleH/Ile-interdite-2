@@ -75,7 +75,12 @@ public class VueDefausse {
         panelIndications.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.black));
         mainPanel.add(panelIndications,BorderLayout.NORTH);
         
-        labelIndications = new JLabel("Vous devez défausser au moins "+toDump+" cartes");
+        if(toDump==1){
+            labelIndications = new JLabel("Vous devez défausser au moins "+toDump+" carte");
+        }else{
+            labelIndications = new JLabel("Vous devez défausser au moins "+toDump+" cartes");
+        }
+        
         panelIndications.add(labelIndications);
         
         //Partie Centre = Selection
@@ -131,10 +136,10 @@ public class VueDefausse {
         PanelCarteTrophee carteTrophee;
         for(CarteTrésor carte : cartes){
             if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
-                carteActi = new PanelCarteActivable(((Activable) carte));
+                carteActi = new PanelCarteActivable(0,((Activable) carte),null);
                 listeCarteTresor.add(carteActi);
             }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(((CarteTrésorTrophée) carte));
+                carteTrophee = new PanelCarteTrophee(0,((CarteTrésorTrophée) carte));
                 listeCarteTresor.add(carteTrophee);
             }
         }

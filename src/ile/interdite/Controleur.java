@@ -353,6 +353,7 @@ public class Controleur implements Observateur {
     @Override
     public void traiterMessage(Message m) {
         Coordonnees c;
+        Activable carteASupp;
         int entier = 0;
         switch (m.getTypeMessage()) {
             case ALLER:
@@ -368,6 +369,37 @@ public class Controleur implements Observateur {
                 c = m.getCoord();
                 System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).assecher(c,grille);
+                break;
+                
+            case ALLER_HELICO:
+                vuePlateau.resShow();
+                c = m.getCoord();
+                System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
+                aventuriers.get(0).setPosition(c);
+                for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
+                    if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
+                        if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.Helicoptere)){
+                            aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                            updateVuePlateau();
+                            break;
+                        }
+                    }
+                }
+                break;
+
+            case ASSECHER_SAC:
+                vuePlateau.resShow();
+                c = m.getCoord();
+                System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
+                for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
+                    if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
+                        if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.SacsDeSable)){
+                            aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                            updateVuePlateau();
+                            break;
+                        }
+                    }
+                }
                 break;
 
             case VAL2:
@@ -403,6 +435,7 @@ public class Controleur implements Observateur {
                     defausseCarteTrésor.add(carte);
                 }
                 vuePlateau.setActive(aventuriers.get(0).getNom());
+                break;
             case REGLES :
                     lireRegle();
                     
@@ -414,9 +447,28 @@ public class Controleur implements Observateur {
 
             case PROPOSER_DEPLACEMENT:
                 vuePlateau.resShow();
-                vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
+                try {
+                    Pilote pilote = (Pilote)aventuriers.get(0);
+                    vuePlateau.showDeplacementPossible(pilote.deplacementPossibleListe(grille).keySet(),pilote.autreActionListe(grille).keySet());
+                } catch (Exception e) {
+                    vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
+                }
+                
+                break;
+            case PROPOSER_ASSECHEMENT_SAC:
+                vuePlateau.resShow();
+                if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
+                    vuePlateau.showAssechablesSac(assechementPossibleSac().keySet());
+                }
                 break;
 
+            case PROPOSER_DEPLACEMENT_HELICO:
+                vuePlateau.resShow();
+                if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
+                    vuePlateau.showDeplacementPossibeHelico(deplacementPossibeHelico().keySet());
+                }
+                break;
+                     
             case PRENDRETRESOR:
                 vuePlateau.resShow();
                 Aventurier a = getAventurier(m.getJoueur());
@@ -453,7 +505,35 @@ public class Controleur implements Observateur {
 
     }
         
+    public HashMap<Coordonnees,Tuile> assechementPossibleSac(){
+        HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+        
+
+        for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
+            if(i.getValue()!=null){
+                
+                if(grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)){
+                    listeD.put( i.getKey(), i.getValue());   
+                }     
+            }
+        }
+        return listeD;
+    }
     
+    public HashMap<Coordonnees,Tuile> deplacementPossibeHelico(){
+        HashMap<Coordonnees,Tuile> listeD = new HashMap<>();   
+        
+
+        for(Map.Entry<Coordonnees,Tuile> i: grille.getHSTuile().entrySet()){
+            if(i.getValue()!=null){
+                
+                if(grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.INONDEE)||grille.getTuile(i.getKey()).getEtat().equals(Utils.EtatTuile.ASSECHEE)){
+                    listeD.put( i.getKey(), i.getValue());   
+                }     
+            }
+        }
+        return listeD;
+    }
     
     public Aventurier getAventurier(String nom){
         for(Aventurier i : aventuriers){
