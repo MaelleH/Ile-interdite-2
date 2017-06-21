@@ -134,7 +134,6 @@ public class VuePlateau implements Observateur{
     
     public void popUpMonteeDesEaux() {
         PanelFadingPopUP popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
-        popUp.setLocation((((int)window.getLocation().getX())+((int)panelPlateau.getLocation().getX())+(panelPlateau.getWidth()/2)-(popUp.getWidth()/2)),((int)window.getLocation().getY())+((int)panelPlateau.getLocation().getY())+(panelPlateau.getHeight()/2)-(popUp.getHeight()/2));
     }
     
     public void updateCase(String coord,String nomCase,EtatTuile etatCase,NomTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
