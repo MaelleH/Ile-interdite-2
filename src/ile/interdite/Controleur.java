@@ -38,7 +38,6 @@ public class Controleur implements Observateur {
     //Collection<CarteTrésor> piocheCarteTrésor;
     private Grille grille;
     private VueLancement vueL;
-    private Regles vueR;
     private ArrayList<Aventurier> aventuriers;
 
     private EchelleNiveauEau niveauEau;
@@ -62,9 +61,6 @@ public class Controleur implements Observateur {
 
     public final void lancerPartie(){
         vueL= new VueLancement(this);
-    }
-    public void lireRegle(){
-        vueR= new Regles(this);
     }
     public void initPartie(int nbj,int nivdif,ArrayList<String> nomJ){
         //Créer la grille
@@ -369,6 +365,7 @@ public class Controleur implements Observateur {
                 c = m.getCoord();
                 System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).assecher(c,grille);
+                updateVuePlateau();
                 break;
                 
             case ALLER_HELICO:
@@ -420,6 +417,7 @@ public class Controleur implements Observateur {
                         break;
                 }
                 initPartie((Integer.parseInt(m.getJoueur())),entier,m.getJoueurs());
+                updateVuePlateau();
                 break;      
 
             case DONNERCARTE:
@@ -427,6 +425,7 @@ public class Controleur implements Observateur {
                 //if(donnationPossible(aventuriers.get(0), aven2)){
                   //  aventuriers.get(0).donnerCarte(aven2, carte);
                 //}
+                //updateVuePlateau();
                 break;
             case DEFAUSSER:
                 vuePlateau.resShow();
@@ -435,30 +434,32 @@ public class Controleur implements Observateur {
                     defausseCarteTrésor.add(carte);
                 }
                 vuePlateau.setActive(aventuriers.get(0).getNom());
+                updateVuePlateau();
                 break;
-            case REGLES :
-                    lireRegle();
-                    
-                break;
+            
+
             case PROPOSER_ASSECHEMENT:
                 vuePlateau.resShow();
                 vuePlateau.showAssechables(aventuriers.get(0).assechementPossibleListe(grille).keySet());
+                updateVuePlateau();        
                 break;
 
             case PROPOSER_DEPLACEMENT:
                 vuePlateau.resShow();
+
                 try {
                     Pilote pilote = (Pilote)aventuriers.get(0);
                     vuePlateau.showDeplacementPossible(pilote.deplacementPossibleListe(grille).keySet(),pilote.autreActionListe(grille).keySet());
                 } catch (Exception e) {
                     vuePlateau.showDeplacementPossible(aventuriers.get(0).deplacementPossibleListe(grille).keySet());
                 }
-                
+                updateVuePlateau();
                 break;
             case PROPOSER_ASSECHEMENT_SAC:
                 vuePlateau.resShow();
                 if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
                     vuePlateau.showAssechablesSac(assechementPossibleSac().keySet());
+                    m.getpCA().setClicked(!m.getpCA().getClicked()); 
                 }
                 break;
 
@@ -466,6 +467,7 @@ public class Controleur implements Observateur {
                 vuePlateau.resShow();
                 if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
                     vuePlateau.showDeplacementPossibeHelico(deplacementPossibeHelico().keySet());
+                    m.getpCA().setClicked(!m.getpCA().getClicked()); 
                 }
                 break;
                      
@@ -484,10 +486,12 @@ public class Controleur implements Observateur {
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))&& a.prendreTresor(NomTrésor.Zéphyr)){
                          priseZephyr=true;
                 }
+                updateVuePlateau();
                 break;
 
             case RELANCERJEU:
                 lancerPartie();
+                updateVuePlateau();
                 break;
 
 
@@ -496,12 +500,13 @@ public class Controleur implements Observateur {
                 System.out.println("Fin du Tour!");
                 finTour();
                 lancerTour();
+                updateVuePlateau();
                 break;
                 
             default:
                 break;
         }
-        updateVuePlateau();
+
 
     }
         

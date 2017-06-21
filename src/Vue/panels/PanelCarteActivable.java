@@ -42,8 +42,9 @@ public class PanelCarteActivable extends PanelCarteTresor{
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setClicked(!getClicked()); 
-                if(getType()==1){
+                if(getType()==0){
+                    setClicked(!getClicked()); 
+                }else if(getType()==1){
                     Message m = new Message();
                     if(getTypeActivable().equals(TypeCarteActivable.Helicoptere)){
                         m = new Message();
