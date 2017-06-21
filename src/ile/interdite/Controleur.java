@@ -50,8 +50,6 @@ public class Controleur implements Observateur {
     private ArrayList<CarteInondation> defausseCarteCoulées;
     private ArrayList<NomTrésor> tresors;
 
-
-
     private boolean prisePierre;
     private boolean priseCristal;
     private boolean priseZephyr;
@@ -82,8 +80,9 @@ public class Controleur implements Observateur {
         defausseCarteInondation = new ArrayList<>();
         defausseCarteTrésor = new ArrayList<>();
         initCartetresor();
+        
         initPiocheInondation();
-        for (int a=1;a<=6;a++){                 //inondation des 6 tuiles au début
+        for (int a=1;a<=6;a++){                 //inondation de 6 tuiles aleatoires au début
             inonderTuile();
         }
 
@@ -113,13 +112,14 @@ public class Controleur implements Observateur {
 
     public void finTour(){
         vuePlateau.setInactive(aventuriers.get(0).getNom());
+        //On redonne le nombre d'actions max a l'aventurier
         aventuriers.get(0).resetActionsRestantes();
         //pioche des 2 cartes trésor
         for(int i = 0;i<2;i++){
-            if(piocheCarteTrésor.isEmpty()){
-                remplirPiocheTresor();
+            if(piocheCarteTrésor.isEmpty()){    //si la pioche tresor est vide
+                remplirPiocheTresor();          //on la rempli
             }else{
-                piocherCT(aventuriers.get(0));
+                piocherCT(aventuriers.get(0));  //l'aventurier pioche une carte
             }
             
         }
