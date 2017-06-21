@@ -151,9 +151,9 @@ public class PanelCase extends JPanel{
             if(etatListener==0){
                 setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
             }else if(etatListener==1){
-                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Color.black, 2)));
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.ORANGE.getColor(), 4)));
             }else if(etatListener==2){
-                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(new Color(150,20,20), 2)));
+                setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.DEEP_ROSE.getColor(), 4)));
             }
             
             //Affichage du Nom de la Case
