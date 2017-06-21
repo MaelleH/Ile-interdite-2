@@ -7,6 +7,7 @@ package Vue;
 
 
 
+import Model.Aventuriers.Aventurier;
 import Vue.panels.KitPanelAventurier;
 import Vue.panels.PanelAventurier;
 import Vue.panels.PanelCase;
@@ -43,7 +44,8 @@ public class VuePlateau implements Observateur{
     private JPanel mainPanel;
     private JPanel panelPlateau;
     private JPanel panelAventuriers;
-    VueDefausse vueDefausse;
+    private VueDefausse vueDefausse;
+    private VueDonnerCarte vueDonnerCarte;
     
     private Observateur controleur;
     private ArrayList<PanelAventurier> listePanelAventuriers;
@@ -132,6 +134,10 @@ public class VuePlateau implements Observateur{
         }
     }
     
+    public void popUpMessage(String message) {
+        PanelFadingPopUP popUp = new PanelFadingPopUP(message,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
+    }
+    
     public void popUpMonteeDesEaux() {
         PanelFadingPopUP popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
     }
@@ -145,8 +151,9 @@ public class VuePlateau implements Observateur{
         this.listeCases.put(key, uneCase);
     }
 
-    public void disposeDefausse(){
+    public void dispose(){
         vueDefausse.dispose();
+        vueDonnerCarte.dispose();
     }
     
     private void initPanelAventuriers(ArrayList<KitPanelAventurier> kitsPanelsAventuriers) {
@@ -167,6 +174,9 @@ public class VuePlateau implements Observateur{
 
     public void popUpDefausse(ArrayList<CarteTrésor> mainCarteTrésor){
         vueDefausse = new VueDefausse(mainCarteTrésor.size()-5,mainCarteTrésor,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2),controleur);
+    }
+    public void popUpDonnerCarte(ArrayList<CarteTrésor> mainCarteTrésor,ArrayList<Aventurier> aventuriers){
+        vueDonnerCarte = new VueDonnerCarte(mainCarteTrésor,aventuriers,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2),controleur);
     }
     
     public Observateur getControleur() {

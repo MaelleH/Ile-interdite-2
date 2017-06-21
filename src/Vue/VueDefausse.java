@@ -139,7 +139,7 @@ public class VueDefausse {
                 carteActi = new PanelCarteActivable(0,((Activable) carte),null);
                 listeCarteTresor.add(carteActi);
             }else if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(0,((CarteTrésorTrophée) carte));
+                carteTrophee = new PanelCarteTrophee(0,((CarteTrésorTrophée) carte),null);
                 listeCarteTresor.add(carteTrophee);
             }
         }

@@ -198,26 +198,8 @@ public class Aventurier {
     }
         
     //le joueur donne une carte à un aventurier donné	
-    public void donnerCarte(Aventurier aven2,CarteTrésor carte) {
-        int taille;
-        
-        if(this.mainCarteTrésor.contains(carte)){
-            //On verifie que l'aventurier a la carte, si il l'a :
-            
-            //On ajoute la carte a l'aventurier 2
-            aven2.getMainCarteTrésor().add(carte);
-                               
-            //on recupere la taille de la main du joueur
-            taille=this.getMainCarteTrésor().size();
-            
-            //on enlève la ou les cartes "carte" de sa main
-            this.mainCarteTrésor.remove(carte);
-            
-            //on remet les cartes qu'on a enlevées en trop
-            for(int i=(this.getMainCarteTrésor().size());i<taille;i++ ){
-                this.mainCarteTrésor.add(carte);
-            }
-        }
+    public boolean donnerCartePossible(Aventurier aven2) {
+        return getPosition().equals(aven2.getPosition());
     }
     
     public int getMaxActions(){

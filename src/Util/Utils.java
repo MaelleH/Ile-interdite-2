@@ -5,7 +5,6 @@
  */
 package Util;
 
-import Util.Parameters;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +13,7 @@ import javax.swing.JOptionPane;
 import Model.Aventuriers.Aventurier;
 import Model.CarteInondation;
 import Model.cartesTresor.CarteTrésor;
+import Util.Parameters;
 import Util.Couleur;
 
 /**

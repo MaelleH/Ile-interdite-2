@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * @author ferreijo
  */
 public abstract class PanelCarteTresor extends JPanel{
-    private int type;//0 pour interface défausse, 1 pour interface utilisateur
+    private int type;//0 pour interface défausse, 1 pour interface utilisateur, 2 pour donenr carte
     private CarteTrésor carteTrésor;
     private boolean clicked;
     

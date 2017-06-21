@@ -15,7 +15,8 @@ public enum TypeMessage {
     AUTREACTION,
     PRENDRETRESOR,
     TERMINERTOUR,
-    DONNERCARTE,
+    DONNERCARTE_Donner,
+    DONNERCARTE_Annuler,
     PROPOSER_DEPLACEMENT,
     PROPOSER_ASSECHEMENT,
     ALLER_HELICO,
@@ -25,7 +26,9 @@ public enum TypeMessage {
     PROPOSER_DONATION_CARTE,
     RELANCERJEU,    
     REGLES,
-    VAL2, DEFAUSSER;
+    GetClicked,
+    VAL2, 
+    DEFAUSSER;
 
     
     

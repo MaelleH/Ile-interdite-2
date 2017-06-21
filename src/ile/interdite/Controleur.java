@@ -28,6 +28,7 @@ import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
 import Vue.Regles;
+import Vue.VueAventurier;
 import Vue.panels.KitPanelAventurier;
 import Vue.VueDefausse;
 import Vue.VueLancement;
@@ -373,7 +374,14 @@ public class Controleur implements Observateur {
                 vuePlateau.resShow();
                 c = m.getCoord();
                 System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
+                /*for(int i =1;i<aventuriers.size();i++){
+                    if(aventuriers.get(0).getPosition().equals(aventuriers.get(i).getPosition())){
+                        aventuriers.get(i).setPosition(c);
+                    }
+                    
+                }*/
                 aventuriers.get(0).setPosition(c);
+                
                 for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
                     if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                         if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.Helicoptere)){
@@ -389,6 +397,7 @@ public class Controleur implements Observateur {
                 vuePlateau.resShow();
                 c = m.getCoord();
                 System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
+                grille.getTuile(c).assechement();
                 for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
                     if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                         if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.SacsDeSable)){
@@ -422,13 +431,39 @@ public class Controleur implements Observateur {
                 updateVuePlateau();
                 break;      
 
-            case DONNERCARTE:
+            case PROPOSER_DONATION_CARTE:
                 vuePlateau.resShow();
-                //if(donnationPossible(aventuriers.get(0), aven2)){
-                  //  aventuriers.get(0).donnerCarte(aven2, carte);
-                //}
-                //updateVuePlateau();
+                ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
+                
+                for(int i =1;i<aventuriers.size();i++){
+                    if(aventuriers.get(0).donnerCartePossible(aventuriers.get(i))){
+                        aventuriersTemp.add(aventuriers.get(i));
+                    }
+                }
+                if(aventuriers.get(0).getMainCarteTrésor().isEmpty()){
+                    vuePlateau.popUpMessage("Vous n'avez pas de cartes!");
+                }else if(aventuriersTemp.isEmpty()){
+                    vuePlateau.popUpMessage("Personne à proximité");
+                }else{
+                    vuePlateau.setInactive(aventuriers.get(0).getNom());
+                    vuePlateau.popUpDonnerCarte(aventuriers.get(0).getMainCarteTrésor(), aventuriersTemp);
+                }
+                
+                updateVuePlateau();
                 break;
+            case DONNERCARTE_Donner:
+                m.getAventurierRecepteur().getMainCarteTrésor().add(m.getCTTrophée());
+                aventuriers.get(0).getMainCarteTrésor().remove(m.getCTTrophée());
+                
+                vuePlateau.setActive(aventuriers.get(0).getNom());
+                updateVuePlateau();
+                break;
+                
+            case DONNERCARTE_Annuler:
+                vuePlateau.setActive(aventuriers.get(0).getNom());
+                updateVuePlateau();
+                break;
+                
             case DEFAUSSER:
                 vuePlateau.resShow();
                 for(CarteTrésor carte : m.getListeCarteTresorADefausse()){
@@ -437,10 +472,7 @@ public class Controleur implements Observateur {
                 }
                 vuePlateau.setActive(aventuriers.get(0).getNom());
                 updateVuePlateau();
-
                 break;
-            
-
 
             case PROPOSER_ASSECHEMENT:
                 vuePlateau.resShow();
@@ -462,8 +494,11 @@ public class Controleur implements Observateur {
             case PROPOSER_ASSECHEMENT_SAC:
                 vuePlateau.resShow();
                 if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
-                    vuePlateau.showAssechablesSac(assechementPossibleSac().keySet());
                     m.getpCA().setClicked(!m.getpCA().getClicked()); 
+                    if(m.getpCA().getClicked()){
+                        vuePlateau.showAssechablesSac(assechementPossibleSac().keySet());
+                        m.getpCA().setClicked(!m.getpCA().getClicked()); 
+                    }
                 }
 
                 break;
@@ -471,8 +506,10 @@ public class Controleur implements Observateur {
             case PROPOSER_DEPLACEMENT_HELICO:
                 vuePlateau.resShow();
                 if(m.getpA().getNomAventurier().toString().equals(aventuriers.get(0).getNom().toString())){
-                    vuePlateau.showDeplacementPossibeHelico(deplacementPossibeHelico().keySet());
                     m.getpCA().setClicked(!m.getpCA().getClicked()); 
+                    if(m.getpCA().getClicked()){
+                        vuePlateau.showDeplacementPossibeHelico(deplacementPossibeHelico().keySet());
+                    }
                 }
                 break;
                      
@@ -509,6 +546,7 @@ public class Controleur implements Observateur {
                 break;
                 
             default:
+                updateVuePlateau();
                 break;
         }
 
