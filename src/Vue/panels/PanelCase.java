@@ -10,7 +10,6 @@ import Vue.panels.PanelJoueurs;
 import Util.NomTrésor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
-import static Util.Utils.EtatTuile.ASSECHEE;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import Util.TypeMessage;
@@ -18,12 +17,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Observable;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -147,38 +144,36 @@ public class PanelCase extends JPanel{
         
         if(typeCase == "ile"){
             super.paintComponent(g);
-            //Affichag de la bordure
-            if(etatListener==0){
-                setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
-            }else if(etatListener==1){
+            //Affichage de la bordure selon la possibilité on non de l'action voulue
+            if(etatListener==0){    
+                setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
+            }else if(etatListener==1){      //si la case est atteignable
                 setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.ORANGE.getColor(), 4)));
-            }else if(etatListener==2){
+            }else if(etatListener==2){      //si la case est assechable
                 setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(1,1,1,1), BorderFactory.createLineBorder(Couleur.DEEP_ROSE.getColor(), 4)));
             }
             
             //Affichage du Nom de la Case
             labelNomCase.setText(nomCase);
             
-            //Affichage de l'état de la case
+            //changement de la couleur de la case selon son etat
             Color c = null;
             if(etatCase.toString().equals(EtatTuile.ASSECHEE.toString())){
                 c = Couleur.DARK_ROUGE.getColor();
                 labelEtatCase.setText(etatCase.toString());
-                
             }else if(etatCase.toString().equals(EtatTuile.INONDEE.toString())){
                 c = Couleur.BLEU_CLAIR.getColor();
                 labelEtatCase.setText(etatCase.toString());
-                
             }else if(etatCase.toString().equals(EtatTuile.COULEE.toString())){
                 c = Couleur.BLEU_FONCE.getColor();
                 labelEtatCase.setText(etatCase.toString());
-                
             }
                 panelNomCase.setBackground(c);
                 panelEtatCase.setBackground(c);
                 panelBas.setBackground(c);
                 panelJoueurs.setBackground(c);
 
+                
             //Affichage du trésor présent sur la Case
             if(tresor.equals(NomTrésor.Cristal)){
                 panelTresor.setBackground(Couleur.TOMATE.getColor());
