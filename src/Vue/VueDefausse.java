@@ -105,9 +105,8 @@ public class VueDefausse {
                     Message m = new Message();
                     m.setTypeMessage(TypeMessage.DEFAUSSER);
                     m.setListeCarteTresorADefausse(listeCarteTresorADefausse);
-                    window.setVisible(false);
                     controleur.traiterMessage(m);
-                    
+                    window.dispose();
                 }
             }
         });

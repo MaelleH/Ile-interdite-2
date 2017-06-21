@@ -206,6 +206,10 @@ public class PanelAventurier  extends JPanel{
                 listeCarteTresor.add(carteTrophee);
             }
         }
+        initPanelCarte();
+    }
+    
+    public void initPanelCarte(){
         panelCartes.removeAll();
         for(PanelCarteTresor panelCartTres : listeCarteTresor){
             panelCartes.add(panelCartTres);
@@ -216,10 +220,6 @@ public class PanelAventurier  extends JPanel{
             }
         }
         revalidate();
-    }
-    
-    public void initPanelCarte(){
-        
     }
           
     

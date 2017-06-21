@@ -61,7 +61,6 @@ public class Controleur implements Observateur {
 
     public Controleur() {
         lancerPartie();
-        
     }
 
     public void lancerPartie(){

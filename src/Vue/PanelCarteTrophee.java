@@ -25,7 +25,6 @@ import javax.swing.BorderFactory;
  * @author ferreijo
  */
 public class PanelCarteTrophee extends PanelCarteTresor{
-    
     Image image;
     public PanelCarteTrophee(CarteTrésorTrophée carteTrésorTrophée){
         super(carteTrésorTrophée);
