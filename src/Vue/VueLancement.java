@@ -41,6 +41,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Util.Couleur;
+import java.awt.Toolkit;
 import Util.Curseurs;
 import Util.Images;
 import static Util.Images.back;
@@ -90,6 +91,8 @@ public class VueLancement implements Curseurs {
         main = new JFrame();
         main.setTitle("Bienvenue sur l'île interdite!");
         main.setSize(400, 400);
+        main.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(main.getSize().width/2)),(int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(main.getSize().height/2)));
+
         
         Font fMain= new Font("Arial", 15, 15);
         main.setFont(fMain);
@@ -391,7 +394,6 @@ public class VueLancement implements Curseurs {
         
     
         main.setVisible(true);
-        main.setLocationRelativeTo(null);
     }
 
     @Override
