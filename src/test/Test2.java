@@ -31,59 +31,21 @@ import Util.NomTuile;
 import Model.cartesTresor.MonteeDesEaux;
 import Model.cartesTresor.Sac;
 import Model.cartesTresor.CarteTrésorTrophée;
-import static Util.Images.sam;
 import Util.NomTrésor;
 import Util.TypeCarteActivable;
 import Util.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
-import Vue.PopUpGif;
 import Vue.panels.KitPanelAventurier;
 import Vue.VueLancement;
 import Vue.VueLoose;
 import Vue.VuePlateau;
 import Vue.VueWin;
 import ile.interdite.Message;
-import ile.interdite.Observateur;;
-
-import Model.cartesTresor.Activable;
-import java.util.*;
-
-import Model.CarteInondation;
-import Util.Coordonnees;
-import Model.Grille;
-import Model.Tuile;
-import Model.cartesTresor.CarteTrésor;
-import Model.Aventuriers.Aventurier;
-import Model.Aventuriers.Explorateur;
-import Model.Aventuriers.Ingenieur;
-import Model.Aventuriers.Messager;
-import Model.Aventuriers.Navigateur;
-import Model.Aventuriers.Pilote;
-import Model.Aventuriers.Plongeur;
-import Model.EchelleNiveauEau;
-import Model.cartesTresor.Helico;
-import Util.NomTuile;
-import Model.cartesTresor.MonteeDesEaux;
-import Model.cartesTresor.Sac;
-import Model.cartesTresor.CarteTrésorTrophée;
-import static Util.Images.sam;
-import Util.NomTrésor;
-import Util.TypeCarteActivable;
-import Util.TypeCarteTresor;
-import Util.Utils;
-import Util.Utils.EtatTuile;
-import Util.Utils.Pion;
-import Vue.PopUpGif;
-import Vue.panels.KitPanelAventurier;
-import Vue.VueLancement;
-import Vue.VueLoose;
-import Vue.VuePlateau;
-import Vue.VueWin;
 import ile.interdite.Observateur;
 
-public class TestDeplacementPlongeur  implements Observateur {
+public class Test2 implements Observateur {
 
     private Grille grille;
     private VueLancement vueL;
@@ -109,7 +71,7 @@ public class TestDeplacementPlongeur  implements Observateur {
     private ArrayList<String> nomJ;
 
 
-    public TestDeplacementPlongeur() {
+    public Test2() {
         lancerPartie();
     }
 
@@ -126,7 +88,7 @@ public class TestDeplacementPlongeur  implements Observateur {
         niveauEau = new EchelleNiveauEau(nivdif);
         
         //Créer la grille
-        grille = new Grille(1);      //Modifier dans la classe Grille pour avoir les differentes grilles
+        grille = new Grille(2);      //Modifier dans la classe Grille pour avoir les differentes grilles
         
         //Sauver les valeurs
         this.nbJoueurs=nbj;
@@ -146,7 +108,11 @@ public class TestDeplacementPlongeur  implements Observateur {
         initCartetresor();
         
         initPiocheInondation();
-        
+        //Enlevever cette partie pour le test 1
+        for (int a=1;a<=6;a++){                 //inondation de 6 tuiles aleatoires au début
+            inonderTuile();
+        }
+
         //Création et Mise à jour du plateau
         int i = 0;
         ArrayList<KitPanelAventurier> kitsPanelAventurier = new ArrayList<>();
@@ -186,7 +152,13 @@ public class TestDeplacementPlongeur  implements Observateur {
         
         //picohe du nombre nécéssaire de cartes Inondation
         
-       
+        /*Enlever pour la grille de test 1, pas d'inondation lors de la fin du tour(plus simple)*/
+        for (int c=1;c<=niveauEau.getNbInond();c++){
+            inonderTuile();
+        }
+        /////////////////////////////////////////////
+        
+        
         aventuriers.get(0).resetActionsRestantes();
         //Passage au joueur suivant
         setJoueurSuivant();
@@ -784,33 +756,37 @@ public class TestDeplacementPlongeur  implements Observateur {
     //créer aléatoirement les joueurs de la partie en fonction du nombre voulu
     public void creationAventurier(int nbjoueur){
         aventuriers = new ArrayList<>();
+
+        //Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));      //grille test 1
+        //Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule")); //grille test 1
+        //Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux")); //grille test 1
+        //Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));         //grille test 1
         
-        Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));      //grille test 1
-        Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule")); //grille test 1
-        Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux")); //grille test 1
-        Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));         //grille test 1
+        Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));      //grille test 2
+        Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));        //grille test 2
         
-        //Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));      //grille test 2
-        //Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));        //grille test 2
-        
-        aventuriers.add(explo);
-        aventuriers.add(inge);
+        aventuriers.add(mess);
         aventuriers.add(pilot);
-        aventuriers.add(plong);
         Collections.shuffle((List<?>) aventuriers);
         
         ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
+        /*choix des joueurs aléatoire, a enlever pour les grilles de test*/
+        for (int i=0 ; i<nbjoueur; i++){
+            aventuriersTemp.add(aventuriers.get(i));
+        }
+        
         //Pour la grille de test 1 : deplacement, assechement, case coulée avec aventurier dessus
+        /*
         aventuriersTemp.add(plong);
         aventuriersTemp.add(pilot);
         aventuriersTemp.add(explo);
         aventuriersTemp.add(inge);
-
+        */
         
         //Pour la grille de test 2 : tresor, donnation de cartes
-        /*aventuriersTemp.add(mess);
+        aventuriersTemp.add(mess);
         aventuriersTemp.add(pilot);
-        */
+        
         
         aventuriers = aventuriersTemp;
     }
@@ -963,8 +939,9 @@ public class TestDeplacementPlongeur  implements Observateur {
     
     public static void main(String [] args) {
         // Instanciation de la fenêtre 
-        TestDeplacementPlongeur controleur = new TestDeplacementPlongeur();    
+        Test2 controleur = new Test2();    
     }
+
 
 
 }
