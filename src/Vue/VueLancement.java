@@ -40,6 +40,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Util.Couleur;
+import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 
 /**
@@ -80,6 +81,8 @@ public class VueLancement {
         main = new JFrame();
         main.setTitle("Bienvenue sur l'île interdite!");
         main.setSize(400, 400);
+        main.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(main.getSize().width/2)),(int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(main.getSize().height/2)));
+
         
         Font fMain= new Font("Arial", 15, 15);
         main.setFont(fMain);
@@ -261,7 +264,6 @@ public class VueLancement {
         
     
         main.setVisible(true);
-        main.setLocationRelativeTo(null);
     }
 
     public class PanelIleHaut extends JPanel{
