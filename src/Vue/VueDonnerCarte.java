@@ -61,7 +61,7 @@ public class VueDonnerCarte implements Observateur{
     private JPanel panelValidation;
     private JButton boutonValidation;
     private JButton boutonAnnulation;
-    public VueDonnerCarte(ArrayList<CarteTrésor> cartes,ArrayList<Aventurier> aventuriers,int x,int y,Observateur obs) {
+    public VueDonnerCarte(ArrayList<CarteTrésorTrophée> cartes,ArrayList<Aventurier> aventuriers,int x,int y,Observateur obs) {
         listeCarteTresor = new ArrayList<>();
         listesPanelsAventuriers = new HashMap<>();
         controleur = obs;
@@ -150,15 +150,14 @@ public class VueDonnerCarte implements Observateur{
         window.dispose();
     }
     
-    public void setListeCarteTresor(ArrayList<CarteTrésor> cartes){
+    public void setListeCarteTresor(ArrayList<CarteTrésorTrophée> cartes){
         listeCarteTresor.clear();
-        PanelCarteActivable carteActi;
+        
+        
         PanelCarteTrophee carteTrophee;
-        for(CarteTrésor carte : cartes){
-            if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(2,((CarteTrésorTrophée) carte),this);
-                listeCarteTresor.add(carteTrophee);
-            }
+        for(CarteTrésorTrophée carte : cartes){
+            carteTrophee = new PanelCarteTrophee(2, carte,this);
+            listeCarteTresor.add(carteTrophee);
         }
     }
     
@@ -266,8 +265,8 @@ public class VueDonnerCarte implements Observateur{
     }
     
     
-    
-    public static void main(String [] args) {
+    //Méthode principale (pour les tests)
+    /*public static void main(String [] args) {
         // Instanciation de la fenêtre 
         ArrayList<CarteTrésor> listeCartes = new ArrayList<>();
         CarteTrésorTrophée carte = new CarteTrésorTrophée(NomTrésor.Calice);
@@ -292,7 +291,7 @@ public class VueDonnerCarte implements Observateur{
         listeAventuriers.add(avent3);
         
         VueDonnerCarte vue = new VueDonnerCarte(listeCartes, listeAventuriers, (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2, null);
-    }
+    }*/
 
     @Override
     public void traiterMessage(Message msg) {

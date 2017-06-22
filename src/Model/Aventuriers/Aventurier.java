@@ -153,10 +153,6 @@ public class Aventurier {
     }
 
     public void resetActionsRestantes() {
-        setMaxActions();
-    }
-    
-    public void setMaxActions(){
         this.actionsRestantes = getMaxActions();
     }
     /**

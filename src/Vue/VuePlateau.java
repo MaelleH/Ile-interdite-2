@@ -12,7 +12,9 @@ import Vue.panels.KitPanelAventurier;
 import Vue.panels.PanelAventurier;
 import Vue.panels.PanelCase;
 import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
 import Util.Coordonnees;
+import Util.Couleur;
 import Util.NomTrésor;
 import static Util.NomTrésor.Pierre;
 import Util.Utils;
@@ -23,14 +25,17 @@ import ile.interdite.Observateur;
 import Util.TypeMessage;
 import static Util.TypeMessage.RELANCERJEU;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -46,6 +51,8 @@ public class VuePlateau implements Observateur{
     private JPanel panelAventuriers;
     private VueDefausse vueDefausse;
     private VueDonnerCarte vueDonnerCarte;
+    private  PanelFadingPopUP popUp;
+    
     
     private Observateur controleur;
     private ArrayList<PanelAventurier> listePanelAventuriers;
@@ -62,14 +69,16 @@ public class VuePlateau implements Observateur{
         controleur = obs;
         
         this.window = new JFrame();
-        window.setLocation(350, 0);
+        
         window.setSize(1200, 900);
+        window.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(window.getSize().width/2)),(int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(window.getSize().height/2)));
         window.setTitle("Ile Interdite");
         
         mainPanel = new JPanel(new BorderLayout());
         window.setLayout(new BorderLayout());
         
         panelPlateau = new JPanel(new GridLayout(6,6));
+        panelPlateau.setBackground(Couleur.GRIS_CLAIR.getColor());
         window.add(panelPlateau,BorderLayout.CENTER);
         
         panelAventuriers = new JPanel(new GridLayout(4, 1));
@@ -120,9 +129,20 @@ public class VuePlateau implements Observateur{
         for(int i = 1; i<=6;i++){
             for(int j = 1; j<=6;j++){
                 if ((i==1 && (j<3||j>4)) || (i==2 && (j==1||j==6)) || (i==5 && (j==1||j==6))  || (i==6 && (j<3||j>4))){
-                    uneCase = new PanelCase();
-                    addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
+                    if(i==1 && j==1){
+                        uneCase = new PanelCase(NomTrésor.Calice);
+                    }else if(i==1 && j==6){
+                        uneCase = new PanelCase(NomTrésor.Cristal);
+                    }else if(i==6 && j==1){
+                        uneCase = new PanelCase(NomTrésor.Pierre);
+                    } else if(i==6 && j==6){
+                        uneCase = new PanelCase(NomTrésor.Zéphyr);
+                    }else{
+                        uneCase = new PanelCase();
+                        
+                    } 
                     
+                    addListeCases(Integer.toString(i)+Integer.toString(j),uneCase);
                     this.panelPlateau.add(uneCase);
                 }else{
                     uneCase = new PanelCase("Tuile",EtatTuile.ASSECHEE,Pierre,this);
@@ -134,12 +154,34 @@ public class VuePlateau implements Observateur{
         }
     }
     
+    public void majIconesTresors(boolean bCalice,boolean bCristal,boolean bPierre,boolean bZephyr){
+        
+        for(int i = 1; i<=6;i++){
+            for(int j = 1; j<=6;j++){
+                    if(i==1 && j==1){
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).setRecupere(bCalice);
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).repaint();
+                    }else if(i==1 && j==6){
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).setRecupere(bCristal);
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).repaint();
+                    }else if(i==6 && j==1){
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).setRecupere(bPierre);
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).repaint();
+                    } else if(i==6 && j==6){
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).setRecupere(bZephyr);
+                        listeCases.get(Integer.toString(i)+Integer.toString(j)).repaint();
+                    }
+                    
+            }
+        }
+    }
+    
     public void popUpMessage(String message) {
-        PanelFadingPopUP popUp = new PanelFadingPopUP(message,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
+        popUp = new PanelFadingPopUP(message,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
     }
     
     public void popUpMonteeDesEaux() {
-        PanelFadingPopUP popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
+        popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
     }
     
     public void updateCase(String coord,String nomCase,EtatTuile etatCase,NomTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
@@ -159,6 +201,9 @@ public class VuePlateau implements Observateur{
         if(vueDonnerCarte!=null){
             vueDonnerCarte.dispose();
         }
+        if(popUp!=null){
+            popUp.dispose();
+        }
     }
     
     private void initPanelAventuriers(ArrayList<KitPanelAventurier> kitsPanelsAventuriers) {
@@ -172,15 +217,18 @@ public class VuePlateau implements Observateur{
             setInactive(kitPanelA.getNomAventurier());
         }
         
+        JPanel filler;
         for(int i = 0;i<4-listePanelAventuriers.size();i++){
-            panelAventuriers.add(new JPanel());
+            filler = new JPanel();
+            filler.setBackground(Couleur.DESERT.getColor());
+            panelAventuriers.add(filler);
         }
     }
 
     public void popUpDefausse(ArrayList<CarteTrésor> mainCarteTrésor){
         vueDefausse = new VueDefausse(mainCarteTrésor.size()-5,mainCarteTrésor,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2),controleur);
     }
-    public void popUpDonnerCarte(ArrayList<CarteTrésor> mainCarteTrésor,ArrayList<Aventurier> aventuriers){
+    public void popUpDonnerCarte(ArrayList<CarteTrésorTrophée> mainCarteTrésor,ArrayList<Aventurier> aventuriers){
         vueDonnerCarte = new VueDonnerCarte(mainCarteTrésor,aventuriers,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2),controleur);
     }
     
@@ -208,6 +256,9 @@ public class VuePlateau implements Observateur{
     public void resShow(){
         for(String c : listeCases.keySet()){
             listeCases.get(c).setEtatListener(0);
+        }
+        for(PanelAventurier pA : listePanelAventuriers){
+            pA.resetClickedSauf(null);
         }
     }
     
