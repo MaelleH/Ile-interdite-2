@@ -78,7 +78,7 @@ public class Controleur implements Observateur {
         niveauEau = new EchelleNiveauEau(nivdif);
         
         //Créer la grille
-        grille = new Grille();      //Modifier dans la classe Grille pour avoir les differentes grilles
+        grille = new Grille();
         
         //Sauver les valeurs
         this.nbJoueurs=nbj;
@@ -142,11 +142,9 @@ public class Controleur implements Observateur {
         
         //picohe du nombre nécéssaire de cartes Inondation
         
-        /*Enlever pour la grille de test 1, pas d'inondation lors de la fin du tour(plus simple)*/
         for (int c=1;c<=niveauEau.getNbInond();c++){
             inonderTuile();
         }
-        /////////////////////////////////////////////
         
         
         aventuriers.get(0).resetActionsRestantes();
@@ -754,15 +752,6 @@ public class Controleur implements Observateur {
         Explorateur explo = new Explorateur(grille.getCoordTuile("La Porte de Bronze"));
         Pilote pilot = new Pilote(grille.getCoordTuile("Heliport"));
         
-        
-        //Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));      //grille test 1
-        //Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule")); //grille test 1
-        //Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux")); //grille test 1
-        //Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));         //grille test 1
-        
-        //Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));      //grille test 2
-        //Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));        //grille test 2
-        
         aventuriers.add(explo);
         aventuriers.add(inge);
         aventuriers.add(mess);
@@ -772,23 +761,9 @@ public class Controleur implements Observateur {
         Collections.shuffle((List<?>) aventuriers);
         
         ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
-        /*choix des joueurs aléatoire, a enlever pour les grilles de test*/
         for (int i=0 ; i<nbjoueur; i++){
             aventuriersTemp.add(aventuriers.get(i));
         }
-        
-        //Pour la grille de test 1 : deplacement, assechement, case coulée avec aventurier dessus
-        /*
-        aventuriersTemp.add(plong);
-        aventuriersTemp.add(pilot);
-        aventuriersTemp.add(explo);
-        aventuriersTemp.add(inge);
-        */
-        
-        //Pour la grille de test 2 : tresor, donnation de cartes
-        /*aventuriersTemp.add(mess);
-        aventuriersTemp.add(pilot);
-        */
         
         aventuriers = aventuriersTemp;
     }

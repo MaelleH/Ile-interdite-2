@@ -58,8 +58,6 @@ import Model.cartesTresor.CarteTrésor;
 import Model.Aventuriers.Aventurier;
 import Model.Aventuriers.Explorateur;
 import Model.Aventuriers.Ingenieur;
-import Model.Aventuriers.Messager;
-import Model.Aventuriers.Navigateur;
 import Model.Aventuriers.Pilote;
 import Model.Aventuriers.Plongeur;
 import Model.EchelleNiveauEau;
@@ -126,7 +124,7 @@ public class TestDeplacementPlongeur  implements Observateur {
         niveauEau = new EchelleNiveauEau(nivdif);
         
         //Créer la grille
-        grille = new Grille(1);      //Modifier dans la classe Grille pour avoir les differentes grilles
+        grille = new Grille(1);
         
         //Sauver les valeurs
         this.nbJoueurs=nbj;
@@ -184,7 +182,6 @@ public class TestDeplacementPlongeur  implements Observateur {
         }
         
         
-        //picohe du nombre nécéssaire de cartes Inondation
         
        
         aventuriers.get(0).resetActionsRestantes();
@@ -785,34 +782,15 @@ public class TestDeplacementPlongeur  implements Observateur {
     public void creationAventurier(int nbjoueur){
         aventuriers = new ArrayList<>();
         
-        Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));      //grille test 1
-        Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule")); //grille test 1
-        Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux")); //grille test 1
-        Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));         //grille test 1
-        
-        //Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));      //grille test 2
-        //Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));        //grille test 2
+        Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));
+        Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule"));
+        Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux"));
+        Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));
         
         aventuriers.add(explo);
         aventuriers.add(inge);
         aventuriers.add(pilot);
         aventuriers.add(plong);
-        Collections.shuffle((List<?>) aventuriers);
-        
-        ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
-        //Pour la grille de test 1 : deplacement, assechement, case coulée avec aventurier dessus
-        aventuriersTemp.add(plong);
-        aventuriersTemp.add(pilot);
-        aventuriersTemp.add(explo);
-        aventuriersTemp.add(inge);
-
-        
-        //Pour la grille de test 2 : tresor, donnation de cartes
-        /*aventuriersTemp.add(mess);
-        aventuriersTemp.add(pilot);
-        */
-        
-        aventuriers = aventuriersTemp;
     }
     
     
@@ -860,12 +838,6 @@ public class TestDeplacementPlongeur  implements Observateur {
     //méthode qui vérifie si la partie est perdue.
     public boolean isPerdu(){
         //si les 2 cases d'un tresor sont coulées, la partie est perdue
-        
-        
-        //grille test 1
-        //return false;
-        
-        
         
         if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)&&prisePierre==false){
             return true;

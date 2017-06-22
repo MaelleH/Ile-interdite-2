@@ -97,7 +97,7 @@ public class Test2 implements Observateur {
         
         
         //Créer les Aventuriers
-        creationAventurier(nbj);
+        creationAventurier();
 
         //Créer les cartes
         piocheCarteInondation = new ArrayList<>();
@@ -754,41 +754,13 @@ public class Test2 implements Observateur {
     }    
     
     //créer aléatoirement les joueurs de la partie en fonction du nombre voulu
-    public void creationAventurier(int nbjoueur){
+    public void creationAventurier(){
         aventuriers = new ArrayList<>();
-
-        //Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));      //grille test 1
-        //Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule")); //grille test 1
-        //Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux")); //grille test 1
-        //Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));         //grille test 1
-        
-        Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));      //grille test 2
-        Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));        //grille test 2
+        Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));
+        Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));
         
         aventuriers.add(mess);
         aventuriers.add(pilot);
-        Collections.shuffle((List<?>) aventuriers);
-        
-        ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
-        /*choix des joueurs aléatoire, a enlever pour les grilles de test*/
-        for (int i=0 ; i<nbjoueur; i++){
-            aventuriersTemp.add(aventuriers.get(i));
-        }
-        
-        //Pour la grille de test 1 : deplacement, assechement, case coulée avec aventurier dessus
-        /*
-        aventuriersTemp.add(plong);
-        aventuriersTemp.add(pilot);
-        aventuriersTemp.add(explo);
-        aventuriersTemp.add(inge);
-        */
-        
-        //Pour la grille de test 2 : tresor, donnation de cartes
-        aventuriersTemp.add(mess);
-        aventuriersTemp.add(pilot);
-        
-        
-        aventuriers = aventuriersTemp;
     }
     
     
