@@ -51,10 +51,8 @@ public class Aventurier {
             setPosition(c);
             setActionsRestantes(getActionsRestantes()-1);
         }else if(this.getActionsRestantes()<1){                                        //Si il n'a plus d'action
-            System.out.println("Plus d'actions....");
             afficherInformation("Vous ne pouvez plus effectuer d'actions!");            //On affiche cette information
         }else{                                                                          //Sinon
-            System.out.println("Déplacement impossible!");
             afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");   //On affiche le fait qu'il ne puisse pas se déplacer vers la tuile
         }
     }
@@ -107,11 +105,9 @@ public class Aventurier {
                 grille.getTuile(c).assechement();                   //Il asseche la tuile
                 setActionsRestantes(getActionsRestantes()-1);       //On lui retire une acion
             }else{                                                   //Sinon on l'informe qu'il n'a plus d'action
-                System.out.println("Plus d'actions....");
                 afficherInformation("Vous ne pouvez plus effectuer d'actions!");
             } 
         }else{                                                   //Sinon on l'informe qu'il ne peut pas assecher la tuile
-            System.out.println("Assechement non possible ici!");
             afficherInformation("Vous ne pouvez pas assécher cette case!");
         }
     }

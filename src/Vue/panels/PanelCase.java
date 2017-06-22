@@ -241,10 +241,8 @@ public class PanelCase extends JPanel{
             int borderWidth = this.getInsets().left+this.getInsets().right;
             int borderHeight = this.getInsets().top+this.getInsets().bottom;
             if(isRecupere()){
-                System.out.println("oui");
                 g.drawImage(imageTresorRecup, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
             }else{
-                System.out.println("oui1");
                 g.drawImage(imageTresorNRecup, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
             }
             

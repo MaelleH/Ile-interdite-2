@@ -16,7 +16,6 @@ public class EchelleNiveauEau {
     public void monteeDesEaux() {   
         this.niveauEau = getNiveauEau() + 1;        //On augmente le niveau d'eau de 1    
         if(getNiveauEau()==10){                     //si la niveau d'eau atteint 10, la partie est perdue
-            System.out.println("Fin de Partie");
         }
     }
     

@@ -55,16 +55,13 @@ public class Pilote extends Aventurier {
                 }
             }else if (this.getActionsRestantes() > 0 && ((deplacementPossibleListe(grille).containsKey(c)) || autreActionListe(grille).containsKey(c))){    //si le pouvoir est disponible et que la tuile est non coulée
                     if (autreActionListe(grille).containsKey(c)){                               //si la tuile est dans la liste des tuiles non adjacentes
-                        System.out.println("Pouvoir utilisé pour ce deplacement ");
                         pouvoirUtilise=true;}                                                       //le pouvoir est utilisé pour effectuer le déplacement
                         setPosition(c);                                                             //l'aventurier se déplace
             }
             setActionsRestantes(getActionsRestantes()-1);                                       //on lui enleve une action
         }else if(this.getActionsRestantes()<1){                                             //Si il n'a plus d'action
-            System.out.println("Plus d'actions....");
             afficherInformation("Vous ne pouvez plus effectuer d'actions!");                    //On affiche cette information
         }else{                                                                              //Sinon (encore au moins une action mais la tuile n'est dans aucune des listes)
-            System.out.println("Déplacement impossible!");
             afficherInformation("Vous ne pouvez pas vous déplacer vers cette case!");           //On affiche le fait qu'il ne puisse pas se déplacer vers la tuile
         }
     }
@@ -73,7 +70,6 @@ public class Pilote extends Aventurier {
     public void resetActionsRestantes() {
         super.resetActionsRestantes();                                    //On réinitialise ses actions
         pouvoirUtilise=false;                               //On réinitialise le pouvoir du pilote
-        System.out.println("Pouvoir du pilote reinitialsé");
     }
 
     @Override

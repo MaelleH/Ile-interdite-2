@@ -39,6 +39,7 @@ public class Controleur implements Observateur {
     private Grille grille;
     private VueLancement vueL;
     private VueLoose vuePerdu;
+    private VueWin vueGagner;
     private ArrayList<Aventurier> aventuriers;
 
     private EchelleNiveauEau niveauEau;
@@ -128,6 +129,7 @@ public class Controleur implements Observateur {
     }
 
     public void finTour(){
+        gagne();
         vuePlateau.setInactive(aventuriers.get(0).getNom());
         //On redonne le nombre d'actions max a l'aventurier
         
@@ -213,7 +215,6 @@ public class Controleur implements Observateur {
 
                 if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
                     defausseCarteTrésor.add(carte);
-                    System.out.println("carte defaussée");
                     monteeDesEaux();                                                    //on augmente le niveau d'eau
                     
                 }else{
@@ -228,7 +229,6 @@ public class Controleur implements Observateur {
 
                 if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
                     defausseCarteTrésor.add(carte);
-                    System.out.println("carte defaussée");
                     monteeDesEaux();                                                    //on augmente le niveau d'eau
                 }else{
                     a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
@@ -433,7 +433,6 @@ public class Controleur implements Observateur {
             case ALLER:
                 vuePlateau.resShow();
                 c = m.getCoord();
-                System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).deplacement(c,grille);
                 updateVuePlateau();
                 gagne();
@@ -442,7 +441,6 @@ public class Controleur implements Observateur {
             case ASSECHER:
                 vuePlateau.resShow();
                 c = m.getCoord();
-                System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).assecher(c,grille);
                 updateVuePlateau();
 
@@ -451,7 +449,6 @@ public class Controleur implements Observateur {
             case ALLER_HELICO:
                 vuePlateau.resShow();
                 c = m.getCoord();
-                System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).setPosition(c);
                 
                 for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
@@ -470,7 +467,6 @@ public class Controleur implements Observateur {
             case ASSECHER_SAC:
                 vuePlateau.resShow();
                 c = m.getCoord();
-                System.out.println("Assècher! (" + c.getX() +","+ c.getY() +")");
                 grille.getTuile(c).assechement();
                 
                 //on supprime la carte de sa main
@@ -646,7 +642,6 @@ public class Controleur implements Observateur {
                 
             case TERMINERTOUR:
                 vuePlateau.resShow();
-                System.out.println("Fin du Tour!");
                 finTour();
                 if(!isPerdu()){
                    lancerTour(); 
@@ -848,6 +843,7 @@ public class Controleur implements Observateur {
     }
     // méthode pour vérifier si les joueurs ont gagné
     public boolean isGagne(){
+    
         int nbavenheli=0;
         int nbaventres=0;
         boolean carteHeli=false;
@@ -869,13 +865,13 @@ public class Controleur implements Observateur {
         }
             return nbavenheli==aventuriers.size() && priseCalice&& prisePierre && priseCristal && priseZephyr && carteHeli;
     }
-        
+      
     public void gagne(){
         if(isGagne()){
             vuePlateau.setAllInactive();
 
-            if(vuePerdu==null){
-                vuePerdu = new VueLoose(this);
+            if(vueGagner==null){
+                vueGagner = new VueWin(this);
             }
         }
         
