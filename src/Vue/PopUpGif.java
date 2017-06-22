@@ -5,12 +5,9 @@
  */
 package Vue;
 
-import static Util.Images.heli;
-import java.lang.reflect.InvocationTargetException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,24 +16,13 @@ import javax.swing.SwingUtilities;
 public class PopUpGif extends JWindow{
     
     public PopUpGif(String nom) {
-        JLabel firework1 = new JLabel(new ImageIcon(getClass().getResource(heli.getChemin())));     
-        add(firework1);
-        setSize(300, 200);//On lui donne une taille pour qu'on puisse la voir
-        setVisible(true);
-        firework1.setVisible(true);
-        
-        try{
-            Thread.sleep(5000);
-        }catch(InterruptedException e){
-            
-        }
-            dispose();
-    }
-    
+        JLabel firework1 = new JLabel(new ImageIcon(getClass().getResource(nom)));     
+        this.add(firework1);
+        this.setSize(300, 200);//On lui donne une taille pour qu'on puisse la voir
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
-
-
-
+    }       
 }
 
    
