@@ -654,6 +654,8 @@ public class Controleur implements Observateur {
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))){
                         prendreTresor(NomTrésor.Zéphyr);
                         a.setActionsRestantes(a.getActionsRestantes()-1);
+                }else{
+                    vuePlateau.popUpMessage("Il n'y a pas de trésors ici!");
                 }
                 updateVuePlateau();
                 break;
