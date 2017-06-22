@@ -6,6 +6,7 @@
 package Vue;
 
 import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.Helico;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
 import static Util.TypeMessage.REGLES;
@@ -40,18 +41,22 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Util.Couleur;
+import Util.Curseurs;
+import Util.Images;
+import static Util.Images.back;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static javafx.scene.Cursor.cursor;
 import javax.swing.SwingConstants;
 
 /**
  *
  * @author heyrendm
  */
-public class VueLancement {
+public class VueLancement implements Curseurs {
     private Observateur controleur;
     private JFrame main;
     
@@ -98,17 +103,9 @@ public class VueLancement {
         
 
         //Curseur
-        Toolkit tk = Toolkit.getDefaultToolkit();
-
-        Image img; 
-        try {
-            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
-        } catch (Exception e) {
-            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
-        }
-        Cursor heli = tk.createCustomCursor(img, new Point(0, 0), "heli");         
-                
-                
+          Cursor heli = createCurs(Images.heli.getChemin());         
+          Cursor interro =createCurs(Images.interro.getChemin());      
+          Cursor back =createCurs(Images.back.getChemin());       
         //Creation du panel principal
             welcomeP = new JPanel(new BorderLayout());
             welcomeP.setAlignmentX(CENTER_ALIGNMENT);
@@ -131,6 +128,7 @@ public class VueLancement {
             @Override
             public void mouseClicked(MouseEvent e) {
                 regle.setVisible(true);
+                main.setCursor(Cursor.DEFAULT_CURSOR);
             }
 
             @Override
@@ -143,7 +141,7 @@ public class VueLancement {
 
             @Override
             public void mouseEntered(MouseEvent e) {    
-                main.setCursor(heli);
+                main.setCursor(interro);
             }
 
             @Override
@@ -153,23 +151,45 @@ public class VueLancement {
         });
                         valRe.add(regles);
                         
-                    //bouton valider
-                        JButton val1 = new JButton("Valider"); 
-                        valRe.add(val1); 
-                        
-                        val1.addActionListener((ActionEvent e) -> {
-                            main.remove(welcomeP);
-                            main.add(joueurP);
-                            j1.setVisible(true);j2.setVisible(true);j4.setVisible(false);j3.setVisible(false);
-                            if(nbj[listeNiv.getSelectedIndex()].equals("3")){
-                                j3.setVisible(true);j4.setVisible(false);
-                            }
-                            else if(nbj[listeNiv.getSelectedIndex()].equals("4")){
-                                j3.setVisible(true);j4.setVisible(true);
-                            }
-                            main.repaint();
+            //bouton valider
+            JButton val1 = new JButton("Valider"); 
+            valRe.add(val1); 
 
-                        });
+            val1.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                main.remove(welcomeP);
+                main.add(joueurP);
+                j1.setVisible(true);j2.setVisible(true);j4.setVisible(false);j3.setVisible(false);
+                if(nbj[listeNiv.getSelectedIndex()].equals("3")){
+                    j3.setVisible(true);j4.setVisible(false);
+                }
+                else if(nbj[listeNiv.getSelectedIndex()].equals("4")){
+                    j3.setVisible(true);j4.setVisible(true);
+                }
+                main.repaint();
+                main.setCursor(Cursor.DEFAULT_CURSOR);
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.setCursor(heli);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);
+            }
+        });
                         
                         
             //Creation du panel choix du panel central             
@@ -233,25 +253,70 @@ public class VueLancement {
                         joueurP.add(valRe2,SOUTH);
                             //BOUTON REGLES
                             JButton regles2 = new JButton("Règles");
-                                regles2.addActionListener((ActionEvent e) -> {
-                                    regle.setVisible(true);
-                                }); 
+                        regles2.addMouseListener(new MouseListener() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                regle.setVisible(true);
+                            }
+
+                            @Override
+                            public void mousePressed(MouseEvent e) {               
+                            }
+
+                            @Override
+                            public void mouseReleased(MouseEvent e) {
+                            }
+
+                            @Override
+                            public void mouseEntered(MouseEvent e) {    
+                                main.setCursor(interro);
+                            }
+
+                            @Override
+                            public void mouseExited(MouseEvent e) {
+                                main.setCursor(Cursor.DEFAULT_CURSOR);
+                            }
+                        });
                             valRe2.add(regles2);
                         
                             //Bouton RETOUR
                                 JButton retour = new JButton("retour");
-                                retour.addActionListener((ActionEvent e) -> {
-                                    main.remove(joueurP);
-                                    main.add(welcomeP);
-                                    main.repaint();
+                                retour.addMouseListener(new MouseListener() {
+                                    @Override
+                                    public void mouseClicked(MouseEvent e) {
+                                        main.remove(joueurP);
+                                        main.add(welcomeP);
+                                        main.repaint();
+                                        main.setCursor(Cursor.DEFAULT_CURSOR);
 
+                                    }
+
+                                    @Override
+                                    public void mousePressed(MouseEvent e) {
+                                    }
+
+                                    @Override
+                                    public void mouseReleased(MouseEvent e) {
+                                    }
+
+                                    @Override
+                                    public void mouseEntered(MouseEvent e) {
+                                        main.setCursor(back);
+                                    }
+
+                                    @Override
+                                    public void mouseExited(MouseEvent e) {
+                                        main.setCursor(Cursor.DEFAULT_CURSOR);
+                                    }
                                 });
+                                
+                              
                                 valRe2.add(retour);
                             //Bouton pour valider les noms des joueurs et lancer le jeu
                                 JButton val2 = new JButton("Valider");
-                                val2.addActionListener((ActionEvent e) -> {
-                                    Message m = new Message();
-                                    
+                                val2.addMouseListener(new MouseListener() {
+                                    @Override
+                                    public void mouseClicked(MouseEvent e) {
                                     switch (nbj[listeNiv.getSelectedIndex()]) {
                                         case "2":
                                             nomJ.add(nj1.getText());
@@ -271,7 +336,7 @@ public class VueLancement {
                                         default:
                                             break;
                                     }
-                                    
+                                    Message m = new Message();
                                     m.setNivDif(nivDif[listeDif.getSelectedIndex()]);
                                     m.setJoueurs(nomJ);
                                     m.setJoueur(nbj[listeNiv.getSelectedIndex()]);
@@ -280,6 +345,29 @@ public class VueLancement {
                                     controleur.traiterMessage(m);
                                     regle.dispose();
                                     main.dispose();
+                                    }
+
+                                    @Override
+                                    public void mousePressed(MouseEvent e) {
+                                    }
+
+                                    @Override
+                                    public void mouseReleased(MouseEvent e) {
+                                    }
+
+                                    @Override
+                                    public void mouseEntered(MouseEvent e) {
+                                        main.setCursor(heli);
+                                    }
+
+                                    @Override
+                                    public void mouseExited(MouseEvent e) {
+                                        main.setCursor(Cursor.DEFAULT_CURSOR);
+                                    }
+
+                                    
+                                    
+                                    
         });
                                 valRe2.add(val2);
                 
@@ -305,6 +393,20 @@ public class VueLancement {
         main.setVisible(true);
         main.setLocationRelativeTo(null);
     }
+
+    @Override
+    public Cursor createCurs(String chemin) {
+            Toolkit tk = Toolkit.getDefaultToolkit();
+
+            Image img; 
+            try {
+                img=tk.getImage(getClass().getResource(chemin));
+            } catch (Exception e) {
+                img=tk.getImage(getClass().getResource(chemin));
+            }
+            Cursor c = tk.createCustomCursor(img, new Point(0, 0), chemin);
+            return c;
+    }    
 
     public class PanelIleHaut extends JPanel{
         
