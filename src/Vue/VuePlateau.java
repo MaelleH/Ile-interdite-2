@@ -84,8 +84,7 @@ public class VuePlateau implements Observateur{
         
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         System.out.println(screenHeight);
-        window.setPreferredSize(new Dimension((int)(screenHeight*0.9*1.77), (int)(screenHeight*0.9)));
-        window.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(window.getSize().width/2)),(int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(window.getSize().height/2)));
+        
         window.setTitle("Ile Interdite");
         
         mainPanel = new JPanel(new BorderLayout());
@@ -121,6 +120,8 @@ public class VuePlateau implements Observateur{
         
      
         this.window.setVisible(true);
+        window.setPreferredSize(new Dimension((int)(screenHeight*0.9*1.77), (int)(screenHeight*0.9)));
+        window.setLocation((((int)(screenHeight*0.05*1.77))),(int)(((screenHeight*0.05))));
         window.pack();
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new WindowAdapter(){

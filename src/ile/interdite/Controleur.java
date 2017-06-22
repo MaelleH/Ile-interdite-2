@@ -330,6 +330,8 @@ public class Controleur implements Observateur {
                 }else if(nomT.equals(NomTrésor.Zéphyr)){
                     priseZephyr=true;
                 }
+                aventuriers.get(0).setActionsRestantes(aventuriers.get(0).getActionsRestantes()-1);
+
             }
                 
                 
@@ -641,19 +643,15 @@ public class Controleur implements Observateur {
                 Aventurier a = getAventurier(m.getJoueur());
                 if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))){
                         prendreTresor(NomTrésor.Pierre);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))){
                         prendreTresor(NomTrésor.Cristal);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))){
                         prendreTresor(NomTrésor.Calice);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))){
                         prendreTresor(NomTrésor.Zéphyr);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }else{
                     vuePlateau.popUpMessage("Il n'y a pas de trésors ici!");
                 }
