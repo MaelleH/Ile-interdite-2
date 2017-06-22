@@ -107,6 +107,7 @@ public class PanelCase extends JPanel{
         panelNomCase = new JPanel();
         panelNomCase.setLayout(new BorderLayout());
         labelNomCase = new JLabel(nomCase,SwingConstants.CENTER);
+        
         labelNomCase.setFont(new Font(labelNomCase.getFont().getFontName(),labelNomCase.getFont().getStyle(),(int) (labelNomCase.getFont().getSize()*0.8)));
       
         panelNomCase.add(labelNomCase,BorderLayout.CENTER);
@@ -216,7 +217,11 @@ public class PanelCase extends JPanel{
                 c = Couleur.BLEU_FONCE.getColor();
                 labelEtatCase.setText(etatCase.toString());
             }
-                panelNomCase.setBackground(c);
+                if(nomCase.equals("Heliport")){
+                    panelNomCase.setBackground(Color.white);
+                }else{
+                    panelNomCase.setBackground(c);
+                }
                 panelEtatCase.setBackground(c);
                 panelBas.setBackground(c);
                 panelJoueurs.setBackground(c);
