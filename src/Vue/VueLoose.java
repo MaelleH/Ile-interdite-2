@@ -6,6 +6,7 @@
 package Vue;
 
 import Util.Couleur;
+import Util.TypeMessage;
 import static Util.TypeMessage.REJOUER;
 import static Util.TypeMessage.RELANCERJEU;
 import ile.interdite.Message;
@@ -135,9 +136,8 @@ public class VueLoose  extends JFrame{
         //Bouton Quitter
             JButton quitter = new JButton("Quitter");
             quitter.addActionListener((ActionEvent e) -> {
-                main.dispose();
                 Message m = new Message();
-                m.setTypeMessage(REJOUER);
+                m.setTypeMessage(TypeMessage.QUITTER);
                 controleur.traiterMessage(m);
             });
             bouP.add(quitter);

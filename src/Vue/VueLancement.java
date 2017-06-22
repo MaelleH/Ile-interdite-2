@@ -282,6 +282,11 @@ public class VueLancement {
         
     }  
     
-     }}
+     }
+
+    public void dispose(){
+        main.dispose();
+    }
+}
 
 

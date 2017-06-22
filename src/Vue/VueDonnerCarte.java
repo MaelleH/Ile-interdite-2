@@ -266,8 +266,8 @@ public class VueDonnerCarte implements Observateur{
     }
     
     
-    
-    public static void main(String [] args) {
+    //Méthode principale (pour les tests)
+    /*public static void main(String [] args) {
         // Instanciation de la fenêtre 
         ArrayList<CarteTrésor> listeCartes = new ArrayList<>();
         CarteTrésorTrophée carte = new CarteTrésorTrophée(NomTrésor.Calice);
@@ -292,7 +292,7 @@ public class VueDonnerCarte implements Observateur{
         listeAventuriers.add(avent3);
         
         VueDonnerCarte vue = new VueDonnerCarte(listeCartes, listeAventuriers, (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2, null);
-    }
+    }*/
 
     @Override
     public void traiterMessage(Message msg) {

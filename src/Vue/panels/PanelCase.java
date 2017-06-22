@@ -17,9 +17,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,7 +36,13 @@ import javax.swing.SwingConstants;
  * @author ferreijo
  */
 public class PanelCase extends JPanel{
-    private String typeCase;
+    private String typeCase;//"ile" pour une tuile, "vide" pour case vide, "tresor" pour affichage des tresors obtenus
+    
+    private NomTrésor nomT;
+    private boolean recupere;
+    private Image imageTresorNRecup;
+    private Image imageTresorRecup;
+    
     private int etatListener; /*0 pour inactive,1 pour cliquable#deplacement,2 pour cliquable#assechement,3 pour cliquable#deplacementPvPilote,4 pour cliquable#assechemen_sac,5pour cliquable#depla_helico*/
     private Observateur controleur;
     
@@ -51,13 +63,34 @@ public class PanelCase extends JPanel{
     public PanelCase() {
         typeCase = "vide";
         pionAAfficher = new ArrayList<>();
-        this.setBackground(Color.black);
+    }
+    
+    public PanelCase(NomTrésor nomt) {
+        typeCase = "tresor";
+        setNomT(nomt);
+        setRecupere(false);
+        pionAAfficher = new ArrayList<>();
+        this.setBackground(Couleur.GRIS_CLAIR.getColor());
+        
+        try {
+            imageTresorRecup = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/IconesTresors/"+getNomT().toString().toLowerCase()+".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PanelCase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+;
+        try {
+            imageTresorNRecup = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/IconesTresors/"+getNomT().toString().toLowerCase()+"_terne.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PanelCase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+;
     }
     
     public PanelCase(String nomCase,EtatTuile etatCase,NomTrésor tresor,Observateur obs) {
         typeCase = "ile";
         etatListener = 0;
         controleur = obs;
+        this.setBackground(Couleur.GRIS_CLAIR.getColor());
         
         pionAAfficher = new ArrayList<>();
         
@@ -203,19 +236,43 @@ public class PanelCase extends JPanel{
             }
             //Affichage des joueurs
             panelJoueurs.afficherJoueurs(pionAAfficher);
+        }else if(typeCase.equals("tresor")){
+            super.paintComponent(g);
+            int borderWidth = this.getInsets().left+this.getInsets().right;
+            int borderHeight = this.getInsets().top+this.getInsets().bottom;
+            if(isRecupere()){
+                System.out.println("oui");
+                g.drawImage(imageTresorRecup, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
+            }else{
+                System.out.println("oui1");
+                g.drawImage(imageTresorNRecup, borderWidth/2, borderHeight/2, this.getWidth()-borderWidth, this.getHeight()-borderHeight, this);
+            }
+            
+            if(nomT.equals(NomTrésor.Cristal)){
+                this.setBackground(Couleur.TOMATE.getColor());
+            }else if(nomT.equals(NomTrésor.Calice)){
+                this.setBackground(Couleur.BLEU_CALICE.getColor());
+            }else if(nomT.equals(NomTrésor.Zéphyr)){
+                this.setBackground(Couleur.JAUNE_GOLDE.getColor());
+            }else if(nomT.equals(NomTrésor.Pierre)){
+                this.setBackground(Couleur.MAUVE.getColor());
+            }
+            revalidate();
         }
     }
     
     
     
     public void updateCase(String nomCase,EtatTuile etatCase,NomTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
+        
         if (typeCase == "ile"){
             setNomCase(nomCase);
             setEtatCase(etatCase);
             setTresor(tresor);
             this.pionAAfficher = pionAAfficher;
-            this.repaint();
+            
         }
+        this.repaint();
     }
 
     
@@ -250,6 +307,34 @@ public class PanelCase extends JPanel{
 
     public void setEtatListener(int etatListener) {
         this.etatListener = etatListener;
+    }
+
+    /**
+     * @return the nomT
+     */
+    public NomTrésor getNomT() {
+        return nomT;
+    }
+
+    /**
+     * @param nomT the nomT to set
+     */
+    public void setNomT(NomTrésor nomT) {
+        this.nomT = nomT;
+    }
+
+    /**
+     * @return the recupere
+     */
+    public boolean isRecupere() {
+        return recupere;
+    }
+
+    /**
+     * @param recupere the recupere to set
+     */
+    public void setRecupere(boolean recupere) {
+        this.recupere = recupere;
     }
     
     
