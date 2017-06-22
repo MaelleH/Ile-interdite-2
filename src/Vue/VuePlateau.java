@@ -204,6 +204,10 @@ public class VuePlateau implements Observateur{
         popUp = new PanelFadingPopUP(message,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
     }
     
+    public void popUpGagne(){
+        
+    }
+    
     public void popUpMonteeDesEaux() {
         popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
     }

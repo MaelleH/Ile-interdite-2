@@ -14,7 +14,7 @@ public class Grille {
 
     public Grille() {
         HSTuile = new HashMap<>();
-        creerGrille();              //creerGrille() ou CreerGrilleProf()
+        creerGrille();              //creerGrille() ou CreerGrilleProf() ou creerGrilleTest()
     }
         
     public HashMap<Coordonnees,Tuile> getHSTuile() {
@@ -129,6 +129,34 @@ public class Grille {
         getTuile("Le Rocher Fantome").setEtat(Utils.EtatTuile.COULEE);
         getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);
         getTuile("Le Temple de La Lune").setEtat(Utils.EtatTuile.COULEE);
+    }
+    
+    
+    //creation de la grille de test
+    public void creerGrilleTest(){
+        ArrayList<Tuile> tuiles = creertuiles();
+        
+        int n=0;
+        for (int i=1;i<=6;i++){
+            for (int o=1;o<=6;o++){
+                if (  (i==1 && (o<3||o>4)) || (i==2 && (o==1||o==6)) || (i==5 && (o==1||o==6))  || (i==6 && (o<3||o>4))  ){
+                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)), null);
+                }
+                else{
+                    //On place les tuiles dans l'ordre
+                    HSTuile.put(new Coordonnees(Integer.toString(i),Integer.toString(o)),tuiles.get(n));
+                    n=n+1;
+                }
+            }
+        }
+        //Mise a jour des etats des tuiles
+        getTuile("Le Lagon Perdu").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Observatoire").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Le Palais des Marees").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("Les Dunes de l’Illusion").setEtat(Utils.EtatTuile.COULEE);
+        getTuile("Le Rocher Fantome").setEtat(Utils.EtatTuile.INONDEE);
+        getTuile("La Porte de Bronze").setEtat(Utils.EtatTuile.INONDEE);
+        
     }
     
     //donne les coordonnées d'une tuile

@@ -24,13 +24,13 @@ public class EchelleNiveauEau {
     public int getNbInond() {
         int nbI=5;
         if(getNiveauEau()<=2){
-            nbI = 1;
-        }else if(getNiveauEau()>=3 && getNiveauEau()<=5){
             nbI = 2;
-        }else if(getNiveauEau()>=6 && getNiveauEau()<=7){
+        }else if(getNiveauEau()>=3 && getNiveauEau()<=5){
             nbI = 3;
-        }else if(getNiveauEau()>=8 && getNiveauEau()<=9){
+        }else if(getNiveauEau()>=6 && getNiveauEau()<=7){
             nbI = 4;
+        }else if(getNiveauEau()>=8 && getNiveauEau()<=9){
+            nbI = 5;
         }
         return nbI;
     }
