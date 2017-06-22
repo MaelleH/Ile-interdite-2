@@ -476,8 +476,6 @@ public class Controleur implements Observateur {
                 c = m.getCoord();
                 aventuriers.get(0).deplacement(c,grille);
                 updateVuePlateau();
-                gagne();
-                PopUpGif p = new PopUpGif(sam.getChemin());
                 break;
 
             case ASSECHER:
