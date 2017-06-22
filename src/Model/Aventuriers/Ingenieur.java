@@ -33,11 +33,9 @@ public class Ingenieur extends Aventurier {
                 }
                        
             }else{                                                   //Sinon on l'informe qu'il n'a plus d'action
-                System.out.println("Plus d'actions....");
                 afficherInformation("Vous ne pouvez plus effectuer d'actions!");
             } 
         }else{                                                   //Sinon on l'informe qu'il ne peut pas assecher la tuile
-            System.out.println("Assechement non possible ici!");
             afficherInformation("Vous ne pouvez pas assécher cette case!");
         }
     }

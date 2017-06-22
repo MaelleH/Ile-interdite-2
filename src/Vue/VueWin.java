@@ -47,7 +47,7 @@ public class VueWin  extends JFrame implements Curseurs{
         
         // CReation de la fenetre
         main = new JFrame();
-        main.setTitle("Vous avez gagnés!");
+        main.setTitle("Vous avez gagné!");
         main.setSize(600, 250);
         main.setBackground(Color.WHITE);
         
@@ -57,7 +57,7 @@ public class VueWin  extends JFrame implements Curseurs{
         main.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e) {
-                int reponse = JOptionPane.showConfirmDialog(main,"Quitter le jeu?", "VOulez vous quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                int reponse = JOptionPane.showConfirmDialog(main,"Quitter le jeu?", "Voulez vous quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                 if (reponse==JOptionPane.YES_OPTION){
                     main.dispose();
                     Message m = new Message();
