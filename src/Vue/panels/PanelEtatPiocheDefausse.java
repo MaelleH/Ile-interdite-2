@@ -5,12 +5,16 @@
  */
 package Vue.panels;
 
+import Util.Couleur;
 import com.sun.javafx.css.Rule;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Label;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +25,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 /**
  *
@@ -37,10 +43,12 @@ public class PanelEtatPiocheDefausse extends JPanel{
     
     private JPanel panelCentral;
     
-    private JPanel panelPioche;
+    private PanelDosCarte panelPioche;
+    private JLabel labelNbCartesPioche;
     private Image imagePioche;
     
     private JPanel panelDefausse;
+    private JPanel panelTempDefausse;
     private JLabel labelDefausse;
     private JScrollPane scrollPaneDefausse;
 
@@ -51,7 +59,7 @@ public class PanelEtatPiocheDefausse extends JPanel{
         
         
         this.setLayout(new BorderLayout());
-        
+        this.setBorder(BorderFactory.createLineBorder(Couleur.GRIS_CLAIR.getColor(),2));
         
         //Partie Titre
         panelTitreCarte = new JPanel();
@@ -69,61 +77,75 @@ public class PanelEtatPiocheDefausse extends JPanel{
         
         //Partie Centrale
         panelCentral = new JPanel(new GridLayout(2, 1));
+        panelCentral.setBorder(BorderFactory.createEmptyBorder(2, 2, 2 ,2));
         this.add(panelCentral,BorderLayout.CENTER);
             //Partie Centrale - Pioche
-            panelPioche = new JPanel();
-            panelPioche.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
             try {
                 if(typeCarte == 0){
                     imagePioche = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/DosDeCartes/Fond_Bleu.png"));
-
                 }else{
                     imagePioche = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/DosDeCartes/Fond_Rouge.png"));
                 }
             } catch (IOException ex) {
                 Logger.getLogger(PanelEtatPiocheDefausse.class.getName()).log(Level.SEVERE, null, ex);
             }
+            panelPioche = new PanelDosCarte(imagePioche);
+            
+            panelPioche.setLayout(new BorderLayout());
+            labelNbCartesPioche = new JLabel(((Integer)nbCartesPioche).toString(),SwingConstants.CENTER);
+            panelPioche.add(labelNbCartesPioche,BorderLayout.CENTER);
+
+            labelNbCartesPioche.setFont(new Font("Serif", Font.PLAIN, 40));
+            if(typeCarte == 0){
+                labelNbCartesPioche.setForeground(Couleur.BLEU_FONCE.getColor());
+            }else{
+                labelNbCartesPioche.setForeground(Couleur.JAUNE.getColor());
+            }
+                  
+            
+            
+            
             panelCentral.add(panelPioche);
             //Partie Centrale - Defausse
             panelDefausse = new JPanel(new BorderLayout());
+            panelDefausse.setBorder(BorderFactory.createEmptyBorder(2, 2, 2 ,2));
                 //Label
                 labelDefausse = new JLabel("Contenu de la défausse :",SwingConstants.LEFT);
                 panelDefausse.add(labelDefausse,BorderLayout.NORTH);
                 //ScrollPane
-                scrollPaneDefausse = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                //scrollPaneDefausse.setColumnHeaderView(new Rule(Rule., true));
                 setLabelsScrollPane();
-                panelDefausse.add(scrollPaneDefausse,BorderLayout.SOUTH);
+                panelDefausse.add(scrollPaneDefausse,BorderLayout.CENTER);
             panelCentral.add(panelDefausse);
             
             
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
-        g.drawImage(imagePioche,(int) panelPioche.getLocation().getX(),(int) panelPioche.getLocation().getX(),(int) panelPioche.getSize().getWidth(), (int) panelPioche.getSize().getHeight(), this);
+    public void update(int nbCartesPioche, ArrayList<String> listeCartesDefausse){
+        this.nbCartesPioche = nbCartesPioche;
+        this.listeCartesDefausse = listeCartesDefausse;
+        labelNbCartesPioche.setText(((Integer)nbCartesPioche).toString());
+        setLabelsScrollPane();
+        repaint();
+        revalidate();
     }
-    
-    
     
     public void setLabelsScrollPane(){
-        scrollPaneDefausse.removeAll();
-        
-        JLabel label;
-        for(String contenuLabel : listeCartesDefausse){
-            label = new JLabel(contenuLabel);
-            scrollPaneDefausse.add(label);
-        }
+        JList listeLabels = new JList(listeCartesDefausse.toArray());
+        scrollPaneDefausse = new JScrollPane(listeLabels,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     }
     
     
-    public static void main(String [] args) {
+    /*public static void main(String [] args) {
         JFrame window = new JFrame();
-        window.setSize(200, 200);
+        window.setSize(100, 100);
         
         
         ArrayList<String> listeCartesDefausse= new ArrayList<>();
+        listeCartesDefausse.add("ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        listeCartesDefausse.add("oui");
+        listeCartesDefausse.add("oui");
+        listeCartesDefausse.add("oui");
+        listeCartesDefausse.add("oui");
         listeCartesDefausse.add("oui");
         listeCartesDefausse.add("oui");
         listeCartesDefausse.add("oui");
@@ -133,5 +155,5 @@ public class PanelEtatPiocheDefausse extends JPanel{
         window.add(new PanelEtatPiocheDefausse(0, 24, listeCartesDefausse));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
-    }
+    }*/
 }

@@ -21,7 +21,9 @@ public enum Images {
     goutte("/Vue/Imagewin/goutte.png"),
     interro("/Vue/Imagewin/interro.png"),
     carte("/Vue/Imagewin/carte.png"),
-    back("/Vue/Imagewin/back.png")
+    back("/Vue/Imagewin/back.png"),
+    sam("/Vue/Imagewin/sam.gif"),
+    heliVole("/Vue/Imagewin/helivole.gif")
     ;
     
     
