@@ -128,23 +128,18 @@ public class Controleur implements Observateur {
     public void finTour(){
         vuePlateau.setInactive(aventuriers.get(0).getNom());
         //On redonne le nombre d'actions max a l'aventurier
-        aventuriers.get(0).resetActionsRestantes();
+        
         //pioche des 2 cartes trésor
         for(int i = 0;i<2;i++){
-            if(piocheCarteTrésor.isEmpty()){    //si la pioche tresor est vide
-                remplirPiocheTresor();              //on la remplit
-            }//else{
             piocherCT(aventuriers.get(0));  //l'aventurier pioche une carte
-            //}
-            
         }
-        aventuriers.get(0).setMaxActions();
         
         //picohe du nombre nécéssaire de cartes Inondation
         for (int c=1;c<=niveauEau.getNbInond();c++){
             inonderTuile();
         }
-
+        
+        aventuriers.get(0).resetActionsRestantes();
         //Passage au joueur suivant
         setJoueurSuivant();
     }
@@ -200,16 +195,34 @@ public class Controleur implements Observateur {
 
     public void piocherCT(Aventurier a){
         if(piocheCarteTrésor.isEmpty()){                                        //si la pioche Trésor est vide
-            remplirPiocheTresor();                                              //On la remplit
-        }
-        CarteTrésor carte= piocheCarteTrésor.get(0);                            //On pioche une carte
-        piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
+            remplirPiocheTresor();   
+            if(piocheCarteTrésor.isEmpty()){  
+                //si les joueurs ont déja toutes les cartes disponibles
+                vuePlateau.popUpMessage("Vous possédez toutes les cartes");                                             //On la remplit
+            }else{
+                //On pioche une carte
+                CarteTrésor carte= piocheCarteTrésor.get(0);   
+                piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
 
-        if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
-            monteeDesEaux();                                                    //on augmente le niveau d'eau
+                if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
+                    monteeDesEaux();                                                    //on augmente le niveau d'eau
+                }else{
+                    a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
+                }
+            }
         }else{
-            a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
-        }
+                //On pioche une carte
+                CarteTrésor carte= piocheCarteTrésor.get(0);   
+                piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
+
+                if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
+                    monteeDesEaux();                                                    //on augmente le niveau d'eau
+                }else{
+                    a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
+                }
+            }
+                             
+        
 
 
     }
@@ -273,24 +286,28 @@ public class Controleur implements Observateur {
 
     public boolean priseTresorPossible(NomTrésor nomT) {
             int nbCartes=0;
-
-            if ((aventuriers.get(0).getMainCarteTrésor().size()>=4)&&(nomT!=null)){
-
-                for(CarteTrésor carte :aventuriers.get(0).getMainCarteTrésor()){
-                    if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                        if(((CarteTrésorTrophée)carte).getNomT().equals(nomT)){
-                            nbCartes = nbCartes +1;  
+            if(aventuriers.get(0).getActionsRestantes()!=0){
+                if ((aventuriers.get(0).getMainCarteTrésor().size()>=4)&&(nomT!=null)){
+                    for(CarteTrésor carte :aventuriers.get(0).getMainCarteTrésor()){
+                        if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
+                            if(((CarteTrésorTrophée)carte).getNomT().equals(nomT)){
+                                nbCartes = nbCartes +1;  
+                            }
                         }
                     }
-                }
-                if(nbCartes>=4){
-                    return true;
+                    if(nbCartes>=4){
+                        return true;
+                    }else{
+                        vuePlateau.popUpMessage("Il manque des cartes!");
+                    }
                 }else{
                     vuePlateau.popUpMessage("Il manque des cartes!");
                 }
+
             }else{
-                vuePlateau.popUpMessage("Il manque des cartes!");
+                vuePlateau.popUpMessage("Plus d'actions restantes");
             }
+            
             return false;                
     }
 
@@ -487,6 +504,8 @@ public class Controleur implements Observateur {
                     vuePlateau.popUpMessage("Vous n'avez pas de cartes!");
                 }else if(aventuriersTemp.isEmpty()){
                     vuePlateau.popUpMessage("Personne à proximité");
+                }else if(aventuriers.get(0).getActionsRestantes()==0){
+                    vuePlateau.popUpMessage("Plus d'actions restantes");
                 }else{
                     vuePlateau.setInactive(aventuriers.get(0).getNom());
                     vuePlateau.popUpDonnerCarte(aventuriers.get(0).getMainCarteTrésor(), aventuriersTemp);
@@ -571,11 +590,6 @@ public class Controleur implements Observateur {
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))){
                         prendreTresor(NomTrésor.Zéphyr);
                 }
-                System.out.println("----- Etat Tresors -----");
-                System.out.println("Calice = "+priseCalice);
-                System.out.println("Cristal = "+priseCristal);
-                System.out.println("Pierre = "+prisePierre);
-                System.out.println("Zephyr = "+priseZephyr);
                 updateVuePlateau();
                 break;
 
@@ -588,7 +602,6 @@ public class Controleur implements Observateur {
             case REJOUER:
                 vuePlateau.dispose();
                 initPartie(nbJoueurs, nivDif, nomJ);
-                
                 break;
                 
             case QUITTER:

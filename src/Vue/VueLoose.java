@@ -136,6 +136,7 @@ public class VueLoose  extends JFrame{
         //Bouton Quitter
             JButton quitter = new JButton("Quitter");
             quitter.addActionListener((ActionEvent e) -> {
+                main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(TypeMessage.QUITTER);
                 controleur.traiterMessage(m);

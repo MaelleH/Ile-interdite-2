@@ -71,7 +71,7 @@ public class Pilote extends Aventurier {
 
     @Override
     public void resetActionsRestantes() {
-        setMaxActions();                                    //On réinitialise ses actions
+        super.resetActionsRestantes();                                    //On réinitialise ses actions
         pouvoirUtilise=false;                               //On réinitialise le pouvoir du pilote
         System.out.println("Pouvoir du pilote reinitialsé");
     }

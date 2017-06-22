@@ -34,7 +34,7 @@ public class PanelFadingPopUP extends JFrame{
         this.message = new JLabel(message,SwingConstants.CENTER);
         mainPanel.add(this.message,BorderLayout.CENTER);
         
-        this.setSize(200, 50);
+        this.setSize(300, 50);
         this.setLocation(x-(getWidth()/2), y-(getHeight()/2)-300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setUndecorated(true);

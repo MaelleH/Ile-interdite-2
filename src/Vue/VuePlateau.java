@@ -50,6 +50,8 @@ public class VuePlateau implements Observateur{
     private JPanel panelAventuriers;
     private VueDefausse vueDefausse;
     private VueDonnerCarte vueDonnerCarte;
+    private  PanelFadingPopUP popUp;
+    
     
     private Observateur controleur;
     private ArrayList<PanelAventurier> listePanelAventuriers;
@@ -174,11 +176,11 @@ public class VuePlateau implements Observateur{
     }
     
     public void popUpMessage(String message) {
-        PanelFadingPopUP popUp = new PanelFadingPopUP(message,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
+        popUp = new PanelFadingPopUP(message,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
     }
     
     public void popUpMonteeDesEaux() {
-        PanelFadingPopUP popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
+        popUp = new PanelFadingPopUP("Montée des Eaux!!!",(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2));
     }
     
     public void updateCase(String coord,String nomCase,EtatTuile etatCase,NomTrésor tresor,ArrayList<Utils.Pion> pionAAfficher){
@@ -197,6 +199,9 @@ public class VuePlateau implements Observateur{
         }
         if(vueDonnerCarte!=null){
             vueDonnerCarte.dispose();
+        }
+        if(popUp!=null){
+            popUp.dispose();
         }
     }
     
