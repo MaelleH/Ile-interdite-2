@@ -34,10 +34,6 @@ import Vue.VueLancement;
 import Vue.VueLoose;
 import Vue.VuePlateau;
 import Vue.VueWin;
-import Vue.panels.PanelCarteTrophee;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controleur implements Observateur {
 
@@ -200,15 +196,23 @@ public class Controleur implements Observateur {
     
     public ArrayList<String> getListeCarteDefausseTresor(){
         ArrayList<String> listeCarteDefausse = new ArrayList<>();
-        for(CarteTrésor cT : defausseCarteTrésor){
+        /*for(CarteTrésor cT : defausseCarteTrésor){
             if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                 listeCarteDefausse.add(((Activable)cT).getTypeCarteActivable().toString());
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
                 listeCarteDefausse.add(cT.getTypeCarteTresor().toString());
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                listeCarteDefausse.add(((CarteTrésorTrophée)cT).toString());
+                if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Calice)){
+                    listeCarteDefausse.add("Calice");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Cristal)){
+                    listeCarteDefausse.add("Cristal");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Pierre)){
+                    listeCarteDefausse.add("Pierre");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Zéphyr)){
+                    listeCarteDefausse.add("Zephyr");
+                }
             }
-        }
+        }*/
         return listeCarteDefausse;
     }
 
@@ -478,6 +482,7 @@ public class Controleur implements Observateur {
                 c = m.getCoord();
                 aventuriers.get(0).deplacement(c,grille);
                 updateVuePlateau();
+                gagne();
                 break;
 
             case ASSECHER:
@@ -667,6 +672,8 @@ public class Controleur implements Observateur {
             case REJOUER:
                 vuePlateau.dispose();
                 initPartie(nbJoueurs, nivDif, nomJ);
+                vueGagner = null;
+                vuePerdu=null;
                 break;
                 
             case QUITTER:
@@ -910,7 +917,21 @@ public class Controleur implements Observateur {
     public void gagne(){
         if(isGagne()){
             vuePlateau.setAllInactive();
-
+            /*PopUpGif p = new PopUpGif(sam.getChemin());               
+            p.setVisible(true);
+              
+                Thread t = new Thread() {
+                    @Override
+                        public void run() {
+                            try{
+                               Thread.sleep(3000);
+                               p.setVisible(false);
+                            }catch(InterruptedException e){
+ 
+                            }
+                        }
+                };
+                t.start();*/
             if(vueGagner==null){
                 vueGagner = new VueWin(this);
             }
