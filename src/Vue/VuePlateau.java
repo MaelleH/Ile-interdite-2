@@ -257,6 +257,9 @@ public class VuePlateau implements Observateur{
         for(String c : listeCases.keySet()){
             listeCases.get(c).setEtatListener(0);
         }
+        for(PanelAventurier pA : listePanelAventuriers){
+            pA.resetClickedSauf(null);
+        }
     }
     
     public void showAssechables(Set<Coordonnees> listeCoordonnees){

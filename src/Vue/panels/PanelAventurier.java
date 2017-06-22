@@ -238,11 +238,13 @@ public class PanelAventurier  extends JPanel implements Observateur{
         switch(msg.getTypeMessage()){
             case PROPOSER_ASSECHEMENT_SAC :
                 msg.setpA(this);
+                resetClickedSauf(msg.getpCA());
                 controleur.traiterMessage(msg);
                 break;
 
             case PROPOSER_DEPLACEMENT_HELICO:
                 msg.setpA(this);
+                resetClickedSauf(msg.getpCA());
                 controleur.traiterMessage(msg);
                 break;
             
@@ -250,7 +252,15 @@ public class PanelAventurier  extends JPanel implements Observateur{
         
     }
     
-    
+    public void resetClickedSauf(PanelCarteActivable pca){
+        for(PanelCarteTresor pCA : listeCarteTresor){
+            if(pCA.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
+                if(pca!=pCA){
+                    pCA.setClicked(false);
+                }
+            }
+        }
+    }
 }
 
  

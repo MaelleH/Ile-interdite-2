@@ -569,7 +569,6 @@ public class Controleur implements Observateur {
                     m.getpCA().setClicked(!m.getpCA().getClicked()); 
                     if(m.getpCA().getClicked()){
                         vuePlateau.showAssechablesSac(assechementPossibleSac().keySet());
-                        m.getpCA().setClicked(!m.getpCA().getClicked()); 
                     }
                 }
 
