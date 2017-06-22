@@ -200,15 +200,23 @@ public class Controleur implements Observateur {
     
     public ArrayList<String> getListeCarteDefausseTresor(){
         ArrayList<String> listeCarteDefausse = new ArrayList<>();
-        for(CarteTrésor cT : defausseCarteTrésor){
+        /*for(CarteTrésor cT : defausseCarteTrésor){
             if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                 listeCarteDefausse.add(((Activable)cT).getTypeCarteActivable().toString());
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
                 listeCarteDefausse.add(cT.getTypeCarteTresor().toString());
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                listeCarteDefausse.add(((CarteTrésorTrophée)cT).toString());
+                if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Calice)){
+                    listeCarteDefausse.add("Calice");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Cristal)){
+                    listeCarteDefausse.add("Cristal");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Pierre)){
+                    listeCarteDefausse.add("Pierre");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Zéphyr)){
+                    listeCarteDefausse.add("Zephyr");
+                }
             }
-        }
+        }*/
         return listeCarteDefausse;
     }
 
