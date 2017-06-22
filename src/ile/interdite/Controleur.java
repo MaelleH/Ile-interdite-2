@@ -36,7 +36,6 @@ import Vue.panels.PanelCarteTrophee;
 
 public class Controleur implements Observateur {
 
-    //Collection<CarteTrésor> piocheCarteTrésor;
     private Grille grille;
     private VueLancement vueL;
     private VueLoose vuePerdu;
@@ -77,7 +76,7 @@ public class Controleur implements Observateur {
         niveauEau = new EchelleNiveauEau(nivdif);
         
         //Créer la grille
-        grille = new Grille();
+        grille = new Grille();      //Modifier dans la classe Grille pour avoir les differentes grilles
         
         //Sauver les valeurs
         this.nbJoueurs=nbj;
@@ -97,6 +96,7 @@ public class Controleur implements Observateur {
         initCartetresor();
         
         initPiocheInondation();
+        //Enlevever cette partie pour le test 1
         for (int a=1;a<=6;a++){                 //inondation de 6 tuiles aleatoires au début
             inonderTuile();
         }
@@ -135,10 +135,15 @@ public class Controleur implements Observateur {
             piocherCT(aventuriers.get(0));  //l'aventurier pioche une carte
         }
         
+        
         //picohe du nombre nécéssaire de cartes Inondation
+        
+        /*Enlever pour la grille de test 1, pas d'inondation lors de la fin du tour(plus simple)*/
         for (int c=1;c<=niveauEau.getNbInond();c++){
             inonderTuile();
         }
+        /////////////////////////////////////////////
+        
         
         aventuriers.get(0).resetActionsRestantes();
         //Passage au joueur suivant
@@ -260,7 +265,7 @@ public class Controleur implements Observateur {
                             if(i<=3){
                                 toRemove.add(carte);
                                 i++;
-                            } 
+                            }
                         }
                     }
                 }
@@ -393,10 +398,9 @@ public class Controleur implements Observateur {
         for(CarteInondation ci : defausseCarteInondation){
             piocheCarteInondation.add(ci);                                      //on ajoute toutes les cartes de la defausse dans la pioche (les cartes de l'ancienne défausse sont les premieres de la pioche
         }
-        defausseCarteInondation.clear();       
-        //on vide la defausse
+        defausseCarteInondation.clear();                                        //on vide la defausse     
         
-        if(isPerdu()){
+        if(isPerdu()){                                                          //on vérifie qi la partie est perdue
             perdu();
         }
     }
@@ -685,12 +689,21 @@ public class Controleur implements Observateur {
     public void creationAventurier(int nbjoueur){
         aventuriers = new ArrayList<>();
 
-        Explorateur explo = new Explorateur(grille.getCoordTuile("La Porte de Bronze"));
-        Ingenieur inge = new Ingenieur(grille.getCoordTuile("La Porte de Cuivre"));
-        Messager mess = new Messager(grille.getCoordTuile("La Porte d’Argent"));
         Navigateur navig = new Navigateur(grille.getCoordTuile("La Porte d’Or"));
-        Pilote pilot = new Pilote(grille.getCoordTuile("Heliport"));
+        Messager mess = new Messager(grille.getCoordTuile("La Porte d’Argent"));
         Plongeur plong= new Plongeur(grille.getCoordTuile("La Porte de Fer"));
+        Ingenieur inge = new Ingenieur(grille.getCoordTuile("La Porte de Cuivre"));
+        Explorateur explo = new Explorateur(grille.getCoordTuile("La Porte de Bronze"));
+        Pilote pilot = new Pilote(grille.getCoordTuile("Heliport"));
+        
+        
+        //Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));      //grille test 1
+        //Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule")); //grille test 1
+        //Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux")); //grille test 1
+        //Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));         //grille test 1
+        
+        //Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));      //grille test 2
+        //Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));        //grille test 2
         
         aventuriers.add(explo);
         aventuriers.add(inge);
@@ -701,13 +714,28 @@ public class Controleur implements Observateur {
         Collections.shuffle((List<?>) aventuriers);
         
         ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
+        /*choix des joueurs aléatoire, a enlever pour les grilles de test*/
         for (int i=0 ; i<nbjoueur; i++){
             aventuriersTemp.add(aventuriers.get(i));
-            //* Ecrire pour chaque joueur son rôle en utilisant joueur i : get(i).getNom();
         }
+        
+        //Pour la grille de test 1 : deplacement, assechement, case coulée avec aventurier dessus
+        /*
+        aventuriersTemp.add(plong);
+        aventuriersTemp.add(pilot);
+        aventuriersTemp.add(explo);
+        aventuriersTemp.add(inge);
+        */
+        
+        //Pour la grille de test 2 : tresor, donnation de cartes
+        /*aventuriersTemp.add(mess);
+        aventuriersTemp.add(pilot);
+        */
         
         aventuriers = aventuriersTemp;
     }
+    
+    
     
               
     public void updateVuePlateau(){
@@ -751,6 +779,13 @@ public class Controleur implements Observateur {
     //méthode qui vérifie si la partie est perdue.
     public boolean isPerdu(){
         //si les 2 cases d'un tresor sont coulées, la partie est perdue
+        
+        
+        //grille test 1
+        //return false;
+        
+        
+        
         if((grille.getTuile("Le Temple du Soleil").getEtat()==EtatTuile.COULEE)&&(grille.getTuile("Le Temple de La Lune").getEtat()==EtatTuile.COULEE)&&prisePierre==false){
             return true;
         }

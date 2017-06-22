@@ -140,7 +140,7 @@ public class Regles extends JFrame{
             
             JPanel pMenuB= new JPanel(new GridLayout(1, 3));
                         mainP.add(pMenuB,SOUTH);
-                            //BOUTON Pred
+                            //BOUTON Precedent
                                 pred = new JButton("Précedent");
                                 pred.setEnabled(false);
                                     pred.addActionListener((ActionEvent e) -> {
@@ -205,7 +205,7 @@ public class Regles extends JFrame{
                                           mainP.add(p7,CENTER);
                                           p7.setVisible(true);
 
-                                          suivant.setEnabled(false);
+                                          suivant.setEnabled(true);
                                       }
                                       
                                     }); 
