@@ -123,6 +123,7 @@ public class Controleur implements Observateur {
         }
         
         vuePlateau.setActive(aventuriers.get(0).getNom());
+        aventuriers.get(0).resetActionsRestantes();
         
     }
 
@@ -204,16 +205,20 @@ public class Controleur implements Observateur {
             remplirPiocheTresor();   
             if(piocheCarteTrésor.isEmpty()){  
                 //si les joueurs ont déja toutes les cartes disponibles
-                vuePlateau.popUpMessage("Vous possédez toutes les cartes");                                             //On la remplit
+                vuePlateau.popUpMessage("Vous possédez toutes les cartes");
             }else{
                 //On pioche une carte
-                CarteTrésor carte= piocheCarteTrésor.get(0);   
-                piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
+                CarteTrésor carte= piocheCarteTrésor.get(0);
+                
 
                 if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
+                    defausseCarteTrésor.add(carte);
+                    System.out.println("carte defaussée");
                     monteeDesEaux();                                                    //on augmente le niveau d'eau
+                    
                 }else{
                     a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
+                    piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
                 }
             }
         }else{
@@ -222,6 +227,8 @@ public class Controleur implements Observateur {
                 piocheCarteTrésor.remove(0);                                            //On l'enlève de la pioche
 
                 if(carte.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){   //Si c'est une carte montée des eaux
+                    defausseCarteTrésor.add(carte);
+                    System.out.println("carte defaussée");
                     monteeDesEaux();                                                    //on augmente le niveau d'eau
                 }else{
                     a.getMainCarteTrésor().add(carte);                                  //Sinon on l'ajoute à la main de l'aventurier
@@ -271,6 +278,7 @@ public class Controleur implements Observateur {
                 }
                 
                 aventuriers.get(0).getMainCarteTrésor().removeAll(toRemove);
+                defausseCarteTrésor.addAll(toRemove);
                 
                 if(nomT.equals(NomTrésor.Calice)){
                     priseCalice=true;
@@ -390,6 +398,7 @@ public class Controleur implements Observateur {
     public void monteeDesEaux(){
         vuePlateau.popUpMonteeDesEaux();
         niveauEau.monteeDesEaux();
+        
         Utils.melangerCI(defausseCarteInondation);                              //On melange la defausse des cartes inondation
         for(CarteInondation ci : piocheCarteInondation){                        //on ajoute la pioche a la defausse 
             defausseCarteInondation.add(ci);
@@ -449,6 +458,7 @@ public class Controleur implements Observateur {
                     if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                         if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.Helicoptere)){
                             aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                            defausseCarteTrésor.add(carte);
                             updateVuePlateau();
                             break;
                         }
@@ -468,6 +478,7 @@ public class Controleur implements Observateur {
                     if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                         if(((Activable)carte).getTypeCarteActivable().equals(TypeCarteActivable.SacsDeSable)){
                             aventuriers.get(0).getMainCarteTrésor().remove(carte);
+                            defausseCarteTrésor.add(carte);
                             updateVuePlateau();
                             break;
                         }
@@ -594,15 +605,19 @@ public class Controleur implements Observateur {
                 Aventurier a = getAventurier(m.getJoueur());
                 if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))){
                         prendreTresor(NomTrésor.Pierre);
+                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))){
                         prendreTresor(NomTrésor.Cristal);
+                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))){
                         prendreTresor(NomTrésor.Calice);
+                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))){
                         prendreTresor(NomTrésor.Zéphyr);
+                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 updateVuePlateau();
                 break;
