@@ -6,32 +6,25 @@
 package Vue;
 
 import Util.Couleur;
+import Util.Curseurs;
+import Util.Images;
 import static Util.TypeMessage.QUITTER;
 import static Util.TypeMessage.REJOUER;
 import static Util.TypeMessage.RELANCERJEU;
-import static Util.TypeMessage.VAL2;
-import Vue.panels.PanelCarteTrophee;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import static java.awt.BorderLayout.NORTH;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -44,7 +37,7 @@ import javax.swing.SwingConstants;
  *
  * @author heyrendm
  */
-public class VueWin  extends JFrame{
+public class VueWin  extends JFrame implements Curseurs{
     private Observateur controleur;
     private JFrame main;
     private JPanel mainP;
@@ -67,24 +60,19 @@ public class VueWin  extends JFrame{
                 int reponse = JOptionPane.showConfirmDialog(main,"Quitter le jeu?", "VOulez vous quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                 if (reponse==JOptionPane.YES_OPTION){
                     main.dispose();
+                    Message m = new Message();
+                    m.setTypeMessage(QUITTER);
+                    controleur.traiterMessage(m);
                 }
             }
 
             
         });
         
-        
-        Toolkit tk = Toolkit.getDefaultToolkit();
-
-        Image img; 
-        try {
-            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
-        } catch (Exception e) {
-            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
-        }
-        Cursor monCurseur = tk.createCustomCursor(img, new Point(0, 0), "heli");
-        main.setCursor(monCurseur);
-        
+        //curseur
+        Cursor heli =createCurs(Images.heli.getChemin());
+        Cursor carte =createCurs(Images.carte.getChemin());
+        Cursor goutte =createCurs(Images.goutte.getChemin());
         
         
         //panel principal
@@ -140,33 +128,98 @@ public class VueWin  extends JFrame{
         
         //BOUTON rejouer
         JButton rej = new JButton("Rejouer");
-            rej.addActionListener((ActionEvent e) -> {
+            rej.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 Message m = new Message();
                 m.setTypeMessage(REJOUER);
                 controleur.traiterMessage(m);
                 main.dispose();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.setCursor(heli);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);
+            }
+
             }); 
         bouP.add(rej);
 
         //Bouton Quitter
             JButton quitter = new JButton("Quitter");
-            quitter.addActionListener((ActionEvent e) -> {
+            quitter.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(QUITTER);
                 controleur.traiterMessage(m);
-            });
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.setCursor(goutte);
+            }
+
+            @Override
+            
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);     
+            }
+        });
             bouP.add(quitter);
         //Bouton pour menu principal
             JButton mp = new JButton("Menu Principal");
-            mp.addActionListener((ActionEvent e) -> {
-                main.dispose();
+            mp.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                                main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(RELANCERJEU);
                 controleur.traiterMessage(m);
+            }
 
-            });
-            bouP.add(mp);
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.setCursor(carte);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);   
+            }
+        });
+        bouP.add(mp);
+        
         main.setVisible(true);
         main.setLocationRelativeTo(null);
         main.setResizable(false);
@@ -178,6 +231,19 @@ public class VueWin  extends JFrame{
         
         
     }  
-    
 
+    @Override
+    public Cursor createCurs(String chemin) {
+            Toolkit tk = Toolkit.getDefaultToolkit();
+
+            Image img; 
+            try {
+                img=tk.getImage(getClass().getResource(chemin));
+            } catch (Exception e) {
+                img=tk.getImage(getClass().getResource(chemin));
+            }
+            Cursor c = tk.createCustomCursor(img, new Point(0, 0), chemin);
+            return c;
+    }    
+    
 }

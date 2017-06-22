@@ -373,9 +373,9 @@ public class Controleur implements Observateur {
             }
             piocheCarteInondation.remove(cI);                                   //la carte est enlevée de la piocheInondation
             }
-            if(isPerdu()){
-               perdu();
-            }
+            
+              perdu();
+            
         }
     
     //si il n'y a plus de carte dans la pioche
@@ -427,6 +427,7 @@ public class Controleur implements Observateur {
                 System.out.println("Déplacement! (" + c.getX() +","+ c.getY() +")");
                 aventuriers.get(0).deplacement(c,grille);
                 updateVuePlateau();
+                gagne();
                 break;
 
             case ASSECHER:
@@ -453,7 +454,7 @@ public class Controleur implements Observateur {
                         }
                     }
                 }
-                
+                gagne();
                 break;
 
             case ASSECHER_SAC:
@@ -822,10 +823,13 @@ public class Controleur implements Observateur {
     }
     
     public void perdu(){
-        vuePlateau.setAllInactive();
+        if(isPerdu()){
+         vuePlateau.setAllInactive();
         if(vuePerdu==null){
             vuePerdu = new VueLoose(this);
+        }   
         }
+        
     }
     // méthode pour vérifier si les joueurs ont gagné
     public boolean isGagne(){
@@ -836,8 +840,7 @@ public class Controleur implements Observateur {
         for (Aventurier atemp : aventuriers){
             if (grille.getTuile(atemp.getPosition())==grille.getTuile("Heliport")){
                 nbavenheli=nbavenheli+1;
-            }
-            for (NomTrésor tres : tresors){
+            
                 for (CarteTrésor main : atemp.getMainCarteTrésor()){           
                     if(main.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                         carteActivable = (Activable) main;
@@ -845,13 +848,23 @@ public class Controleur implements Observateur {
                             carteHeli=true;
                         }
                     }
-                }                
-            }   
+                }               
+            }
+   
         }
             return nbavenheli==aventuriers.size() && priseCalice&& prisePierre && priseCristal && priseZephyr && carteHeli;
     }
         
-    
+    public void gagne(){
+        if(isGagne()){
+            vuePlateau.setAllInactive();
+
+            if(vuePerdu==null){
+                vuePerdu = new VueLoose(this);
+            }
+        }
+        
+    }
     
     public static void main(String [] args) {
         // Instanciation de la fenêtre 
