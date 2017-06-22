@@ -21,18 +21,23 @@ import Util.NomTuile;
 import Model.cartesTresor.MonteeDesEaux;
 import Model.cartesTresor.Sac;
 import Model.cartesTresor.CarteTrésorTrophée;
+import static Util.Images.sam;
 import Util.NomTrésor;
 import Util.TypeCarteActivable;
 import Util.TypeCarteTresor;
 import Util.Utils;
 import Util.Utils.EtatTuile;
 import Util.Utils.Pion;
+import Vue.PopUpGif;
 import Vue.panels.KitPanelAventurier;
 import Vue.VueLancement;
 import Vue.VueLoose;
 import Vue.VuePlateau;
 import Vue.VueWin;
 import Vue.panels.PanelCarteTrophee;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controleur implements Observateur {
 
@@ -424,6 +429,7 @@ public class Controleur implements Observateur {
                 aventuriers.get(0).deplacement(c,grille);
                 updateVuePlateau();
                 gagne();
+                PopUpGif p = new PopUpGif(sam.getChemin());
                 break;
 
             case ASSECHER:
