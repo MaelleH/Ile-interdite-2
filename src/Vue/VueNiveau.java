@@ -21,7 +21,7 @@ public class VueNiveau extends JPanel{
     
     private Integer niveau ;
     HashMap<Integer, JPanel> panelsGauches ;
-    Integer cellWidth = 50 ;
+    Integer cellWidth = 100 ;
     Integer cellHeight = (Parameters.HAUTEUR_AUTRES_VUES - 25 - (Parameters.UNDECORATED ? 0 : Parameters.DECORATION_HEIGHT)) / 10 ;
     private final JPanel mainPanel;
         
@@ -170,7 +170,7 @@ public class VueNiveau extends JPanel{
         }
     }
     
-    public static void main(String[] args) {   
+    /*public static void main(String[] args) {   
         VueNiveau vueNiveau = new VueNiveau(1);
 
         Scanner scanner = new Scanner(System.in);
@@ -182,5 +182,5 @@ public class VueNiveau extends JPanel{
         System.out.println("Pour passer au niveau 5, appuyer sur entrée");
         suite = scanner.nextLine();
         vueNiveau.setNiveau(10);
-    }    
+    }    */
 }

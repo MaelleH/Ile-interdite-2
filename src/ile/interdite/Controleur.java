@@ -108,7 +108,7 @@ public class Controleur implements Observateur {
             kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(),a.getMainCarteTrésor(), getPionAventurier(a).getCouleur()));
             i++;
         }
-        vuePlateau = new VuePlateau(kitsPanelAventurier,this);
+        vuePlateau = new VuePlateau(kitsPanelAventurier,niveauEau.getNiveauEau(),this);
         updateVuePlateau();
         
         lancerTour();
@@ -733,7 +733,7 @@ public class Controleur implements Observateur {
             }
         }
         vuePlateau.majIconesTresors(priseCalice, priseCristal, prisePierre, priseZephyr);
-        
+        vuePlateau.setNiveauEchelleEau(niveauEau.getNiveauEau());
     }
     
     public Pion getPionAventurier(Aventurier a){

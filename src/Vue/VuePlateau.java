@@ -25,7 +25,6 @@ import ile.interdite.Observateur;
 import Util.TypeMessage;
 import static Util.TypeMessage.RELANCERJEU;
 import java.awt.BorderLayout;
-import java.awt.Color;
 
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -49,6 +48,8 @@ public class VuePlateau implements Observateur{
     private JPanel mainPanel;
     private JPanel panelPlateau;
     private JPanel panelAventuriers;
+    private JPanel panelInformationsJeu;
+    private VueNiveau echelleEau;
     private VueDefausse vueDefausse;
     private VueDonnerCarte vueDonnerCarte;
     private  PanelFadingPopUP popUp;
@@ -64,13 +65,13 @@ public class VuePlateau implements Observateur{
      *
      * @param obs
      */
-    public VuePlateau(ArrayList<KitPanelAventurier> kitsPanelsAventuriers,Observateur obs) {
+    public VuePlateau(ArrayList<KitPanelAventurier> kitsPanelsAventuriers,int niveauEchelle,Observateur obs) {
         listePanelAventuriers = new ArrayList<>();
         controleur = obs;
         
         this.window = new JFrame();
         
-        window.setSize(1200, 900);
+        window.setSize(1325, 900);
         window.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(window.getSize().width/2)),(int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(window.getSize().height/2)));
         window.setTitle("Ile Interdite");
         
@@ -84,8 +85,13 @@ public class VuePlateau implements Observateur{
         panelAventuriers = new JPanel(new GridLayout(4, 1));
         window.add(panelAventuriers,BorderLayout.WEST);
         
+        panelInformationsJeu = new JPanel(new BorderLayout());
+        echelleEau = new VueNiveau(niveauEchelle);
+        echelleEau.setBackground(Couleur.DESERT.getColor());
         
+        panelInformationsJeu.add(echelleEau,BorderLayout.NORTH);
         
+        window.add(panelInformationsJeu,BorderLayout.EAST);
         
         initPanelAventuriers(kitsPanelsAventuriers);
         initPlateau();
@@ -191,6 +197,10 @@ public class VuePlateau implements Observateur{
     
     public void addListeCases(String key,PanelCase uneCase){
         this.listeCases.put(key, uneCase);
+    }
+    
+    public void setNiveauEchelleEau(int niveauEchelle){
+        this.echelleEau.setNiveau(niveauEchelle);
     }
 
     public void dispose(){
