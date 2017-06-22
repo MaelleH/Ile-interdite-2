@@ -18,6 +18,8 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
@@ -102,7 +104,7 @@ public class VueLoose  extends JFrame{
                 img=tk.getImage(getClass().getResource("/Vue/Imagewin/goutte.png"));
             }
             Cursor monCurseur = tk.createCustomCursor(img, new Point(0, 0), "goutte");
-            main.setCursor(monCurseur);        
+                    
         
         
         
@@ -124,12 +126,34 @@ public class VueLoose  extends JFrame{
         
         //BOUTON rejouer
         JButton rej = new JButton("Rejouer");
-            rej.addActionListener((ActionEvent e) -> {
-                Message m = new Message();
+            rej.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 Message m = new Message();
                 m.setTypeMessage(REJOUER);
                 controleur.traiterMessage(m);
                 main.dispose();
-            }); 
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.setCursor(monCurseur);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);
+            }
+        });
+               
         bouP.add(rej);
 
         //Bouton Quitter

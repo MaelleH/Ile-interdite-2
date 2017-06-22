@@ -9,29 +9,18 @@ import Util.Couleur;
 import static Util.TypeMessage.QUITTER;
 import static Util.TypeMessage.REJOUER;
 import static Util.TypeMessage.RELANCERJEU;
-import static Util.TypeMessage.VAL2;
-import Vue.panels.PanelCarteTrophee;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import static java.awt.BorderLayout.NORTH;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -67,6 +56,9 @@ public class VueWin  extends JFrame{
                 int reponse = JOptionPane.showConfirmDialog(main,"Quitter le jeu?", "VOulez vous quitter?",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
                 if (reponse==JOptionPane.YES_OPTION){
                     main.dispose();
+                    Message m = new Message();
+                    m.setTypeMessage(QUITTER);
+                    controleur.traiterMessage(m);
                 }
             }
 

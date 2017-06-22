@@ -40,6 +40,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Util.Couleur;
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.SwingConstants;
 
 /**
@@ -89,7 +94,21 @@ public class VueLancement {
                 PanelIleHaut ileHaut = new PanelIleHaut();
                 main.setContentPane(ileHaut);   
                 
+        
+        
 
+        //Curseur
+        Toolkit tk = Toolkit.getDefaultToolkit();
+
+        Image img; 
+        try {
+            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
+        } catch (Exception e) {
+            img=tk.getImage(getClass().getResource("/Vue/Imagewin/heli.gif"));
+        }
+        Cursor heli = tk.createCustomCursor(img, new Point(0, 0), "heli");         
+                
+                
         //Creation du panel principal
             welcomeP = new JPanel(new BorderLayout());
             welcomeP.setAlignmentX(CENTER_ALIGNMENT);
@@ -108,9 +127,30 @@ public class VueLancement {
                 //Creation des boutons du panel bouton du panel central
                     //Bouton regles
                         JButton regles = new JButton("Règles");
-                        regles.addActionListener((ActionEvent e) -> {
-                            regle.setVisible(true);
-                        }); 
+                        regles.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                regle.setVisible(true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {               
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {    
+                main.setCursor(heli);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);
+            }
+        });
                         valRe.add(regles);
                         
                     //bouton valider
@@ -258,6 +298,8 @@ public class VueLancement {
             
         });
         
+        
+  
         
     
         main.setVisible(true);
