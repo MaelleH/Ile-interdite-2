@@ -24,6 +24,7 @@ import ile.interdite.Message;
 import ile.interdite.Observateur;
 import Util.TypeMessage;
 import static Util.TypeMessage.RELANCERJEU;
+import Vue.panels.PanelEtatPiocheDefausse;
 import java.awt.BorderLayout;
 
 import java.awt.GridLayout;
@@ -50,6 +51,9 @@ public class VuePlateau implements Observateur{
     private JPanel panelAventuriers;
     private JPanel panelInformationsJeu;
     private VueNiveau echelleEau;
+    private JPanel panelEtatPiocheDefausse;
+    private PanelEtatPiocheDefausse panelEtatPiocheDefausseTresor;
+    private PanelEtatPiocheDefausse panelEtatPiocheDefausseInondation;
     private VueDefausse vueDefausse;
     private VueDonnerCarte vueDonnerCarte;
     private  PanelFadingPopUP popUp;
@@ -63,9 +67,15 @@ public class VuePlateau implements Observateur{
 
     /**
      *
+     * @param kitsPanelsAventuriers
+     * @param niveauEchelle
+     * @param nbCartesInondationPioche
+     * @param listeCartesInondationDefausse
+     * @param nbCartesTresorPioche
      * @param obs
+     * @param listeCartesTresorDefausse
      */
-    public VuePlateau(ArrayList<KitPanelAventurier> kitsPanelsAventuriers,int niveauEchelle,Observateur obs) {
+    public VuePlateau(ArrayList<KitPanelAventurier> kitsPanelsAventuriers,int niveauEchelle,int nbCartesInondationPioche, ArrayList<String> listeCartesInondationDefausse,int nbCartesTresorPioche, ArrayList<String> listeCartesTresorDefausse,Observateur obs) {
         listePanelAventuriers = new ArrayList<>();
         controleur = obs;
         
@@ -86,10 +96,18 @@ public class VuePlateau implements Observateur{
         window.add(panelAventuriers,BorderLayout.WEST);
         
         panelInformationsJeu = new JPanel(new BorderLayout());
+        
         echelleEau = new VueNiveau(niveauEchelle);
         echelleEau.setBackground(Couleur.DESERT.getColor());
         
+        panelEtatPiocheDefausse = new JPanel(new GridLayout(2, 1));
+        panelEtatPiocheDefausseInondation = new PanelEtatPiocheDefausse(0, nbCartesInondationPioche, listeCartesInondationDefausse);
+        panelEtatPiocheDefausseTresor = new PanelEtatPiocheDefausse(1, nbCartesTresorPioche, listeCartesTresorDefausse);
+        panelEtatPiocheDefausse.add(panelEtatPiocheDefausseInondation);
+        panelEtatPiocheDefausse.add(panelEtatPiocheDefausseTresor);
+        
         panelInformationsJeu.add(echelleEau,BorderLayout.NORTH);
+        panelInformationsJeu.add(panelEtatPiocheDefausse,BorderLayout.SOUTH);
         
         window.add(panelInformationsJeu,BorderLayout.EAST);
         
@@ -365,5 +383,10 @@ public class VuePlateau implements Observateur{
             }
             pnA.repaint();
         }
+    }
+    
+    public void updatePanelsPioche(int nbCartesInondationPioche, ArrayList<String> listeCartesInondationDefausse,int nbCartesTresorPioche, ArrayList<String> listeCartesTresorDefausse){
+        panelEtatPiocheDefausseInondation.update(nbCartesInondationPioche, listeCartesInondationDefausse);
+        panelEtatPiocheDefausseTresor.update(nbCartesTresorPioche, listeCartesTresorDefausse);
     }
 }

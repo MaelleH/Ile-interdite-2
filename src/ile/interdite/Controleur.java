@@ -108,7 +108,7 @@ public class Controleur implements Observateur {
             kitsPanelAventurier.add(new KitPanelAventurier(nomJ.get(i), a.getNom(),a.getMainCarteTrésor(), getPionAventurier(a).getCouleur()));
             i++;
         }
-        vuePlateau = new VuePlateau(kitsPanelAventurier,niveauEau.getNiveauEau(),this);
+        vuePlateau = new VuePlateau(kitsPanelAventurier,niveauEau.getNiveauEau(),getNbCartePiocheInondation(),getListeCarteDefausseInondation(),getNbCartePiocheTresor(),getListeCarteDefausseTresor(),this);
         updateVuePlateau();
         
         lancerTour();
@@ -160,8 +160,44 @@ public class Controleur implements Observateur {
         return null;
     }*/
         
+    public int getNbCartePiocheInondation(){
+        int i = 0;
+        for(CarteInondation cI : piocheCarteInondation){
+            i++;
+        }
+        return i;
+    }
+    
+    public int getNbCartePiocheTresor(){
+        int i = 0;
+        for(CarteTrésor cT : piocheCarteTrésor){
+            i++;
+        }
+        return i;
+    }
+    
 
-        
+    public ArrayList<String> getListeCarteDefausseInondation(){
+        ArrayList<String> listeCarteDefausse = new ArrayList<>();
+        for(CarteInondation cI : defausseCarteInondation){
+            listeCarteDefausse.add(cI.getNomTuile().toString());
+        }
+        return listeCarteDefausse;
+    }
+    
+    public ArrayList<String> getListeCarteDefausseTresor(){
+        ArrayList<String> listeCarteDefausse = new ArrayList<>();
+        for(CarteTrésor cT : defausseCarteTrésor){
+            if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
+                listeCarteDefausse.add(((Activable)cT).getTypeCarteActivable().toString());
+            }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
+                listeCarteDefausse.add(cT.getTypeCarteTresor().toString());
+            }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
+                listeCarteDefausse.add(((CarteTrésorTrophée)cT).toString());
+            }
+        }
+        return listeCarteDefausse;
+    }
 
 
     public void initCartetresor(){
@@ -732,6 +768,7 @@ public class Controleur implements Observateur {
                 vuePlateau.updateCase(coord, nomCase, etatTuile, tresor, pionAAfficher);
             }
         }
+        vuePlateau.updatePanelsPioche(getNbCartePiocheInondation(),getListeCarteDefausseInondation(),getNbCartePiocheTresor(),getListeCarteDefausseTresor());
         vuePlateau.majIconesTresors(priseCalice, priseCristal, prisePierre, priseZephyr);
         vuePlateau.setNiveauEchelleEau(niveauEau.getNiveauEau());
     }
