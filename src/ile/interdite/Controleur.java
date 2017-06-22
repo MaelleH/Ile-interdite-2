@@ -34,10 +34,6 @@ import Vue.VueLancement;
 import Vue.VueLoose;
 import Vue.VuePlateau;
 import Vue.VueWin;
-import Vue.panels.PanelCarteTrophee;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controleur implements Observateur {
 
@@ -486,6 +482,7 @@ public class Controleur implements Observateur {
                 c = m.getCoord();
                 aventuriers.get(0).deplacement(c,grille);
                 updateVuePlateau();
+                gagne();
                 break;
 
             case ASSECHER:
@@ -675,6 +672,8 @@ public class Controleur implements Observateur {
             case REJOUER:
                 vuePlateau.dispose();
                 initPartie(nbJoueurs, nivDif, nomJ);
+                vueGagner = null;
+                vuePerdu=null;
                 break;
                 
             case QUITTER:
@@ -918,7 +917,21 @@ public class Controleur implements Observateur {
     public void gagne(){
         if(isGagne()){
             vuePlateau.setAllInactive();
-
+            /*PopUpGif p = new PopUpGif(sam.getChemin());               
+            p.setVisible(true);
+              
+                Thread t = new Thread() {
+                    @Override
+                        public void run() {
+                            try{
+                               Thread.sleep(3000);
+                               p.setVisible(false);
+                            }catch(InterruptedException e){
+ 
+                            }
+                        }
+                };
+                t.start();*/
             if(vueGagner==null){
                 vueGagner = new VueWin(this);
             }
