@@ -12,6 +12,7 @@ import Vue.panels.KitPanelAventurier;
 import Vue.panels.PanelAventurier;
 import Vue.panels.PanelCase;
 import Model.cartesTresor.CarteTrésor;
+import Model.cartesTresor.CarteTrésorTrophée;
 import Util.Coordonnees;
 import Util.Couleur;
 import Util.NomTrésor;
@@ -227,7 +228,7 @@ public class VuePlateau implements Observateur{
     public void popUpDefausse(ArrayList<CarteTrésor> mainCarteTrésor){
         vueDefausse = new VueDefausse(mainCarteTrésor.size()-5,mainCarteTrésor,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2),controleur);
     }
-    public void popUpDonnerCarte(ArrayList<CarteTrésor> mainCarteTrésor,ArrayList<Aventurier> aventuriers){
+    public void popUpDonnerCarte(ArrayList<CarteTrésorTrophée> mainCarteTrésor,ArrayList<Aventurier> aventuriers){
         vueDonnerCarte = new VueDonnerCarte(mainCarteTrésor,aventuriers,(int)(panelPlateau.getLocationOnScreen().getX()+panelPlateau.getSize().width/2),(int)(panelPlateau.getLocationOnScreen().getY()+panelPlateau.getSize().width/2),controleur);
     }
     

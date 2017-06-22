@@ -32,6 +32,7 @@ import Vue.VueLancement;
 import Vue.VueLoose;
 import Vue.VuePlateau;
 import Vue.VueWin;
+import Vue.panels.PanelCarteTrophee;
 
 public class Controleur implements Observateur {
 
@@ -500,15 +501,24 @@ public class Controleur implements Observateur {
                         aventuriersTemp.add(aventuriers.get(i));
                     }
                 }
-                if(aventuriers.get(0).getMainCarteTrésor().isEmpty()){
-                    vuePlateau.popUpMessage("Vous n'avez pas de cartes!");
+                ArrayList<CarteTrésorTrophée> listeCarteTresor = new ArrayList<>();
+                CarteTrésorTrophée carteTrophee;
+                for(CarteTrésor carte : aventuriers.get(0).getMainCarteTrésor()){
+                    if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
+                        carteTrophee=(CarteTrésorTrophée)carte;
+                        listeCarteTresor.add(carteTrophee);
+                    }
+                }
+                
+                if(aventuriers.get(0).getMainCarteTrésor().isEmpty()||listeCarteTresor.isEmpty()){
+                    vuePlateau.popUpMessage("Vous n'avez pas de cartes à donner!");
                 }else if(aventuriersTemp.isEmpty()){
                     vuePlateau.popUpMessage("Personne à proximité");
                 }else if(aventuriers.get(0).getActionsRestantes()==0){
                     vuePlateau.popUpMessage("Plus d'actions restantes");
                 }else{
                     vuePlateau.setInactive(aventuriers.get(0).getNom());
-                    vuePlateau.popUpDonnerCarte(aventuriers.get(0).getMainCarteTrésor(), aventuriersTemp);
+                    vuePlateau.popUpDonnerCarte(listeCarteTresor, aventuriersTemp);
                 }
                 
                 updateVuePlateau();

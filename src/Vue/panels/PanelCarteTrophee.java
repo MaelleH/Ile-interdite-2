@@ -43,14 +43,16 @@ public class PanelCarteTrophee extends PanelCarteTresor{
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setClicked(!getClicked());
-                repaint();
-                if(getType()==2){
+                if(getType()==0){
+                    setClicked(!getClicked());
+                }else if(getType()==2){
+                    setClicked(!getClicked());
                     Message msg = new Message();
                     msg.setTypeMessage(TypeMessage.GetClicked);
                     msg.setpCT((PanelCarteTrophee)e.getSource());
                     controleur.traiterMessage(msg);
                 }
+                repaint();
             }
 
             @Override
