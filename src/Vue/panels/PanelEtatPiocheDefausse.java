@@ -8,6 +8,7 @@ package Vue.panels;
 import com.sun.javafx.css.Rule;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -18,10 +19,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 /**
  *
@@ -38,9 +42,12 @@ public class PanelEtatPiocheDefausse extends JPanel{
     private JPanel panelCentral;
     
     private JPanel panelPioche;
+    private JLabel labelIconePioche;
+    private JLabel labelNbCartesPioche;
     private Image imagePioche;
     
     private JPanel panelDefausse;
+    private JPanel panelTempDefausse;
     private JLabel labelDefausse;
     private JScrollPane scrollPaneDefausse;
 
@@ -71,18 +78,27 @@ public class PanelEtatPiocheDefausse extends JPanel{
         panelCentral = new JPanel(new GridLayout(2, 1));
         this.add(panelCentral,BorderLayout.CENTER);
             //Partie Centrale - Pioche
-            panelPioche = new JPanel();
+            panelPioche = new JPanel(new GridLayout(1, 2));
+            labelNbCartesPioche = new JLabel("25",SwingConstants.CENTER);
+             if(typeCarte == 0){
+                    labelIconePioche = new JLabel(new ImageIcon(getClass().getResource("/Vue/DosDeCartes/Fond_Bleu.png")));
+                }else{
+                    labelIconePioche = new JLabel(new ImageIcon(getClass().getResource("/Vue/DosDeCartes/Fond_Rouge.png")));
+                }
+            panelPioche.add(labelIconePioche);
+            panelPioche.add(labelNbCartesPioche);
+            
             panelPioche.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-            try {
+            /*try {
                 if(typeCarte == 0){
+                    System.out.println("oui");
                     imagePioche = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/DosDeCartes/Fond_Bleu.png"));
-
                 }else{
                     imagePioche = ImageIO.read(new File(System.getProperty("user.dir")+"/src/Vue/DosDeCartes/Fond_Rouge.png"));
                 }
             } catch (IOException ex) {
                 Logger.getLogger(PanelEtatPiocheDefausse.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
             panelCentral.add(panelPioche);
             //Partie Centrale - Defausse
             panelDefausse = new JPanel(new BorderLayout());
@@ -90,31 +106,21 @@ public class PanelEtatPiocheDefausse extends JPanel{
                 labelDefausse = new JLabel("Contenu de la défausse :",SwingConstants.LEFT);
                 panelDefausse.add(labelDefausse,BorderLayout.NORTH);
                 //ScrollPane
-                scrollPaneDefausse = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                //scrollPaneDefausse.setColumnHeaderView(new Rule(Rule., true));
                 setLabelsScrollPane();
-                panelDefausse.add(scrollPaneDefausse,BorderLayout.SOUTH);
+                panelDefausse.add(scrollPaneDefausse,BorderLayout.CENTER);
             panelCentral.add(panelDefausse);
             
             
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
-        g.drawImage(imagePioche,(int) panelPioche.getLocation().getX(),(int) panelPioche.getLocation().getX(),(int) panelPioche.getSize().getWidth(), (int) panelPioche.getSize().getHeight(), this);
-    }
+    
     
     
     
     public void setLabelsScrollPane(){
-        scrollPaneDefausse.removeAll();
-        
-        JLabel label;
-        for(String contenuLabel : listeCartesDefausse){
-            label = new JLabel(contenuLabel);
-            scrollPaneDefausse.add(label);
-        }
+        JList listeLabels = new JList(listeCartesDefausse.toArray());
+        scrollPaneDefausse = new JScrollPane(listeLabels,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    
     }
     
     
@@ -124,6 +130,11 @@ public class PanelEtatPiocheDefausse extends JPanel{
         
         
         ArrayList<String> listeCartesDefausse= new ArrayList<>();
+        listeCartesDefausse.add("ouiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+        listeCartesDefausse.add("oui");
+        listeCartesDefausse.add("oui");
+        listeCartesDefausse.add("oui");
+        listeCartesDefausse.add("oui");
         listeCartesDefausse.add("oui");
         listeCartesDefausse.add("oui");
         listeCartesDefausse.add("oui");
