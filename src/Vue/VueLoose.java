@@ -6,6 +6,8 @@
 package Vue;
 
 import Util.Couleur;
+import Util.Curseurs;
+import Util.Images;
 import Util.TypeMessage;
 import static Util.TypeMessage.REJOUER;
 import static Util.TypeMessage.RELANCERJEU;
@@ -35,7 +37,7 @@ import javax.swing.SwingConstants;
  *
  * @author heyrendm
  */
-public class VueLoose  extends JFrame{
+public class VueLoose  extends JFrame implements Curseurs{
     private Observateur controleur;
     private JFrame main;
     private JPanel mainP;
@@ -63,6 +65,12 @@ public class VueLoose  extends JFrame{
 
             
         });
+        
+        //cursor
+        
+        Cursor heli =createCurs(Images.heli.getChemin());
+        Cursor goutte =createCurs(Images.goutte.getChemin());
+        Cursor carte =createCurs(Images.carte.getChemin());
        
         //panel principal
         mainP= new JPanel(new GridLayout(2,1));
@@ -91,23 +99,7 @@ public class VueLoose  extends JFrame{
             titreP.add(titreG);
             
             JLabel firework1 = new JLabel(new ImageIcon(getClass().getResource("/Vue/Imagewin/perduGoutte.gif" )));
-            
             hautP.add(firework1);
-            
-        
-        
-            Toolkit tk = Toolkit.getDefaultToolkit();
-
-            Image img; 
-            try {
-                img=tk.getImage(getClass().getResource("/Vue/Imagewin/goutte.png"));
-            } catch (Exception e) {
-                img=tk.getImage(getClass().getResource("/Vue/Imagewin/goutte.png"));
-            }
-            Cursor monCurseur = tk.createCustomCursor(img, new Point(0, 0), "goutte");
-                    
-        
-        
         
         
         //Panel bas
@@ -146,7 +138,7 @@ public class VueLoose  extends JFrame{
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                main.setCursor(monCurseur);
+                main.setCursor(heli);
             }
 
             @Override
@@ -159,23 +151,65 @@ public class VueLoose  extends JFrame{
 
         //Bouton Quitter
             JButton quitter = new JButton("Quitter");
-            quitter.addActionListener((ActionEvent e) -> {
+            quitter.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(TypeMessage.QUITTER);
                 controleur.traiterMessage(m);
-            });
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.setCursor(goutte);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);
+            }
+        });
             bouP.add(quitter);
         //Bouton pour menu principal
             JButton mp = new JButton("Menu Principal");
-            mp.addActionListener((ActionEvent e) -> {
+            mp.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 main.dispose();
                 Message m = new Message();
                 m.setTypeMessage(RELANCERJEU);
                 controleur.traiterMessage(m);
+            }
 
-            });
-            bouP.add(mp);
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                main.setCursor(carte);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                main.setCursor(Cursor.DEFAULT_CURSOR);
+            }
+        });
+                
+        bouP.add(mp);
         main.setVisible(true);
         main.setLocationRelativeTo(null);
         main.setResizable(false);
@@ -186,6 +220,20 @@ public class VueLoose  extends JFrame{
         
         
         
+    }
+
+    @Override
+    public Cursor createCurs(String chemin) {
+            Toolkit tk = Toolkit.getDefaultToolkit();
+
+            Image img; 
+            try {
+                img=tk.getImage(getClass().getResource(chemin));
+            } catch (Exception e) {
+                img=tk.getImage(getClass().getResource(chemin));
+            }
+            Cursor c = tk.createCustomCursor(img, new Point(0, 0), chemin);
+            return c;
     }
     
 
