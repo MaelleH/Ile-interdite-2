@@ -23,7 +23,7 @@ public class Parameters {
     public static final Integer TOP_VUE_AVENTURIER = UNDECORATED ? 30 : 0 ; // Position des fenêtres aventuriers
     public static final Integer TOP_AUTRES_VUES = 265 - (UNDECORATED ? 0 : DECORATION_HEIGHT) ; // Position des fenêtres Niveau, Plateau et Message en NoPic
     public static final Integer HAUTEUR_VUE_AVENTURIER = 200 ; // Hauteur des fenêtres Aventurier
-    public static final Integer HAUTEUR_AUTRES_VUES = 300 + (UNDECORATED ? 0 : DECORATION_HEIGHT) ; // Hauteur des fenêtres Niveau, Plateau et Message
+    public static final Integer HAUTEUR_AUTRES_VUES = 280 + (UNDECORATED ? 0 : DECORATION_HEIGHT) ; // Hauteur des fenêtres Niveau, Plateau et Message
 
     // ====================================================================================
     // Jeu

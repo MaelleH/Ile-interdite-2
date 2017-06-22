@@ -29,7 +29,7 @@ public class PanelDosCarte extends JPanel{
         super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
         int borderWidth = this.getInsets().left+this.getInsets().right;
         int borderHeight = this.getInsets().top+this.getInsets().bottom;
-        g.drawImage(dosDeCarte,(int) this.getLocation().getX()+(borderWidth/2),(int) this.getLocation().getY()+(borderHeight/2),(int) this.getSize().getWidth()-borderWidth*2, (int) this.getSize().getHeight()-borderHeight, this);
+        g.drawImage(dosDeCarte,(int) this.getLocation().getX()+(borderWidth/2),(int) this.getLocation().getY()+(borderHeight/2),(int) this.getSize().getWidth()-borderWidth*4, (int) this.getSize().getHeight()-borderHeight, this);
         revalidate();
     }
 }

@@ -200,11 +200,15 @@ public class Controleur implements Observateur {
         ArrayList<String> listeCarteDefausse = new ArrayList<>();
         for(CarteTrésor cT : defausseCarteTrésor){
             if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
-                listeCarteDefausse.add(((Activable)cT).getTypeCarteActivable().toString());
+                if(((Activable)cT).getTypeCarteActivable().equals(TypeCarteActivable.Helicoptere)){
+                    listeCarteDefausse.add("Hélicoptère");
+                }else{
+                    listeCarteDefausse.add("Sacs de Sable");
+                }
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
-                listeCarteDefausse.add(cT.getTypeCarteTresor().toString());
+                listeCarteDefausse.add("Montée des Eaux");
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                listeCarteDefausse.add(((CarteTrésorTrophée)cT).toString());
+                listeCarteDefausse.add(((CarteTrésorTrophée)cT).getNomT().toString());
             }
         }
         return listeCarteDefausse;

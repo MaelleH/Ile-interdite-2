@@ -10,6 +10,7 @@ import com.sun.javafx.css.Rule;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -56,7 +57,6 @@ public class PanelEtatPiocheDefausse extends JPanel{
         this.typeCarte = typeCarte;
         this.nbCartesPioche = nbCartesPioche;
         this.listeCartesDefausse = listeCartesDefausse;
-        
         
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Couleur.GRIS_CLAIR.getColor(),2));
@@ -114,6 +114,7 @@ public class PanelEtatPiocheDefausse extends JPanel{
                 panelDefausse.add(labelDefausse,BorderLayout.NORTH);
                 //ScrollPane
                 setLabelsScrollPane();
+                
                 panelDefausse.add(scrollPaneDefausse,BorderLayout.CENTER);
             panelCentral.add(panelDefausse);
             
@@ -124,14 +125,16 @@ public class PanelEtatPiocheDefausse extends JPanel{
         this.nbCartesPioche = nbCartesPioche;
         this.listeCartesDefausse = listeCartesDefausse;
         labelNbCartesPioche.setText(((Integer)nbCartesPioche).toString());
+        panelDefausse.remove(scrollPaneDefausse);
         setLabelsScrollPane();
+        panelDefausse.add(scrollPaneDefausse);
         repaint();
         revalidate();
     }
     
     public void setLabelsScrollPane(){
-        JList listeLabels = new JList(listeCartesDefausse.toArray());
-        scrollPaneDefausse = new JScrollPane(listeLabels,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        
+        scrollPaneDefausse = new JScrollPane(new JList(listeCartesDefausse.toArray()),JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     }
     
     
