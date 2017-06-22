@@ -83,7 +83,6 @@ public class VuePlateau implements Observateur{
         this.window = new JFrame();
         
         int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-        System.out.println(screenHeight);
         
         window.setTitle("Ile Interdite");
         
