@@ -61,7 +61,7 @@ public class VueDonnerCarte implements Observateur{
     private JPanel panelValidation;
     private JButton boutonValidation;
     private JButton boutonAnnulation;
-    public VueDonnerCarte(ArrayList<CarteTrésor> cartes,ArrayList<Aventurier> aventuriers,int x,int y,Observateur obs) {
+    public VueDonnerCarte(ArrayList<CarteTrésorTrophée> cartes,ArrayList<Aventurier> aventuriers,int x,int y,Observateur obs) {
         listeCarteTresor = new ArrayList<>();
         listesPanelsAventuriers = new HashMap<>();
         controleur = obs;
@@ -150,15 +150,14 @@ public class VueDonnerCarte implements Observateur{
         window.dispose();
     }
     
-    public void setListeCarteTresor(ArrayList<CarteTrésor> cartes){
+    public void setListeCarteTresor(ArrayList<CarteTrésorTrophée> cartes){
         listeCarteTresor.clear();
-        PanelCarteActivable carteActi;
+        
+        
         PanelCarteTrophee carteTrophee;
-        for(CarteTrésor carte : cartes){
-            if(carte.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                carteTrophee = new PanelCarteTrophee(2,((CarteTrésorTrophée) carte),this);
-                listeCarteTresor.add(carteTrophee);
-            }
+        for(CarteTrésorTrophée carte : cartes){
+            carteTrophee = new PanelCarteTrophee(2, carte,this);
+            listeCarteTresor.add(carteTrophee);
         }
     }
     
