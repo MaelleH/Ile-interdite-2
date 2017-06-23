@@ -131,7 +131,7 @@ public class TestWin implements Observateur {
 
     public void lancerTour(){
         //Vérification de la main de l'aventurier
-        if(aventuriers.get(0).doitDefausser() && !isPerdu()){
+        if(aventuriers.get(0).doitDefausser() && !isPerdu() && !isGagne()){
             vuePlateau.popUpDefausse(aventuriers.get(0).getMainCarteTrésor());
             return;
 
@@ -860,10 +860,10 @@ public class TestWin implements Observateur {
     
     public void perdu(){
         if(isPerdu()){
-         vuePlateau.setAllInactive();
-        if(vuePerdu==null){
-            vuePerdu = new VueLoose(this);
-        }   
+            vuePlateau.setAllInactive();
+            if(vuePerdu==null){
+                vuePerdu = new VueLoose(this);
+            }   
         }
         
     }

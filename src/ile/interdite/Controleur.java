@@ -118,7 +118,7 @@ public class Controleur implements Observateur {
 
     public void lancerTour(){
         //Vérification de la main de l'aventurier
-        if(aventuriers.get(0).doitDefausser() && !isPerdu()){
+        if(aventuriers.get(0).doitDefausser() && !isPerdu()&& !isGagne()){
             vuePlateau.popUpDefausse(aventuriers.get(0).getMainCarteTrésor());
             return;
 
