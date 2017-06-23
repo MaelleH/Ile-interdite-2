@@ -82,8 +82,14 @@ public class VuePlateau implements Observateur{
         
         this.window = new JFrame();
         
-        window.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()*0.80*1.77), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()*0.80)));
-        window.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(window.getPreferredSize().width/2)),(int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(window.getPreferredSize().height/2)));
+
+        int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        //window.setPreferredSize(new Dimension((int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()*0.80*1.77), (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()*0.80)));
+        //window.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(window.getPreferredSize().width/2)),(int)((Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(window.getPreferredSize().height/2)));
+
+        
+        
+
         window.setTitle("Ile Interdite");
         window.setResizable(false);
         
@@ -97,19 +103,29 @@ public class VuePlateau implements Observateur{
         panelAventuriers = new JPanel(new GridLayout(4, 1));
         window.add(panelAventuriers,BorderLayout.WEST);
         
-        
+
         panelInformationsJeu = new JPanel(new GridLayout(3, 1));
         
         echelleEau = new VueNiveau(niveauEchelle);
         echelleEau.setBackground(Couleur.DESERT.getColor());
+        panelInformationsJeu.add(echelleEau,BorderLayout.NORTH);
         
+
+        //panelEtatPiocheDefausse = new JPanel(new GridLayout(2, 1));
+
         panelEtatPiocheDefausseInondation = new PanelEtatPiocheDefausse(0, nbCartesInondationPioche, listeCartesInondationDefausse);
         panelEtatPiocheDefausseTresor = new PanelEtatPiocheDefausse(1, nbCartesTresorPioche, listeCartesTresorDefausse);
+
         
+
         panelInformationsJeu.add(echelleEau);
         panelInformationsJeu.add(panelEtatPiocheDefausseInondation);
         panelInformationsJeu.add(panelEtatPiocheDefausseTresor);
         
+
+        
+        //panelInformationsJeu.add(panelEtatPiocheDefausse,BorderLayout.SOUTH);
+
         
         window.add(panelInformationsJeu,BorderLayout.EAST);
         
@@ -119,7 +135,11 @@ public class VuePlateau implements Observateur{
         
         this.window.pack();
         this.window.setVisible(true);
-        
+
+        window.setPreferredSize(new Dimension((int)(screenHeight*0.9*1.77), (int)(screenHeight*0.9)));
+        window.setLocation((((int)(screenHeight*0.05*1.77))),(int)(((screenHeight*0.05))));
+        window.pack();
+
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new WindowAdapter(){
             @Override

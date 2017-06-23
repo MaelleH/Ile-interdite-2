@@ -16,6 +16,11 @@ public class Grille {
         HSTuile = new HashMap<>();
         creerGrille();              //creerGrille() ou CreerGrilleProf() ou creerGrilleTest()
     }
+
+    public Grille(int i) {
+        HSTuile = new HashMap<>();
+        creerGrilleTest();              //creerGrille() ou CreerGrilleProf() ou creerGrilleTest()
+    }
         
     public HashMap<Coordonnees,Tuile> getHSTuile() {
         return HSTuile;

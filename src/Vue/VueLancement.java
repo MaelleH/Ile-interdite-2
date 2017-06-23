@@ -5,11 +5,8 @@
  */
 package Vue;
 
-import Model.cartesTresor.CarteTrésor;
-import Model.cartesTresor.Helico;
 import ile.interdite.Message;
 import ile.interdite.Observateur;
-import static Util.TypeMessage.REGLES;
 import static Util.TypeMessage.VAL2;
 import Vue.panels.PanelCarteTrophee;
 import java.awt.BorderLayout;
@@ -23,8 +20,6 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.TextField;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -40,17 +35,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import Util.Couleur;
-import java.awt.Toolkit;
 import Util.Curseurs;
 import Util.Images;
-import static Util.Images.back;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import static javafx.scene.Cursor.cursor;
 import javax.swing.SwingConstants;
 
 /**
@@ -65,11 +56,11 @@ public class VueLancement implements Curseurs {
 
     
     private JPanel welcomeP;
-    private JPanel choixP;
+    private final JPanel choixP;
     
     
     private JPanel joueurP;
-    private JPanel nomJoueurP;
+    private final JPanel nomJoueurP;
     
     private JPanel j1,j2,j3,j4;
     
@@ -397,7 +388,7 @@ public class VueLancement implements Curseurs {
     }
 
     @Override
-    public Cursor createCurs(String chemin) {
+    public final Cursor createCurs(String chemin) {
             Toolkit tk = Toolkit.getDefaultToolkit();
 
             Image img; 

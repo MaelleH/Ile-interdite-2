@@ -34,10 +34,6 @@ import Vue.VueLancement;
 import Vue.VueLoose;
 import Vue.VuePlateau;
 import Vue.VueWin;
-import Vue.panels.PanelCarteTrophee;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Controleur implements Observateur {
 
@@ -82,7 +78,7 @@ public class Controleur implements Observateur {
         niveauEau = new EchelleNiveauEau(nivdif);
         
         //Créer la grille
-        grille = new Grille();      //Modifier dans la classe Grille pour avoir les differentes grilles
+        grille = new Grille();
         
         //Sauver les valeurs
         this.nbJoueurs=nbj;
@@ -146,11 +142,9 @@ public class Controleur implements Observateur {
         
         //picohe du nombre nécéssaire de cartes Inondation
         
-        /*Enlever pour la grille de test 1, pas d'inondation lors de la fin du tour(plus simple)*/
         for (int c=1;c<=niveauEau.getNbInond();c++){
             inonderTuile();
         }
-        /////////////////////////////////////////////
         
         
         aventuriers.get(0).resetActionsRestantes();
@@ -200,7 +194,7 @@ public class Controleur implements Observateur {
     
     public ArrayList<String> getListeCarteDefausseTresor(){
         ArrayList<String> listeCarteDefausse = new ArrayList<>();
-        for(CarteTrésor cT : defausseCarteTrésor){
+        /*for(CarteTrésor cT : defausseCarteTrésor){
             if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Activable)){
                 if(((Activable)cT).getTypeCarteActivable().equals(TypeCarteActivable.Helicoptere)){
                     listeCarteDefausse.add("Hélicoptère");
@@ -210,9 +204,17 @@ public class Controleur implements Observateur {
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.MonteeDesEaux)){
                 listeCarteDefausse.add("Montée des Eaux");
             }else if(cT.getTypeCarteTresor().equals(TypeCarteTresor.Tresor)){
-                listeCarteDefausse.add(((CarteTrésorTrophée)cT).getNomT().toString());
+                if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Calice)){
+                    listeCarteDefausse.add("Calice");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Cristal)){
+                    listeCarteDefausse.add("Cristal");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Pierre)){
+                    listeCarteDefausse.add("Pierre");
+                }else if(((CarteTrésorTrophée)cT).getNomT().equals(NomTrésor.Zéphyr)){
+                    listeCarteDefausse.add("Zephyr");
+                }
             }
-        }
+        }*/
         return listeCarteDefausse;
     }
 
@@ -334,6 +336,8 @@ public class Controleur implements Observateur {
                 }else if(nomT.equals(NomTrésor.Zéphyr)){
                     priseZephyr=true;
                 }
+                aventuriers.get(0).setActionsRestantes(aventuriers.get(0).getActionsRestantes()-1);
+
             }
                 
                 
@@ -481,7 +485,6 @@ public class Controleur implements Observateur {
                 aventuriers.get(0).deplacement(c,grille);
                 updateVuePlateau();
                 gagne();
-                PopUpGif p = new PopUpGif(sam.getChemin());
                 break;
 
             case ASSECHER:
@@ -647,19 +650,17 @@ public class Controleur implements Observateur {
                 Aventurier a = getAventurier(m.getJoueur());
                 if((grille.getTuile(a.getPosition())==grille.getTuile("Le Temple du Soleil")||grille.getTuile(a.getPosition())==grille.getTuile("Le Temple de La Lune"))){
                         prendreTresor(NomTrésor.Pierre);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("La Caverne des Ombres")||grille.getTuile(a.getPosition())==grille.getTuile("La Caverne du Brasier"))){
                         prendreTresor(NomTrésor.Cristal);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Palais de Corail")||grille.getTuile(a.getPosition())==grille.getTuile("Le Palais des Marees"))){
                         prendreTresor(NomTrésor.Calice);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
                 }
                 else if((grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Murmures")||grille.getTuile(a.getPosition())==grille.getTuile("Le Jardin des Hurlements"))){
                         prendreTresor(NomTrésor.Zéphyr);
-                        a.setActionsRestantes(a.getActionsRestantes()-1);
+                }else{
+                    vuePlateau.popUpMessage("Il n'y a pas de trésors ici!");
                 }
                 updateVuePlateau();
                 break;
@@ -673,6 +674,8 @@ public class Controleur implements Observateur {
             case REJOUER:
                 vuePlateau.dispose();
                 initPartie(nbJoueurs, nivDif, nomJ);
+                vueGagner = null;
+                vuePerdu=null;
                 break;
                 
             case QUITTER:
@@ -753,15 +756,6 @@ public class Controleur implements Observateur {
         Explorateur explo = new Explorateur(grille.getCoordTuile("La Porte de Bronze"));
         Pilote pilot = new Pilote(grille.getCoordTuile("Heliport"));
         
-        
-        //Plongeur plong= new Plongeur(grille.getCoordTuile("Le Marais Brumeux"));      //grille test 1
-        //Ingenieur inge = new Ingenieur(grille.getCoordTuile("Le Val du Crepuscule")); //grille test 1
-        //Explorateur explo = new Explorateur(grille.getCoordTuile("Le Marais Brumeux")); //grille test 1
-        //Pilote pilot = new Pilote(grille.getCoordTuile("Le Marais Brumeux"));         //grille test 1
-        
-        //Messager mess= new Messager(grille.getCoordTuile("La Porte de Cuivre"));      //grille test 2
-        //Pilote pilot = new Pilote(grille.getCoordTuile("La Porte de Cuivre"));        //grille test 2
-        
         aventuriers.add(explo);
         aventuriers.add(inge);
         aventuriers.add(mess);
@@ -771,23 +765,9 @@ public class Controleur implements Observateur {
         Collections.shuffle((List<?>) aventuriers);
         
         ArrayList<Aventurier> aventuriersTemp = new ArrayList<>();
-        /*choix des joueurs aléatoire, a enlever pour les grilles de test*/
         for (int i=0 ; i<nbjoueur; i++){
             aventuriersTemp.add(aventuriers.get(i));
         }
-        
-        //Pour la grille de test 1 : deplacement, assechement, case coulée avec aventurier dessus
-        /*
-        aventuriersTemp.add(plong);
-        aventuriersTemp.add(pilot);
-        aventuriersTemp.add(explo);
-        aventuriersTemp.add(inge);
-        */
-        
-        //Pour la grille de test 2 : tresor, donnation de cartes
-        /*aventuriersTemp.add(mess);
-        aventuriersTemp.add(pilot);
-        */
         
         aventuriers = aventuriersTemp;
     }
@@ -916,7 +896,21 @@ public class Controleur implements Observateur {
     public void gagne(){
         if(isGagne()){
             vuePlateau.setAllInactive();
-
+            /*PopUpGif p = new PopUpGif(sam.getChemin());               
+            p.setVisible(true);
+              
+                Thread t = new Thread() {
+                    @Override
+                        public void run() {
+                            try{
+                               Thread.sleep(3000);
+                               p.setVisible(false);
+                            }catch(InterruptedException e){
+ 
+                            }
+                        }
+                };
+                t.start();*/
             if(vueGagner==null){
                 vueGagner = new VueWin(this);
             }

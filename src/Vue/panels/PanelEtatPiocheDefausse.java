@@ -113,12 +113,11 @@ public class PanelEtatPiocheDefausse extends JPanel{
                 labelDefausse = new JLabel("Contenu de la défausse :",SwingConstants.LEFT);
                 panelDefausse.add(labelDefausse,BorderLayout.NORTH);
                 //ScrollPane
+                scrollPaneDefausse = new JScrollPane(null,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 setLabelsScrollPane();
-                
-                panelDefausse.add(scrollPaneDefausse,BorderLayout.CENTER);
+               
+
             panelCentral.add(panelDefausse);
-            
-            
     }
 
     public void update(int nbCartesPioche, ArrayList<String> listeCartesDefausse){
@@ -133,8 +132,12 @@ public class PanelEtatPiocheDefausse extends JPanel{
     }
     
     public void setLabelsScrollPane(){
-        
-        scrollPaneDefausse = new JScrollPane(new JList(listeCartesDefausse.toArray()),JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        JList<String> listeLabels = new JList(listeCartesDefausse.toArray());
+        panelDefausse.remove(scrollPaneDefausse);
+        scrollPaneDefausse = new JScrollPane(listeLabels,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panelDefausse.add(scrollPaneDefausse,BorderLayout.CENTER);
+
     }
     
     
